@@ -519,6 +519,22 @@
     }
   }
 
+  function saveTeamState() {
+    const { pool, teamA, teamB, weekKey } = window._state;
+    localStorage.setItem('butchers_teams', JSON.stringify({ pool, teamA, teamB, weekKey }));
+  }
+
+  function loadTeamState() {
+    try {
+      const saved = JSON.parse(localStorage.getItem('butchers_teams') || 'null');
+      if (!saved || saved.weekKey !== window._state.weekKey) return false;
+      window._state.pool  = saved.pool  || [];
+      window._state.teamA = saved.teamA || [];
+      window._state.teamB = saved.teamB || [];
+      return true;
+    } catch(e) { return false; }
+  }
+
   function movePlayer(name, from, to) {
     const s = window._state;
     const lists = { pool: s.pool, a: s.teamA, b: s.teamB };
@@ -526,6 +542,7 @@
     if (idx === -1) return;
     const [p] = lists[from].splice(idx, 1);
     lists[to].push(p);
+    saveTeamState();
     renderTeamBuilder();
   }
 
@@ -655,6 +672,7 @@
     window._state.pool  = [];
     window._state.teamA = newA;
     window._state.teamB = newB;
+    saveTeamState();
     renderTeamBuilder();
   };
 
@@ -664,6 +682,7 @@
     window._state.pool  = [...teamA, ...teamB, ...window._state.pool];
     window._state.teamA = [];
     window._state.teamB = [];
+    saveTeamState();
     renderTeamBuilder();
   };
 
@@ -744,6 +763,9 @@
   window._state.votes  = votes;
   window._state.roster = roster;
   renderPoll(votes, roster);
+
+  // Restore team state if saved for this week
+  if (loadTeamState()) renderTeamBuilder();
 </script>
 </body>
 </html>
