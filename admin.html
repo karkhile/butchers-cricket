@@ -284,13 +284,68 @@
     return votes;
   }
 
-  // ── CRICCLUBS ─────────────────────────────────────────────────────────────────
+  // ── CRICCLUBS ROSTER (hardcoded to avoid CORS) ───────────────────────────────
+  const ROSTER = {
+    'Aakash Agnihotri': 'wVpWtSNNZtaYn4eED3or8w',
+    'Abhishek Kumar Singh': 'F-4-1aQaOKGP_80zheL7-w',
+    'Abhishek Lingwal': 'r7wJQ8hLQCFcDhYEbM2hPg',
+    'Ajay Joy': 'JQW7e_zlUYgq4W2R7xr1Bg',
+    'Akashdeep Balu': 'gBldUizxL90dpRNmPJ5O0w',
+    'Akshay Garg': 'opnSJfA8BbEQDNhr5MsPNg',
+    'Aman Kohli': '-x1s5v1YQOoCAZ0rioui1A',
+    'Anil Mallapur': 'sowXTBqbllzxmvtGL82nRA',
+    'Anjan Kumar': '0IVjB0se55LVgadkP2Vccw',
+    'Ankit Agarwal': 'vTqjb8CPnQPHggOoqZvLzQ',
+    'Arjun Deb': 'B6kVR34vPZiSJjU2jilGCQ',
+    'Arjun Shukla': '7HdIapHND8_8RMZt9oolXg',
+    'Arpan Dey': 'dgpc9xS75HYuJEpx5sjB2w',
+    'Ashish Chanchalani': '6D43Iczb0O31zqlKPo8SNg',
+    'Chaitanya Teja Golla': 'T0zm276dqUyshg3Jj_0y_A',
+    'Eshwar Chaitanya Sarampati': 'oYt44YJQduKKTUh5NeAZLw',
+    'Gaurav Kumar': 'K_8wrjweXhaFdJ5r_GQrFg',
+    'Gaurav Mehta': '8ftsnbhfI2TFprglJhxVqg',
+    'Hari Vangipuram': 'lb5qtZyZ9MAw8RZrQ9BxUg',
+    'Harsha Vardhan Reddy Vndavally': 'nzCOyZ2wnvICLTgecLW4LQ',
+    'Jay Shah': 'E9qpwch9MUZOHb32JSoyQw',
+    'Jimit Majmudar': 'CVlttfvYLBoXq1-DMkWvnw',
+    'Kaushal Karkera': 'qy2LF0hlIApbCdJvlmJlSA',
+    'Kunal Kokate': 'eG1SQTWlobx6fRmv1XAK3Q',
+    'Lokesh Bala': '6zeeLxNJcRvoJMPiAN2yDg',
+    'Meet Dhabalia': 'u_f6I4jd5H1PfkUdMOtteA',
+    'Mithal Kothari': 'PNiz5arBIvOxbRPEOLY0UQ',
+    'Mohan Challa': 'RVZghkGqglBrB4I7ZtU25A',
+    'Piyush Jha': 'ioPkjejkP77VFhtcjq0kQA',
+    'Prashant Kumar': '8ctXtKSWKntH1lO64_HJ8A',
+    'Praveen Karkhile': '_5Mc7iXkzNa9ihUc306PQw',
+    'Rajeev Tirumala': 'RuSErenuqhtROzzGRiSCAQ',
+    'Rijwan Rana': 'xJsYjCHjzUfCGDHQvzANZQ',
+    'Rohit Sharma': 'yW-77OY_JTv2OoCW1xLpTQ',
+    'Santosh Ghosh': 'hEbc_nxgC7A4JWFd8IWsgA',
+    'Shashank Dube': 'L35gfItw-22iq9zVxn8Paw',
+    'Shivang Sharma': 'jvB0-M9G4qN86WdiLwabPw',
+    'Shriganesh Shintre': 'z3eKIG49-jjJUFBhLFXp8g',
+    'Smit Paul': 'JFIkgI7Jj4ZXwytGoMBEQQ',
+    'Soumya Smruti Mishra': 'JkAMCgcDg9yJO1LR6AUjFw',
+    'Srinath Shah': '0DWqNB_E2to_DQ1jUSgW0w',
+    'Subham Satapathy': 'm37hkGUOzIdT8Gcu9j4pgQ',
+    'Sylvestor George': '2w3Xyu1KTe3sp7RdNx1_eA',
+    'Tarang Thapa': '2V_MpmjkrKPO7uVfDOpyhg',
+    'Tarun JOSHI': 'CZfrIH7xZ5f2eO4DpAvijQ',
+    'Venkata Krishna Ravi': 'GiHUfTQioEKjrUwvLxkM6A',
+    'Vignesh Ganguly': 'DNMTRLbQDdwYwBEPPYgtsw',
+    'Vinay Bharbhari': '_mZdWtufHjg-Z9YSNA3BfA',
+    'Vivek Garg': 'h-GqKCWgZyAOhig2iyhX6A',
+    'Yash Mehta': 'zJYuV8VjO_Lw7YFmFPec6A',
+    'Abhishek Kumar Singh': 'F-4-1aQaOKGP_80zheL7-w',
+    'Akashdeep Balu': 'gBldUizxL90dpRNmPJ5O0w',
+    'Rohit Sharma': 'yW-77OY_JTv2OoCW1xLpTQ',
+  };
+
   async function loadRoster() {
-    const d = await ccGet('league/' + LEAGUE_ID + '/players?size=200');
+    // Use hardcoded roster to avoid CORS issues
     const map = {};
-    for (const p of (d.data?.players || [])) {
-      if (p.name.toLowerCase().includes('dummy') || p.name.toLowerCase().includes('guest')) continue;
-      map[p.name] = { id: p.id, name: p.name };
+    for (const [name, id] of Object.entries(ROSTER)) {
+      map[name] = { id, name };
     }
     return map;
   }
