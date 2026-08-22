@@ -333,43 +333,43 @@
   }
 
   // ── STRENGTH ──────────────────────────────────────────────────────────────────
-  // Precomputed from series stats — update periodically
+  // Official CricClubs ranking total points (updated 2026-08-21)
   const STRENGTH = {
-    'Abhishek Kumar Singh': 69,
-    'Abhishek Lingwal': 50,
-    'Akashdeep Balu': 50,
-    'Anil Mallapur': 36,
-    'Anjan Kumar': 70,
-    'Arpan Dey': 40,
-    'Arjun Deb': 22,
-    'Arjun Shukla': 36,
-    'Chaitanya Teja Golla': 50,
-    'Eshwar Chaitanya Sarampati': 38,
-    'Gaurav Kumar': 68,
-    'Gaurav Mehta': 65,
-    'Hari Vangipuram': 42,
-    'Jay Shah': 54,
-    'Kaushal Karkera': 47,
-    'Kunal Kokate': 58,
-    'Lokesh Bala': 65,
-    'Meet Dhabalia': 31,
-    'Mithal Kothari': 37,
-    'Piyush Jha': 35,
-    'Prashant Kumar': 45,
-    'Praveen Karkhile': 51,
-    'Rajeev Tirumala': 33,
-    'Rijwan Rana': 52,
-    'Rohit Sharma': 43,
-    'Samir Savla': 50,
-    'Shriganesh Shintre': 50,
-    'Soumya Smruti Mishra': 47,
-    'Srinath Shah': 57,
-    'Subham Satapathy': 27,
-    'Sylvestor George': 51,
-    'Tarun JOSHI': 50,
-    'Venkata Krishna Ravi': 70,
-    'Vinay Bharbhari': 68,
-    'Yash Mehta': 72,
+    'Anjan Kumar':                    4015,
+    'Yash Mehta':                     3274,
+    'Gaurav Mehta':                   2954,
+    'Prashant Kumar':                 2814,
+    'Arpan Dey':                      2749,
+    'Abhishek Kumar Singh':           2476,
+    'Praveen Karkhile':               2365,
+    'Hari Vangipuram':                2235,
+    'Arjun Shukla':                   2177,
+    'Gaurav Kumar':                   2146,
+    'Sylvestor George':               1881,
+    'Anil Mallapur':                  1715,
+    'Kaushal Karkera':                1666,
+    'Vinay Bharbhari':                1627,
+    'Soumya Smruti Mishra':           1286,
+    'Rijwan Rana':                    1163,
+    'Jay Shah':                       1065,
+    'Abhishek Lingwal':               1047,
+    'Akashdeep Balu':                  966,
+    'Venkata Krishna Ravi':            863,
+    'Kunal Kokate':                    506,
+    'Lokesh Bala':                     390,
+    'Rohit Sharma':                    390,
+    'Rajeev Tirumala':                 330,
+    'Srinath Shah':                    324,
+    'Arjun Deb':                       321,
+    'Eshwar Chaitanya Sarampati':      241,
+    'Mithal Kothari':                  211,
+    'Piyush Jha':                      143,
+    'Tarun JOSHI':                     124,
+    'Meet Dhabalia':                   112,
+    'Subham Satapathy':                 41,
+    'Shriganesh Shintre':               16,
+    'Chaitanya Teja Golla':             50,
+    'Samir Savla':                      50,
   };
 
   function snakeDraft(players) {
@@ -500,16 +500,16 @@
       log('✓ Rosters cleared', 'success');
 
       log('Assigning Butchers-A (' + teamA.length + ' players)...');
-      const idsA = teamA.map(p => p.id);
-      if (teamA.length < 11) idsA.push(DUMMY_A);
-      const rA = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_A + '/players', { players: idsA, lang: 'en' });
-      log(rA.status === 'Success' ? '✓ Butchers-A assigned (' + idsA.length + ' incl. ' + (teamA.length < 11 ? 'DummyA' : 'no dummy') + ')' : '✗ ' + JSON.stringify(rA).slice(0,100), rA.status === 'Success' ? 'success' : 'error');
+      const rosterA = teamA.map(p => p.id);
+      if (teamA.length < 11) rosterA.push(DUMMY_A);
+      const rA = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_A + '/players', { players: rosterA, lang: 'en' });
+      log(rA.status === 'Success' ? '✓ Butchers-A assigned (' + rosterA.length + ' incl. ' + (teamA.length < 11 ? 'DummyA' : 'no dummy') + ')' : '✗ ' + JSON.stringify(rA).slice(0,100), rA.status === 'Success' ? 'success' : 'error');
 
       log('Assigning Butchers-B (' + teamB.length + ' players)...');
-      const idsB = teamB.map(p => p.id);
-      if (teamB.length < 11) idsB.push(DUMMY_B);
-      const rB = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: idsB, lang: 'en' });
-      log(rB.status === 'Success' ? '✓ Butchers-B assigned (' + idsB.length + ' incl. ' + (teamB.length < 11 ? 'DummyB' : 'no dummy') + ')' : '✗ ' + JSON.stringify(rB).slice(0,100), rB.status === 'Success' ? 'success' : 'error');
+      const rosterB = teamB.map(p => p.id);
+      if (teamB.length < 11) rosterB.push(DUMMY_B);
+      const rB = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: rosterB, lang: 'en' });
+      log(rB.status === 'Success' ? '✓ Butchers-B assigned (' + rosterB.length + ' incl. ' + (teamB.length < 11 ? 'DummyB' : 'no dummy') + ')' : '✗ ' + JSON.stringify(rB).slice(0,100), rB.status === 'Success' ? 'success' : 'error');
 
       for (const time of ['7:30 AM', '9:30 AM']) {
         log('Creating fixture at ' + time + '...');
