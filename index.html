@@ -145,7 +145,7 @@
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
-  import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+  import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, getDocs } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
   const FIREBASE_CONFIG = {
     apiKey: "AIzaSyDU0RHh9ScIIPE5tSpjjhnAPN8ypF5T9EE",
@@ -203,8 +203,14 @@
         <div class="vote-summary">Your availability:<br><strong>${formatVoteSummary(days, sat, sun)}</strong></div>
         <div class="dashboard" id="dashboard"><h3>📊 Loading poll results...</h3></div>
         <button class="submit-btn" id="changeBtn" style="margin-top:16px;background:#666;font-size:14px;padding:12px">✏️ Change my vote</button>
+        <button class="submit-btn" id="undoBtn" style="margin-top:8px;background:white;color:#c0392b;border:2px solid #c0392b;font-size:14px;padding:12px">🗑️ Undo — I'll decide later</button>
       </div>`;
     document.getElementById('changeBtn').addEventListener('click', () => showVoteForm(name, voteRef, weekKey, days));
+    document.getElementById('undoBtn').addEventListener('click', async () => {
+      if (!confirm('Remove your vote? You can always vote again later.')) return;
+      await deleteDoc(voteRef);
+      showVoteForm(name, voteRef, weekKey, null);
+    });
     renderDashboard('dashboard', weekKey);
   }
 
