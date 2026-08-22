@@ -141,12 +141,15 @@
   const app = initializeApp(FIREBASE_CONFIG);
   const db  = getFirestore(app);
 
-  const OPTIONS = [
-    { value: 'saturday',    label: 'Saturday',      icon: '📅' },
-    { value: 'sunday',      label: 'Sunday',         icon: '📅' },
-    { value: 'both',        label: 'Both days',      icon: '🙌' },
-    { value: 'unavailable', label: 'Not Available',  icon: '❌' },
-  ];
+  function getUpcomingDates() {
+    const now = new Date();
+    const day = now.getDay();
+    const daysUntilSat = (6 - day + 7) % 7 || 7;
+    const sat = new Date(now); sat.setDate(now.getDate() + daysUntilSat);
+    const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
+    const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return { sat: fmt(sat), sun: fmt(sun) };
+  }
 
   function getWeekKey() {
     const now = new Date();
@@ -157,6 +160,13 @@
   }
 
   function showSuccess(name, vote, voteRef, weekKey) {
+    const { sat, sun } = getUpcomingDates();
+    const OPTIONS = [
+      { value: 'saturday',    label: 'Saturday, ' + sat,   icon: '📅' },
+      { value: 'sunday',      label: 'Sunday, ' + sun,     icon: '📅' },
+      { value: 'both',        label: 'Both days',           icon: '🙌' },
+      { value: 'unavailable', label: 'Not Available',       icon: '❌' },
+    ];
     const opt = OPTIONS.find(o => o.value === vote);
     document.getElementById('content').innerHTML = `
       <div class="success">
@@ -174,6 +184,13 @@
 
   function showVoteForm(name, voteRef, weekKey, currentVote) {
     let selected = currentVote || null;
+    const { sat, sun } = getUpcomingDates();
+    const OPTIONS = [
+      { value: 'saturday',    label: 'Saturday, ' + sat,   icon: '📅' },
+      { value: 'sunday',      label: 'Sunday, ' + sun,     icon: '📅' },
+      { value: 'both',        label: 'Both days',           icon: '🙌' },
+      { value: 'unavailable', label: 'Not Available',       icon: '❌' },
+    ];
 
     document.getElementById('content').innerHTML = `
       <div class="greeting">
