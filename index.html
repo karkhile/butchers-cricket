@@ -140,102 +140,22 @@
   const app = initializeApp(FIREBASE_CONFIG);
   const db  = getFirestore(app);
 
-  const params     = new URLSearchParams(window.location.search);
-  const playerName = params.get('player');
-  const content    = document.getElementById('content');
-
   const OPTIONS = [
-    { value: 'saturday',  label: 'Saturday',      icon: '📅', color: '#2ecc71' },
-    { value: 'sunday',    label: 'Sunday',         icon: '📅', color: '#3498db' },
-    { value: 'unavailable', label: 'Not Available', icon: '❌', color: '#e74c3c' },
+    { value: 'saturday',    label: 'Saturday',      icon: '📅' },
+    { value: 'sunday',      label: 'Sunday',         icon: '📅' },
+    { value: 'unavailable', label: 'Not Available',  icon: '❌' },
   ];
 
-  if (!playerName) {
-    content.innerHTML = `
-      <div class="unknown-player">
-        <div class="big">🤔</div>
-        <h2>Who are you?</h2>
-        <p>Please use the personal link shared in the WhatsApp group to vote.</p>
-      </div>`;
-    return;
-  }
-
-  // Check if already voted
-  const voteRef = doc(db, 'votes', playerName);
-  let existing;
-  try {
-    const snap = await getDoc(voteRef);
-    existing = snap.exists() ? snap.data() : null;
-  } catch(e) { existing = null; }
-
-  // Get current week key (Saturday-based)
   function getWeekKey() {
     const now = new Date();
-    const day = now.getDay(); // 0=Sun, 6=Sat
-    const diff = (day >= 6) ? 0 : day + 1; // days since last Saturday
+    const diff = (now.getDay() >= 6) ? 0 : now.getDay() + 1;
     const sat = new Date(now); sat.setDate(now.getDate() - diff);
     return sat.toISOString().slice(0, 10);
   }
-  const weekKey = getWeekKey();
-
-  if (existing && existing.week === weekKey) {
-    showSuccess(playerName, existing.vote);
-    return;
-  }
-
-  // Show voting UI
-  let selected = null;
-
-  content.innerHTML = `
-    <div class="greeting">
-      <h2>Hey ${playerName.split(' ')[0]}! 👋</h2>
-      <p>Can you play this weekend?</p>
-    </div>
-    <div class="question">Choose your availability:</div>
-    <div class="options" id="options"></div>
-    <button class="submit-btn" id="submitBtn" disabled>Submit Vote</button>
-    <div class="error-msg" id="errorMsg">Something went wrong. Please try again.</div>
-  `;
-
-  const optionsEl  = document.getElementById('options');
-  const submitBtn  = document.getElementById('submitBtn');
-  const errorMsg   = document.getElementById('errorMsg');
-
-  OPTIONS.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'option-btn';
-    btn.dataset.value = opt.value;
-    btn.innerHTML = `
-      <span class="icon">${opt.icon}</span>
-      <span class="label">${opt.label}</span>
-      <span class="check">✓</span>
-    `;
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      selected = opt.value;
-      submitBtn.disabled = false;
-    });
-    optionsEl.appendChild(btn);
-  });
-
-  submitBtn.addEventListener('click', async () => {
-    if (!selected) return;
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting...';
-    try {
-      await setDoc(voteRef, { player: playerName, vote: selected, week: weekKey, timestamp: Date.now() });
-      showSuccess(playerName, selected);
-    } catch(e) {
-      errorMsg.style.display = 'block';
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Submit Vote';
-    }
-  });
 
   function showSuccess(name, vote) {
     const opt = OPTIONS.find(o => o.value === vote);
-    content.innerHTML = `
+    document.getElementById('content').innerHTML = `
       <div class="success">
         <div class="big">${vote === 'unavailable' ? '😢' : '🎉'}</div>
         <h2>${vote === 'unavailable' ? 'Thanks for letting us know!' : "You're in!"}</h2>
@@ -243,12 +163,77 @@
           ? 'Hope to see you next week, ' + name.split(' ')[0] + '!'
           : 'See you on the field, ' + name.split(' ')[0] + '! 🏏'
         }</p>
-        <div class="vote-summary">
-          Your vote: <strong>${opt.icon} ${opt.label}</strong>
-        </div>
-      </div>
-    `;
+        <div class="vote-summary">Your vote: <strong>${opt.icon} ${opt.label}</strong></div>
+      </div>`;
   }
+
+  (async () => {
+    const params     = new URLSearchParams(window.location.search);
+    const playerName = params.get('player');
+    const content    = document.getElementById('content');
+
+    if (!playerName) {
+      content.innerHTML = `
+        <div class="unknown-player">
+          <div class="big">🤔</div>
+          <h2>Who are you?</h2>
+          <p>Please use the personal link shared in the WhatsApp group to vote.</p>
+        </div>`;
+      return;
+    }
+
+    const weekKey = getWeekKey();
+    const voteRef = doc(db, 'votes', playerName);
+
+    try {
+      const snap = await getDoc(voteRef);
+      if (snap.exists() && snap.data().week === weekKey) {
+        showSuccess(playerName, snap.data().vote);
+        return;
+      }
+    } catch(e) {}
+
+    let selected = null;
+
+    content.innerHTML = `
+      <div class="greeting">
+        <h2>Hey ${playerName.split(' ')[0]}! 👋</h2>
+        <p>Can you play this weekend?</p>
+      </div>
+      <div class="question">Choose your availability:</div>
+      <div class="options" id="options"></div>
+      <button class="submit-btn" id="submitBtn" disabled>Submit Vote</button>
+      <div class="error-msg" id="errorMsg">Something went wrong. Please try again.</div>
+    `;
+
+    OPTIONS.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.innerHTML = `<span class="icon">${opt.icon}</span><span class="label">${opt.label}</span><span class="check">✓</span>`;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selected = opt.value;
+        document.getElementById('submitBtn').disabled = false;
+      });
+      document.getElementById('options').appendChild(btn);
+    });
+
+    document.getElementById('submitBtn').addEventListener('click', async () => {
+      if (!selected) return;
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+      try {
+        await setDoc(voteRef, { player: playerName, vote: selected, week: weekKey, timestamp: Date.now() });
+        showSuccess(playerName, selected);
+      } catch(e) {
+        document.getElementById('errorMsg').style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Vote';
+      }
+    });
+  })();
 </script>
 </body>
 </html>
