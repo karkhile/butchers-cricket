@@ -13,6 +13,27 @@
       min-height: 100vh;
       padding: 20px;
       color: #333;
+
+    /* ── Login overlay ── */
+    #login-screen {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 20px;
+    }
+    .login-card {
+      background: white; border-radius: 20px; padding: 36px 28px;
+      max-width: 360px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .login-card .emoji { font-size: 48px; }
+    .login-card h2 { font-size: 20px; font-weight: 700; color: #0a3d1f; margin: 12px 0 4px; }
+    .login-card p { font-size: 13px; color: #888; margin-bottom: 24px; }
+    .login-card input {
+      width: 100%; padding: 14px 16px; border: 2px solid #e0e0e0; border-radius: 12px;
+      font-size: 16px; margin-bottom: 12px; outline: none;
+    }
+    .login-card input:focus { border-color: #0a3d1f; }
+    .login-card .err { color: #c0392b; font-size: 13px; margin-bottom: 8px; display: none; }
+    #main-content { display: none; }
     }
     h1 { color: white; font-size: 24px; margin-bottom: 4px; }
     .subtitle { color: #9ecfb0; font-size: 14px; margin-bottom: 24px; }
@@ -63,21 +84,44 @@
     .dot.pending  { background: #ccc; }
     .player-chip .str { margin-left: auto; font-size: 11px; color: #aaa; }
 
+    /* ── Teams tab ── */
     .teams-section { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); margin-bottom: 16px; }
-    .teams-section h2 { font-size: 16px; font-weight: 700; color: #0a3d1f; margin-bottom: 16px; }
-    .teams-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .team-col h3 { font-size: 14px; font-weight: 700; padding: 8px 12px; border-radius: 8px; margin-bottom: 8px; }
-    .team-col.a h3 { background: #0a3d1f; color: white; }
-    .team-col.b h3 { background: #1a5c8a; color: white; }
-    .team-player {
-      display: flex; align-items: center; gap: 8px;
-      padding: 7px 10px; background: #f9f9f9; border-radius: 7px;
-      font-size: 12px; margin-bottom: 5px; cursor: grab;
-    }
-    .team-player .num { color: #aaa; width: 16px; flex-shrink: 0; }
-    .team-player .str-badge { margin-left: auto; background: #e8f5e9; color: #2e7d32; font-size: 10px; padding: 2px 6px; border-radius: 10px; }
+    .teams-section h2 { font-size: 16px; font-weight: 700; color: #0a3d1f; margin-bottom: 12px; }
 
-    .action-bar { display: flex; gap: 12px; flex-wrap: wrap; }
+    .team-builder { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    @media (max-width: 700px) { .team-builder { grid-template-columns: 1fr; } }
+
+    .drop-zone {
+      border: 2px dashed #ccc;
+      border-radius: 12px;
+      padding: 10px;
+      min-height: 120px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .drop-zone.drag-over { background: #e8f5e9; border-color: #0a3d1f; }
+    .drop-zone h3 {
+      font-size: 13px; font-weight: 700; padding: 6px 10px;
+      border-radius: 8px; margin-bottom: 8px; text-align: center;
+    }
+    .drop-zone.pool h3  { background: #f0f0f0; color: #555; }
+    .drop-zone.team-a h3 { background: #0a3d1f; color: white; }
+    .drop-zone.team-b h3 { background: #1a5c8a; color: white; }
+
+    .draggable {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 10px; background: white; border: 1px solid #e0e0e0;
+      border-radius: 8px; font-size: 12px; margin-bottom: 5px;
+      cursor: grab; user-select: none; transition: box-shadow 0.1s;
+    }
+    .draggable:active { cursor: grabbing; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .draggable.dragging { opacity: 0.4; }
+    .draggable .str-badge { margin-left: auto; background: #e8f5e9; color: #2e7d32; font-size: 10px; padding: 2px 6px; border-radius: 10px; flex-shrink: 0; }
+    .draggable .day-badge { font-size: 10px; color: #aaa; }
+
+    .zone-count { font-size: 11px; color: #aaa; text-align: center; margin-top: 4px; }
+    .balance-info { font-size: 13px; color: #888; margin-bottom: 12px; }
+
+    .action-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
     .btn {
       padding: 14px 24px; border: none; border-radius: 12px;
       font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.15s;
@@ -87,6 +131,8 @@
     .btn-primary:hover { background: #0d5229; }
     .btn-secondary { background: white; color: #0a3d1f; border: 2px solid #0a3d1f; }
     .btn-secondary:hover { background: #f0faf4; }
+    .btn-warn { background: #e67e22; color: white; }
+    .btn-warn:hover { background: #d35400; }
     .btn:disabled { background: #ccc; color: #888; cursor: not-allowed; border-color: #ccc; }
 
     .date-input {
@@ -114,13 +160,27 @@
     .tab.active { background: white; color: #0a3d1f; }
 
     @media (max-width: 600px) {
-      .teams-grid { grid-template-columns: 1fr; }
       .action-bar { flex-direction: column; }
       .btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Login screen -->
+  <div id="login-screen">
+    <div class="login-card">
+      <div class="emoji">🏏</div>
+      <h2>Admin Panel</h2>
+      <p>Butchers Cricket Club</p>
+      <input type="password" id="pwInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkLogin()">
+      <div class="err" id="pwErr">Incorrect password</div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="checkLogin()">Login</button>
+    </div>
+  </div>
+
+  <!-- Main content (hidden until login) -->
+  <div id="main-content">
   <h1>🏏 Butchers Cricket</h1>
   <p class="subtitle" id="weekLabel">Loading...</p>
 
@@ -165,44 +225,84 @@
     </div>
 
     <div class="card" style="margin-bottom:16px">
-      <h2>⚙️ Generate Teams & Schedule</h2>
+      <h2>⚙️ Build Teams</h2>
       <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:12px">
         <input type="date" class="date-input" id="gameDate">
-        <button class="btn btn-secondary" onclick="autoBalance()" style="display:none">⚖️ Auto Balance</button>
+        <button class="btn btn-secondary" onclick="goToTeams()">👥 Build Teams →</button>
       </div>
-      <p style="font-size:13px;color:#888">Auto balance uses Saturday/Sunday voters based on winning day. Or switch to Teams tab to adjust manually.</p>
+      <p style="font-size:13px;color:#888">Select a date, then build teams manually or auto-balance.</p>
     </div>
   </div>
 
   <!-- Teams Tab -->
   <div id="tab-teams" style="display:none">
     <div class="teams-section">
-      <h2>👥 Team Preview <span id="balanceDiff" style="font-size:13px;color:#888;font-weight:400;margin-left:8px"></span></h2>
-      <div class="teams-grid">
-        <div class="team-col a">
-          <h3>Butchers-A</h3>
-          <div id="teamAList"></div>
+      <h2>👥 Build Teams</h2>
+      <div class="balance-info" id="balanceInfo">Drag players into each team, or use Auto Balance.</div>
+
+      <div class="team-builder">
+        <!-- Pool -->
+        <div class="drop-zone pool" id="zone-pool" ondragover="onDragOver(event)" ondrop="onDrop(event,'pool')" ondragleave="onDragLeave(event)">
+          <h3>Available Players</h3>
+          <div id="pool-list"></div>
+          <div class="zone-count" id="pool-count"></div>
         </div>
-        <div class="team-col b">
+        <!-- Butchers-A -->
+        <div class="drop-zone team-a" id="zone-a" ondragover="onDragOver(event)" ondrop="onDrop(event,'a')" ondragleave="onDragLeave(event)">
+          <h3>Butchers-A</h3>
+          <div id="team-a-list"></div>
+          <div class="zone-count" id="team-a-count"></div>
+        </div>
+        <!-- Butchers-B -->
+        <div class="drop-zone team-b" id="zone-b" ondragover="onDragOver(event)" ondrop="onDrop(event,'b')" ondragleave="onDragLeave(event)">
           <h3>Butchers-B</h3>
-          <div id="teamBList"></div>
+          <div id="team-b-list"></div>
+          <div class="zone-count" id="team-b-count"></div>
         </div>
       </div>
     </div>
 
     <div class="action-bar">
       <input type="date" class="date-input" id="gameDate2">
+      <button class="btn btn-secondary" onclick="autoBalance()">⚖️ Auto Balance</button>
+      <button class="btn btn-warn" onclick="resetTeams()">↺ Reset</button>
       <button class="btn btn-primary" id="createBtn" onclick="createTeamsAndSchedule()" disabled>
         🚀 Create Teams &amp; Schedule
       </button>
+    </div>
+    <div class="action-bar" style="margin-top:8px">
       <button class="btn btn-secondary" onclick="showTab('poll')">← Back to Poll</button>
     </div>
     <div class="log" id="log"></div>
-  </div>
+  </div><!-- end tab-teams -->
+  </div><!-- end main-content -->
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
   import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+
+  // ── LOGIN ────────────────────────────────────────────────────────────────────
+  const ADMIN_PASS = 'butchers2024';
+
+  window.checkLogin = function() {
+    const pw = document.getElementById('pwInput').value;
+    if (pw === ADMIN_PASS) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+      sessionStorage.setItem('bcc-admin', '1');
+    } else {
+      const err = document.getElementById('pwErr');
+      err.style.display = 'block';
+      document.getElementById('pwInput').value = '';
+      document.getElementById('pwInput').focus();
+    }
+  };
+
+  // Auto-login if already authenticated this session
+  if (sessionStorage.getItem('bcc-admin') === '1') {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+  }
 
   // ── CONFIG ──────────────────────────────────────────────────────────────────
   const FIREBASE_CONFIG = {
@@ -245,7 +345,6 @@
     return sat.toISOString().slice(0, 10);
   }
 
-  // CricClubs token generation (RSA encrypt using SubtleCrypto)
   async function makeCCToken() {
     const keyData = Uint8Array.from(atob(PUB_KEY_B64), c => c.charCodeAt(0));
     const key = await crypto.subtle.importKey('spki', keyData, { name: 'RSA-OAEP', hash: 'SHA-1' }, false, ['encrypt']);
@@ -280,9 +379,8 @@
   }
 
   // ── STATE ────────────────────────────────────────────────────────────────────
-  window._state = { votes: {}, roster: {}, strength: {}, teamA: [], teamB: [], weekKey: getWeekKey() };
+  window._state = { votes: {}, roster: {}, weekKey: getWeekKey(), pool: [], teamA: [], teamB: [] };
 
-  // ── FIREBASE ─────────────────────────────────────────────────────────────────
   const fbApp = initializeApp(FIREBASE_CONFIG);
   const db    = getFirestore(fbApp);
 
@@ -293,7 +391,7 @@
     return votes;
   }
 
-  // ── CRICCLUBS ROSTER (hardcoded to avoid CORS) ───────────────────────────────
+  // ── ROSTER ───────────────────────────────────────────────────────────────────
   const ROSTER = {
     'Abhishek Kumar Singh':             'F-4-1aQaOKGP_80zheL7-w',
     'Abhishek Lingwal':                 'r7wJQ8hLQCFcDhYEbM2hPg',
@@ -332,17 +430,7 @@
     'Yash Mehta':                       'zJYuV8VjO_Lw7YFmFPec6A',
   };
 
-  async function loadRoster() {
-    // Use hardcoded roster to avoid CORS issues
-    const map = {};
-    for (const [name, id] of Object.entries(ROSTER)) {
-      map[name] = { id, name };
-    }
-    return map;
-  }
-
   // ── STRENGTH ──────────────────────────────────────────────────────────────────
-  // Official CricClubs ranking total points (updated 2026-08-21)
   const STRENGTH = {
     'Anjan Kumar':                    4015,
     'Yash Mehta':                     3274,
@@ -381,6 +469,14 @@
     'Samir Savla':                      50,
   };
 
+  function getDays(v) {
+    if (v.days !== undefined) return v.days;
+    if (v.vote === 'both') return ['saturday', 'sunday'];
+    if (v.vote === 'unavailable') return [];
+    if (v.vote) return [v.vote];
+    return [];
+  }
+
   function snakeDraft(players) {
     const sorted = [...players].sort((a, b) => b.strength - a.strength);
     const teamA = [], teamB = [];
@@ -391,16 +487,85 @@
     return { teamA, teamB };
   }
 
-  // ── RENDER ────────────────────────────────────────────────────────────────────
-  function getDays(v) {
-    // New format: days array. Old format: vote string.
-    if (v.days !== undefined) return v.days;
-    if (v.vote === 'both') return ['saturday', 'sunday'];
-    if (v.vote === 'unavailable') return [];
-    if (v.vote) return [v.vote];
-    return [];
+  // ── DRAG & DROP ───────────────────────────────────────────────────────────────
+  let dragName = null;
+
+  function makeDraggable(p) {
+    const el = document.createElement('div');
+    el.className = 'draggable';
+    el.draggable = true;
+    el.dataset.name = p.name;
+    const dayIcon = p.days && p.days.includes('saturday') && p.days.includes('sunday') ? '📅📅'
+                  : p.days && p.days.includes('saturday') ? '📅'
+                  : p.days && p.days.includes('sunday') ? '🌅' : '';
+    el.innerHTML = `<span style="flex:1">${p.name}</span><span class="day-badge">${dayIcon}</span><span class="str-badge">${p.strength}</span>`;
+    el.addEventListener('dragstart', () => { dragName = p.name; el.classList.add('dragging'); });
+    el.addEventListener('dragend', () => el.classList.remove('dragging'));
+    // tap to cycle on mobile
+    el.addEventListener('click', () => cyclePlayer(p.name));
+    return el;
   }
 
+  function cyclePlayer(name) {
+    const { pool, teamA, teamB } = window._state;
+    if (pool.find(p => p.name === name)) {
+      movePlayer(name, 'pool', 'a');
+    } else if (teamA.find(p => p.name === name)) {
+      movePlayer(name, 'a', 'b');
+    } else {
+      movePlayer(name, 'b', 'pool');
+    }
+  }
+
+  function movePlayer(name, from, to) {
+    const s = window._state;
+    const lists = { pool: s.pool, a: s.teamA, b: s.teamB };
+    const idx = lists[from].findIndex(p => p.name === name);
+    if (idx === -1) return;
+    const [p] = lists[from].splice(idx, 1);
+    lists[to].push(p);
+    renderTeamBuilder();
+  }
+
+  window.onDragOver = function(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('drag-over');
+  };
+  window.onDragLeave = function(e) {
+    e.currentTarget.classList.remove('drag-over');
+  };
+  window.onDrop = function(e, zone) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
+    if (!dragName) return;
+    const from = window._state.teamA.find(p => p.name === dragName) ? 'a'
+               : window._state.teamB.find(p => p.name === dragName) ? 'b' : 'pool';
+    if (from !== zone) movePlayer(dragName, from, zone);
+    dragName = null;
+  };
+
+  function renderTeamBuilder() {
+    const { pool, teamA, teamB } = window._state;
+    const render = (list, listId, countId) => {
+      const el = document.getElementById(listId);
+      el.innerHTML = '';
+      list.forEach(p => el.appendChild(makeDraggable(p)));
+      document.getElementById(countId).textContent = list.length + ' player' + (list.length !== 1 ? 's' : '');
+    };
+    render(pool,  'pool-list',   'pool-count');
+    render(teamA, 'team-a-list', 'team-a-count');
+    render(teamB, 'team-b-list', 'team-b-count');
+
+    const sumA = teamA.reduce((s, p) => s + p.strength, 0);
+    const sumB = teamB.reduce((s, p) => s + p.strength, 0);
+    document.getElementById('balanceInfo').textContent =
+      teamA.length || teamB.length
+        ? `Butchers-A: ${teamA.length} players (${sumA} pts)  •  Butchers-B: ${teamB.length} players (${sumB} pts)  •  diff: ${Math.abs(sumA - sumB)}`
+        : 'Drag players into each team, or use Auto Balance.';
+    document.getElementById('createBtn').disabled = (teamA.length === 0 || teamB.length === 0);
+  }
+
+  // ── POLL RENDER ───────────────────────────────────────────────────────────────
   function renderPoll(votes, roster) {
     const weekKey = window._state.weekKey;
     const thisWeek = Object.entries(votes).filter(([, v]) => v.week === weekKey);
@@ -414,13 +579,12 @@
 
     const total = Object.keys(roster).length;
     const voted = thisWeek.length;
-    const pending = total - voted;
 
     document.getElementById('countSat').textContent     = counts.saturday;
     document.getElementById('countSun').textContent     = counts.sunday;
     document.getElementById('countBoth').textContent    = thisWeek.filter(([, v]) => { const d = getDays(v); return d.includes('saturday') && d.includes('sunday'); }).length;
     document.getElementById('countNA').textContent      = counts.unavailable;
-    document.getElementById('countPending').textContent = pending;
+    document.getElementById('countPending').textContent = total - voted;
     document.getElementById('responseBar').style.width  = Math.round(voted / total * 100) + '%';
 
     const winner = counts.saturday >= counts.sunday ? 'saturday' : 'sunday';
@@ -435,7 +599,6 @@
       document.getElementById('gameDate2').value = nextDay;
     } else { winnerEl.innerHTML = ''; }
 
-    // Player list
     const voteMap = {};
     thisWeek.forEach(([name, v]) => { voteMap[name] = getDays(v); });
 
@@ -443,19 +606,13 @@
     const listEl = document.getElementById('playerList');
     listEl.innerHTML = allPlayers.map(name => {
       const days = voteMap[name];
-      const str  = STRENGTH[name] ? '[' + STRENGTH[name] + ']' : '';
-      let chipClass, dotClass, icon, label;
-      if (!days) {
-        chipClass = 'pending'; dotClass = 'pending'; icon = '⏳'; label = '';
-      } else if (days.length === 0) {
-        chipClass = 'unavailable'; dotClass = 'unavailable'; icon = '❌'; label = '';
-      } else if (days.includes('saturday') && days.includes('sunday')) {
-        chipClass = 'saturday'; dotClass = 'saturday'; icon = '📅📅'; label = '';
-      } else if (days.includes('saturday')) {
-        chipClass = 'saturday'; dotClass = 'saturday'; icon = '📅'; label = '';
-      } else {
-        chipClass = 'sunday'; dotClass = 'sunday'; icon = '📅'; label = '';
-      }
+      let chipClass, dotClass, icon;
+      if (!days)                                              { chipClass = 'pending';     dotClass = 'pending';     icon = '⏳'; }
+      else if (days.length === 0)                             { chipClass = 'unavailable'; dotClass = 'unavailable'; icon = '❌'; }
+      else if (days.includes('saturday') && days.includes('sunday')) { chipClass = 'saturday'; dotClass = 'saturday'; icon = '📅📅'; }
+      else if (days.includes('saturday'))                     { chipClass = 'saturday';    dotClass = 'saturday';    icon = '📅'; }
+      else                                                    { chipClass = 'sunday';      dotClass = 'sunday';      icon = '📅'; }
+      const str = STRENGTH[name] ? '[' + STRENGTH[name] + ']' : '';
       return `<div class="player-chip ${chipClass}">
         <div class="dot ${dotClass}"></div>
         <span>${name}</span>
@@ -464,49 +621,48 @@
       </div>`;
     }).join('');
 
+    // Build pool from available players (winning day voters)
+    window._state._winner = winner;
+    window._state._voteMap = voteMap;
+
     return { winner, counts, voteMap };
   }
 
-  function renderTeams(teamA, teamB) {
-    const render = (list, elId) => {
-      document.getElementById(elId).innerHTML = list.map((p, i) =>
-        `<div class="team-player">
-          <span class="num">${i+1}</span>
-          <span>${p.name}</span>
-          <span class="str-badge">${p.strength}</span>
-        </div>`
-      ).join('');
-    };
-    render(teamA, 'teamAList');
-    render(teamB, 'teamBList');
-    const sumA = teamA.reduce((s, p) => s + p.strength, 0);
-    const sumB = teamB.reduce((s, p) => s + p.strength, 0);
-    document.getElementById('balanceDiff').textContent =
-      'A:' + sumA + '  B:' + sumB + '  diff:' + Math.abs(sumA - sumB);
-    document.getElementById('createBtn').disabled = false;
-    window._state.teamA = teamA;
-    window._state.teamB = teamB;
-  }
+  // ── GO TO TEAMS ───────────────────────────────────────────────────────────────
+  window.goToTeams = function() {
+    const date = document.getElementById('gameDate').value;
+    if (date) document.getElementById('gameDate2').value = date;
+    const { roster, _winner, _voteMap } = window._state;
+    // Populate pool with available players for winning day
+    const available = Object.keys(roster)
+      .filter(name => _voteMap[name] && _voteMap[name].includes(_winner))
+      .map(name => ({ name, id: roster[name].id, strength: STRENGTH[name] || 50, days: _voteMap[name] }));
+    window._state.pool  = available;
+    window._state.teamA = [];
+    window._state.teamB = [];
+    renderTeamBuilder();
+    showTab('teams');
+  };
 
   // ── AUTO BALANCE ──────────────────────────────────────────────────────────────
   window.autoBalance = function() {
-    const { votes, roster, weekKey } = window._state;
-    const thisWeek = Object.entries(votes).filter(([, v]) => v.week === weekKey);
-    const counts = { saturday: 0, sunday: 0 };
-    thisWeek.forEach(([, v]) => {
-      const days = getDays(v);
-      if (days.includes('saturday')) counts.saturday++;
-      if (days.includes('sunday')) counts.sunday++;
-    });
-    const winner = counts.saturday >= counts.sunday ? 'saturday' : 'sunday';
-    const available = thisWeek.filter(([, v]) => getDays(v).includes(winner)).map(([name]) => name);
-    const players = available
-      .filter(name => roster[name])
-      .map(name => ({ name, id: roster[name].id, strength: STRENGTH[name] || 50 }));
-    if (players.length < 4) { alert('Not enough players voted for ' + winner + ' yet!'); return; }
-    const { teamA, teamB } = snakeDraft(players);
-    renderTeams(teamA, teamB);
-    showTab('teams');
+    const { pool, teamA, teamB } = window._state;
+    const all = [...pool, ...teamA, ...teamB];
+    if (all.length < 4) { alert('Not enough players. Go back to Poll tab first.'); return; }
+    const { teamA: newA, teamB: newB } = snakeDraft(all);
+    window._state.pool  = [];
+    window._state.teamA = newA;
+    window._state.teamB = newB;
+    renderTeamBuilder();
+  };
+
+  // ── RESET ─────────────────────────────────────────────────────────────────────
+  window.resetTeams = function() {
+    const { teamA, teamB } = window._state;
+    window._state.pool  = [...teamA, ...teamB, ...window._state.pool];
+    window._state.teamA = [];
+    window._state.teamB = [];
+    renderTeamBuilder();
   };
 
   // ── CREATE TEAMS & SCHEDULE ───────────────────────────────────────────────────
@@ -514,13 +670,12 @@
     const date = document.getElementById('gameDate2').value;
     if (!date) { alert('Please select a date.'); return; }
     const { teamA, teamB } = window._state;
-    if (!teamA.length) { alert('Please auto-balance teams first.'); return; }
+    if (!teamA.length || !teamB.length) { alert('Both teams need at least one player.'); return; }
 
     document.getElementById('createBtn').disabled = true;
     const logEl = document.getElementById('log');
     logEl.classList.add('visible');
     logEl.innerHTML = '';
-
     const log = (msg, type = 'info') => {
       logEl.innerHTML += `<div class="line ${type}">${msg}</div>`;
       logEl.scrollTop = logEl.scrollHeight;
@@ -540,13 +695,13 @@
       const rosterA = teamA.map(p => p.id);
       if (teamA.length < 11) rosterA.push(DUMMY_A);
       const rA = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_A + '/players', { players: rosterA, lang: 'en' });
-      log(rA.status === 'Success' ? '✓ Butchers-A assigned (' + rosterA.length + ' incl. ' + (teamA.length < 11 ? 'DummyA' : 'no dummy') + ')' : '✗ ' + JSON.stringify(rA).slice(0,100), rA.status === 'Success' ? 'success' : 'error');
+      log(rA.status === 'Success' ? '✓ Butchers-A: ' + rosterA.length + ' players' + (teamA.length < 11 ? ' + DummyA' : '') : '✗ ' + JSON.stringify(rA).slice(0,100), rA.status === 'Success' ? 'success' : 'error');
 
       log('Assigning Butchers-B (' + teamB.length + ' players)...');
       const rosterB = teamB.map(p => p.id);
       if (teamB.length < 11) rosterB.push(DUMMY_B);
       const rB = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: rosterB, lang: 'en' });
-      log(rB.status === 'Success' ? '✓ Butchers-B assigned (' + rosterB.length + ' incl. ' + (teamB.length < 11 ? 'DummyB' : 'no dummy') + ')' : '✗ ' + JSON.stringify(rB).slice(0,100), rB.status === 'Success' ? 'success' : 'error');
+      log(rB.status === 'Success' ? '✓ Butchers-B: ' + rosterB.length + ' players' + (teamB.length < 11 ? ' + DummyB' : '') : '✗ ' + JSON.stringify(rB).slice(0,100), rB.status === 'Success' ? 'success' : 'error');
 
       for (const time of ['7:30 AM', '9:30 AM']) {
         log('Creating fixture at ' + time + '...');
@@ -556,7 +711,7 @@
           groundId: GROUND_ID, publicNotes: '', privateNotes: '',
           sendNotifications: 0, matchManager: '', seriesId: SERIES_ID, divisionId: '', forceProceed: 0,
         });
-        log(r.status === 'Success' ? '✓ Fixture created: ' + time : '✗ ' + JSON.stringify(r).slice(0,100), r.status === 'Success' ? 'success' : 'error');
+        log(r.status === 'Success' ? '✓ Fixture: ' + time : '✗ ' + JSON.stringify(r).slice(0,100), r.status === 'Success' ? 'success' : 'error');
       }
 
       log('🎉 All done! Check admin.cricclubs.com', 'success');
@@ -577,7 +732,13 @@
   const weekKey = getWeekKey();
   document.getElementById('weekLabel').textContent = 'Week of ' + weekKey + '  •  Admin Panel';
 
-  const [votes, roster] = await Promise.all([loadVotes(), loadRoster()]);
+  const snap = await getDocs(collection(db, 'votes'));
+  const votes = {};
+  snap.forEach(d => { votes[d.id] = d.data(); });
+
+  const roster = {};
+  for (const [name, id] of Object.entries(ROSTER)) roster[name] = { id, name };
+
   window._state.votes  = votes;
   window._state.roster = roster;
   renderPoll(votes, roster);
