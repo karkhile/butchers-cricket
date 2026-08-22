@@ -104,15 +104,13 @@
       text-align: left;
     }
     .dashboard h3 { font-size: 13px; font-weight: 700; color: #0a3d1f; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .dash-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .dash-row:last-child { margin-bottom: 0; }
-    .dash-label { font-size: 13px; color: #555; width: 110px; flex-shrink: 0; }
-    .dash-bar-wrap { flex: 1; background: #e0e0e0; border-radius: 4px; height: 8px; }
-    .dash-bar { height: 8px; border-radius: 4px; transition: width 0.4s; }
-    .dash-bar.sat { background: #2ecc71; }
-    .dash-bar.sun { background: #3498db; }
-    .dash-bar.na  { background: #e74c3c; }
-    .dash-count { font-size: 13px; font-weight: 700; color: #333; width: 24px; text-align: right; }
+
+    .dash-group { margin-bottom: 14px; }
+    .dash-group:last-child { margin-bottom: 0; }
+    .dash-group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: #444; }
+    .dash-group-count { background: #0a3d1f; color: white; border-radius: 10px; padding: 1px 8px; font-size: 12px; }
+    .player-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .player-pill { background: white; border: 1.5px solid #d0e8d8; border-radius: 20px; padding: 4px 10px; font-size: 12px; color: #0a3d1f; font-weight: 500; }
 
     .error-msg {
       background: #fff0f0;
@@ -220,35 +218,36 @@
     // Fetch all votes and render live dashboard
     try {
       const snap = await getDocs(collection(db, 'votes'));
-      const counts = { saturday: 0, sunday: 0, unavailable: 0 };
+      const groups = { saturday: [], sunday: [], unavailable: [] };
       let total = 0;
       snap.forEach(d => {
         const v = d.data();
         if (v.week !== weekKey) return;
         total++;
         const vdays = getDays(v);
-        if (vdays.length === 0) counts.unavailable++;
-        if (vdays.includes('saturday')) counts.saturday++;
-        if (vdays.includes('sunday')) counts.sunday++;
+        const firstName = (v.player || d.id).split(' ')[0];
+        if (vdays.length === 0) groups.unavailable.push(firstName);
+        if (vdays.includes('saturday')) groups.saturday.push(firstName);
+        if (vdays.includes('sunday'))   groups.sunday.push(firstName);
       });
-      const max = Math.max(counts.saturday, counts.sunday, counts.unavailable, 1);
+
+      const renderGroup = (label, icon, names, barClass) => {
+        const pills = names.map(n => `<span class="player-pill">${n}</span>`).join('');
+        return `
+          <div class="dash-group">
+            <div class="dash-group-header">
+              <span>${icon} ${label}</span>
+              <span class="dash-group-count">${names.length}</span>
+            </div>
+            <div class="player-pills">${pills || '<span style="color:#aaa;font-size:12px">No responses yet</span>'}</div>
+          </div>`;
+      };
+
       document.getElementById('dashboard').innerHTML = `
-        <h3>📊 This week's votes (${total} responded)</h3>
-        <div class="dash-row">
-          <span class="dash-label">📅 Sat, ${sat}</span>
-          <div class="dash-bar-wrap"><div class="dash-bar sat" style="width:${Math.round(counts.saturday/max*100)}%"></div></div>
-          <span class="dash-count">${counts.saturday}</span>
-        </div>
-        <div class="dash-row">
-          <span class="dash-label">📅 Sun, ${sun}</span>
-          <div class="dash-bar-wrap"><div class="dash-bar sun" style="width:${Math.round(counts.sunday/max*100)}%"></div></div>
-          <span class="dash-count">${counts.sunday}</span>
-        </div>
-        <div class="dash-row">
-          <span class="dash-label">❌ Not Available</span>
-          <div class="dash-bar-wrap"><div class="dash-bar na" style="width:${Math.round(counts.unavailable/max*100)}%"></div></div>
-          <span class="dash-count">${counts.unavailable}</span>
-        </div>`;
+        <h3>📊 Who's playing this week? (${total} responded)</h3>
+        ${renderGroup('Saturday, ' + sat, '📅', groups.saturday, 'sat')}
+        ${renderGroup('Sunday, '   + sun, '📅', groups.sunday,   'sun')}
+        ${renderGroup('Not Available',    '❌', groups.unavailable, 'na')}`;
     } catch(e) {
       document.getElementById('dashboard').innerHTML = '';
     }
