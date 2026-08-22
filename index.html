@@ -24,10 +24,7 @@
       width: 100%;
       box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
-    .logo {
-      text-align: center;
-      margin-bottom: 24px;
-    }
+    .logo { text-align: center; margin-bottom: 24px; }
     .logo .emoji { font-size: 48px; }
     .logo h1 { font-size: 22px; font-weight: 700; color: #0a3d1f; margin-top: 8px; }
     .logo p { font-size: 14px; color: #666; margin-top: 4px; }
@@ -42,7 +39,8 @@
     .greeting h2 { font-size: 18px; color: #0a3d1f; font-weight: 600; }
     .greeting p { font-size: 13px; color: #555; margin-top: 4px; }
 
-    .question { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 14px; }
+    .question { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 6px; }
+    .hint { font-size: 12px; color: #888; margin-bottom: 14px; }
 
     .options { display: flex; flex-direction: column; gap: 12px; }
     .option-btn {
@@ -62,6 +60,7 @@
     }
     .option-btn:hover { border-color: #0a3d1f; background: #f0faf4; }
     .option-btn.selected { border-color: #0a3d1f; background: #0a3d1f; color: white; }
+    .option-btn.unavailable-btn.selected { border-color: #c0392b; background: #c0392b; }
     .option-btn .icon { font-size: 24px; }
     .option-btn .label { flex: 1; }
     .option-btn .check { font-size: 18px; opacity: 0; }
@@ -83,10 +82,7 @@
     .submit-btn:hover { background: #0d5229; }
     .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-    .success {
-      text-align: center;
-      padding: 20px 0;
-    }
+    .success { text-align: center; padding: 20px 0; }
     .success .big { font-size: 56px; }
     .success h2 { font-size: 22px; font-weight: 700; color: #0a3d1f; margin-top: 12px; }
     .success p { font-size: 14px; color: #666; margin-top: 8px; line-height: 1.5; }
@@ -97,6 +93,7 @@
       padding: 12px 16px;
       font-size: 14px;
       color: #333;
+      line-height: 1.8;
     }
 
     .error-msg {
@@ -109,10 +106,7 @@
       display: none;
     }
 
-    .unknown-player {
-      text-align: center;
-      padding: 20px 0;
-    }
+    .unknown-player { text-align: center; padding: 20px 0; }
     .unknown-player .big { font-size: 48px; }
     .unknown-player h2 { font-size: 20px; font-weight: 700; color: #333; margin-top: 12px; }
     .unknown-player p { font-size: 14px; color: #666; margin-top: 8px; line-height: 1.5; }
@@ -143,8 +137,7 @@
 
   function getUpcomingDates() {
     const now = new Date();
-    const day = now.getDay();
-    const daysUntilSat = (6 - day + 7) % 7 || 7;
+    const daysUntilSat = (6 - now.getDay() + 7) % 7 || 7;
     const sat = new Date(now); sat.setDate(now.getDate() + daysUntilSat);
     const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
     const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -153,77 +146,109 @@
 
   function getWeekKey() {
     const now = new Date();
-    const day = now.getDay(); // 0=Sun, 6=Sat
-    const daysUntilSat = (6 - day + 7) % 7 || 7; // always next Saturday
+    const daysUntilSat = (6 - now.getDay() + 7) % 7 || 7;
     const sat = new Date(now); sat.setDate(now.getDate() + daysUntilSat);
     return sat.toISOString().slice(0, 10);
   }
 
-  function showSuccess(name, vote, voteRef, weekKey) {
+  function formatVoteSummary(days, sat, sun) {
+    if (!days || days.length === 0) return '❌ Not Available';
+    return days.map(d => d === 'saturday' ? '📅 Saturday, ' + sat : '📅 Sunday, ' + sun).join('<br>');
+  }
+
+  function showSuccess(name, days, voteRef, weekKey) {
     const { sat, sun } = getUpcomingDates();
-    const OPTIONS = [
-      { value: 'saturday',    label: 'Saturday, ' + sat,   icon: '📅' },
-      { value: 'sunday',      label: 'Sunday, ' + sun,     icon: '📅' },
-      { value: 'both',        label: 'Both days',           icon: '🙌' },
-      { value: 'unavailable', label: 'Not Available',       icon: '❌' },
-    ];
-    const opt = OPTIONS.find(o => o.value === vote);
+    const unavailable = !days || days.length === 0;
     document.getElementById('content').innerHTML = `
       <div class="success">
-        <div class="big">${vote === 'unavailable' ? '😢' : '🎉'}</div>
-        <h2>${vote === 'unavailable' ? 'Thanks for letting us know!' : "You're in!"}</h2>
-        <p>${vote === 'unavailable'
+        <div class="big">${unavailable ? '😢' : '🎉'}</div>
+        <h2>${unavailable ? 'Thanks for letting us know!' : "You're in!"}</h2>
+        <p>${unavailable
           ? 'Hope to see you next week, ' + name.split(' ')[0] + '!'
           : 'See you on the field, ' + name.split(' ')[0] + '! 🏏'
         }</p>
-        <div class="vote-summary">Your vote: <strong>${opt.icon} ${opt.label}</strong></div>
+        <div class="vote-summary">Your availability:<br><strong>${formatVoteSummary(days, sat, sun)}</strong></div>
         <button class="submit-btn" id="changeBtn" style="margin-top:16px;background:#666;font-size:14px;padding:12px">✏️ Change my vote</button>
       </div>`;
-    document.getElementById('changeBtn').addEventListener('click', () => showVoteForm(name, voteRef, weekKey, vote));
+    document.getElementById('changeBtn').addEventListener('click', () => showVoteForm(name, voteRef, weekKey, days));
   }
 
-  function showVoteForm(name, voteRef, weekKey, currentVote) {
-    let selected = currentVote || null;
+  function showVoteForm(name, voteRef, weekKey, currentDays) {
     const { sat, sun } = getUpcomingDates();
-    const OPTIONS = [
-      { value: 'saturday',    label: 'Saturday, ' + sat,   icon: '📅' },
-      { value: 'sunday',      label: 'Sunday, ' + sun,     icon: '📅' },
-      { value: 'both',        label: 'Both days',           icon: '🙌' },
-      { value: 'unavailable', label: 'Not Available',       icon: '❌' },
-    ];
+    // selected is a Set of 'saturday'/'sunday', or empty = unavailable
+    const selected = new Set(currentDays && currentDays.length ? currentDays : []);
+    let unavailable = !currentDays || currentDays.length === 0;
+    if (currentDays === null) unavailable = false; // fresh vote — nothing pre-selected
 
     document.getElementById('content').innerHTML = `
       <div class="greeting">
         <h2>Hey ${name.split(' ')[0]}! 👋</h2>
         <p>Can you play this weekend?</p>
       </div>
-      <div class="question">Choose your availability:</div>
+      <div class="question">Select the days you can play:</div>
+      <div class="hint">You can select both days</div>
       <div class="options" id="options"></div>
-      <button class="submit-btn" id="submitBtn" ${selected ? '' : 'disabled'}>Submit Vote</button>
+      <button class="submit-btn" id="submitBtn" disabled>Submit Vote</button>
       <div class="error-msg" id="errorMsg">Something went wrong. Please try again.</div>
     `;
 
-    OPTIONS.forEach(opt => {
+    const days = [
+      { value: 'saturday', label: 'Saturday, ' + sat, icon: '📅' },
+      { value: 'sunday',   label: 'Sunday, '   + sun, icon: '📅' },
+    ];
+
+    const updateSubmit = () => {
+      document.getElementById('submitBtn').disabled = (!unavailable && selected.size === 0);
+    };
+
+    days.forEach(opt => {
       const btn = document.createElement('button');
-      btn.className = 'option-btn' + (opt.value === selected ? ' selected' : '');
+      btn.className = 'option-btn' + (selected.has(opt.value) ? ' selected' : '');
+      btn.dataset.value = opt.value;
       btn.innerHTML = `<span class="icon">${opt.icon}</span><span class="label">${opt.label}</span><span class="check">✓</span>`;
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-        selected = opt.value;
-        document.getElementById('submitBtn').disabled = false;
+        if (selected.has(opt.value)) {
+          selected.delete(opt.value);
+          btn.classList.remove('selected');
+        } else {
+          selected.add(opt.value);
+          btn.classList.add('selected');
+          unavailable = false;
+          naBtn.classList.remove('selected');
+        }
+        updateSubmit();
       });
       document.getElementById('options').appendChild(btn);
     });
 
+    // Not Available button
+    const naBtn = document.createElement('button');
+    naBtn.className = 'option-btn unavailable-btn' + (unavailable ? ' selected' : '');
+    naBtn.innerHTML = `<span class="icon">❌</span><span class="label">Not Available</span><span class="check">✓</span>`;
+    naBtn.addEventListener('click', () => {
+      unavailable = !unavailable;
+      if (unavailable) {
+        selected.clear();
+        document.querySelectorAll('.option-btn:not(.unavailable-btn)').forEach(b => b.classList.remove('selected'));
+        naBtn.classList.add('selected');
+      } else {
+        naBtn.classList.remove('selected');
+      }
+      updateSubmit();
+    });
+    document.getElementById('options').appendChild(naBtn);
+
+    // pre-set submit state
+    if (currentDays !== null) updateSubmit();
+
     document.getElementById('submitBtn').addEventListener('click', async () => {
-      if (!selected) return;
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
       submitBtn.textContent = 'Submitting...';
+      const daysArr = unavailable ? [] : [...selected];
       try {
-        await setDoc(voteRef, { player: name, vote: selected, week: weekKey, timestamp: Date.now() });
-        showSuccess(name, selected, voteRef, weekKey);
+        await setDoc(voteRef, { player: name, days: daysArr, week: weekKey, timestamp: Date.now() });
+        showSuccess(name, daysArr, voteRef, weekKey);
       } catch(e) {
         document.getElementById('errorMsg').style.display = 'block';
         submitBtn.disabled = false;
@@ -253,7 +278,10 @@
     try {
       const snap = await getDoc(voteRef);
       if (snap.exists() && snap.data().week === weekKey) {
-        showSuccess(playerName, snap.data().vote, voteRef, weekKey);
+        const data = snap.data();
+        // support old single-value votes
+        const days = data.days !== undefined ? data.days : (data.vote && data.vote !== 'unavailable' ? [data.vote === 'both' ? ['saturday','sunday'] : data.vote].flat() : []);
+        showSuccess(playerName, days, voteRef, weekKey);
         return;
       }
     } catch(e) {}
