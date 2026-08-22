@@ -857,7 +857,7 @@
     const today = new Date();
     const todayISO = today.toISOString().slice(0, 10);
     const isMatchDay = pollData.satDate && pollData.satDate === todayISO;
-    const isAfterLastMatch = today.getHours() === 23 && today.getMinutes() >= 59;
+    const isAfterLastMatch = today.getHours() === 11 && today.getMinutes() >= 59;
 
     // Next Saturday from today
     const day = today.getDay();
