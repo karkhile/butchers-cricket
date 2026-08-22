@@ -848,19 +848,27 @@
   const weekKey = getWeekKey();
   document.getElementById('weekLabel').textContent = 'Week of ' + weekKey + '  •  Admin Panel';
 
-  // Load poll open/closed state — auto-reset on Monday if last week's poll is stale
+  // Load poll open/closed state — auto-reset after last match day (Sat or Sun) at 11:59 PM
   try {
     const pollSnap = await getDoc(doc(db, 'config', 'poll'));
     const pollData = pollSnap.exists() ? pollSnap.data() : {};
     const isOpen = !pollSnap.exists() || pollData.open !== false;
 
     const today = new Date();
-    const isMonday = today.getDay() === 1;
-    const nextSat = getWeekKey(); // upcoming Saturday ISO date
-    const pollIsStale = !pollData.satDate || pollData.satDate < nextSat;
+    const day = today.getDay(); // 0=Sun, 6=Sat
+    const isMatchDay = day === 6 || day === 0;
+    const isAfterLastMatch = today.getHours() === 23 && today.getMinutes() >= 59;
 
-    if (isMonday && pollIsStale) {
-      // Auto-reset: clear last week's votes and open for this coming Saturday
+    // Next Saturday after today
+    const daysUntilNextSat = day === 6 ? 7 : (6 - day);
+    const nextSatDate = new Date(today);
+    nextSatDate.setDate(today.getDate() + daysUntilNextSat);
+    const nextSat = nextSatDate.toISOString().slice(0, 10);
+
+    const pollIsStale = !pollData.satDate || pollData.satDate <= today.toISOString().slice(0, 10);
+
+    if (isMatchDay && isAfterLastMatch && pollIsStale) {
+      // Auto-reset: clear this week's votes and open for next Saturday
       const oldWeek = pollData.satDate;
       if (oldWeek) {
         const allVotes = await getDocs(collection(db, 'votes'));
@@ -873,7 +881,7 @@
       updatePollStatusUI(true, nextSat);
       document.getElementById('gameDate').value  = nextSat;
       document.getElementById('gameDate2').value = nextSat;
-      console.log('Auto-opened poll for', nextSat, '(Monday auto-reset)');
+      console.log('Auto-opened poll for', nextSat, '(post-match auto-reset)');
     } else {
       if (pollData.satDate) window._state.weekKey = pollData.satDate;
       updatePollStatusUI(isOpen, pollData.satDate || '');
