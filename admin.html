@@ -667,6 +667,13 @@
   };
 
   // ── CREATE TEAMS & SCHEDULE ───────────────────────────────────────────────────
+  async function proxyAvailable() {
+    try {
+      const r = await fetch('http://localhost:3131/ping', { signal: AbortSignal.timeout(1500) });
+      return r.ok;
+    } catch { return false; }
+  }
+
   window.createTeamsAndSchedule = async function() {
     const date = document.getElementById('gameDate2').value;
     if (!date) { alert('Please select a date.'); return; }
@@ -683,39 +690,32 @@
     };
 
     try {
-      log('Clearing existing rosters...');
-      const curA = await ccGet('series/' + SERIES_ID + '/team/' + TEAM_A + '/players?lang=en');
-      const curB = await ccGet('series/' + SERIES_ID + '/team/' + TEAM_B + '/players?lang=en');
-      const idsA = (curA.data?.players || []).map(p => p.id);
-      const idsB = (curB.data?.players || []).map(p => p.id);
-      if (idsA.length) await ccPut('league/' + LEAGUE_ID + '/team/' + TEAM_A + '/players', { lang: 'en', players: idsA });
-      if (idsB.length) await ccPut('league/' + LEAGUE_ID + '/team/' + TEAM_B + '/players', { lang: 'en', players: idsB });
-      log('✓ Rosters cleared', 'success');
+      const useProxy = await proxyAvailable();
 
-      log('Assigning Butchers-A (' + teamA.length + ' players)...');
-      const rosterA = teamA.map(p => p.id);
-      if (teamA.length < 11) rosterA.push(DUMMY_A);
-      const rA = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_A + '/players', { players: rosterA, lang: 'en' });
-      log(rA.status === 'Success' ? '✓ Butchers-A: ' + rosterA.length + ' players' + (teamA.length < 11 ? ' + DummyA' : '') : '✗ ' + JSON.stringify(rA).slice(0,100), rA.status === 'Success' ? 'success' : 'error');
-
-      log('Assigning Butchers-B (' + teamB.length + ' players)...');
-      const rosterB = teamB.map(p => p.id);
-      if (teamB.length < 11) rosterB.push(DUMMY_B);
-      const rB = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: rosterB, lang: 'en' });
-      log(rB.status === 'Success' ? '✓ Butchers-B: ' + rosterB.length + ' players' + (teamB.length < 11 ? ' + DummyB' : '') : '✗ ' + JSON.stringify(rB).slice(0,100), rB.status === 'Success' ? 'success' : 'error');
-
-      for (const time of ['7:30 AM', '9:30 AM']) {
-        log('Creating fixture at ' + time + '...');
-        const r = await ccPost('series/' + SERIES_ID + '/fixture', {
-          umpires: [], scorers: [], teamOneId: TEAM_A, teamTwoId: TEAM_B,
-          matchType: 'league', startDate: date, startTime: time,
-          groundId: GROUND_ID, publicNotes: '', privateNotes: '',
-          sendNotifications: 0, matchManager: '', seriesId: SERIES_ID, divisionId: '', forceProceed: 0,
+      if (useProxy) {
+        log('📡 Using local proxy (correct token signing)...', 'info');
+        const r = await fetch('http://localhost:3131/create', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ teamA, teamB, date }),
         });
-        log(r.status === 'Success' ? '✓ Fixture: ' + time : '✗ ' + JSON.stringify(r).slice(0,100), r.status === 'Success' ? 'success' : 'error');
+        const data = await r.json();
+        if (!r.ok) { log('✗ Proxy error: ' + (data.error || 'unknown'), 'error'); return; }
+
+        for (const step of data.results) {
+          if (step.step === 'clear')     log('✓ Rosters cleared', 'success');
+          if (step.step === 'assign-a')  log(step.status === 'Success' ? '✓ Butchers-A: ' + step.count + ' players' : '✗ Butchers-A failed', step.status === 'Success' ? 'success' : 'error');
+          if (step.step === 'assign-b')  log(step.status === 'Success' ? '✓ Butchers-B: ' + step.count + ' players' : '✗ Butchers-B failed', step.status === 'Success' ? 'success' : 'error');
+          if (step.step === 'fixture')   log(step.status === 'Success' ? '✓ Fixture: ' + step.time : '✗ Fixture ' + step.time + ' failed', step.status === 'Success' ? 'success' : 'error');
+        }
+        log('🎉 All done! Check admin.cricclubs.com', 'success');
+
+      } else {
+        log('⚠️  Local proxy not running. Start it with:', 'error');
+        log('   cd ~/IdeaProjects/Personal/butchers-cricket && node proxy.js', 'info');
+        log('Then click Create again.', 'info');
       }
 
-      log('🎉 All done! Check admin.cricclubs.com', 'success');
     } catch(e) {
       log('✗ Error: ' + e.message, 'error');
     }
