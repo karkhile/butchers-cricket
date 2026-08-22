@@ -153,20 +153,24 @@
   const app = initializeApp(FIREBASE_CONFIG);
   const db  = getFirestore(app);
 
-  function getUpcomingDates() {
+  function nextSaturday() {
     const now = new Date();
-    const daysUntilSat = (6 - now.getDay() + 7) % 7 || 7;
+    const day = now.getDay();
+    // Mon–Fri: next Saturday. Sat+Sun: Saturday of following week (poll is for next weekend)
+    const daysUntilSat = day === 0 ? 6 : day === 6 ? 7 : (6 - day);
     const sat = new Date(now); sat.setDate(now.getDate() + daysUntilSat);
+    return sat;
+  }
+
+  function getUpcomingDates() {
+    const sat = nextSaturday();
     const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
     const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     return { sat: fmt(sat), sun: fmt(sun) };
   }
 
   function getWeekKey() {
-    const now = new Date();
-    const daysUntilSat = (6 - now.getDay() + 7) % 7 || 7;
-    const sat = new Date(now); sat.setDate(now.getDate() + daysUntilSat);
-    return sat.toISOString().slice(0, 10);
+    return nextSaturday().toISOString().slice(0, 10);
   }
 
   function formatVoteSummary(days, sat, sun) {

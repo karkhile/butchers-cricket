@@ -224,20 +224,25 @@
 
   // ── HELPERS ─────────────────────────────────────────────────────────────────
 
-  function getWeekKey() {
+  function nextSaturday() {
     const now = new Date();
-    const day = now.getDay(); // 0=Sun, 6=Sat
-    const daysUntilSat = (6 - day + 7) % 7 || 7; // always next Saturday
+    const day = now.getDay();
+    const daysUntilSat = day === 0 ? 6 : day === 6 ? 7 : (6 - day);
     const sat = new Date(now); sat.setDate(now.getDate() + daysUntilSat);
-    return sat.toISOString().slice(0, 10);
+    return sat;
+  }
+
+  function getWeekKey() {
+    return nextSaturday().toISOString().slice(0, 10);
   }
 
   function getNextGameDay(preferredDay) {
-    const now = new Date();
-    const targetDay = preferredDay === 'sunday' ? 0 : 6;
-    let d = new Date(now);
-    d.setDate(d.getDate() + ((targetDay - d.getDay() + 7) % 7 || 7));
-    return d.toISOString().slice(0, 10);
+    const sat = nextSaturday();
+    if (preferredDay === 'sunday') {
+      const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
+      return sun.toISOString().slice(0, 10);
+    }
+    return sat.toISOString().slice(0, 10);
   }
 
   // CricClubs token generation (RSA encrypt using SubtleCrypto)
