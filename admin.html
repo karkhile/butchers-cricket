@@ -199,8 +199,8 @@
     <div class="card" style="margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <span style="font-size:13px;font-weight:600;color:#555;">Poll status:</span>
       <span id="pollStatusBadge" style="font-size:13px;font-weight:700;">...</span>
-      <input type="date" id="pollSatDate" class="date-input" style="font-size:13px;padding:7px 10px;" title="Select the Saturday for this poll">
-      <button class="btn btn-primary"   id="btnOpenPoll"  onclick="setPollOpen(true)"  style="padding:8px 14px;font-size:13px;">🔓 Open Poll</button>
+      <input type="date" id="pollSatDate" class="date-input" style="font-size:13px;padding:7px 10px;" title="Select the Saturday for this poll" onchange="document.getElementById('btnOpenPoll').disabled = !this.value;">
+      <button class="btn btn-primary" id="btnOpenPoll" onclick="setPollOpen(true)" style="padding:8px 14px;font-size:13px;" disabled>🔓 Open Poll</button>
       <button class="btn btn-secondary" id="btnClosePoll" onclick="setPollOpen(false)" style="padding:8px 14px;font-size:13px;">🔒 Close Poll</button>
       <button class="btn" id="btnResetPoll" onclick="resetPoll()" style="padding:8px 14px;font-size:13px;background:#c0392b;color:white;border:none;border-radius:8px;cursor:pointer;">🗑️ Reset Poll</button>
     </div>
@@ -795,9 +795,10 @@
   // ── POLL CONTROLS ─────────────────────────────────────────────────────────────
   function updatePollStatusUI(isOpen, satDate) {
     document.getElementById('pollStatusBadge').textContent = isOpen ? '🟢 Open' : '🔴 Closed';
-    document.getElementById('btnOpenPoll').disabled  =  isOpen;
-    document.getElementById('btnClosePoll').disabled = !isOpen;
     if (satDate) document.getElementById('pollSatDate').value = satDate;
+    const hasSatDate = !!(satDate || document.getElementById('pollSatDate').value);
+    document.getElementById('btnOpenPoll').disabled  = isOpen || !hasSatDate;
+    document.getElementById('btnClosePoll').disabled = !isOpen;
   }
 
   window.setPollOpen = async function(open) {
