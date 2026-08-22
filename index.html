@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Butchers Cricket — Game Day Poll</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a3d1f;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 32px 24px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .logo .emoji { font-size: 48px; }
+    .logo h1 { font-size: 22px; font-weight: 700; color: #0a3d1f; margin-top: 8px; }
+    .logo p { font-size: 14px; color: #666; margin-top: 4px; }
+
+    .greeting {
+      background: #f0faf4;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .greeting h2 { font-size: 18px; color: #0a3d1f; font-weight: 600; }
+    .greeting p { font-size: 13px; color: #555; margin-top: 4px; }
+
+    .question { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 14px; }
+
+    .options { display: flex; flex-direction: column; gap: 12px; }
+    .option-btn {
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      background: white;
+      color: #333;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.15s;
+    }
+    .option-btn:hover { border-color: #0a3d1f; background: #f0faf4; }
+    .option-btn.selected { border-color: #0a3d1f; background: #0a3d1f; color: white; }
+    .option-btn .icon { font-size: 24px; }
+    .option-btn .label { flex: 1; }
+    .option-btn .check { font-size: 18px; opacity: 0; }
+    .option-btn.selected .check { opacity: 1; }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 16px;
+      background: #0a3d1f;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .submit-btn:hover { background: #0d5229; }
+    .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+    .success {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .success .big { font-size: 56px; }
+    .success h2 { font-size: 22px; font-weight: 700; color: #0a3d1f; margin-top: 12px; }
+    .success p { font-size: 14px; color: #666; margin-top: 8px; line-height: 1.5; }
+    .success .vote-summary {
+      margin-top: 16px;
+      background: #f0faf4;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .error-msg {
+      background: #fff0f0;
+      color: #c0392b;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .unknown-player {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .unknown-player .big { font-size: 48px; }
+    .unknown-player h2 { font-size: 20px; font-weight: 700; color: #333; margin-top: 12px; }
+    .unknown-player p { font-size: 14px; color: #666; margin-top: 8px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+<div class="card" id="app">
+  <div class="logo">
+    <div class="emoji">🏏</div>
+    <h1>Butchers Cricket</h1>
+    <p>Weekly Game Day Poll</p>
+  </div>
+  <div id="content">Loading...</div>
+</div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+  const FIREBASE_CONFIG = {
+    apiKey: "FIREBASE_API_KEY",
+    authDomain: "FIREBASE_AUTH_DOMAIN",
+    projectId: "FIREBASE_PROJECT_ID",
+  };
+
+  const app = initializeApp(FIREBASE_CONFIG);
+  const db  = getFirestore(app);
+
+  const params     = new URLSearchParams(window.location.search);
+  const playerName = params.get('player');
+  const content    = document.getElementById('content');
+
+  const OPTIONS = [
+    { value: 'saturday',  label: 'Saturday',      icon: '📅', color: '#2ecc71' },
+    { value: 'sunday',    label: 'Sunday',         icon: '📅', color: '#3498db' },
+    { value: 'unavailable', label: 'Not Available', icon: '❌', color: '#e74c3c' },
+  ];
+
+  if (!playerName) {
+    content.innerHTML = `
+      <div class="unknown-player">
+        <div class="big">🤔</div>
+        <h2>Who are you?</h2>
+        <p>Please use the personal link shared in the WhatsApp group to vote.</p>
+      </div>`;
+    return;
+  }
+
+  // Check if already voted
+  const voteRef = doc(db, 'votes', playerName);
+  let existing;
+  try {
+    const snap = await getDoc(voteRef);
+    existing = snap.exists() ? snap.data() : null;
+  } catch(e) { existing = null; }
+
+  // Get current week key (Saturday-based)
+  function getWeekKey() {
+    const now = new Date();
+    const day = now.getDay(); // 0=Sun, 6=Sat
+    const diff = (day >= 6) ? 0 : day + 1; // days since last Saturday
+    const sat = new Date(now); sat.setDate(now.getDate() - diff);
+    return sat.toISOString().slice(0, 10);
+  }
+  const weekKey = getWeekKey();
+
+  if (existing && existing.week === weekKey) {
+    showSuccess(playerName, existing.vote);
+    return;
+  }
+
+  // Show voting UI
+  let selected = null;
+
+  content.innerHTML = `
+    <div class="greeting">
+      <h2>Hey ${playerName.split(' ')[0]}! 👋</h2>
+      <p>Can you play this weekend?</p>
+    </div>
+    <div class="question">Choose your availability:</div>
+    <div class="options" id="options"></div>
+    <button class="submit-btn" id="submitBtn" disabled>Submit Vote</button>
+    <div class="error-msg" id="errorMsg">Something went wrong. Please try again.</div>
+  `;
+
+  const optionsEl  = document.getElementById('options');
+  const submitBtn  = document.getElementById('submitBtn');
+  const errorMsg   = document.getElementById('errorMsg');
+
+  OPTIONS.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.dataset.value = opt.value;
+    btn.innerHTML = `
+      <span class="icon">${opt.icon}</span>
+      <span class="label">${opt.label}</span>
+      <span class="check">✓</span>
+    `;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selected = opt.value;
+      submitBtn.disabled = false;
+    });
+    optionsEl.appendChild(btn);
+  });
+
+  submitBtn.addEventListener('click', async () => {
+    if (!selected) return;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+    try {
+      await setDoc(voteRef, { player: playerName, vote: selected, week: weekKey, timestamp: Date.now() });
+      showSuccess(playerName, selected);
+    } catch(e) {
+      errorMsg.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Vote';
+    }
+  });
+
+  function showSuccess(name, vote) {
+    const opt = OPTIONS.find(o => o.value === vote);
+    content.innerHTML = `
+      <div class="success">
+        <div class="big">${vote === 'unavailable' ? '😢' : '🎉'}</div>
+        <h2>${vote === 'unavailable' ? 'Thanks for letting us know!' : "You're in!"}</h2>
+        <p>${vote === 'unavailable'
+          ? 'Hope to see you next week, ' + name.split(' ')[0] + '!'
+          : 'See you on the field, ' + name.split(' ')[0] + '! 🏏'
+        }</p>
+        <div class="vote-summary">
+          Your vote: <strong>${opt.icon} ${opt.label}</strong>
+        </div>
+      </div>
+    `;
+  }
+</script>
+</body>
+</html>

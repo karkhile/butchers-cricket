@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Butchers Cricket — Admin</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a3d1f;
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+    h1 { color: white; font-size: 24px; margin-bottom: 4px; }
+    .subtitle { color: #9ecfb0; font-size: 14px; margin-bottom: 24px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 24px; }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .card h2 { font-size: 16px; font-weight: 700; color: #0a3d1f; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+
+    .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-label { font-size: 14px; color: #555; display: flex; align-items: center; gap: 8px; }
+    .stat-value { font-size: 18px; font-weight: 700; }
+    .stat-value.saturday { color: #2ecc71; }
+    .stat-value.sunday { color: #3498db; }
+    .stat-value.unavailable { color: #e74c3c; }
+    .stat-value.pending { color: #999; }
+
+    .winner-badge {
+      background: #fff8e1;
+      border: 2px solid #f39c12;
+      border-radius: 10px;
+      padding: 12px 16px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .winner-badge .day { font-size: 20px; font-weight: 700; color: #f39c12; }
+    .winner-badge .sub { font-size: 12px; color: #888; margin-top: 2px; }
+
+    .player-list { display: flex; flex-direction: column; gap: 6px; max-height: 300px; overflow-y: auto; }
+    .player-chip {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 12px; border-radius: 8px; font-size: 13px;
+    }
+    .player-chip.saturday { background: #f0fff4; }
+    .player-chip.sunday   { background: #eff6ff; }
+    .player-chip.unavailable { background: #fff0f0; }
+    .player-chip.pending  { background: #f9f9f9; color: #999; }
+    .player-chip .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dot.saturday { background: #2ecc71; }
+    .dot.sunday   { background: #3498db; }
+    .dot.unavailable { background: #e74c3c; }
+    .dot.pending  { background: #ccc; }
+    .player-chip .str { margin-left: auto; font-size: 11px; color: #aaa; }
+
+    .teams-section { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); margin-bottom: 16px; }
+    .teams-section h2 { font-size: 16px; font-weight: 700; color: #0a3d1f; margin-bottom: 16px; }
+    .teams-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .team-col h3 { font-size: 14px; font-weight: 700; padding: 8px 12px; border-radius: 8px; margin-bottom: 8px; }
+    .team-col.a h3 { background: #0a3d1f; color: white; }
+    .team-col.b h3 { background: #1a5c8a; color: white; }
+    .team-player {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 10px; background: #f9f9f9; border-radius: 7px;
+      font-size: 12px; margin-bottom: 5px; cursor: grab;
+    }
+    .team-player .num { color: #aaa; width: 16px; flex-shrink: 0; }
+    .team-player .str-badge { margin-left: auto; background: #e8f5e9; color: #2e7d32; font-size: 10px; padding: 2px 6px; border-radius: 10px; }
+
+    .action-bar { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      padding: 14px 24px; border: none; border-radius: 12px;
+      font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .btn-primary { background: #0a3d1f; color: white; }
+    .btn-primary:hover { background: #0d5229; }
+    .btn-secondary { background: white; color: #0a3d1f; border: 2px solid #0a3d1f; }
+    .btn-secondary:hover { background: #f0faf4; }
+    .btn:disabled { background: #ccc; color: #888; cursor: not-allowed; border-color: #ccc; }
+
+    .date-input {
+      padding: 14px 16px; border: 2px solid #e0e0e0; border-radius: 12px;
+      font-size: 15px; color: #333; background: white;
+    }
+
+    .log {
+      background: #1a1a1a; color: #00ff88; border-radius: 12px;
+      padding: 16px; font-family: monospace; font-size: 13px;
+      max-height: 200px; overflow-y: auto; margin-top: 12px;
+      display: none;
+    }
+    .log.visible { display: block; }
+    .log .line { margin-bottom: 4px; }
+    .log .line.error { color: #ff6b6b; }
+    .log .line.success { color: #00ff88; }
+    .log .line.info { color: #87ceeb; }
+
+    .strength-bar { height: 4px; background: #e0e0e0; border-radius: 2px; margin-top: 8px; }
+    .strength-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, #0a3d1f, #2ecc71); transition: width 0.5s; }
+
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tab { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: rgba(255,255,255,0.15); color: white; }
+    .tab.active { background: white; color: #0a3d1f; }
+
+    @media (max-width: 600px) {
+      .teams-grid { grid-template-columns: 1fr; }
+      .action-bar { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🏏 Butchers Cricket</h1>
+  <p class="subtitle" id="weekLabel">Loading...</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('poll')">📊 Poll</button>
+    <button class="tab" onclick="showTab('teams')">👥 Teams</button>
+  </div>
+
+  <!-- Poll Tab -->
+  <div id="tab-poll">
+    <div class="grid">
+      <div class="card">
+        <h2>📊 This Week's Votes</h2>
+        <div id="winnerBadge"></div>
+        <div class="stat-row">
+          <span class="stat-label">📅 Saturday</span>
+          <span class="stat-value saturday" id="countSat">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">📅 Sunday</span>
+          <span class="stat-value sunday" id="countSun">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">❌ Not Available</span>
+          <span class="stat-value unavailable" id="countNA">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">⏳ Not Voted Yet</span>
+          <span class="stat-value pending" id="countPending">—</span>
+        </div>
+        <div class="strength-bar"><div class="strength-fill" id="responseBar" style="width:0%"></div></div>
+      </div>
+
+      <div class="card">
+        <h2>👥 Player Availability</h2>
+        <div class="player-list" id="playerList">Loading...</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px">
+      <h2>⚙️ Generate Teams & Schedule</h2>
+      <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:12px">
+        <input type="date" class="date-input" id="gameDate">
+        <button class="btn btn-secondary" onclick="autoBalance()">⚖️ Auto Balance</button>
+      </div>
+      <p style="font-size:13px;color:#888">Auto balance uses Saturday/Sunday voters based on winning day. Or switch to Teams tab to adjust manually.</p>
+    </div>
+  </div>
+
+  <!-- Teams Tab -->
+  <div id="tab-teams" style="display:none">
+    <div class="teams-section">
+      <h2>👥 Team Preview <span id="balanceDiff" style="font-size:13px;color:#888;font-weight:400;margin-left:8px"></span></h2>
+      <div class="teams-grid">
+        <div class="team-col a">
+          <h3>Butchers-A</h3>
+          <div id="teamAList"></div>
+        </div>
+        <div class="team-col b">
+          <h3>Butchers-B</h3>
+          <div id="teamBList"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <input type="date" class="date-input" id="gameDate2">
+      <button class="btn btn-primary" id="createBtn" onclick="createTeamsAndSchedule()" disabled>
+        🚀 Create Teams &amp; Schedule
+      </button>
+      <button class="btn btn-secondary" onclick="showTab('poll')">← Back to Poll</button>
+    </div>
+    <div class="log" id="log"></div>
+  </div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+  // ── CONFIG ──────────────────────────────────────────────────────────────────
+  const FIREBASE_CONFIG = {
+    apiKey: "FIREBASE_API_KEY",
+    authDomain: "FIREBASE_AUTH_DOMAIN",
+    projectId: "FIREBASE_PROJECT_ID",
+  };
+
+  const CC_TOKEN    = 'CRICCLUBS_TOKEN';
+  const LEAGUE_ID   = 'kroq2QrfcoPEe4neEeXrVA';
+  const SERIES_ID   = 'wynmKh98CCp9qybL-NjEyQ';
+  const TEAM_A      = '8LZsXms8mkRjsz07r42o5g';
+  const TEAM_B      = 'aznlJuFfzhxhMjImILNBwA';
+  const GROUND_ID   = '1WsAYvg2aOUxiMXutmB0LA';
+  const DUMMY_A     = 'Tqq4WqGl2d6EDkEnS0vvKA';
+  const DUMMY_B     = 'Fdjf-dllW75Sf4799EkAhg';
+  const BASE_URL    = 'https://core-prod-origin.cricclubs.com/core';
+  const PUB_KEY_B64 = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCNokj65NYc9LdYZshBi6I1BUVu8NdhcafSkzSugFVwUydw7t2DPaZcewxkko3G2R/0OS8s7ceSV/p4zljtgCNtls5A6TT2Ehsoxhqh6PHRRuK4gvhPn8gYtBXjQHkj0VWkr9VoPdEt3NQIr0MkBmwAgt5YkTCV1EZPOAnsLSnQrwIDAQAB';
+
+  // ── HELPERS ─────────────────────────────────────────────────────────────────
+
+  function getWeekKey() {
+    const now = new Date();
+    const day = now.getDay();
+    const diff = (day >= 6) ? 0 : day + 1;
+    const sat = new Date(now); sat.setDate(now.getDate() - diff);
+    return sat.toISOString().slice(0, 10);
+  }
+
+  function getNextGameDay(preferredDay) {
+    const now = new Date();
+    const targetDay = preferredDay === 'sunday' ? 0 : 6;
+    let d = new Date(now);
+    d.setDate(d.getDate() + ((targetDay - d.getDay() + 7) % 7 || 7));
+    return d.toISOString().slice(0, 10);
+  }
+
+  // CricClubs token generation (RSA encrypt using SubtleCrypto)
+  async function makeCCToken() {
+    const keyData = Uint8Array.from(atob(PUB_KEY_B64), c => c.charCodeAt(0));
+    const key = await crypto.subtle.importKey('spki', keyData, { name: 'RSA-OAEP', hash: 'SHA-1' }, false, ['encrypt']);
+    const msg = new TextEncoder().encode('core-' + Date.now());
+    const enc = await crypto.subtle.encrypt({ name: 'RSA-OAEP' }, key, msg);
+    return btoa(String.fromCharCode(...new Uint8Array(enc)));
+  }
+
+  async function ccGet(path) {
+    const sep = path.includes('?') ? '&' : '?';
+    const url = BASE_URL + '/' + path + sep + 'token=' + CC_TOKEN + '&leagueId=' + LEAGUE_ID;
+    const r = await fetch(url, { headers: { accept: 'application/json', 'x-content-token': await makeCCToken() } });
+    return r.json();
+  }
+
+  async function ccPost(path, body) {
+    const r = await fetch(BASE_URL + '/' + path, {
+      method: 'POST',
+      headers: { accept: 'application/json', 'content-type': 'application/json', 'x-content-token': await makeCCToken(), origin: 'https://admin.cricclubs.com' },
+      body: JSON.stringify({ token: CC_TOKEN, leagueId: LEAGUE_ID, ...body })
+    });
+    return r.json();
+  }
+
+  async function ccPut(path, body) {
+    const r = await fetch(BASE_URL + '/' + path, {
+      method: 'PUT',
+      headers: { accept: 'application/json', 'content-type': 'application/json', 'x-content-token': await makeCCToken(), origin: 'https://admin.cricclubs.com' },
+      body: JSON.stringify({ token: CC_TOKEN, leagueId: LEAGUE_ID, ...body })
+    });
+    return r.json();
+  }
+
+  // ── STATE ────────────────────────────────────────────────────────────────────
+  window._state = { votes: {}, roster: {}, strength: {}, teamA: [], teamB: [], weekKey: getWeekKey() };
+
+  // ── FIREBASE ─────────────────────────────────────────────────────────────────
+  const fbApp = initializeApp(FIREBASE_CONFIG);
+  const db    = getFirestore(fbApp);
+
+  async function loadVotes() {
+    const snap = await getDocs(collection(db, 'votes'));
+    const votes = {};
+    snap.forEach(d => { votes[d.id] = d.data(); });
+    return votes;
+  }
+
+  // ── CRICCLUBS ─────────────────────────────────────────────────────────────────
+  async function loadRoster() {
+    const d = await ccGet('league/' + LEAGUE_ID + '/players?size=200');
+    const map = {};
+    for (const p of (d.data?.players || [])) {
+      if (p.name.toLowerCase().includes('dummy') || p.name.toLowerCase().includes('guest')) continue;
+      map[p.name] = { id: p.id, name: p.name };
+    }
+    return map;
+  }
+
+  // ── STRENGTH ──────────────────────────────────────────────────────────────────
+  // Precomputed from series stats — update periodically
+  const STRENGTH = {
+    'Yash Mehta': 73, 'Anjan Kumar': 71, 'Venkata Krishna Ravi': 70,
+    'Lokesh Bala': 66, 'Gaurav Mehta': 66, 'Srinath Shah': 57,
+    'Gaurav Kumar': 69, 'Sylvestor George': 52, 'Rijwan Rana': 52,
+    'Kaushal Karkera': 48, 'Soumya Smruti Mishra': 48, 'Akashdeep Balu': 50,
+    'Prashant Kumar': 45, 'Rohit Sharma': 44, 'Arpan Dey': 40,
+    'Anil Mallapur': 37, 'Mithal Kothari': 37, 'Rajeev Tirumala': 33,
+  };
+
+  function snakeDraft(players) {
+    const sorted = [...players].sort((a, b) => b.strength - a.strength);
+    const teamA = [], teamB = [];
+    sorted.forEach((p, i) => {
+      const round = Math.floor(i / 2), pos = i % 2;
+      (round % 2 === 0 ? (pos === 0 ? teamA : teamB) : (pos === 0 ? teamB : teamA)).push(p);
+    });
+    return { teamA, teamB };
+  }
+
+  // ── RENDER ────────────────────────────────────────────────────────────────────
+  function renderPoll(votes, roster) {
+    const weekKey = window._state.weekKey;
+    const thisWeek = Object.entries(votes).filter(([, v]) => v.week === weekKey);
+    const counts = { saturday: 0, sunday: 0, unavailable: 0 };
+    thisWeek.forEach(([, v]) => { if (counts[v.vote] !== undefined) counts[v.vote]++; });
+
+    const total = Object.keys(roster).length;
+    const voted = thisWeek.length;
+    const pending = total - voted;
+
+    document.getElementById('countSat').textContent     = counts.saturday;
+    document.getElementById('countSun').textContent     = counts.sunday;
+    document.getElementById('countNA').textContent      = counts.unavailable;
+    document.getElementById('countPending').textContent = pending;
+    document.getElementById('responseBar').style.width  = Math.round(voted / total * 100) + '%';
+
+    // Winner
+    const winner = counts.saturday >= counts.sunday ? 'saturday' : 'sunday';
+    const winnerEl = document.getElementById('winnerBadge');
+    if (counts.saturday > 0 || counts.sunday > 0) {
+      winnerEl.innerHTML = `<div class="winner-badge">
+        <div class="day">${winner === 'saturday' ? '📅 Saturday' : '📅 Sunday'} leads</div>
+        <div class="sub">${counts[winner]} votes</div>
+      </div>`;
+      // Set date pickers to next game day
+      const nextDay = getNextGameDay(winner);
+      document.getElementById('gameDate').value  = nextDay;
+      document.getElementById('gameDate2').value = nextDay;
+    } else { winnerEl.innerHTML = ''; }
+
+    // Player list
+    const voteMap = {};
+    thisWeek.forEach(([name, v]) => { voteMap[name] = v.vote; });
+
+    const icons = { saturday: '📅', sunday: '📅', unavailable: '❌', pending: '⏳' };
+    const allPlayers = Object.keys(roster).sort();
+    const listEl = document.getElementById('playerList');
+    listEl.innerHTML = allPlayers.map(name => {
+      const vote = voteMap[name] || 'pending';
+      const str  = STRENGTH[name] ? '[' + STRENGTH[name] + ']' : '';
+      return `<div class="player-chip ${vote}">
+        <div class="dot ${vote}"></div>
+        <span>${name}</span>
+        <span class="str">${str}</span>
+        <span style="margin-left:4px">${icons[vote]}</span>
+      </div>`;
+    }).join('');
+
+    return { winner, counts, voteMap };
+  }
+
+  function renderTeams(teamA, teamB) {
+    const render = (list, elId) => {
+      document.getElementById(elId).innerHTML = list.map((p, i) =>
+        `<div class="team-player">
+          <span class="num">${i+1}</span>
+          <span>${p.name}</span>
+          <span class="str-badge">${p.strength}</span>
+        </div>`
+      ).join('');
+    };
+    render(teamA, 'teamAList');
+    render(teamB, 'teamBList');
+    const sumA = teamA.reduce((s, p) => s + p.strength, 0);
+    const sumB = teamB.reduce((s, p) => s + p.strength, 0);
+    document.getElementById('balanceDiff').textContent =
+      'A:' + sumA + '  B:' + sumB + '  diff:' + Math.abs(sumA - sumB);
+    document.getElementById('createBtn').disabled = false;
+    window._state.teamA = teamA;
+    window._state.teamB = teamB;
+  }
+
+  // ── AUTO BALANCE ──────────────────────────────────────────────────────────────
+  window.autoBalance = function() {
+    const { votes, roster, weekKey } = window._state;
+    const thisWeek = Object.entries(votes).filter(([, v]) => v.week === weekKey);
+    const counts = { saturday: 0, sunday: 0 };
+    thisWeek.forEach(([, v]) => { if (counts[v.vote] !== undefined) counts[v.vote]++; });
+    const winner = counts.saturday >= counts.sunday ? 'saturday' : 'sunday';
+    const available = thisWeek.filter(([, v]) => v.vote === winner).map(([name]) => name);
+    const players = available
+      .filter(name => roster[name])
+      .map(name => ({ name, id: roster[name].id, strength: STRENGTH[name] || 50 }));
+    if (players.length < 4) { alert('Not enough players voted for ' + winner + ' yet!'); return; }
+    const { teamA, teamB } = snakeDraft(players);
+    renderTeams(teamA, teamB);
+    showTab('teams');
+  };
+
+  // ── CREATE TEAMS & SCHEDULE ───────────────────────────────────────────────────
+  window.createTeamsAndSchedule = async function() {
+    const date = document.getElementById('gameDate2').value;
+    if (!date) { alert('Please select a date.'); return; }
+    const { teamA, teamB } = window._state;
+    if (!teamA.length) { alert('Please auto-balance teams first.'); return; }
+
+    document.getElementById('createBtn').disabled = true;
+    const logEl = document.getElementById('log');
+    logEl.classList.add('visible');
+    logEl.innerHTML = '';
+
+    const log = (msg, type = 'info') => {
+      logEl.innerHTML += `<div class="line ${type}">${msg}</div>`;
+      logEl.scrollTop = logEl.scrollHeight;
+    };
+
+    try {
+      log('Clearing existing rosters...');
+      const curA = await ccGet('series/' + SERIES_ID + '/team/' + TEAM_A + '/players?lang=en');
+      const curB = await ccGet('series/' + SERIES_ID + '/team/' + TEAM_B + '/players?lang=en');
+      const idsA = (curA.data?.players || []).map(p => p.id);
+      const idsB = (curB.data?.players || []).map(p => p.id);
+      if (idsA.length) await ccPut('league/' + LEAGUE_ID + '/team/' + TEAM_A + '/players', { lang: 'en', players: idsA });
+      if (idsB.length) await ccPut('league/' + LEAGUE_ID + '/team/' + TEAM_B + '/players', { lang: 'en', players: idsB });
+      log('✓ Rosters cleared', 'success');
+
+      log('Assigning Butchers-A (' + teamA.length + ' players + DummyA)...');
+      const rA = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_A + '/players', { players: [...teamA.map(p => p.id), DUMMY_A], lang: 'en' });
+      log(rA.status === 'Success' ? '✓ Butchers-A assigned' : '✗ ' + JSON.stringify(rA).slice(0,100), rA.status === 'Success' ? 'success' : 'error');
+
+      log('Assigning Butchers-B (' + teamB.length + ' players + DummyB)...');
+      const rB = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: [...teamB.map(p => p.id), DUMMY_B], lang: 'en' });
+      log(rB.status === 'Success' ? '✓ Butchers-B assigned' : '✗ ' + JSON.stringify(rB).slice(0,100), rB.status === 'Success' ? 'success' : 'error');
+
+      for (const time of ['7:30 AM', '9:30 AM']) {
+        log('Creating fixture at ' + time + '...');
+        const r = await ccPost('series/' + SERIES_ID + '/fixture', {
+          umpires: [], scorers: [], teamOneId: TEAM_A, teamTwoId: TEAM_B,
+          matchType: 'league', startDate: date, startTime: time,
+          groundId: GROUND_ID, publicNotes: '', privateNotes: '',
+          sendNotifications: 0, matchManager: '', seriesId: SERIES_ID, divisionId: '', forceProceed: 0,
+        });
+        log(r.status === 'Success' ? '✓ Fixture created: ' + time : '✗ ' + JSON.stringify(r).slice(0,100), r.status === 'Success' ? 'success' : 'error');
+      }
+
+      log('🎉 All done! Check admin.cricclubs.com', 'success');
+    } catch(e) {
+      log('✗ Error: ' + e.message, 'error');
+    }
+    document.getElementById('createBtn').disabled = false;
+  };
+
+  // ── TABS ──────────────────────────────────────────────────────────────────────
+  window.showTab = function(tab) {
+    document.getElementById('tab-poll').style.display  = tab === 'poll'  ? 'block' : 'none';
+    document.getElementById('tab-teams').style.display = tab === 'teams' ? 'block' : 'none';
+    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', (i === 0) === (tab === 'poll')));
+  };
+
+  // ── INIT ──────────────────────────────────────────────────────────────────────
+  const weekKey = getWeekKey();
+  document.getElementById('weekLabel').textContent = 'Week of ' + weekKey + '  •  Admin Panel';
+
+  const [votes, roster] = await Promise.all([loadVotes(), loadRoster()]);
+  window._state.votes  = votes;
+  window._state.roster = roster;
+  renderPoll(votes, roster);
+</script>
+</body>
+</html>
