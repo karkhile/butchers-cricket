@@ -128,6 +128,11 @@
     .unknown-player .big { font-size: 48px; }
     .unknown-player h2 { font-size: 20px; font-weight: 700; color: #333; margin-top: 12px; }
     .unknown-player p { font-size: 14px; color: #666; margin-top: 8px; line-height: 1.5; }
+
+    .poll-closed { text-align: center; padding: 20px 0; }
+    .poll-closed .big { font-size: 48px; }
+    .poll-closed h2 { font-size: 20px; font-weight: 700; color: #0a3d1f; margin-top: 12px; }
+    .poll-closed p { font-size: 14px; color: #666; margin-top: 8px; line-height: 1.5; }
   </style>
 </head>
 <body>
@@ -152,6 +157,15 @@
 
   const app = initializeApp(FIREBASE_CONFIG);
   const db  = getFirestore(app);
+
+  function isPollClosed() {
+    const now = new Date();
+    const day = now.getDay(); // 0=Sun,1=Mon,...,5=Fri,6=Sat
+    // Closed: Fri midnight (23:59) through end of Sunday
+    if (day === 6 || day === 0) return true;
+    if (day === 5 && now.getHours() === 23 && now.getMinutes() >= 59) return true;
+    return false;
+  }
 
   function nextSaturday() {
     const now = new Date();
@@ -335,6 +349,17 @@
           <div class="big">🤔</div>
           <h2>Who are you?</h2>
           <p>Please use the personal link shared in the WhatsApp group to vote.</p>
+        </div>`;
+      return;
+    }
+
+    if (isPollClosed()) {
+      const { sat } = getUpcomingDates();
+      content.innerHTML = `
+        <div class="poll-closed">
+          <div class="big">🔒</div>
+          <h2>Poll is closed</h2>
+          <p>Voting opens again on Monday.<br>See you on the field, ${playerName.split(' ')[0]}! 🏏</p>
         </div>`;
       return;
     }
