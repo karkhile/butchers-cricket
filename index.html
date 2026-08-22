@@ -156,8 +156,8 @@
   function nextSaturday() {
     const now = new Date();
     const day = now.getDay();
-    // Mon–Fri: next Saturday. Sat+Sun: Saturday of following week (poll is for next weekend)
-    const daysUntilSat = day === 0 ? 6 : day === 6 ? 7 : (6 - day);
+    // Sat: stay on today. Sun: jump to next Sat. Mon-Fri: this coming Sat.
+    const daysUntilSat = day === 6 ? 0 : day === 0 ? 6 : (6 - day);
     const sat = new Date(now); sat.setDate(now.getDate() + daysUntilSat);
     return sat;
   }
