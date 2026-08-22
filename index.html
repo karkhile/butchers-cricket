@@ -166,6 +166,7 @@
   }
 
   function getUpcomingDates() {
+    if (window._pollDates) return window._pollDates;
     const sat = nextSaturday();
     const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
     const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -173,6 +174,7 @@
   }
 
   function getWeekKey() {
+    if (window._pollWeekKey) return window._pollWeekKey;
     return nextSaturday().toISOString().slice(0, 10);
   }
 
@@ -349,12 +351,27 @@
       return;
     }
 
-    // Check Firestore for poll open/closed state
+    // Check Firestore for poll open/closed state and game date
     let pollOpen = true;
+    let pollSatDate = null;
     try {
       const pollSnap = await getDoc(doc(db, 'config', 'poll'));
-      if (pollSnap.exists()) pollOpen = pollSnap.data().open !== false;
+      if (pollSnap.exists()) {
+        const pd = pollSnap.data();
+        pollOpen = pd.open !== false;
+        if (pd.satDate) pollSatDate = pd.satDate; // YYYY-MM-DD
+      }
     } catch(e) {}
+
+    // Override upcoming dates with admin-set date if available
+    if (pollSatDate) {
+      const sat = new Date(pollSatDate + 'T12:00:00');
+      const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
+      const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      // Monkey-patch getUpcomingDates for this session
+      window._pollDates = { sat: fmt(sat), sun: fmt(sun) };
+      window._pollWeekKey = pollSatDate;
+    }
 
     if (!pollOpen) {
       content.innerHTML = `

@@ -199,6 +199,7 @@
     <div class="card" style="margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <span style="font-size:13px;font-weight:600;color:#555;">Poll status:</span>
       <span id="pollStatusBadge" style="font-size:13px;font-weight:700;">...</span>
+      <input type="date" id="pollSatDate" class="date-input" style="font-size:13px;padding:7px 10px;" title="Select the Saturday for this poll">
       <button class="btn btn-primary"   id="btnOpenPoll"  onclick="setPollOpen(true)"  style="padding:8px 14px;font-size:13px;">🔓 Open Poll</button>
       <button class="btn btn-secondary" id="btnClosePoll" onclick="setPollOpen(false)" style="padding:8px 14px;font-size:13px;">🔒 Close Poll</button>
       <button class="btn" id="btnResetPoll" onclick="resetPoll()" style="padding:8px 14px;font-size:13px;background:#c0392b;color:white;border:none;border-radius:8px;cursor:pointer;">🗑️ Reset Poll</button>
@@ -792,17 +793,31 @@
   };
 
   // ── POLL CONTROLS ─────────────────────────────────────────────────────────────
-  function updatePollStatusUI(isOpen) {
+  function updatePollStatusUI(isOpen, satDate) {
     document.getElementById('pollStatusBadge').textContent = isOpen ? '🟢 Open' : '🔴 Closed';
     document.getElementById('btnOpenPoll').disabled  =  isOpen;
     document.getElementById('btnClosePoll').disabled = !isOpen;
+    if (satDate) document.getElementById('pollSatDate').value = satDate;
   }
 
   window.setPollOpen = async function(open) {
-    try {
-      await setDoc(doc(db, 'config', 'poll'), { open, updatedAt: new Date().toISOString() });
-      updatePollStatusUI(open);
-    } catch(e) { alert('Failed: ' + e.message); }
+    if (open) {
+      const satDate = document.getElementById('pollSatDate').value;
+      if (!satDate) { alert('Please select the Saturday date before opening the poll.'); return; }
+      // Also sync to gameDate for team creation
+      document.getElementById('gameDate').value  = satDate;
+      document.getElementById('gameDate2').value = satDate;
+      try {
+        await setDoc(doc(db, 'config', 'poll'), { open: true, satDate, updatedAt: new Date().toISOString() });
+        updatePollStatusUI(true, satDate);
+      } catch(e) { alert('Failed: ' + e.message); }
+    } else {
+      try {
+        const cur = (await getDoc(doc(db, 'config', 'poll'))).data() || {};
+        await setDoc(doc(db, 'config', 'poll'), { ...cur, open: false, updatedAt: new Date().toISOString() });
+        updatePollStatusUI(false);
+      } catch(e) { alert('Failed: ' + e.message); }
+    }
   };
 
   window.resetPoll = async function() {
@@ -829,10 +844,38 @@
   const weekKey = getWeekKey();
   document.getElementById('weekLabel').textContent = 'Week of ' + weekKey + '  •  Admin Panel';
 
-  // Load poll open/closed state
+  // Load poll open/closed state — auto-reset on Monday if last week's poll is stale
   try {
     const pollSnap = await getDoc(doc(db, 'config', 'poll'));
-    updatePollStatusUI(!pollSnap.exists() || pollSnap.data().open !== false);
+    const pollData = pollSnap.exists() ? pollSnap.data() : {};
+    const isOpen = !pollSnap.exists() || pollData.open !== false;
+
+    const today = new Date();
+    const isMonday = today.getDay() === 1;
+    const nextSat = getWeekKey(); // upcoming Saturday ISO date
+    const pollIsStale = !pollData.satDate || pollData.satDate < nextSat;
+
+    if (isMonday && pollIsStale) {
+      // Auto-reset: clear last week's votes and open for this coming Saturday
+      const oldWeek = pollData.satDate;
+      if (oldWeek) {
+        const allVotes = await getDocs(collection(db, 'votes'));
+        const staleRefs = [];
+        allVotes.forEach(d => { if (d.data().week === oldWeek) staleRefs.push(d.ref); });
+        await Promise.all(staleRefs.map(ref => setDoc(ref, { _deleted: true, week: '' })));
+      }
+      await setDoc(doc(db, 'config', 'poll'), { open: true, satDate: nextSat, updatedAt: new Date().toISOString(), autoOpened: true });
+      updatePollStatusUI(true, nextSat);
+      document.getElementById('gameDate').value  = nextSat;
+      document.getElementById('gameDate2').value = nextSat;
+      console.log('Auto-opened poll for', nextSat, '(Monday auto-reset)');
+    } else {
+      updatePollStatusUI(isOpen, pollData.satDate || '');
+      if (pollData.satDate) {
+        document.getElementById('gameDate').value  = pollData.satDate;
+        document.getElementById('gameDate2').value = pollData.satDate;
+      }
+    }
   } catch(e) { updatePollStatusUI(true); }
 
   const snap = await getDocs(collection(db, 'votes'));
