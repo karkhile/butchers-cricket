@@ -651,14 +651,18 @@
   window.goToTeams = function() {
     const date = document.getElementById('gameDate').value;
     if (date) document.getElementById('gameDate2').value = date;
-    const { roster, _winner, _voteMap } = window._state;
-    // Populate pool with available players for winning day
-    const available = Object.keys(roster)
-      .filter(name => _voteMap[name] && _voteMap[name].includes(_winner))
-      .map(name => ({ name, id: roster[name].id, strength: STRENGTH[name] || 50, days: _voteMap[name] }));
-    window._state.pool  = available;
-    window._state.teamA = [];
-    window._state.teamB = [];
+
+    // If we already have saved teams for this week, just switch tabs
+    const saved = loadTeamState();
+    if (!saved) {
+      const { roster, _winner, _voteMap } = window._state;
+      const available = Object.keys(roster)
+        .filter(name => _voteMap[name] && _voteMap[name].includes(_winner))
+        .map(name => ({ name, id: roster[name].id, strength: STRENGTH[name] || 50, days: _voteMap[name] }));
+      window._state.pool  = available;
+      window._state.teamA = [];
+      window._state.teamB = [];
+    }
     renderTeamBuilder();
     showTab('teams');
   };
@@ -736,6 +740,7 @@
       }
 
       log('🎉 All done! Check admin.cricclubs.com', 'success');
+      saveTeamState();
     } catch(e) {
       log('✗ Error: ' + e.message, 'error');
     }
@@ -764,8 +769,11 @@
   window._state.roster = roster;
   renderPoll(votes, roster);
 
-  // Restore team state if saved for this week
-  if (loadTeamState()) renderTeamBuilder();
+  // Restore team state if saved for this week — show Teams tab directly
+  if (loadTeamState()) {
+    renderTeamBuilder();
+    showTab('teams');
+  }
 </script>
 </body>
 </html>
