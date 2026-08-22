@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.gstatic.com https://*.firebaseio.com https://*.googleapis.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://firestore.googleapis.com https://core-prod-origin.cricclubs.com; style-src 'self' 'unsafe-inline';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.gstatic.com https://*.firebaseio.com https://*.googleapis.com https://cdn.jsdelivr.net; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://firestore.googleapis.com https://core-prod-origin.cricclubs.com; style-src 'self' 'unsafe-inline';">
   <title>Butchers Cricket — Admin</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -164,6 +164,7 @@
       .btn { width: 100%; justify-content: center; }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/node-forge@1.3.1/dist/forge.min.js"></script>
 </head>
 <body>
 
@@ -346,25 +347,25 @@
     return sat.toISOString().slice(0, 10);
   }
 
-  async function makeCCToken() {
-    const keyData = Uint8Array.from(atob(PUB_KEY_B64), c => c.charCodeAt(0));
-    const key = await crypto.subtle.importKey('spki', keyData, { name: 'RSA-OAEP', hash: 'SHA-1' }, false, ['encrypt']);
-    const msg = new TextEncoder().encode('core-' + Date.now());
-    const enc = await crypto.subtle.encrypt({ name: 'RSA-OAEP' }, key, msg);
-    return btoa(String.fromCharCode(...new Uint8Array(enc)));
+  function makeCCToken() {
+    const pem = '-----BEGIN PUBLIC KEY-----\n' + PUB_KEY_B64.match(/.{1,64}/g).join('\n') + '\n-----END PUBLIC KEY-----';
+    const pub = forge.pki.publicKeyFromPem(pem);
+    const msg = 'core-' + Date.now();
+    const enc = pub.encrypt(msg, 'RSAES-PKCS1-V1_5');
+    return forge.util.encode64(enc);
   }
 
   async function ccGet(path) {
     const sep = path.includes('?') ? '&' : '?';
     const url = BASE_URL + '/' + path + sep + 'token=' + CC_TOKEN + '&leagueId=' + LEAGUE_ID;
-    const r = await fetch(url, { headers: { accept: 'application/json', 'x-content-token': await makeCCToken() } });
+    const r = await fetch(url, { headers: { accept: 'application/json', 'x-content-token': makeCCToken() } });
     return r.json();
   }
 
   async function ccPost(path, body) {
     const r = await fetch(BASE_URL + '/' + path, {
       method: 'POST',
-      headers: { accept: 'application/json', 'content-type': 'application/json', 'x-content-token': await makeCCToken(), origin: 'https://admin.cricclubs.com' },
+      headers: { accept: 'application/json', 'content-type': 'application/json', 'x-content-token': makeCCToken(), origin: 'https://admin.cricclubs.com' },
       body: JSON.stringify({ token: CC_TOKEN, leagueId: LEAGUE_ID, ...body })
     });
     return r.json();
@@ -373,7 +374,7 @@
   async function ccPut(path, body) {
     const r = await fetch(BASE_URL + '/' + path, {
       method: 'PUT',
-      headers: { accept: 'application/json', 'content-type': 'application/json', 'x-content-token': await makeCCToken(), origin: 'https://admin.cricclubs.com' },
+      headers: { accept: 'application/json', 'content-type': 'application/json', 'x-content-token': makeCCToken(), origin: 'https://admin.cricclubs.com' },
       body: JSON.stringify({ token: CC_TOKEN, leagueId: LEAGUE_ID, ...body })
     });
     return r.json();
@@ -667,13 +668,6 @@
   };
 
   // ── CREATE TEAMS & SCHEDULE ───────────────────────────────────────────────────
-  async function proxyAvailable() {
-    try {
-      const r = await fetch('http://localhost:3131/ping', { signal: AbortSignal.timeout(1500) });
-      return r.ok;
-    } catch { return false; }
-  }
-
   window.createTeamsAndSchedule = async function() {
     const date = document.getElementById('gameDate2').value;
     if (!date) { alert('Please select a date.'); return; }
@@ -690,32 +684,39 @@
     };
 
     try {
-      const useProxy = await proxyAvailable();
+      log('Clearing existing rosters...');
+      const curA = await ccGet('series/' + SERIES_ID + '/team/' + TEAM_A + '/players?lang=en');
+      const curB = await ccGet('series/' + SERIES_ID + '/team/' + TEAM_B + '/players?lang=en');
+      const idsA = (curA.data?.players || []).map(p => p.id);
+      const idsB = (curB.data?.players || []).map(p => p.id);
+      if (idsA.length) await ccPut('league/' + LEAGUE_ID + '/team/' + TEAM_A + '/players', { lang: 'en', players: idsA });
+      if (idsB.length) await ccPut('league/' + LEAGUE_ID + '/team/' + TEAM_B + '/players', { lang: 'en', players: idsB });
+      log('✓ Rosters cleared', 'success');
 
-      if (useProxy) {
-        log('📡 Using local proxy (correct token signing)...', 'info');
-        const r = await fetch('http://localhost:3131/create', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ teamA, teamB, date }),
+      log('Assigning Butchers-A (' + teamA.length + ' players)...');
+      const rosterA = teamA.map(p => p.id);
+      if (teamA.length < 11) rosterA.push(DUMMY_A);
+      const rA = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_A + '/players', { players: rosterA, lang: 'en' });
+      log(rA.status === 'Success' ? '✓ Butchers-A: ' + rosterA.length + ' players' : '✗ ' + JSON.stringify(rA).slice(0, 120), rA.status === 'Success' ? 'success' : 'error');
+
+      log('Assigning Butchers-B (' + teamB.length + ' players)...');
+      const rosterB = teamB.map(p => p.id);
+      if (teamB.length < 11) rosterB.push(DUMMY_B);
+      const rB = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: rosterB, lang: 'en' });
+      log(rB.status === 'Success' ? '✓ Butchers-B: ' + rosterB.length + ' players' : '✗ ' + JSON.stringify(rB).slice(0, 120), rB.status === 'Success' ? 'success' : 'error');
+
+      for (const time of ['7:30 AM', '9:30 AM']) {
+        log('Creating fixture at ' + time + '...');
+        const r = await ccPost('series/' + SERIES_ID + '/fixture', {
+          umpires: [], scorers: [], teamOneId: TEAM_A, teamTwoId: TEAM_B,
+          matchType: 'league', startDate: date, startTime: time,
+          groundId: GROUND_ID, publicNotes: '', privateNotes: '',
+          sendNotifications: 0, matchManager: '', seriesId: SERIES_ID, divisionId: '', forceProceed: 0,
         });
-        const data = await r.json();
-        if (!r.ok) { log('✗ Proxy error: ' + (data.error || 'unknown'), 'error'); return; }
-
-        for (const step of data.results) {
-          if (step.step === 'clear')     log('✓ Rosters cleared', 'success');
-          if (step.step === 'assign-a')  log(step.status === 'Success' ? '✓ Butchers-A: ' + step.count + ' players' : '✗ Butchers-A failed', step.status === 'Success' ? 'success' : 'error');
-          if (step.step === 'assign-b')  log(step.status === 'Success' ? '✓ Butchers-B: ' + step.count + ' players' : '✗ Butchers-B failed', step.status === 'Success' ? 'success' : 'error');
-          if (step.step === 'fixture')   log(step.status === 'Success' ? '✓ Fixture: ' + step.time : '✗ Fixture ' + step.time + ' failed', step.status === 'Success' ? 'success' : 'error');
-        }
-        log('🎉 All done! Check admin.cricclubs.com', 'success');
-
-      } else {
-        log('⚠️  Local proxy not running. Start it with:', 'error');
-        log('   cd ~/IdeaProjects/Personal/butchers-cricket && node proxy.js', 'info');
-        log('Then click Create again.', 'info');
+        log(r.status === 'Success' ? '✓ Fixture: ' + time : '✗ ' + JSON.stringify(r).slice(0, 120), r.status === 'Success' ? 'success' : 'error');
       }
 
+      log('🎉 All done! Check admin.cricclubs.com', 'success');
     } catch(e) {
       log('✗ Error: ' + e.message, 'error');
     }
