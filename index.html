@@ -156,7 +156,7 @@
     return sat.toISOString().slice(0, 10);
   }
 
-  function showSuccess(name, vote) {
+  function showSuccess(name, vote, voteRef, weekKey) {
     const opt = OPTIONS.find(o => o.value === vote);
     document.getElementById('content').innerHTML = `
       <div class="success">
@@ -167,7 +167,52 @@
           : 'See you on the field, ' + name.split(' ')[0] + '! 🏏'
         }</p>
         <div class="vote-summary">Your vote: <strong>${opt.icon} ${opt.label}</strong></div>
+        <button class="submit-btn" id="changeBtn" style="margin-top:16px;background:#666;font-size:14px;padding:12px">✏️ Change my vote</button>
       </div>`;
+    document.getElementById('changeBtn').addEventListener('click', () => showVoteForm(name, voteRef, weekKey, vote));
+  }
+
+  function showVoteForm(name, voteRef, weekKey, currentVote) {
+    let selected = currentVote || null;
+
+    document.getElementById('content').innerHTML = `
+      <div class="greeting">
+        <h2>Hey ${name.split(' ')[0]}! 👋</h2>
+        <p>Can you play this weekend?</p>
+      </div>
+      <div class="question">Choose your availability:</div>
+      <div class="options" id="options"></div>
+      <button class="submit-btn" id="submitBtn" ${selected ? '' : 'disabled'}>Submit Vote</button>
+      <div class="error-msg" id="errorMsg">Something went wrong. Please try again.</div>
+    `;
+
+    OPTIONS.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn' + (opt.value === selected ? ' selected' : '');
+      btn.innerHTML = `<span class="icon">${opt.icon}</span><span class="label">${opt.label}</span><span class="check">✓</span>`;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selected = opt.value;
+        document.getElementById('submitBtn').disabled = false;
+      });
+      document.getElementById('options').appendChild(btn);
+    });
+
+    document.getElementById('submitBtn').addEventListener('click', async () => {
+      if (!selected) return;
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+      try {
+        await setDoc(voteRef, { player: name, vote: selected, week: weekKey, timestamp: Date.now() });
+        showSuccess(name, selected, voteRef, weekKey);
+      } catch(e) {
+        document.getElementById('errorMsg').style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Vote';
+      }
+    });
   }
 
   (async () => {
@@ -191,51 +236,12 @@
     try {
       const snap = await getDoc(voteRef);
       if (snap.exists() && snap.data().week === weekKey) {
-        showSuccess(playerName, snap.data().vote);
+        showSuccess(playerName, snap.data().vote, voteRef, weekKey);
         return;
       }
     } catch(e) {}
 
-    let selected = null;
-
-    content.innerHTML = `
-      <div class="greeting">
-        <h2>Hey ${playerName.split(' ')[0]}! 👋</h2>
-        <p>Can you play this weekend?</p>
-      </div>
-      <div class="question">Choose your availability:</div>
-      <div class="options" id="options"></div>
-      <button class="submit-btn" id="submitBtn" disabled>Submit Vote</button>
-      <div class="error-msg" id="errorMsg">Something went wrong. Please try again.</div>
-    `;
-
-    OPTIONS.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'option-btn';
-      btn.innerHTML = `<span class="icon">${opt.icon}</span><span class="label">${opt.label}</span><span class="check">✓</span>`;
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-        selected = opt.value;
-        document.getElementById('submitBtn').disabled = false;
-      });
-      document.getElementById('options').appendChild(btn);
-    });
-
-    document.getElementById('submitBtn').addEventListener('click', async () => {
-      if (!selected) return;
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting...';
-      try {
-        await setDoc(voteRef, { player: playerName, vote: selected, week: weekKey, timestamp: Date.now() });
-        showSuccess(playerName, selected);
-      } catch(e) {
-        document.getElementById('errorMsg').style.display = 'block';
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit Vote';
-      }
-    });
+    showVoteForm(playerName, voteRef, weekKey, null);
   })();
 </script>
 </body>
