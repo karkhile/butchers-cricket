@@ -470,13 +470,17 @@
       if (idsB.length) await ccPut('league/' + LEAGUE_ID + '/team/' + TEAM_B + '/players', { lang: 'en', players: idsB });
       log('✓ Rosters cleared', 'success');
 
-      log('Assigning Butchers-A (' + teamA.length + ' players + DummyA)...');
-      const rA = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_A + '/players', { players: [...teamA.map(p => p.id), DUMMY_A], lang: 'en' });
-      log(rA.status === 'Success' ? '✓ Butchers-A assigned' : '✗ ' + JSON.stringify(rA).slice(0,100), rA.status === 'Success' ? 'success' : 'error');
+      log('Assigning Butchers-A (' + teamA.length + ' players)...');
+      const idsA = teamA.map(p => p.id);
+      if (teamA.length < 11) idsA.push(DUMMY_A);
+      const rA = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_A + '/players', { players: idsA, lang: 'en' });
+      log(rA.status === 'Success' ? '✓ Butchers-A assigned (' + idsA.length + ' incl. ' + (teamA.length < 11 ? 'DummyA' : 'no dummy') + ')' : '✗ ' + JSON.stringify(rA).slice(0,100), rA.status === 'Success' ? 'success' : 'error');
 
-      log('Assigning Butchers-B (' + teamB.length + ' players + DummyB)...');
-      const rB = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: [...teamB.map(p => p.id), DUMMY_B], lang: 'en' });
-      log(rB.status === 'Success' ? '✓ Butchers-B assigned' : '✗ ' + JSON.stringify(rB).slice(0,100), rB.status === 'Success' ? 'success' : 'error');
+      log('Assigning Butchers-B (' + teamB.length + ' players)...');
+      const idsB = teamB.map(p => p.id);
+      if (teamB.length < 11) idsB.push(DUMMY_B);
+      const rB = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: idsB, lang: 'en' });
+      log(rB.status === 'Success' ? '✓ Butchers-B assigned (' + idsB.length + ' incl. ' + (teamB.length < 11 ? 'DummyB' : 'no dummy') + ')' : '✗ ' + JSON.stringify(rB).slice(0,100), rB.status === 'Success' ? 'success' : 'error');
 
       for (const time of ['7:30 AM', '9:30 AM']) {
         log('Creating fixture at ' + time + '...');
