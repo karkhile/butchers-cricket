@@ -809,7 +809,10 @@
       document.getElementById('gameDate2').value = satDate;
       try {
         await setDoc(doc(db, 'config', 'poll'), { open: true, satDate, updatedAt: new Date().toISOString() });
+        window._state.weekKey = satDate;
         updatePollStatusUI(true, satDate);
+        // Re-render poll with correct weekKey
+        renderPoll(window._state.votes, window._state.roster);
       } catch(e) { alert('Failed: ' + e.message); }
     } else {
       try {
@@ -865,11 +868,13 @@
         await Promise.all(staleRefs.map(ref => setDoc(ref, { _deleted: true, week: '' })));
       }
       await setDoc(doc(db, 'config', 'poll'), { open: true, satDate: nextSat, updatedAt: new Date().toISOString(), autoOpened: true });
+      window._state.weekKey = nextSat;
       updatePollStatusUI(true, nextSat);
       document.getElementById('gameDate').value  = nextSat;
       document.getElementById('gameDate2').value = nextSat;
       console.log('Auto-opened poll for', nextSat, '(Monday auto-reset)');
     } else {
+      if (pollData.satDate) window._state.weekKey = pollData.satDate;
       updatePollStatusUI(isOpen, pollData.satDate || '');
       if (pollData.satDate) {
         document.getElementById('gameDate').value  = pollData.satDate;
