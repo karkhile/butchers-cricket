@@ -918,12 +918,14 @@
 
   window._state.votes  = votes;
   window._state.roster = roster;
-  renderPoll(votes, roster);
+  renderPoll(votes, roster);  // strength is already loaded above, so points are correct
 
-  // Restore team state if saved for this week — show Teams tab directly
+  // Restore saved team state for this week (but stay on Poll tab — only switch if teams exist)
   if (loadTeamState()) {
     renderTeamBuilder();
-    showTab('teams');
+    if (window._state.teamA.length > 0 || window._state.teamB.length > 0) {
+      showTab('teams');
+    }
   }
 </script>
 </body>
