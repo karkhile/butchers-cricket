@@ -144,6 +144,10 @@
           <span class="stat-value sunday" id="countSun">—</span>
         </div>
         <div class="stat-row">
+          <span class="stat-label">🙌 Both Days</span>
+          <span class="stat-value" style="color:#9b59b6" id="countBoth">—</span>
+        </div>
+        <div class="stat-row">
           <span class="stat-label">❌ Not Available</span>
           <span class="stat-value unavailable" id="countNA">—</span>
         </div>
@@ -386,28 +390,30 @@
   function renderPoll(votes, roster) {
     const weekKey = window._state.weekKey;
     const thisWeek = Object.entries(votes).filter(([, v]) => v.week === weekKey);
-    const counts = { saturday: 0, sunday: 0, unavailable: 0 };
+    const counts = { saturday: 0, sunday: 0, both: 0, unavailable: 0 };
     thisWeek.forEach(([, v]) => { if (counts[v.vote] !== undefined) counts[v.vote]++; });
 
     const total = Object.keys(roster).length;
     const voted = thisWeek.length;
     const pending = total - voted;
 
-    document.getElementById('countSat').textContent     = counts.saturday;
-    document.getElementById('countSun').textContent     = counts.sunday;
+    document.getElementById('countSat').textContent     = counts.saturday + counts.both;
+    document.getElementById('countSun').textContent     = counts.sunday + counts.both;
+    document.getElementById('countBoth').textContent    = counts.both;
     document.getElementById('countNA').textContent      = counts.unavailable;
     document.getElementById('countPending').textContent = pending;
     document.getElementById('responseBar').style.width  = Math.round(voted / total * 100) + '%';
 
-    // Winner
-    const winner = counts.saturday >= counts.sunday ? 'saturday' : 'sunday';
+    // Winner (both voters count for each day)
+    const satTotal = counts.saturday + counts.both;
+    const sunTotal = counts.sunday + counts.both;
+    const winner = satTotal >= sunTotal ? 'saturday' : 'sunday';
     const winnerEl = document.getElementById('winnerBadge');
-    if (counts.saturday > 0 || counts.sunday > 0) {
+    if (satTotal > 0 || sunTotal > 0) {
       winnerEl.innerHTML = `<div class="winner-badge">
         <div class="day">${winner === 'saturday' ? '📅 Saturday' : '📅 Sunday'} leads</div>
-        <div class="sub">${counts[winner]} votes</div>
+        <div class="sub">${winner === 'saturday' ? satTotal : sunTotal} votes</div>
       </div>`;
-      // Set date pickers to next game day
       const nextDay = getNextGameDay(winner);
       document.getElementById('gameDate').value  = nextDay;
       document.getElementById('gameDate2').value = nextDay;
@@ -417,14 +423,14 @@
     const voteMap = {};
     thisWeek.forEach(([name, v]) => { voteMap[name] = v.vote; });
 
-    const icons = { saturday: '📅', sunday: '📅', unavailable: '❌', pending: '⏳' };
+    const icons = { saturday: '📅', sunday: '📅', both: '🙌', unavailable: '❌', pending: '⏳' };
     const allPlayers = Object.keys(roster).sort();
     const listEl = document.getElementById('playerList');
     listEl.innerHTML = allPlayers.map(name => {
       const vote = voteMap[name] || 'pending';
       const str  = STRENGTH[name] ? '[' + STRENGTH[name] + ']' : '';
-      return `<div class="player-chip ${vote}">
-        <div class="dot ${vote}"></div>
+      return `<div class="player-chip ${vote === 'both' ? 'saturday' : vote}">
+        <div class="dot ${vote === 'both' ? 'saturday' : vote}"></div>
         <span>${name}</span>
         <span class="str">${str}</span>
         <span style="margin-left:4px">${icons[vote]}</span>
@@ -459,10 +465,10 @@
   window.autoBalance = function() {
     const { votes, roster, weekKey } = window._state;
     const thisWeek = Object.entries(votes).filter(([, v]) => v.week === weekKey);
-    const counts = { saturday: 0, sunday: 0 };
+    const counts = { saturday: 0, sunday: 0, both: 0 };
     thisWeek.forEach(([, v]) => { if (counts[v.vote] !== undefined) counts[v.vote]++; });
-    const winner = counts.saturday >= counts.sunday ? 'saturday' : 'sunday';
-    const available = thisWeek.filter(([, v]) => v.vote === winner).map(([name]) => name);
+    const winner = (counts.saturday + counts.both) >= (counts.sunday + counts.both) ? 'saturday' : 'sunday';
+    const available = thisWeek.filter(([, v]) => v.vote === winner || v.vote === 'both').map(([name]) => name);
     const players = available
       .filter(name => roster[name])
       .map(name => ({ name, id: roster[name].id, strength: STRENGTH[name] || 50 }));
