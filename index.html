@@ -96,6 +96,24 @@
       line-height: 1.8;
     }
 
+    .dashboard {
+      margin-top: 20px;
+      background: #f9f9f9;
+      border-radius: 14px;
+      padding: 16px;
+      text-align: left;
+    }
+    .dashboard h3 { font-size: 13px; font-weight: 700; color: #0a3d1f; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .dash-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .dash-row:last-child { margin-bottom: 0; }
+    .dash-label { font-size: 13px; color: #555; width: 110px; flex-shrink: 0; }
+    .dash-bar-wrap { flex: 1; background: #e0e0e0; border-radius: 4px; height: 8px; }
+    .dash-bar { height: 8px; border-radius: 4px; transition: width 0.4s; }
+    .dash-bar.sat { background: #2ecc71; }
+    .dash-bar.sun { background: #3498db; }
+    .dash-bar.na  { background: #e74c3c; }
+    .dash-count { font-size: 13px; font-weight: 700; color: #333; width: 24px; text-align: right; }
+
     .error-msg {
       background: #fff0f0;
       color: #c0392b;
@@ -124,7 +142,7 @@
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
-  import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+  import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
   const FIREBASE_CONFIG = {
     apiKey: "AIzaSyDU0RHh9ScIIPE5tSpjjhnAPN8ypF5T9EE",
@@ -156,7 +174,15 @@
     return days.map(d => d === 'saturday' ? '📅 Saturday, ' + sat : '📅 Sunday, ' + sun).join('<br>');
   }
 
-  function showSuccess(name, days, voteRef, weekKey) {
+  function getDays(v) {
+    if (v.days !== undefined) return v.days;
+    if (v.vote === 'both') return ['saturday', 'sunday'];
+    if (v.vote === 'unavailable') return [];
+    if (v.vote) return [v.vote];
+    return [];
+  }
+
+  async function showSuccess(name, days, voteRef, weekKey) {
     const { sat, sun } = getUpcomingDates();
     const unavailable = !days || days.length === 0;
     document.getElementById('content').innerHTML = `
@@ -168,9 +194,46 @@
           : 'See you on the field, ' + name.split(' ')[0] + '! 🏏'
         }</p>
         <div class="vote-summary">Your availability:<br><strong>${formatVoteSummary(days, sat, sun)}</strong></div>
+        <div class="dashboard" id="dashboard"><h3>📊 Loading poll results...</h3></div>
         <button class="submit-btn" id="changeBtn" style="margin-top:16px;background:#666;font-size:14px;padding:12px">✏️ Change my vote</button>
       </div>`;
     document.getElementById('changeBtn').addEventListener('click', () => showVoteForm(name, voteRef, weekKey, days));
+
+    // Fetch all votes and render live dashboard
+    try {
+      const snap = await getDocs(collection(db, 'votes'));
+      const counts = { saturday: 0, sunday: 0, unavailable: 0 };
+      let total = 0;
+      snap.forEach(d => {
+        const v = d.data();
+        if (v.week !== weekKey) return;
+        total++;
+        const vdays = getDays(v);
+        if (vdays.length === 0) counts.unavailable++;
+        if (vdays.includes('saturday')) counts.saturday++;
+        if (vdays.includes('sunday')) counts.sunday++;
+      });
+      const max = Math.max(counts.saturday, counts.sunday, counts.unavailable, 1);
+      document.getElementById('dashboard').innerHTML = `
+        <h3>📊 This week's votes (${total} responded)</h3>
+        <div class="dash-row">
+          <span class="dash-label">📅 Sat, ${sat}</span>
+          <div class="dash-bar-wrap"><div class="dash-bar sat" style="width:${Math.round(counts.saturday/max*100)}%"></div></div>
+          <span class="dash-count">${counts.saturday}</span>
+        </div>
+        <div class="dash-row">
+          <span class="dash-label">📅 Sun, ${sun}</span>
+          <div class="dash-bar-wrap"><div class="dash-bar sun" style="width:${Math.round(counts.sunday/max*100)}%"></div></div>
+          <span class="dash-count">${counts.sunday}</span>
+        </div>
+        <div class="dash-row">
+          <span class="dash-label">❌ Not Available</span>
+          <div class="dash-bar-wrap"><div class="dash-bar na" style="width:${Math.round(counts.unavailable/max*100)}%"></div></div>
+          <span class="dash-count">${counts.unavailable}</span>
+        </div>`;
+    } catch(e) {
+      document.getElementById('dashboard').innerHTML = '';
+    }
   }
 
   function showVoteForm(name, voteRef, weekKey, currentDays) {
@@ -248,7 +311,7 @@
       const daysArr = unavailable ? [] : [...selected];
       try {
         await setDoc(voteRef, { player: name, days: daysArr, week: weekKey, timestamp: Date.now() });
-        showSuccess(name, daysArr, voteRef, weekKey);
+        await showSuccess(name, daysArr, voteRef, weekKey);
       } catch(e) {
         document.getElementById('errorMsg').style.display = 'block';
         submitBtn.disabled = false;
@@ -281,7 +344,7 @@
         const data = snap.data();
         // support old single-value votes
         const days = data.days !== undefined ? data.days : (data.vote && data.vote !== 'unavailable' ? [data.vote === 'both' ? ['saturday','sunday'] : data.vote].flat() : []);
-        showSuccess(playerName, days, voteRef, weekKey);
+        await showSuccess(playerName, days, voteRef, weekKey);
         return;
       }
     } catch(e) {}
