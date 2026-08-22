@@ -280,7 +280,7 @@
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
-  import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+  import { getFirestore, collection, getDocs, doc, getDoc } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
   // ── LOGIN ────────────────────────────────────────────────────────────────────
   const ADMIN_PASS = 'L3stH@v3Fun!';
@@ -757,6 +757,17 @@
   // ── INIT ──────────────────────────────────────────────────────────────────────
   const weekKey = getWeekKey();
   document.getElementById('weekLabel').textContent = 'Week of ' + weekKey + '  •  Admin Panel';
+
+  // Load strength scores from Firestore (updated by update_points.js every Sunday)
+  try {
+    const strengthSnap = await getDoc(doc(db, 'config', 'strength'));
+    if (strengthSnap.exists()) {
+      const data = strengthSnap.data();
+      const scores = data.scores || {};
+      for (const [name, pts] of Object.entries(scores)) STRENGTH[name] = pts;
+      console.log('Loaded updated strength scores from Firestore (' + data.updatedAt?.slice(0,10) + ', ' + data.matchCount + ' matches)');
+    }
+  } catch(e) { console.warn('Could not load Firestore strength scores, using defaults:', e.message); }
 
   const snap = await getDocs(collection(db, 'votes'));
   const votes = {};
