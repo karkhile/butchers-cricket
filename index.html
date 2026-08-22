@@ -149,8 +149,9 @@
 
   function getWeekKey() {
     const now = new Date();
-    const diff = (now.getDay() >= 6) ? 0 : now.getDay() + 1;
-    const sat = new Date(now); sat.setDate(now.getDate() - diff);
+    const day = now.getDay(); // 0=Sun, 6=Sat
+    const daysUntilSat = (6 - day + 7) % 7 || 7; // always next Saturday
+    const sat = new Date(now); sat.setDate(now.getDate() + daysUntilSat);
     return sat.toISOString().slice(0, 10);
   }
 
