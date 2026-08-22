@@ -156,15 +156,6 @@
   const app = initializeApp(FIREBASE_CONFIG);
   const db  = getFirestore(app);
 
-  function isPollClosed() {
-    const now = new Date();
-    const day = now.getDay(); // 0=Sun,1=Mon,...,5=Fri,6=Sat
-    // Closed: Fri midnight (23:59) through end of Sunday
-    if (day === 6 || day === 0) return true;
-    if (day === 5 && now.getHours() === 23 && now.getMinutes() >= 59) return true;
-    return false;
-  }
-
   function nextSaturday() {
     const now = new Date();
     const day = now.getDay();
@@ -352,13 +343,19 @@
       return;
     }
 
-    if (isPollClosed()) {
-      const { sat } = getUpcomingDates();
+    // Check Firestore for poll open/closed state
+    let pollOpen = true;
+    try {
+      const pollSnap = await getDoc(doc(db, 'config', 'poll'));
+      if (pollSnap.exists()) pollOpen = pollSnap.data().open !== false;
+    } catch(e) {}
+
+    if (!pollOpen) {
       content.innerHTML = `
         <div class="poll-closed">
           <div class="big">🔒</div>
           <h2>Poll is closed</h2>
-          <p>Voting opens again on Monday.<br>See you on the field, ${playerName.split(' ')[0]}! 🏏</p>
+          <p>Check back later for next week's poll.<br>See you on the field, ${playerName.split(' ')[0]}! 🏏</p>
         </div>`;
       return;
     }
