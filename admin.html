@@ -295,19 +295,38 @@
   import { getFirestore, collection, getDocs, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
   // ── LOGIN ────────────────────────────────────────────────────────────────────
-  const ADMIN_PASS = 'L3stH@v3Fun!';
+  async function hashPassword(pw) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
 
-  window.checkLogin = function() {
+  window.checkLogin = async function() {
     const pw = document.getElementById('pwInput').value;
-    if (pw === ADMIN_PASS) {
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('main-content').style.display = 'block';
-      sessionStorage.setItem('bcc-admin', '1');
-    } else {
-      const err = document.getElementById('pwErr');
-      err.style.display = 'block';
-      document.getElementById('pwInput').value = '';
-      document.getElementById('pwInput').focus();
+    const btn = document.querySelector('#login-screen .btn-primary');
+    btn.disabled = true;
+    btn.textContent = 'Checking...';
+    try {
+      const app = initializeApp(FIREBASE_CONFIG);
+      const db = getFirestore(app);
+      const snap = await getDoc(doc(db, 'config', 'admin'));
+      const storedHash = snap.exists() ? snap.data().passwordHash : null;
+      const typedHash = await hashPassword(pw);
+      if (storedHash && typedHash === storedHash) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        sessionStorage.setItem('bcc-admin', '1');
+      } else {
+        const err = document.getElementById('pwErr');
+        err.style.display = 'block';
+        document.getElementById('pwInput').value = '';
+        document.getElementById('pwInput').focus();
+      }
+    } catch (e) {
+      console.error('Login error:', e);
+      document.getElementById('pwErr').style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Login';
     }
   };
 
