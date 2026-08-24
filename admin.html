@@ -313,6 +313,7 @@
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
         sessionStorage.setItem('bcc-admin', '1');
+        sessionStorage.setItem('bcc-cc-token', snap.data().ccToken || '');
       } else {
         const err = document.getElementById('pwErr');
         err.style.display = 'block';
@@ -341,7 +342,7 @@
     projectId: "butchers-cricket",
   };
 
-  const CC_TOKEN    = '1d1f95e3-4b54-4a9b-b388-6472e0c5516a';
+  const CC_TOKEN    = sessionStorage.getItem('bcc-cc-token') || '';
   const LEAGUE_ID   = 'kroq2QrfcoPEe4neEeXrVA';
   const SERIES_ID   = 'wynmKh98CCp9qybL-NjEyQ';
   const TEAM_A      = '8LZsXms8mkRjsz07r42o5g';
