@@ -306,8 +306,6 @@
     btn.disabled = true;
     btn.textContent = 'Checking...';
     try {
-      const app = initializeApp(FIREBASE_CONFIG);
-      const db = getFirestore(app);
       const snap = await getDoc(doc(db, 'config', 'admin'));
       const storedHash = snap.exists() ? snap.data().passwordHash : null;
       const typedHash = await hashPassword(pw);
