@@ -123,7 +123,7 @@
 
     document.getElementById('weekLabel').textContent = 'Week of ' + fmt(weekKey);
 
-    const groups = { saturday: [], sunday: [], both: [], unavailable: [] };
+    const groups = { saturday: [], sunday: [], unavailable: [] };
 
     const snap = await getDocs(collection(db, 'votes'));
     snap.forEach(d => {
@@ -133,17 +133,15 @@
       const days = getDays(v);
       const hasSat = days.includes('saturday');
       const hasSun = days.includes('sunday');
-      if (hasSat && hasSun)       groups.both.push(name);
-      else if (hasSat)            groups.saturday.push(name);
-      else if (hasSun)            groups.sunday.push(name);
-      else                        groups.unavailable.push(name);
+      if (hasSat)  groups.saturday.push(name);
+      if (hasSun)  groups.sunday.push(name);
+      if (!hasSat && !hasSun) groups.unavailable.push(name);
     });
 
     const sections = [
-      { key: 'saturday',   label: satLabel,       icon: '📅' },
-      { key: 'sunday',     label: sunLabel,        icon: '📅' },
-      { key: 'both',       label: 'Both Days',     icon: '🔁' },
-      { key: 'unavailable',label: 'Not Available', icon: '❌' },
+      { key: 'saturday',    label: satLabel,       icon: '📅' },
+      { key: 'sunday',      label: sunLabel,        icon: '📅' },
+      { key: 'unavailable', label: 'Not Available', icon: '❌' },
     ];
 
     const html = `<div class="grid">${sections.map(s => {
