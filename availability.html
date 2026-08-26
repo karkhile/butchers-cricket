@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Butchers Cricket — Availability</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a3d1f;
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+    .header { text-align: center; margin-bottom: 24px; }
+    .header img { width: 56px; height: 56px; border-radius: 50%; margin-bottom: 8px; }
+    .header h1 { color: white; font-size: 22px; font-weight: 700; }
+    .header p { color: #9ecfb0; font-size: 13px; margin-top: 4px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; max-width: 900px; margin: 0 auto; }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .card-title { font-size: 15px; font-weight: 700; color: #0a3d1f; display: flex; align-items: center; gap: 6px; }
+    .count-badge {
+      font-size: 13px; font-weight: 700; padding: 3px 10px;
+      border-radius: 20px; color: white;
+    }
+    .badge-saturday  { background: #2ecc71; }
+    .badge-sunday    { background: #3498db; }
+    .badge-both      { background: #8e44ad; }
+    .badge-unavailable { background: #e74c3c; }
+
+    .player-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill {
+      font-size: 13px; padding: 5px 12px; border-radius: 20px; font-weight: 500;
+    }
+    .pill-saturday   { background: #f0fff4; color: #1a7a3e; }
+    .pill-sunday     { background: #eff6ff; color: #1a5c8a; }
+    .pill-both       { background: #f5eeff; color: #6c2fa0; }
+    .pill-unavailable { background: #fff0f0; color: #a93226; }
+
+    .empty { color: #bbb; font-size: 13px; font-style: italic; }
+
+    .updated { text-align: center; color: #9ecfb0; font-size: 12px; margin-top: 20px; }
+    .loading { text-align: center; color: white; padding: 40px; font-size: 15px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="logo.jpg" alt="Butchers Cricket">
+    <h1>Butchers Cricket</h1>
+    <p id="weekLabel">Loading availability...</p>
+  </div>
+
+  <div id="root" class="loading">Loading...</div>
+  <p class="updated" id="updatedAt"></p>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
+  import { getFirestore, collection, getDocs, doc, getDoc } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyDU0RHh9ScIIPE5tSpjjhnAPN8ypF5T9EE",
+    authDomain: "butchers-cricket.firebaseapp.com",
+    projectId: "butchers-cricket",
+  };
+
+  const app = initializeApp(FIREBASE_CONFIG);
+  const db  = getFirestore(app);
+
+  function nextSaturday() {
+    const now = new Date();
+    const day = now.getDay();
+    const daysUntilSat = day === 6 ? 0 : day === 0 ? 6 : (6 - day);
+    const sat = new Date(now);
+    sat.setDate(now.getDate() + daysUntilSat);
+    return sat;
+  }
+
+  function fmt(dateStr) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr + 'T12:00:00');
+    return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+  }
+
+  function getDays(v) {
+    if (v.days !== undefined) return v.days;
+    if (v.vote === 'both') return ['saturday', 'sunday'];
+    if (v.vote === 'unavailable') return [];
+    if (v.vote) return [v.vote];
+    return [];
+  }
+
+  function firstName(name) { return (name || '').split(' ')[0]; }
+
+  async function load() {
+    // Get poll config for dates and week key
+    let weekKey = nextSaturday().toISOString().slice(0, 10);
+    let satLabel = 'Saturday';
+    let sunLabel = 'Sunday';
+
+    try {
+      const pollSnap = await getDoc(doc(db, 'config', 'poll'));
+      if (pollSnap.exists()) {
+        const pd = pollSnap.data();
+        if (pd.satDate) {
+          weekKey  = pd.satDate;
+          satLabel = 'Saturday ' + fmt(pd.satDate);
+          sunLabel = 'Sunday '   + fmt(pd.sunDate || '');
+        }
+      }
+    } catch (_) {}
+
+    document.getElementById('weekLabel').textContent = 'Week of ' + fmt(weekKey);
+
+    const groups = { saturday: [], sunday: [], both: [], unavailable: [] };
+
+    const snap = await getDocs(collection(db, 'votes'));
+    snap.forEach(d => {
+      const v = d.data();
+      if (v.week !== weekKey) return;
+      const name = firstName(v.player || d.id);
+      const days = getDays(v);
+      const hasSat = days.includes('saturday');
+      const hasSun = days.includes('sunday');
+      if (hasSat && hasSun)       groups.both.push(name);
+      else if (hasSat)            groups.saturday.push(name);
+      else if (hasSun)            groups.sunday.push(name);
+      else                        groups.unavailable.push(name);
+    });
+
+    const sections = [
+      { key: 'saturday',   label: satLabel,       icon: '📅' },
+      { key: 'sunday',     label: sunLabel,        icon: '📅' },
+      { key: 'both',       label: 'Both Days',     icon: '🔁' },
+      { key: 'unavailable',label: 'Not Available', icon: '❌' },
+    ];
+
+    const html = `<div class="grid">${sections.map(s => {
+      const names = groups[s.key];
+      const pills = names.length
+        ? names.map(n => `<span class="pill pill-${s.key}">${n}</span>`).join('')
+        : `<span class="empty">No responses yet</span>`;
+      return `
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">${s.icon} ${s.label}</span>
+            <span class="count-badge badge-${s.key}">${names.length}</span>
+          </div>
+          <div class="player-list">${pills}</div>
+        </div>`;
+    }).join('')}</div>`;
+
+    document.getElementById('root').innerHTML = html;
+    document.getElementById('updatedAt').textContent =
+      'Last updated ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  load().catch(e => {
+    document.getElementById('root').innerHTML = '<p style="color:white;text-align:center">Failed to load. Please refresh.</p>';
+    console.error(e);
+  });
+</script>
+</body>
+</html>
