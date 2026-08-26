@@ -101,7 +101,10 @@
     return [];
   }
 
-  function firstName(name) { return (name || '').split(' ')[0]; }
+  function firstName(name) {
+    const parts = (name || '').trim().split(/\s+/);
+    return parts[0] + (parts.length > 1 ? ' ' + parts[parts.length - 1][0] : '');
+  }
 
   async function load() {
     // Get poll config for dates and week key
