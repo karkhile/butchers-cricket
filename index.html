@@ -230,7 +230,8 @@
         if (v.week !== weekKey) return;
         total++;
         const vdays = getDays(v);
-        const firstName = (v.player || d.id).split(' ')[0];
+        const parts = (v.player || d.id).trim().split(/\s+/);
+        const firstName = parts[0] + (parts.length > 1 ? ' ' + parts[parts.length - 1][0] : '');
         if (vdays.length === 0) groups.unavailable.push(firstName);
         if (vdays.includes('saturday')) groups.saturday.push(firstName);
         if (vdays.includes('sunday'))   groups.sunday.push(firstName);
