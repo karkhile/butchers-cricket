@@ -62,6 +62,21 @@
     .extra-rows { display: none; }
     .extra-rows.open { display: block; }
 
+    /* fastest tab */
+    .fastest-card { background: white; border-radius: 16px; padding: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+    .fastest-card .card-title { font-size: 14px; font-weight: 700; color: #0a3d1f; margin-bottom: 14px; }
+    .fastest-section { margin-bottom: 16px; }
+    .fastest-section:last-child { margin-bottom: 0; }
+    .fastest-threshold { font-size: 12px; font-weight: 700; color: #0a3d1f; background: #e8f5e9; border-radius: 8px; padding: 4px 10px; display: inline-block; margin-bottom: 6px; }
+    .fastest-entry { display: flex; align-items: center; gap: 8px; padding: 4px 0; border-bottom: 1px solid #f5f5f5; }
+    .fastest-entry:last-child { border-bottom: none; }
+    .fastest-rank { font-size: 12px; font-weight: 700; color: #888; width: 20px; flex-shrink: 0; }
+    .fastest-rank.gold   { color: #f0b429; }
+    .fastest-rank.silver { color: #8f9ba8; }
+    .fastest-rank.bronze { color: #c17b3d; }
+    .fastest-name  { font-size: 13px; font-weight: 600; color: #222; flex: 1; }
+    .fastest-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: #e8f5e9; color: #1b5e20; white-space: nowrap; }
+
     .loading { color: #9ecfb0; text-align: center; padding: 40px; font-size: 14px; }
     .error   { color: #e74c3c; text-align: center; padding: 40px; font-size: 14px; }
   </style>
@@ -77,6 +92,7 @@
     <button class="toggle-btn active"   id="btn-big"      onclick="setView('big')">Major upcoming</button>
     <button class="toggle-btn inactive" id="btn-all"      onclick="setView('all')">All upcoming</button>
     <button class="toggle-btn inactive" id="btn-achieved" onclick="setView('achieved')">🏆 Achieved</button>
+    <button class="toggle-btn inactive" id="btn-fastest"  onclick="setView('fastest')">⚡ Fastest</button>
   </div>
 
   <div id="content" class="loading">Fetching milestones…</div>
@@ -87,6 +103,8 @@
 
     const CARDS = [
       { key: 'batting',      title: '🏏 Batting',        unit: 'runs',       gap: 'runs needed'      },
+      { key: 'fours',        title: '4️⃣  Fours',          unit: 'fours',      gap: 'fours needed'     },
+      { key: 'sixes',        title: '6️⃣  Sixes',          unit: 'sixes',      gap: 'sixes needed'     },
       { key: 'bowling',      title: '🔴 Bowling',        unit: 'wkts',       gap: 'wickets needed'   },
       { key: 'totalCatches', title: '🤲 Total Catches',  unit: 'catches',    gap: 'catches needed'   },
       { key: 'catches',      title: '↳ Field Catches',   unit: 'catches',    gap: 'catches needed'   },
@@ -111,7 +129,7 @@
 
     function setView(v) {
       _view = v;
-      ['big','all','achieved'].forEach(k => {
+      ['big','all','achieved','fastest'].forEach(k => {
         document.getElementById('btn-' + k).className = 'toggle-btn ' + (v === k ? 'active' : 'inactive');
       });
       if (_data) render();
@@ -126,6 +144,8 @@
           const items = (_data[c.key] || {}).achieved || [];
           el.appendChild(buildAchievedCard(c.title, items, c.unit));
         }
+      } else if (_view === 'fastest') {
+        renderFastest(el);
       } else {
         for (const c of CARDS) {
           const items = (_data[c.key] || {})[_view] || [];
@@ -213,6 +233,53 @@
         '</div>' +
         '<span class="achieved-badge">✓ ' + item.achieved + ' ' + unit + '</span>';
       return row;
+    }
+
+    const FASTEST_CARDS = [
+      { key: 'batting',     title: '🏏 Batting',        unit: 'matches', suffix: 'runs'     },
+      { key: 'fours',       title: '4️⃣  Fours',          unit: 'matches', suffix: 'fours'    },
+      { key: 'sixes',       title: '6️⃣  Sixes',          unit: 'matches', suffix: 'sixes'    },
+      { key: 'bowling',     title: '🔴 Bowling',        unit: 'matches', suffix: 'wickets'  },
+      { key: 'totalCatch',  title: '🤲 Total Catches',  unit: 'matches', suffix: 'catches'  },
+      { key: 'fieldCatch',  title: '↳ Field Catches',   unit: 'matches', suffix: 'catches'  },
+      { key: 'keeperCatch', title: '↳ Keeper Catches',  unit: 'matches', suffix: 'catches'  },
+      { key: 'stumpings',   title: '🪄 Stumpings',      unit: 'matches', suffix: 'stumpings'},
+      { key: 'runOuts',     title: '🏃 Run-Outs',       unit: 'matches', suffix: 'run-outs' },
+    ];
+
+    function renderFastest(el) {
+      const fastest = (_data.fastest || {});
+      for (const c of FASTEST_CARDS) {
+        const thresholds = fastest[c.key] || [];
+        el.appendChild(buildFastestCard(c.title, thresholds, c.suffix));
+      }
+    }
+
+    function buildFastestCard(title, thresholds, suffix) {
+      const card = document.createElement('div');
+      card.className = 'fastest-card';
+      card.innerHTML = '<div class="card-title">' + title + '</div>';
+      if (!thresholds.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
+      for (const t of thresholds) {
+        const sec = document.createElement('div');
+        sec.className = 'fastest-section';
+        sec.innerHTML = '<div class="fastest-threshold">⚡ First to ' + t.threshold + ' ' + suffix + '</div>';
+        const rankLabels = ['🥇','🥈','🥉'];
+        const rankClasses = ['gold','silver','bronze'];
+        t.entries.forEach((e, i) => {
+          const row = document.createElement('div');
+          row.className = 'fastest-entry';
+          const rankHtml = i < 3
+            ? '<span class="fastest-rank ' + rankClasses[i] + '">' + rankLabels[i] + '</span>'
+            : '<span class="fastest-rank">' + (i + 1) + '</span>';
+          row.innerHTML = rankHtml +
+            '<span class="fastest-name">' + e.name + '</span>' +
+            '<span class="fastest-badge">match ' + e.matches + '</span>';
+          sec.appendChild(row);
+        });
+        card.appendChild(sec);
+      }
+      return card;
     }
   </script>
 </body>
