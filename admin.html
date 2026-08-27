@@ -819,15 +819,22 @@
       const rB = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: rosterB, lang: 'en' });
       log(rB.status === 'Success' ? '✓ Butchers-B: ' + rosterB.length + ' players' : '✗ ' + JSON.stringify(rB).slice(0, 120), rB.status === 'Success' ? 'success' : 'error');
 
-      for (const time of ['7:30 AM', '9:30 AM']) {
-        log('Creating fixture at ' + time + '...');
-        const r = await ccPost('series/' + SERIES_ID + '/fixture', {
-          umpires: [], scorers: [], teamOneId: TEAM_A, teamTwoId: TEAM_B,
-          matchType: 'league', startDate: date, startTime: time,
-          groundId: GROUND_ID, publicNotes: '', privateNotes: '',
-          sendNotifications: 0, matchManager: '', seriesId: SERIES_ID, divisionId: '', forceProceed: 0,
-        });
-        log(r.status === 'Success' ? '✓ Fixture: ' + time : '✗ ' + JSON.stringify(r).slice(0, 120), r.status === 'Success' ? 'success' : 'error');
+      log('Checking for existing fixtures on ' + date + '...');
+      const upcoming = await ccGet('series/' + SERIES_ID + '/matches?status=upcoming&lang=en&page=1');
+      const existing = (upcoming.data?.scheduled || []).filter(m => m.startDate === date);
+      if (existing.length > 0) {
+        log('✓ Fixtures already exist for ' + date + ' — skipping creation', 'success');
+      } else {
+        for (const time of ['7:30 AM', '9:30 AM']) {
+          log('Creating fixture at ' + time + '...');
+          const r = await ccPost('series/' + SERIES_ID + '/fixture', {
+            umpires: [], scorers: [], teamOneId: TEAM_A, teamTwoId: TEAM_B,
+            matchType: 'league', startDate: date, startTime: time,
+            groundId: GROUND_ID, publicNotes: '', privateNotes: '',
+            sendNotifications: 0, matchManager: '', seriesId: SERIES_ID, divisionId: '', forceProceed: 0,
+          });
+          log(r.status === 'Success' ? '✓ Fixture: ' + time : '✗ ' + JSON.stringify(r).slice(0, 120), r.status === 'Success' ? 'success' : 'error');
+        }
       }
 
       log('🎉 All done! Check admin.cricclubs.com', 'success');
