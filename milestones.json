@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-27T06:04:33.094Z",
+  "updatedAt": "2026-08-27T06:09:02.031Z",
   "batting": [
     {
       "name": "Gaurav Mehta",
@@ -421,6 +421,32 @@
     },
     {
       "name": "Subham S",
+      "current": 3,
+      "next": 5,
+      "gap": 2
+    }
+  ],
+  "keeper": [
+    {
+      "name": "Arpan D",
+      "current": 4,
+      "next": 5,
+      "gap": 1
+    },
+    {
+      "name": "Hari V",
+      "current": 14,
+      "next": 15,
+      "gap": 1
+    },
+    {
+      "name": "Anil M",
+      "current": 38,
+      "next": 40,
+      "gap": 2
+    },
+    {
+      "name": "Sylvestor G",
       "current": 3,
       "next": 5,
       "gap": 2

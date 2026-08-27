@@ -90,6 +90,7 @@
         el.appendChild(buildCard('🏏 Batting Milestones', data.batting || [], 'runs', 'runs needed'));
         el.appendChild(buildCard('🎳 Bowling Milestones', data.bowling || [], 'wkts', 'wickets needed'));
         el.appendChild(buildCard('🤲 Catches Milestones', data.catches || [], 'catches', 'catches needed'));
+        el.appendChild(buildCard('🧤 Keeper Dismissals', data.keeper || [], 'dismissals', 'dismissals needed'));
         el.appendChild(buildCard('🏃 Run-Out Milestones', data.runOuts || [], 'run-outs', 'run-outs needed'));
       })
       .catch(() => {
