@@ -39,10 +39,56 @@ const isJunk = name =>
   !name || name === 'null' || name.includes('Dummy') || name.includes('Guest') ||
   name.includes('Substitute') || name.includes('Sub)') || name.startsWith('&#');
 
+// Fielding stats from CricClubs (updated manually — parsing out-strings misses ~15% of entries)
+// Source: CricClubs league fielding page — last updated 2026-08-27
+const FIELDING = {
+  'Abhishek Kumar Singh':          { ct: 43, ctw: 35, directRO: 2,  indirectRO: 7,  st: 4  },
+  'Yash Mehta':                    { ct:  8, ctw: 52, directRO: 7,  indirectRO: 8,  st: 0  },
+  'Sylvestor George':              { ct: 59, ctw:  1, directRO: 1,  indirectRO: 8,  st: 2  },
+  'Anil Mallapur':                 { ct:  9, ctw: 39, directRO: 6,  indirectRO: 5,  st: 3  },
+  'Anjan Kumar':                   { ct: 31, ctw:  9, directRO: 15, indirectRO: 5,  st: 0  },
+  'Arjun Shukla':                  { ct: 17, ctw: 21, directRO: 5,  indirectRO: 10, st: 3  },
+  'Hari Vangipuram':               { ct: 17, ctw: 12, directRO: 3,  indirectRO: 8,  st: 2  },
+  'Praveen Karkhile':              { ct: 34, ctw:  0, directRO: 3,  indirectRO: 4,  st: 0  },
+  'Prashant Kumar':                { ct: 17, ctw:  6, directRO: 7,  indirectRO: 9,  st: 0  },
+  'Arpan Dey':                     { ct: 24, ctw:  3, directRO: 4,  indirectRO: 5,  st: 1  },
+  'Gaurav Mehta':                  { ct: 23, ctw:  5, directRO: 4,  indirectRO: 3,  st: 0  },
+  'Gaurav Kumar':                  { ct: 27, ctw:  0, directRO: 2,  indirectRO: 3,  st: 0  },
+  'Kaushal Karkera':               { ct: 19, ctw:  2, directRO: 4,  indirectRO: 1,  st: 0  },
+  'Vinay Bharbhari':               { ct: 18, ctw:  1, directRO: 3,  indirectRO: 3,  st: 0  },
+  'Soumya Smruti Mishra':          { ct: 13, ctw:  6, directRO: 3,  indirectRO: 2,  st: 0  },
+  'Jay Shah':                      { ct: 14, ctw:  0, directRO: 2,  indirectRO: 2,  st: 0  },
+  'Abhishek Lingwal':              { ct: 13, ctw:  1, directRO: 0,  indirectRO: 4,  st: 0  },
+  'Venkata Krishna Ravi':          { ct: 15, ctw:  0, directRO: 1,  indirectRO: 1,  st: 0  },
+  'Rijwan Rana':                   { ct: 13, ctw:  1, directRO: 1,  indirectRO: 1,  st: 0  },
+  'Eshwar Chaitanya Sarampati':    { ct:  1, ctw:  5, directRO: 0,  indirectRO: 1,  st: 2  },
+  'Lokesh Bala':                   { ct:  6, ctw:  0, directRO: 1,  indirectRO: 1,  st: 1  },
+  'Akashdeep Balu':                { ct:  5, ctw:  0, directRO: 1,  indirectRO: 2,  st: 0  },
+  'Arjun Deb':                     { ct:  7, ctw:  0, directRO: 0,  indirectRO: 1,  st: 0  },
+  'Rajeev Tirumala':               { ct:  3, ctw:  0, directRO: 1,  indirectRO: 4,  st: 0  },
+  'Rohit Sharma':                  { ct:  7, ctw:  0, directRO: 0,  indirectRO: 0,  st: 0  },
+  'Kunal Kokate':                  { ct:  5, ctw:  0, directRO: 0,  indirectRO: 2,  st: 0  },
+  'Piyush Jha':                    { ct:  4, ctw:  0, directRO: 2,  indirectRO: 0,  st: 0  },
+  'Meet Dhabalia':                 { ct:  3, ctw:  1, directRO: 2,  indirectRO: 0,  st: 0  },
+  'Srinath Shah':                  { ct:  5, ctw:  0, directRO: 0,  indirectRO: 1,  st: 0  },
+  'Harsha Vardhan Reddy Vndavally':{ ct:  3, ctw:  0, directRO: 2,  indirectRO: 0,  st: 0  },
+  'Jimit Majmudar':                { ct:  1, ctw:  0, directRO: 2,  indirectRO: 1,  st: 0  },
+  'Subham Satapathy':              { ct:  3, ctw:  0, directRO: 1,  indirectRO: 0,  st: 0  },
+  'Santosh Ghosh':                 { ct:  2, ctw:  0, directRO: 1,  indirectRO: 0,  st: 0  },
+  'Ajay Joy':                      { ct:  3, ctw:  0, directRO: 0,  indirectRO: 0,  st: 0  },
+  'tarun JOSHI':                   { ct:  2, ctw:  0, directRO: 0,  indirectRO: 1,  st: 0  },
+  'Shriganesh Shintre':            { ct:  1, ctw:  0, directRO: 1,  indirectRO: 0,  st: 0  },
+  'Mithal Kothari':                { ct:  2, ctw:  0, directRO: 0,  indirectRO: 0,  st: 0  },
+  'Mohan Challa':                  { ct:  0, ctw:  0, directRO: 1,  indirectRO: 0,  st: 0  },
+  'Ashish Chanchalani':            { ct:  1, ctw:  0, directRO: 0,  indirectRO: 0,  st: 0  },
+  'Shashank Dube':                 { ct:  0, ctw:  0, directRO: 0,  indirectRO: 1,  st: 0  },
+  'Chaitanya Teja Golla':          { ct:  0, ctw:  0, directRO: 0,  indirectRO: 1,  st: 0  },
+};
+
 (async () => {
   const matches = await getAllMatchesAllSeries();
   console.log('Total matches:', matches.length);
-  const batters = {}, bowlers = {}, catches = {}, keeperCt = {}, stumpings = {}, runouts = {};
+  const batters = {}, bowlers = {};
 
   for (let i = 0; i < matches.length; i++) {
     const m = matches[i];
@@ -63,36 +109,6 @@ const isJunk = name =>
           if ((parseInt(b.ballsFaced) || 0) === 0 && (parseInt(b.runsScored) || 0) === 0) continue;
           if (!batters[name]) batters[name] = 0;
           batters[name] += parseInt(b.runsScored) || 0;
-
-          const raw = b.outStringNoLink || '';
-
-          if (howOut === 'ct') {
-            // "c Srinath S b Akashdeep B"
-            const mx = raw.match(/^c\s+(.+?)\s+b\s+/i);
-            const fielder = mx ? mx[1].trim() : '';
-            if (!isJunk(fielder)) catches[fielder] = (catches[fielder] || 0) + 1;
-          }
-
-          if (howOut === 'ctw') {
-            // "c &#8224;Yash M b Akashdeep B" — keeper catch
-            const mx = raw.match(/^c\s+(.+?)\s+b\s+/i);
-            const k = mx ? mx[1].replace(/&#\d+;/g, '').trim() : '';
-            if (!isJunk(k)) keeperCt[k] = (keeperCt[k] || 0) + 1;
-          }
-
-          if (howOut === 'st') {
-            // "St Eshwar Chaitanya S b Gaurav M"
-            const mx = raw.match(/^st\s+(.+?)\s+b\s+/i);
-            const k = mx ? mx[1].trim() : '';
-            if (!isJunk(k)) stumpings[k] = (stumpings[k] || 0) + 1;
-          }
-
-          if (howOut === 'ro') {
-            // "run out (Yash M)" or "run out (A/B)"
-            const mx = raw.match(/run\s+out\s*\((.+?)\)/i);
-            const fielder = mx ? mx[1].trim() : '';
-            if (!isJunk(fielder)) runouts[fielder] = (runouts[fielder] || 0) + 1;
-          }
         }
         for (const b of (inn.bowling || [])) {
           const name = ((b.firstName || '') + ' ' + (b.lastName || '')).trim();
@@ -117,10 +133,12 @@ const isJunk = name =>
       .map(([name, n]) => { const ms = nearMilestone(n, milestones, window); return ms ? { name, ...ms } : null; })
       .filter(Boolean).sort((a, b) => a.gap - b.gap);
 
-  // Combined catches = regular catches + keeper catches (stumpings excluded)
-  const totalCatches = {};
-  for (const [name, n] of Object.entries(catches))  totalCatches[name] = (totalCatches[name] || 0) + n;
-  for (const [name, n] of Object.entries(keeperCt)) totalCatches[name] = (totalCatches[name] || 0) + n;
+  // Build fielding maps from authoritative FIELDING table
+  const catches     = Object.fromEntries(Object.entries(FIELDING).map(([n, f]) => [n, f.ct]));
+  const keeperCt    = Object.fromEntries(Object.entries(FIELDING).map(([n, f]) => [n, f.ctw]));
+  const stumpings   = Object.fromEntries(Object.entries(FIELDING).map(([n, f]) => [n, f.st]));
+  const runouts     = Object.fromEntries(Object.entries(FIELDING).map(([n, f]) => [n, f.directRO + f.indirectRO]));
+  const totalCatches = Object.fromEntries(Object.entries(FIELDING).map(([n, f]) => [n, f.ct + f.ctw]));
 
   const output = {
     updatedAt: new Date().toISOString(),
