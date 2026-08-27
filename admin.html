@@ -261,7 +261,8 @@
           <div id="pool-list"></div>
           <div class="zone-count" id="pool-count"></div>
           <div style="display:flex;gap:6px;margin-top:8px;">
-            <input id="addPlayerInput" type="text" placeholder="Add player by name…" style="flex:1;padding:6px 8px;border:1px solid #ccc;border-radius:6px;font-size:13px;" onkeydown="if(event.key==='Enter')addPlayerToPool()">
+            <input id="addPlayerInput" type="text" list="playerSuggestions" placeholder="Add player by name…" style="flex:1;padding:6px 8px;border:1px solid #ccc;border-radius:6px;font-size:13px;" onkeydown="if(event.key==='Enter')addPlayerToPool()" oninput="updatePlayerSuggestions()">
+            <datalist id="playerSuggestions"></datalist>
             <button onclick="addPlayerToPool()" style="padding:6px 12px;background:#0a3d1f;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px;">Add</button>
           </div>
         </div>
@@ -744,6 +745,19 @@
   };
 
   // ── ADD PLAYER TO POOL (admin override) ──────────────────────────────────────
+  window.updatePlayerSuggestions = function() {
+    const input = document.getElementById('addPlayerInput');
+    const q = input.value.toLowerCase();
+    const { pool, teamA, teamB } = window._state;
+    const inBuilder = new Set([...pool, ...teamA, ...teamB].map(p => p.name));
+    const dl = document.getElementById('playerSuggestions');
+    dl.innerHTML = Object.keys(STRENGTH)
+      .filter(name => !inBuilder.has(name) && name.toLowerCase().includes(q))
+      .slice(0, 8)
+      .map(name => `<option value="${name}">`)
+      .join('');
+  };
+
   window.addPlayerToPool = function() {
     const input = document.getElementById('addPlayerInput');
     const name = input.value.trim();
