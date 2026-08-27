@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-27T07:43:20.451Z",
+  "updatedAt": "2026-08-27T09:00:41.862Z",
   "batting": {
     "big": [
       {
@@ -667,16 +667,268 @@
   "fours": {
     "big": [
       {
+        "name": "Santosh Ghosh",
+        "current": 9,
+        "next": 10,
+        "gap": 1
+      },
+      {
+        "name": "Mithal Kothari",
+        "current": 9,
+        "next": 10,
+        "gap": 1
+      },
+      {
+        "name": "Lokesh Bala",
+        "current": 8,
+        "next": 10,
+        "gap": 2
+      },
+      {
+        "name": "Venkata Krishna Ravi",
+        "current": 8,
+        "next": 10,
+        "gap": 2
+      },
+      {
+        "name": "Soumya Smruti Mishra",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
+        "name": "Piyush Jha",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
         "name": "Gaurav Mehta",
         "current": 46,
         "next": 50,
         "gap": 4
       },
       {
+        "name": "Srinath Shah",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
+        "name": "Abhishek Lingwal",
+        "current": 5,
+        "next": 10,
+        "gap": 5
+      },
+      {
+        "name": "Kunal Kokate",
+        "current": 5,
+        "next": 10,
+        "gap": 5
+      },
+      {
         "name": "Sylvestor George",
         "current": 44,
         "next": 50,
         "gap": 6
+      },
+      {
+        "name": "Kaushal Karkera",
+        "current": 19,
+        "next": 25,
+        "gap": 6
+      },
+      {
+        "name": "Hari Vangipuram",
+        "current": 18,
+        "next": 25,
+        "gap": 7
+      },
+      {
+        "name": "Subham Satapathy",
+        "current": 3,
+        "next": 10,
+        "gap": 7
+      },
+      {
+        "name": "Praveen Karkhile",
+        "current": 18,
+        "next": 25,
+        "gap": 7
+      },
+      {
+        "name": "Harsha Vardhan Reddy Vndavally",
+        "current": 3,
+        "next": 10,
+        "gap": 7
+      },
+      {
+        "name": "Ajay Joy",
+        "current": 3,
+        "next": 10,
+        "gap": 7
+      },
+      {
+        "name": "Vinay Bharbhari",
+        "current": 17,
+        "next": 25,
+        "gap": 8
+      },
+      {
+        "name": "Jimit Majmudar",
+        "current": 2,
+        "next": 10,
+        "gap": 8
+      },
+      {
+        "name": "Aman Kohli",
+        "current": 2,
+        "next": 10,
+        "gap": 8
+      },
+      {
+        "name": "Rajeev Tirumala",
+        "current": 2,
+        "next": 10,
+        "gap": 8
+      },
+      {
+        "name": "Rohit Sharma",
+        "current": 2,
+        "next": 10,
+        "gap": 8
+      },
+      {
+        "name": "Eshwar Chaitanya Sarampati",
+        "current": 2,
+        "next": 10,
+        "gap": 8
+      },
+      {
+        "name": "Vivek Garg",
+        "current": 1,
+        "next": 10,
+        "gap": 9
+      },
+      {
+        "name": "Tarun JOSHI",
+        "current": 1,
+        "next": 10,
+        "gap": 9
+      },
+      {
+        "name": "Akashdeep Balu",
+        "current": 16,
+        "next": 25,
+        "gap": 9
+      },
+      {
+        "name": "Shriganesh Shintre",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Chaitanya Teja Golla",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Arjun Deb",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Ankit Agarwal",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Meet Dhabalia",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Akshay Garg",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Mohan Challa",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Shashank Dube",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Vignesh Ganguly",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Tarang Thapa",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Smit Paul",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Aakash Agnihotri",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Ashish Chanchalani",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Shivang Sharma",
+        "current": 0,
+        "next": 10,
+        "gap": 10
+      },
+      {
+        "name": "Arpan Dey",
+        "current": 13,
+        "next": 25,
+        "gap": 12
+      },
+      {
+        "name": "Arjun Shukla",
+        "current": 10,
+        "next": 25,
+        "gap": 15
+      },
+      {
+        "name": "Gaurav Kumar",
+        "current": 10,
+        "next": 25,
+        "gap": 15
+      },
+      {
+        "name": "Jay Shah",
+        "current": 10,
+        "next": 25,
+        "gap": 15
       },
       {
         "name": "Rijwan Rana",
@@ -743,10 +995,100 @@
     ],
     "achieved": [
       {
+        "name": "Arjun Shukla",
+        "current": 10,
+        "achieved": 10,
+        "surplus": 0
+      },
+      {
+        "name": "Gaurav Kumar",
+        "current": 10,
+        "achieved": 10,
+        "surplus": 0
+      },
+      {
+        "name": "Jay Shah",
+        "current": 10,
+        "achieved": 10,
+        "surplus": 0
+      },
+      {
+        "name": "Prashant Kumar",
+        "current": 28,
+        "achieved": 25,
+        "surplus": 3
+      },
+      {
+        "name": "Arpan Dey",
+        "current": 13,
+        "achieved": 10,
+        "surplus": 3
+      },
+      {
+        "name": "Anil Mallapur",
+        "current": 31,
+        "achieved": 25,
+        "surplus": 6
+      },
+      {
+        "name": "Yash Mehta",
+        "current": 31,
+        "achieved": 25,
+        "surplus": 6
+      },
+      {
+        "name": "Akashdeep Balu",
+        "current": 16,
+        "achieved": 10,
+        "surplus": 6
+      },
+      {
+        "name": "Vinay Bharbhari",
+        "current": 17,
+        "achieved": 10,
+        "surplus": 7
+      },
+      {
+        "name": "Rijwan Rana",
+        "current": 32,
+        "achieved": 25,
+        "surplus": 7
+      },
+      {
+        "name": "Hari Vangipuram",
+        "current": 18,
+        "achieved": 10,
+        "surplus": 8
+      },
+      {
+        "name": "Praveen Karkhile",
+        "current": 18,
+        "achieved": 10,
+        "surplus": 8
+      },
+      {
+        "name": "Kaushal Karkera",
+        "current": 19,
+        "achieved": 10,
+        "surplus": 9
+      },
+      {
         "name": "Anjan Kumar",
         "current": 60,
         "achieved": 50,
         "surplus": 10
+      },
+      {
+        "name": "Sylvestor George",
+        "current": 44,
+        "achieved": 25,
+        "surplus": 19
+      },
+      {
+        "name": "Gaurav Mehta",
+        "current": 46,
+        "achieved": 25,
+        "surplus": 21
       },
       {
         "name": "Abhishek Kumar Singh",
