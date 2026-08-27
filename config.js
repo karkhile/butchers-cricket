@@ -64,7 +64,8 @@ async function getAllMatchesAllSeries() {
     while (true) {
       const d = await apiGet('series/' + sid + '/matches?status=completed&lang=en&page=' + page);
       const completed = d.data?.completed || [];
-      matches.push(...completed);
+      // exclude practice matches
+      matches.push(...completed.filter(m => (m.matchType || '').toLowerCase() !== 'practice'));
       if (completed.length < 30) break;
       page++;
     }
