@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Butchers Cricket — Upcoming Milestones</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a3d1f;
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+    .header { text-align: center; margin-bottom: 24px; }
+    .header img { width: 56px; height: 56px; border-radius: 50%; margin-bottom: 8px; }
+    .header h1 { color: white; font-size: 22px; font-weight: 700; }
+    .header p { color: #9ecfb0; font-size: 13px; margin-top: 4px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; max-width: 1100px; margin: 0 auto; }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .card-title {
+      font-size: 15px; font-weight: 700; color: #0a3d1f;
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 16px;
+    }
+    .empty { color: #aaa; font-size: 13px; text-align: center; padding: 12px 0; }
+
+    .milestone-row {
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .milestone-row:last-child { border-bottom: none; }
+    .milestone-row.hot { background: #fffbea; border-radius: 8px; padding: 10px 8px; margin: 0 -8px; }
+
+    .row-top {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 6px;
+    }
+    .player-name { font-size: 14px; font-weight: 600; color: #222; }
+    .milestone-row.hot .player-name { color: #a05f00; }
+
+    .gap-badge {
+      font-size: 12px; font-weight: 700; padding: 2px 8px;
+      border-radius: 12px; background: #e8f5e9; color: #1b5e20;
+    }
+    .milestone-row.hot .gap-badge { background: #fff3cd; color: #856404; }
+
+    .progress-wrap { height: 6px; background: #eee; border-radius: 4px; overflow: hidden; }
+    .progress-bar { height: 100%; border-radius: 4px; background: #2ecc71; transition: width 0.4s; }
+    .milestone-row.hot .progress-bar { background: #f39c12; }
+
+    .row-bottom {
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: #888; margin-top: 4px;
+    }
+
+    .loading { color: #9ecfb0; text-align: center; padding: 40px; font-size: 14px; }
+    .error { color: #e74c3c; text-align: center; padding: 40px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="https://karkhile.github.io/butchers-cricket/logo.png" onerror="this.style.display='none'" alt="Logo">
+    <h1>Upcoming Milestones</h1>
+    <p id="updated-at">Loading…</p>
+  </div>
+
+  <div id="content" class="loading">Fetching milestones…</div>
+
+  <script>
+    fetch('./milestones.json?v=' + Date.now())
+      .then(r => r.json())
+      .then(data => {
+        const d = new Date(data.updatedAt);
+        document.getElementById('updated-at').textContent =
+          'Updated ' + d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+
+        const el = document.getElementById('content');
+        el.className = 'grid';
+        el.innerHTML = '';
+
+        el.appendChild(buildCard('🏏 Batting Milestones', data.batting || [], 'runs', 'runs needed'));
+        el.appendChild(buildCard('🎳 Bowling Milestones', data.bowling || [], 'wkts', 'wickets needed'));
+        el.appendChild(buildCard('🤲 Catches Milestones', data.catches || [], 'catches', 'catches needed'));
+        el.appendChild(buildCard('🏃 Run-Out Milestones', data.runOuts || [], 'run-outs', 'run-outs needed'));
+      })
+      .catch(() => {
+        document.getElementById('content').className = 'error';
+        document.getElementById('content').textContent = 'Could not load milestones data.';
+      });
+
+    function buildCard(title, items, unit, gapLabel) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const h = document.createElement('div');
+      h.className = 'card-title';
+      h.textContent = title;
+      card.appendChild(h);
+
+      if (!items.length) {
+        const empty = document.createElement('div');
+        empty.className = 'empty';
+        empty.textContent = 'No players close to a milestone';
+        card.appendChild(empty);
+        return card;
+      }
+
+      for (const item of items) {
+        const hot = item.gap <= Math.ceil(item.next * 0.05) || item.gap <= 2;
+        const pct = Math.min(99, Math.round(item.current / item.next * 100));
+
+        const row = document.createElement('div');
+        row.className = 'milestone-row' + (hot ? ' hot' : '');
+        row.innerHTML = `
+          <div class="row-top">
+            <span class="player-name">${item.name}${hot ? ' 🔥' : ''}</span>
+            <span class="gap-badge">${item.gap} ${gapLabel}</span>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-bar" style="width:${pct}%"></div>
+          </div>
+          <div class="row-bottom">
+            <span>${item.current} ${unit}</span>
+            <span>🎯 ${item.next} ${unit}</span>
+          </div>`;
+        card.appendChild(row);
+      }
+      return card;
+    }
+  </script>
+</body>
+</html>
