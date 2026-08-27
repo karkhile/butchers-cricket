@@ -19,8 +19,8 @@ jobs:
       - name: Install dependencies
         run: npm install firebase-admin
 
-      - name: Run update_points.js
-        run: node update_points.js
+      - name: Run push_points.js
+        run: node push_points.js
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           CC_TOKEN: ${{ secrets.CC_TOKEN }}
