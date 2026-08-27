@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-27T06:31:08.229Z",
+  "updatedAt": "2026-08-27T06:31:51.557Z",
   "batting": {
     "big": [
       {
@@ -465,18 +465,6 @@
         "gap": 1
       },
       {
-        "name": "Eshwar Chaitanya S",
-        "current": 8,
-        "next": 10,
-        "gap": 2
-      },
-      {
-        "name": "Hari V",
-        "current": 28,
-        "next": 30,
-        "gap": 2
-      },
-      {
         "name": "Soumya Smruti M",
         "current": 18,
         "next": 20,
@@ -489,10 +477,16 @@
         "gap": 3
       },
       {
-        "name": "Lokesh",
-        "current": 7,
+        "name": "Eshwar Chaitanya S",
+        "current": 6,
         "next": 10,
-        "gap": 3
+        "gap": 4
+      },
+      {
+        "name": "Hari V",
+        "current": 26,
+        "next": 30,
+        "gap": 4
       },
       {
         "name": "Rohit S",
@@ -501,9 +495,9 @@
         "gap": 4
       },
       {
-        "name": "Anil M",
-        "current": 46,
-        "next": 50,
+        "name": "Lokesh",
+        "current": 6,
+        "next": 10,
         "gap": 4
       },
       {
@@ -563,12 +557,6 @@
         "gap": 1
       },
       {
-        "name": "Arpan D",
-        "current": 24,
-        "next": 25,
-        "gap": 1
-      },
-      {
         "name": "Piyush J",
         "current": 4,
         "next": 5,
@@ -581,21 +569,15 @@
         "gap": 2
       },
       {
-        "name": "Eshwar Chaitanya S",
-        "current": 8,
-        "next": 10,
-        "gap": 2
-      },
-      {
-        "name": "Hari V",
-        "current": 28,
-        "next": 30,
-        "gap": 2
-      },
-      {
         "name": "Soumya Smruti M",
         "current": 18,
         "next": 20,
+        "gap": 2
+      },
+      {
+        "name": "Arpan D",
+        "current": 23,
+        "next": 25,
         "gap": 2
       },
       {

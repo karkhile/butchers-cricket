@@ -117,11 +117,10 @@ const isJunk = name =>
       .map(([name, n]) => { const ms = nearMilestone(n, milestones, window); return ms ? { name, ...ms } : null; })
       .filter(Boolean).sort((a, b) => a.gap - b.gap);
 
-  // Combined catches = regular catches + keeper catches + stumpings
+  // Combined catches = regular catches + keeper catches (stumpings excluded)
   const totalCatches = {};
-  for (const [name, n] of Object.entries(catches))   totalCatches[name] = (totalCatches[name] || 0) + n;
-  for (const [name, n] of Object.entries(keeperCt))  totalCatches[name] = (totalCatches[name] || 0) + n;
-  for (const [name, n] of Object.entries(stumpings)) totalCatches[name] = (totalCatches[name] || 0) + n;
+  for (const [name, n] of Object.entries(catches))  totalCatches[name] = (totalCatches[name] || 0) + n;
+  for (const [name, n] of Object.entries(keeperCt)) totalCatches[name] = (totalCatches[name] || 0) + n;
 
   const output = {
     updatedAt: new Date().toISOString(),
