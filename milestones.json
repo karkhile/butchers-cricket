@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-27T06:11:59.429Z",
+  "updatedAt": "2026-08-27T06:16:32.741Z",
   "batting": {
     "big": [
       {
@@ -612,16 +612,16 @@
       }
     ]
   },
-  "keeper": {
+  "keeperCt": {
     "big": [
       {
-        "name": "Anjan K",
-        "current": 7,
-        "next": 10,
-        "gap": 3
+        "name": "Arjun S",
+        "current": 18,
+        "next": 20,
+        "gap": 2
       },
       {
-        "name": "Eshwar Chaitanya S",
+        "name": "Anjan K",
         "current": 7,
         "next": 10,
         "gap": 3
@@ -639,6 +639,12 @@
         "gap": 4
       },
       {
+        "name": "Eshwar Chaitanya S",
+        "current": 5,
+        "next": 10,
+        "gap": 5
+      },
+      {
         "name": "Gaurav M",
         "current": 5,
         "next": 10,
@@ -648,27 +654,93 @@
     "all": [
       {
         "name": "Arpan D",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Arjun S",
+        "current": 18,
+        "next": 20,
+        "gap": 2
+      }
+    ]
+  },
+  "stumpings": {
+    "big": [
+      {
+        "name": "Eshwar Chaitanya S",
+        "current": 2,
+        "next": 3,
+        "gap": 1
+      },
+      {
+        "name": "Hari V",
+        "current": 2,
+        "next": 3,
+        "gap": 1
+      },
+      {
+        "name": "Sylvestor G",
+        "current": 2,
+        "next": 3,
+        "gap": 1
+      },
+      {
+        "name": "Abhishek Kumar S",
         "current": 4,
         "next": 5,
         "gap": 1
       },
       {
-        "name": "Hari V",
-        "current": 14,
-        "next": 15,
-        "gap": 1
-      },
-      {
-        "name": "Anil M",
-        "current": 38,
-        "next": 40,
-        "gap": 2
-      },
-      {
-        "name": "Sylvestor G",
+        "name": "Arjun S",
         "current": 3,
         "next": 5,
         "gap": 2
+      },
+      {
+        "name": "Arpan D",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Lokesh",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Anil M",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      }
+    ],
+    "all": [
+      {
+        "name": "Eshwar Chaitanya S",
+        "current": 2,
+        "next": 3,
+        "gap": 1
+      },
+      {
+        "name": "Hari V",
+        "current": 2,
+        "next": 3,
+        "gap": 1
+      },
+      {
+        "name": "Sylvestor G",
+        "current": 2,
+        "next": 3,
+        "gap": 1
+      },
+      {
+        "name": "Abhishek Kumar S",
+        "current": 4,
+        "next": 5,
+        "gap": 1
       }
     ]
   },
