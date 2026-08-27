@@ -117,14 +117,21 @@ const isJunk = name =>
       .map(([name, n]) => { const ms = nearMilestone(n, milestones, window); return ms ? { name, ...ms } : null; })
       .filter(Boolean).sort((a, b) => a.gap - b.gap);
 
+  // Combined catches = regular catches + keeper catches + stumpings
+  const totalCatches = {};
+  for (const [name, n] of Object.entries(catches))   totalCatches[name] = (totalCatches[name] || 0) + n;
+  for (const [name, n] of Object.entries(keeperCt))  totalCatches[name] = (totalCatches[name] || 0) + n;
+  for (const [name, n] of Object.entries(stumpings)) totalCatches[name] = (totalCatches[name] || 0) + n;
+
   const output = {
     updatedAt: new Date().toISOString(),
-    batting:   { big: toList(batters,   RUN_BIG,       RUN_BIG_WINDOW),      all: toList(batters,   RUN_MILESTONES,    RUN_WINDOW) },
-    bowling:   { big: toList(bowlers,   WKTS_BIG,      WKTS_BIG_WINDOW),     all: toList(bowlers,   WKTS_MILESTONES,   WKT_WINDOW) },
-    catches:   { big: toList(catches,   CATCH_BIG,     CATCH_BIG_WINDOW),    all: toList(catches,   CATCH_MILESTONES,  CATCH_WINDOW) },
-    keeperCt:  { big: toList(keeperCt,  KEEPERCT_BIG,  KEEPERCT_BIG_WINDOW), all: toList(keeperCt,  KEEPERCT_MILESTONES, KEEPERCT_WINDOW) },
-    stumpings: { big: toList(stumpings, STUMPING_BIG,  STUMPING_BIG_WINDOW), all: toList(stumpings, STUMPING_MILESTONES, STUMPING_WINDOW) },
-    runOuts:   { big: toList(runouts,   RUNOUT_BIG,    RUNOUT_BIG_WINDOW),   all: toList(runouts,   RUNOUT_MILESTONES, RUNOUT_WINDOW) },
+    batting:      { big: toList(batters,      RUN_BIG,       RUN_BIG_WINDOW),      all: toList(batters,      RUN_MILESTONES,      RUN_WINDOW) },
+    bowling:      { big: toList(bowlers,      WKTS_BIG,      WKTS_BIG_WINDOW),     all: toList(bowlers,      WKTS_MILESTONES,     WKT_WINDOW) },
+    totalCatches: { big: toList(totalCatches, CATCH_BIG,     CATCH_BIG_WINDOW),    all: toList(totalCatches, CATCH_MILESTONES,    CATCH_WINDOW) },
+    catches:      { big: toList(catches,      CATCH_BIG,     CATCH_BIG_WINDOW),    all: toList(catches,      CATCH_MILESTONES,    CATCH_WINDOW) },
+    keeperCt:     { big: toList(keeperCt,     KEEPERCT_BIG,  KEEPERCT_BIG_WINDOW), all: toList(keeperCt,     KEEPERCT_MILESTONES, KEEPERCT_WINDOW) },
+    stumpings:    { big: toList(stumpings,    STUMPING_BIG,  STUMPING_BIG_WINDOW), all: toList(stumpings,    STUMPING_MILESTONES, STUMPING_WINDOW) },
+    runOuts:      { big: toList(runouts,      RUNOUT_BIG,    RUNOUT_BIG_WINDOW),   all: toList(runouts,      RUNOUT_MILESTONES,   RUNOUT_WINDOW) },
   };
 
   fs.writeFileSync('milestones.json', JSON.stringify(output, null, 2));

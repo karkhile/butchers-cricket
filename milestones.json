@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-27T06:16:32.741Z",
+  "updatedAt": "2026-08-27T06:31:08.229Z",
   "batting": {
     "big": [
       {
@@ -453,6 +453,162 @@
         "current": 45,
         "next": 50,
         "gap": 5
+      }
+    ]
+  },
+  "totalCatches": {
+    "big": [
+      {
+        "name": "Praveen K",
+        "current": 29,
+        "next": 30,
+        "gap": 1
+      },
+      {
+        "name": "Eshwar Chaitanya S",
+        "current": 8,
+        "next": 10,
+        "gap": 2
+      },
+      {
+        "name": "Hari V",
+        "current": 28,
+        "next": 30,
+        "gap": 2
+      },
+      {
+        "name": "Soumya Smruti M",
+        "current": 18,
+        "next": 20,
+        "gap": 2
+      },
+      {
+        "name": "Kaushal K",
+        "current": 17,
+        "next": 20,
+        "gap": 3
+      },
+      {
+        "name": "Lokesh",
+        "current": 7,
+        "next": 10,
+        "gap": 3
+      },
+      {
+        "name": "Rohit S",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
+        "name": "Anil M",
+        "current": 46,
+        "next": 50,
+        "gap": 4
+      },
+      {
+        "name": "Arjun D",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
+        "name": "Vinay",
+        "current": 16,
+        "next": 20,
+        "gap": 4
+      },
+      {
+        "name": "Kunal K",
+        "current": 5,
+        "next": 10,
+        "gap": 5
+      },
+      {
+        "name": "Akashdeep",
+        "current": 5,
+        "next": 10,
+        "gap": 5
+      }
+    ],
+    "all": [
+      {
+        "name": "Srinath S",
+        "current": 4,
+        "next": 5,
+        "gap": 1
+      },
+      {
+        "name": "Venkata Krishna R",
+        "current": 14,
+        "next": 15,
+        "gap": 1
+      },
+      {
+        "name": "Gaurav K",
+        "current": 24,
+        "next": 25,
+        "gap": 1
+      },
+      {
+        "name": "Meet D",
+        "current": 4,
+        "next": 5,
+        "gap": 1
+      },
+      {
+        "name": "Praveen K",
+        "current": 29,
+        "next": 30,
+        "gap": 1
+      },
+      {
+        "name": "Arpan D",
+        "current": 24,
+        "next": 25,
+        "gap": 1
+      },
+      {
+        "name": "Piyush J",
+        "current": 4,
+        "next": 5,
+        "gap": 1
+      },
+      {
+        "name": "Gaurav M",
+        "current": 23,
+        "next": 25,
+        "gap": 2
+      },
+      {
+        "name": "Eshwar Chaitanya S",
+        "current": 8,
+        "next": 10,
+        "gap": 2
+      },
+      {
+        "name": "Hari V",
+        "current": 28,
+        "next": 30,
+        "gap": 2
+      },
+      {
+        "name": "Soumya Smruti M",
+        "current": 18,
+        "next": 20,
+        "gap": 2
+      },
+      {
+        "name": "Ajay J",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Subham S",
+        "current": 3,
+        "next": 5,
+        "gap": 2
       }
     ]
   },
