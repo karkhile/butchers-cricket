@@ -39,7 +39,15 @@ const MIN_BALLS   = parseInt(process.argv[3]) || 120;
           if (runs > batters[name].highScore) batters[name].highScore = runs;
 
           if (howOut === 'ct' || howOut === 'ctw') {
-            const fielder = (b.fielder || b.catchBy || '').trim();
+            const raw = b.outStringNoLink || '';
+            let fielder = '';
+            if (/^c&b\s+/i.test(raw)) {
+              // caught and bowled — bowler is the catcher
+              fielder = raw.replace(/^c&b\s+/i, '').trim();
+            } else {
+              const mx = raw.match(/^c\s+(.+?)\s+b\s+/i);
+              fielder = mx ? mx[1].replace(/&#\d+;/g, '').trim() : '';
+            }
             if (fielder) { if (!fielders[fielder]) fielders[fielder] = 0; fielders[fielder]++; }
           }
         }
