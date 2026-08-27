@@ -572,7 +572,7 @@
     if (pool.find(p => p.name === name)) {
       movePlayer(name, 'pool', 'a');
     } else if (teamA.find(p => p.name === name)) {
-      movePlayer(name, 'a', 'b');
+      movePlayer(name, 'a', 'pool');
     } else {
       movePlayer(name, 'b', 'pool');
     }
