@@ -260,6 +260,10 @@
           <h3>Available Players</h3>
           <div id="pool-list"></div>
           <div class="zone-count" id="pool-count"></div>
+          <div style="display:flex;gap:6px;margin-top:8px;">
+            <input id="addPlayerInput" type="text" placeholder="Add player by name…" style="flex:1;padding:6px 8px;border:1px solid #ccc;border-radius:6px;font-size:13px;" onkeydown="if(event.key==='Enter')addPlayerToPool()">
+            <button onclick="addPlayerToPool()" style="padding:6px 12px;background:#0a3d1f;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px;">Add</button>
+          </div>
         </div>
         <!-- Butchers-A -->
         <div class="drop-zone team-a" id="zone-a" ondragover="onDragOver(event)" ondrop="onDrop(event,'a')" ondragleave="onDragLeave(event)">
@@ -735,6 +739,20 @@
     window._state.pool  = [];
     window._state.teamA = newA;
     window._state.teamB = newB;
+    saveTeamState();
+    renderTeamBuilder();
+  };
+
+  // ── ADD PLAYER TO POOL (admin override) ──────────────────────────────────────
+  window.addPlayerToPool = function() {
+    const input = document.getElementById('addPlayerInput');
+    const name = input.value.trim();
+    if (!name) return;
+    const { pool, teamA, teamB } = window._state;
+    const already = [...pool, ...teamA, ...teamB].find(p => p.name.toLowerCase() === name.toLowerCase());
+    if (already) { alert(already.name + ' is already in the builder.'); return; }
+    pool.push({ name, strength: STRENGTH[name] || 50, days: [] });
+    input.value = '';
     saveTeamState();
     renderTeamBuilder();
   };
