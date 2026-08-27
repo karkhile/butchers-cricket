@@ -18,10 +18,7 @@
     .header h1 { color: white; font-size: 22px; font-weight: 700; }
     .header p { color: #9ecfb0; font-size: 13px; margin-top: 4px; }
 
-    .toggle-bar {
-      display: flex; justify-content: center; gap: 8px;
-      margin-bottom: 20px;
-    }
+    .toggle-bar { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
     .toggle-btn {
       padding: 7px 18px; border-radius: 20px; border: none; cursor: pointer;
       font-size: 13px; font-weight: 600; transition: all 0.2s;
@@ -36,22 +33,26 @@
     .card-title { font-size: 14px; font-weight: 700; color: #0a3d1f; margin-bottom: 14px; }
     .empty { color: #bbb; font-size: 13px; text-align: center; padding: 10px 0; }
 
+    /* upcoming rows */
     .milestone-row { padding: 9px 0; border-bottom: 1px solid #f0f0f0; }
     .milestone-row:last-child { border-bottom: none; }
     .milestone-row.hot { background: #fffbea; border-radius: 8px; padding: 9px 8px; margin: 2px -8px; }
-
     .row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
     .player-name { font-size: 13px; font-weight: 600; color: #222; }
     .milestone-row.hot .player-name { color: #a05f00; }
-
     .gap-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: #e8f5e9; color: #1b5e20; white-space: nowrap; }
     .milestone-row.hot .gap-badge { background: #fff3cd; color: #856404; }
-
     .progress-wrap { height: 5px; background: #eee; border-radius: 3px; overflow: hidden; }
     .progress-bar  { height: 100%; border-radius: 3px; background: #2ecc71; }
     .milestone-row.hot .progress-bar { background: #f39c12; }
-
     .row-bottom { display: flex; justify-content: space-between; font-size: 11px; color: #aaa; margin-top: 4px; }
+
+    /* achieved rows */
+    .achieved-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+    .achieved-row:last-child { border-bottom: none; }
+    .achieved-name { font-size: 13px; font-weight: 600; color: #222; }
+    .achieved-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: #e8f5e9; color: #1b5e20; white-space: nowrap; }
+    .achieved-sub { font-size: 11px; color: #aaa; margin-top: 1px; }
 
     .view-more-wrap { text-align: center; margin-top: 8px; }
     .view-more-btn {
@@ -68,13 +69,14 @@
 <body>
   <div class="header">
     <img src="https://karkhile.github.io/butchers-cricket/logo.png" onerror="this.style.display='none'" alt="">
-    <h1>Upcoming Milestones</h1>
+    <h1>Milestones</h1>
     <p id="updated-at">Loading…</p>
   </div>
 
   <div class="toggle-bar">
-    <button class="toggle-btn active"   id="btn-big" onclick="setView('big')">Major milestones</button>
-    <button class="toggle-btn inactive" id="btn-all" onclick="setView('all')">All milestones</button>
+    <button class="toggle-btn active"   id="btn-big"      onclick="setView('big')">Major upcoming</button>
+    <button class="toggle-btn inactive" id="btn-all"      onclick="setView('all')">All upcoming</button>
+    <button class="toggle-btn inactive" id="btn-achieved" onclick="setView('achieved')">🏆 Achieved</button>
   </div>
 
   <div id="content" class="loading">Fetching milestones…</div>
@@ -84,13 +86,13 @@
     let _view = 'big';
 
     const CARDS = [
-      { key: 'batting',      title: '🏏 Batting',          unit: 'runs',        gap: 'runs needed'       },
-      { key: 'bowling',      title: '🔴 Bowling',          unit: 'wkts',        gap: 'wickets needed'    },
-      { key: 'totalCatches', title: '🤲 Total Catches',   unit: 'catches',     gap: 'catches needed'    },
-      { key: 'catches',      title: '↳ Field Catches',     unit: 'catches',     gap: 'catches needed'    },
-      { key: 'keeperCt',     title: '↳ Keeper Catches',    unit: 'catches',     gap: 'catches needed'    },
-      { key: 'stumpings',    title: '🪄 Stumpings',        unit: 'stumpings',   gap: 'stumpings needed'  },
-      { key: 'runOuts',      title: '🏃 Run-Outs',         unit: 'run-outs',    gap: 'run-outs needed'   },
+      { key: 'batting',      title: '🏏 Batting',        unit: 'runs',       gap: 'runs needed'      },
+      { key: 'bowling',      title: '🔴 Bowling',        unit: 'wkts',       gap: 'wickets needed'   },
+      { key: 'totalCatches', title: '🤲 Total Catches',  unit: 'catches',    gap: 'catches needed'   },
+      { key: 'catches',      title: '↳ Field Catches',   unit: 'catches',    gap: 'catches needed'   },
+      { key: 'keeperCt',     title: '↳ Keeper Catches',  unit: 'catches',    gap: 'catches needed'   },
+      { key: 'stumpings',    title: '🪄 Stumpings',      unit: 'stumpings',  gap: 'stumpings needed' },
+      { key: 'runOuts',      title: '🏃 Run-Outs',       unit: 'run-outs',   gap: 'run-outs needed'  },
     ];
 
     fetch('./milestones.json?v=' + Date.now())
@@ -109,8 +111,9 @@
 
     function setView(v) {
       _view = v;
-      document.getElementById('btn-big').className = 'toggle-btn ' + (v === 'big' ? 'active' : 'inactive');
-      document.getElementById('btn-all').className = 'toggle-btn ' + (v === 'all' ? 'active' : 'inactive');
+      ['big','all','achieved'].forEach(k => {
+        document.getElementById('btn-' + k).className = 'toggle-btn ' + (v === k ? 'active' : 'inactive');
+      });
       if (_data) render();
     }
 
@@ -118,9 +121,16 @@
       const el = document.getElementById('content');
       el.className = 'grid';
       el.innerHTML = '';
-      for (const c of CARDS) {
-        const items = (_data[c.key] || {})[_view] || [];
-        el.appendChild(buildCard(c.title, items, c.unit, c.gap));
+      if (_view === 'achieved') {
+        for (const c of CARDS) {
+          const items = (_data[c.key] || {}).achieved || [];
+          el.appendChild(buildAchievedCard(c.title, items, c.unit));
+        }
+      } else {
+        for (const c of CARDS) {
+          const items = (_data[c.key] || {})[_view] || [];
+          el.appendChild(buildCard(c.title, items, c.unit, c.gap));
+        }
       }
     }
 
@@ -128,38 +138,53 @@
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = '<div class="card-title">' + title + '</div>';
+      if (!items.length) { card.innerHTML += '<div class="empty">No upcoming milestones</div>'; return card; }
 
-      if (!items.length) {
-        card.innerHTML += '<div class="empty">No upcoming milestones</div>';
-        return card;
-      }
-
-      // Show first 5 inline, rest in collapsible section
       const SHOW = 5;
-      const main  = items.slice(0, SHOW);
+      for (const item of items.slice(0, SHOW)) card.appendChild(makeRow(item, unit, gapLabel));
+
       const extra = items.slice(SHOW);
-
-      for (const item of main)  card.appendChild(makeRow(item, unit, gapLabel));
-
       if (extra.length) {
         const extraWrap = document.createElement('div');
         extraWrap.className = 'extra-rows';
         for (const item of extra) extraWrap.appendChild(makeRow(item, unit, gapLabel));
         card.appendChild(extraWrap);
-
         const btnWrap = document.createElement('div');
         btnWrap.className = 'view-more-wrap';
         const btn = document.createElement('button');
         btn.className = 'view-more-btn';
         btn.textContent = '+ ' + extra.length + ' more';
-        btn.onclick = () => {
-          const open = extraWrap.classList.toggle('open');
-          btn.textContent = open ? '− Show less' : '+ ' + extra.length + ' more';
-        };
+        btn.onclick = () => { const open = extraWrap.classList.toggle('open'); btn.textContent = open ? '− Show less' : '+ ' + extra.length + ' more'; };
         btnWrap.appendChild(btn);
         card.appendChild(btnWrap);
       }
+      return card;
+    }
 
+    function buildAchievedCard(title, items, unit) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = '<div class="card-title">' + title + '</div>';
+      if (!items.length) { card.innerHTML += '<div class="empty">No milestones achieved yet</div>'; return card; }
+
+      const SHOW = 5;
+      for (const item of items.slice(0, SHOW)) card.appendChild(makeAchievedRow(item, unit));
+
+      const extra = items.slice(SHOW);
+      if (extra.length) {
+        const extraWrap = document.createElement('div');
+        extraWrap.className = 'extra-rows';
+        for (const item of extra) extraWrap.appendChild(makeAchievedRow(item, unit));
+        card.appendChild(extraWrap);
+        const btnWrap = document.createElement('div');
+        btnWrap.className = 'view-more-wrap';
+        const btn = document.createElement('button');
+        btn.className = 'view-more-btn';
+        btn.textContent = '+ ' + extra.length + ' more';
+        btn.onclick = () => { const open = extraWrap.classList.toggle('open'); btn.textContent = open ? '− Show less' : '+ ' + extra.length + ' more'; };
+        btnWrap.appendChild(btn);
+        card.appendChild(btnWrap);
+      }
       return card;
     }
 
@@ -175,6 +200,18 @@
         '</div>' +
         '<div class="progress-wrap"><div class="progress-bar" style="width:' + pct + '%"></div></div>' +
         '<div class="row-bottom"><span>' + item.current + ' ' + unit + '</span><span>🎯 ' + item.next + ' ' + unit + '</span></div>';
+      return row;
+    }
+
+    function makeAchievedRow(item, unit) {
+      const row = document.createElement('div');
+      row.className = 'achieved-row';
+      row.innerHTML =
+        '<div>' +
+          '<div class="achieved-name">🏆 ' + item.name + '</div>' +
+          '<div class="achieved-sub">' + item.current + ' ' + unit + ' total</div>' +
+        '</div>' +
+        '<span class="achieved-badge">✓ ' + item.achieved + ' ' + unit + '</span>';
       return row;
     }
   </script>

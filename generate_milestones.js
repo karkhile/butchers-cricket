@@ -118,19 +118,31 @@ function parseFielder(raw, howOut) {
       .map(([name, n]) => { const ms = nearMilestone(n, milestones, window); return ms ? { name, ...ms } : null; })
       .filter(Boolean).sort((a, b) => a.gap - b.gap);
 
+  // Achieved: players who have crossed at least one milestone, sorted by how recently they crossed it
+  // (i.e. smallest surplus above the last milestone crossed = crossed it most recently)
+  const toAchieved = (map, milestones) =>
+    Object.entries(map)
+      .map(([name, n]) => {
+        const crossed = [...milestones].reverse().find(ms => ms <= n);
+        if (!crossed) return null;
+        return { name, current: n, achieved: crossed, surplus: n - crossed };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a.surplus - b.surplus);
+
   const totalCatches = {};
   for (const [name, n] of Object.entries(catches))  totalCatches[name] = (totalCatches[name] || 0) + n;
   for (const [name, n] of Object.entries(keeperCt)) totalCatches[name] = (totalCatches[name] || 0) + n;
 
   const output = {
     updatedAt: new Date().toISOString(),
-    batting:      { big: toList(batters,      RUN_BIG,       RUN_BIG_WINDOW),      all: toList(batters,      RUN_MILESTONES,      RUN_WINDOW) },
-    bowling:      { big: toList(bowlers,      WKTS_BIG,      WKTS_BIG_WINDOW),     all: toList(bowlers,      WKTS_MILESTONES,     WKT_WINDOW) },
-    totalCatches: { big: toList(totalCatches, CATCH_BIG,     CATCH_BIG_WINDOW),    all: toList(totalCatches, CATCH_MILESTONES,    CATCH_WINDOW) },
-    catches:      { big: toList(catches,      CATCH_BIG,     CATCH_BIG_WINDOW),    all: toList(catches,      CATCH_MILESTONES,    CATCH_WINDOW) },
-    keeperCt:     { big: toList(keeperCt,     KEEPERCT_BIG,  KEEPERCT_BIG_WINDOW), all: toList(keeperCt,     KEEPERCT_MILESTONES, KEEPERCT_WINDOW) },
-    stumpings:    { big: toList(stumpings,    STUMPING_BIG,  STUMPING_BIG_WINDOW), all: toList(stumpings,    STUMPING_MILESTONES, STUMPING_WINDOW) },
-    runOuts:      { big: toList(runouts,      RUNOUT_BIG,    RUNOUT_BIG_WINDOW),   all: toList(runouts,      RUNOUT_MILESTONES,   RUNOUT_WINDOW) },
+    batting:      { big: toList(batters,      RUN_BIG,       RUN_BIG_WINDOW),      all: toList(batters,      RUN_MILESTONES,      RUN_WINDOW),      achieved: toAchieved(batters,      RUN_BIG) },
+    bowling:      { big: toList(bowlers,      WKTS_BIG,      WKTS_BIG_WINDOW),     all: toList(bowlers,      WKTS_MILESTONES,     WKT_WINDOW),      achieved: toAchieved(bowlers,      WKTS_BIG) },
+    totalCatches: { big: toList(totalCatches, CATCH_BIG,     CATCH_BIG_WINDOW),    all: toList(totalCatches, CATCH_MILESTONES,    CATCH_WINDOW),    achieved: toAchieved(totalCatches, CATCH_BIG) },
+    catches:      { big: toList(catches,      CATCH_BIG,     CATCH_BIG_WINDOW),    all: toList(catches,      CATCH_MILESTONES,    CATCH_WINDOW),    achieved: toAchieved(catches,      CATCH_BIG) },
+    keeperCt:     { big: toList(keeperCt,     KEEPERCT_BIG,  KEEPERCT_BIG_WINDOW), all: toList(keeperCt,     KEEPERCT_MILESTONES, KEEPERCT_WINDOW), achieved: toAchieved(keeperCt,     KEEPERCT_BIG) },
+    stumpings:    { big: toList(stumpings,    STUMPING_BIG,  STUMPING_BIG_WINDOW), all: toList(stumpings,    STUMPING_MILESTONES, STUMPING_WINDOW), achieved: toAchieved(stumpings,    STUMPING_BIG) },
+    runOuts:      { big: toList(runouts,      RUNOUT_BIG,    RUNOUT_BIG_WINDOW),   all: toList(runouts,      RUNOUT_MILESTONES,   RUNOUT_WINDOW),   achieved: toAchieved(runouts,      RUNOUT_BIG) },
   };
 
   fs.writeFileSync('milestones.json', JSON.stringify(output, null, 2));
