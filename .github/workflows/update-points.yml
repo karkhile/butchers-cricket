@@ -24,3 +24,8 @@ jobs:
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           CC_TOKEN: ${{ secrets.CC_TOKEN }}
+
+      - name: Reset and open poll for next week
+        run: node reset_poll.js
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
