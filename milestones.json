@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-27T13:45:54.062Z",
+  "updatedAt": "2026-08-27T14:06:12.253Z",
   "batting": {
     "big": [
       {
@@ -2597,6 +2597,88 @@
       }
     ],
     "fours": [
+      {
+        "threshold": 10,
+        "entries": [
+          {
+            "name": "Gaurav Mehta",
+            "matches": 11
+          },
+          {
+            "name": "Rijwan Rana",
+            "matches": 13
+          },
+          {
+            "name": "Yash Mehta",
+            "matches": 14
+          },
+          {
+            "name": "Abhishek Kumar Singh",
+            "matches": 15
+          },
+          {
+            "name": "Anjan Kumar",
+            "matches": 16
+          },
+          {
+            "name": "Vinay Bharbhari",
+            "matches": 20
+          },
+          {
+            "name": "Anil Mallapur",
+            "matches": 22
+          },
+          {
+            "name": "Akashdeep Balu",
+            "matches": 22
+          },
+          {
+            "name": "Praveen Karkhile",
+            "matches": 24
+          },
+          {
+            "name": "Jay Shah",
+            "matches": 25
+          }
+        ]
+      },
+      {
+        "threshold": 25,
+        "entries": [
+          {
+            "name": "Abhishek Kumar Singh",
+            "matches": 20
+          },
+          {
+            "name": "Rijwan Rana",
+            "matches": 23
+          },
+          {
+            "name": "Anjan Kumar",
+            "matches": 44
+          },
+          {
+            "name": "Gaurav Mehta",
+            "matches": 45
+          },
+          {
+            "name": "Anil Mallapur",
+            "matches": 54
+          },
+          {
+            "name": "Yash Mehta",
+            "matches": 56
+          },
+          {
+            "name": "Sylvestor George",
+            "matches": 69
+          },
+          {
+            "name": "Prashant Kumar",
+            "matches": 83
+          }
+        ]
+      },
       {
         "threshold": 50,
         "entries": [

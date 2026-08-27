@@ -20,7 +20,7 @@ const FAST_WKTS     = [25,50,100,150,200,250];
 const FAST_CATCH    = [10,20,30,50];
 const FAST_STUMPING = [1,5,10,15,20];
 const FAST_RUNOUT   = [5,10,15,20];
-const FAST_FOURS    = [50,100,150,200];
+const FAST_FOURS    = [10,25,50,100,150,200];
 const FAST_SIXES    = [10,25,50];
 const FAST_MOM      = [1,5,10,15,20];
 
