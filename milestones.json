@@ -1,499 +1,819 @@
 {
-  "updatedAt": "2026-08-27T06:09:02.031Z",
-  "batting": [
-    {
-      "name": "Gaurav Mehta",
-      "current": 999,
-      "next": 1000,
-      "gap": 1
-    },
-    {
-      "name": "Gaurav Kumar",
-      "current": 1046,
-      "next": 1050,
-      "gap": 4
-    },
-    {
-      "name": "Hari Vangipuram",
-      "current": 445,
-      "next": 450,
-      "gap": 5
-    },
-    {
-      "name": "Kaushal Karkera",
-      "current": 341,
-      "next": 350,
-      "gap": 9
-    },
-    {
-      "name": "Jay Shah",
-      "current": 237,
-      "next": 250,
-      "gap": 13
-    },
-    {
-      "name": "Akashdeep Balu",
-      "current": 334,
-      "next": 350,
-      "gap": 16
-    },
-    {
-      "name": "Jimit Majmudar",
-      "current": 83,
-      "next": 100,
-      "gap": 17
-    },
-    {
-      "name": "Abhishek Kumar Singh",
-      "current": 1431,
-      "next": 1450,
-      "gap": 19
-    },
-    {
-      "name": "Soumya Smruti Mishra",
-      "current": 331,
-      "next": 350,
-      "gap": 19
-    },
-    {
-      "name": "Sylvestor George",
-      "current": 1076,
-      "next": 1100,
-      "gap": 24
-    },
-    {
-      "name": "Venkata Krishna Ravi",
-      "current": 376,
-      "next": 400,
-      "gap": 24
-    },
-    {
-      "name": "Arpan Dey",
-      "current": 375,
-      "next": 400,
-      "gap": 25
-    },
-    {
-      "name": "Anjan Kumar",
-      "current": 1425,
-      "next": 1450,
-      "gap": 25
-    },
-    {
-      "name": "Prashant Kumar",
-      "current": 622,
-      "next": 650,
-      "gap": 28
-    },
-    {
-      "name": "Meet Dhabalia",
-      "current": 72,
-      "next": 100,
-      "gap": 28
-    },
-    {
-      "name": "Yash Mehta",
-      "current": 921,
-      "next": 950,
-      "gap": 29
-    },
-    {
-      "name": "Rajeev Tirumala",
-      "current": 120,
-      "next": 150,
-      "gap": 30
-    },
-    {
-      "name": "Mithal Kothari",
-      "current": 219,
-      "next": 250,
-      "gap": 31
-    },
-    {
-      "name": "Praveen Karkhile",
-      "current": 568,
-      "next": 600,
-      "gap": 32
-    },
-    {
-      "name": "Ajay Joy",
-      "current": 67,
-      "next": 100,
-      "gap": 33
-    },
-    {
-      "name": "Vinay Bharbhari",
-      "current": 317,
-      "next": 350,
-      "gap": 33
-    },
-    {
-      "name": "Abhishek Lingwal",
-      "current": 266,
-      "next": 300,
-      "gap": 34
-    },
-    {
-      "name": "Anil Mallapur",
-      "current": 511,
-      "next": 550,
-      "gap": 39
-    },
-    {
-      "name": "Rohit Sharma",
-      "current": 111,
-      "next": 150,
-      "gap": 39
-    },
-    {
-      "name": "Lokesh Bala",
-      "current": 160,
-      "next": 200,
-      "gap": 40
-    },
-    {
-      "name": "Santosh Ghosh",
-      "current": 110,
-      "next": 150,
-      "gap": 40
-    },
-    {
-      "name": "Kunal Kokate",
-      "current": 208,
-      "next": 250,
-      "gap": 42
-    },
-    {
-      "name": "Piyush Jha",
-      "current": 108,
-      "next": 150,
-      "gap": 42
-    },
-    {
-      "name": "Eshwar Chaitanya Sarampati",
-      "current": 57,
-      "next": 100,
-      "gap": 43
-    },
-    {
-      "name": "Harsha Vardhan Reddy Vndavally",
-      "current": 57,
-      "next": 100,
-      "gap": 43
-    },
-    {
-      "name": "Rijwan Rana",
-      "current": 306,
-      "next": 350,
-      "gap": 44
-    },
-    {
-      "name": "Srinath Shah",
-      "current": 104,
-      "next": 150,
-      "gap": 46
-    },
-    {
-      "name": "Arjun Shukla",
-      "current": 350,
-      "next": 400,
-      "gap": 50
-    }
-  ],
-  "bowling": [
-    {
-      "name": "Rijwan Rana",
-      "current": 29,
-      "next": 30,
-      "gap": 1
-    },
-    {
-      "name": "Sylvestor George",
-      "current": 14,
-      "next": 15,
-      "gap": 1
-    },
-    {
-      "name": "Yash Mehta",
-      "current": 58,
-      "next": 60,
-      "gap": 2
-    },
-    {
-      "name": "Gaurav Mehta",
-      "current": 58,
-      "next": 60,
-      "gap": 2
-    },
-    {
-      "name": "Rajeev Tirumala",
-      "current": 8,
-      "next": 10,
-      "gap": 2
-    },
-    {
-      "name": "Hari Vangipuram",
-      "current": 68,
-      "next": 70,
-      "gap": 2
-    },
-    {
-      "name": "Srinath Shah",
-      "current": 8,
-      "next": 10,
-      "gap": 2
-    },
-    {
-      "name": "Santosh Ghosh",
-      "current": 8,
-      "next": 10,
-      "gap": 2
-    },
-    {
-      "name": "Rohit Sharma",
-      "current": 12,
-      "next": 15,
-      "gap": 3
-    },
-    {
-      "name": "Praveen Karkhile",
-      "current": 57,
-      "next": 60,
-      "gap": 3
-    },
-    {
-      "name": "Soumya Smruti Mishra",
-      "current": 37,
-      "next": 40,
-      "gap": 3
-    },
-    {
-      "name": "Kunal Kokate",
-      "current": 7,
-      "next": 10,
-      "gap": 3
-    },
-    {
-      "name": "Abhishek Lingwal",
-      "current": 37,
-      "next": 40,
-      "gap": 3
-    },
-    {
-      "name": "Piyush Jha",
-      "current": 7,
-      "next": 10,
-      "gap": 3
-    },
-    {
-      "name": "Jay Shah",
-      "current": 22,
-      "next": 25,
-      "gap": 3
-    },
-    {
-      "name": "Arjun Deb",
-      "current": 12,
-      "next": 15,
-      "gap": 3
-    },
-    {
-      "name": "Harsha Vardhan Reddy Vndavally",
-      "current": 7,
-      "next": 10,
-      "gap": 3
-    },
-    {
-      "name": "Kaushal Karkera",
-      "current": 46,
-      "next": 50,
-      "gap": 4
-    },
-    {
-      "name": "Akashdeep Balu",
-      "current": 21,
-      "next": 25,
-      "gap": 4
-    },
-    {
-      "name": "Gaurav Kumar",
-      "current": 36,
-      "next": 40,
-      "gap": 4
-    },
-    {
-      "name": "Prashant Kumar",
-      "current": 71,
-      "next": 75,
-      "gap": 4
-    },
-    {
-      "name": "Arjun Shukla",
-      "current": 71,
-      "next": 75,
-      "gap": 4
-    },
-    {
-      "name": "Venkata Krishna  Ravi",
-      "current": 6,
-      "next": 10,
-      "gap": 4
-    },
-    {
-      "name": "tarun JOSHI",
-      "current": 6,
-      "next": 10,
-      "gap": 4
-    },
-    {
-      "name": "Vinay Bharbhari",
-      "current": 45,
-      "next": 50,
-      "gap": 5
-    }
-  ],
-  "catches": [
-    {
-      "name": "Srinath S",
-      "current": 4,
-      "next": 5,
-      "gap": 1
-    },
-    {
-      "name": "Venkata Krishna R",
-      "current": 14,
-      "next": 15,
-      "gap": 1
-    },
-    {
-      "name": "Gaurav K",
-      "current": 24,
-      "next": 25,
-      "gap": 1
-    },
-    {
-      "name": "Hari V",
-      "current": 14,
-      "next": 15,
-      "gap": 1
-    },
-    {
-      "name": "Praveen K",
-      "current": 29,
-      "next": 30,
-      "gap": 1
-    },
-    {
-      "name": "Arjun S",
-      "current": 14,
-      "next": 15,
-      "gap": 1
-    },
-    {
-      "name": "Piyush J",
-      "current": 4,
-      "next": 5,
-      "gap": 1
-    },
-    {
-      "name": "Gaurav M",
-      "current": 18,
-      "next": 20,
-      "gap": 2
-    },
-    {
-      "name": "Meet D",
-      "current": 3,
-      "next": 5,
-      "gap": 2
-    },
-    {
-      "name": "Ajay J",
-      "current": 3,
-      "next": 5,
-      "gap": 2
-    },
-    {
-      "name": "Anil M",
-      "current": 8,
-      "next": 10,
-      "gap": 2
-    },
-    {
-      "name": "Subham S",
-      "current": 3,
-      "next": 5,
-      "gap": 2
-    }
-  ],
-  "keeper": [
-    {
-      "name": "Arpan D",
-      "current": 4,
-      "next": 5,
-      "gap": 1
-    },
-    {
-      "name": "Hari V",
-      "current": 14,
-      "next": 15,
-      "gap": 1
-    },
-    {
-      "name": "Anil M",
-      "current": 38,
-      "next": 40,
-      "gap": 2
-    },
-    {
-      "name": "Sylvestor G",
-      "current": 3,
-      "next": 5,
-      "gap": 2
-    }
-  ],
-  "runOuts": [
-    {
-      "name": "Anjan K/Arjun S",
-      "current": 2,
-      "next": 3,
-      "gap": 1
-    },
-    {
-      "name": "Gaurav M",
-      "current": 4,
-      "next": 5,
-      "gap": 1
-    },
-    {
-      "name": "Piyush J",
-      "current": 2,
-      "next": 3,
-      "gap": 1
-    },
-    {
-      "name": "Jimit M",
-      "current": 2,
-      "next": 3,
-      "gap": 1
-    },
-    {
-      "name": "Abhishek Kumar S",
-      "current": 2,
-      "next": 3,
-      "gap": 1
-    },
-    {
-      "name": "Gaurav K",
-      "current": 2,
-      "next": 3,
-      "gap": 1
-    },
-    {
-      "name": "Meet D",
-      "current": 2,
-      "next": 3,
-      "gap": 1
-    }
-  ]
+  "updatedAt": "2026-08-27T06:11:59.429Z",
+  "batting": {
+    "big": [
+      {
+        "name": "Gaurav Mehta",
+        "current": 999,
+        "next": 1000,
+        "gap": 1
+      },
+      {
+        "name": "Jay Shah",
+        "current": 237,
+        "next": 250,
+        "gap": 13
+      },
+      {
+        "name": "Mithal Kothari",
+        "current": 219,
+        "next": 250,
+        "gap": 31
+      },
+      {
+        "name": "Kunal Kokate",
+        "current": 208,
+        "next": 250,
+        "gap": 42
+      },
+      {
+        "name": "Hari Vangipuram",
+        "current": 445,
+        "next": 500,
+        "gap": 55
+      },
+      {
+        "name": "Abhishek Kumar Singh",
+        "current": 1431,
+        "next": 1500,
+        "gap": 69
+      },
+      {
+        "name": "Anjan Kumar",
+        "current": 1425,
+        "next": 1500,
+        "gap": 75
+      },
+      {
+        "name": "Yash Mehta",
+        "current": 921,
+        "next": 1000,
+        "gap": 79
+      },
+      {
+        "name": "Lokesh Bala",
+        "current": 160,
+        "next": 250,
+        "gap": 90
+      }
+    ],
+    "all": [
+      {
+        "name": "Gaurav Mehta",
+        "current": 999,
+        "next": 1000,
+        "gap": 1
+      },
+      {
+        "name": "Gaurav Kumar",
+        "current": 1046,
+        "next": 1050,
+        "gap": 4
+      },
+      {
+        "name": "Hari Vangipuram",
+        "current": 445,
+        "next": 450,
+        "gap": 5
+      },
+      {
+        "name": "Kaushal Karkera",
+        "current": 341,
+        "next": 350,
+        "gap": 9
+      },
+      {
+        "name": "Jay Shah",
+        "current": 237,
+        "next": 250,
+        "gap": 13
+      },
+      {
+        "name": "Akashdeep Balu",
+        "current": 334,
+        "next": 350,
+        "gap": 16
+      },
+      {
+        "name": "Jimit Majmudar",
+        "current": 83,
+        "next": 100,
+        "gap": 17
+      },
+      {
+        "name": "Abhishek Kumar Singh",
+        "current": 1431,
+        "next": 1450,
+        "gap": 19
+      },
+      {
+        "name": "Soumya Smruti Mishra",
+        "current": 331,
+        "next": 350,
+        "gap": 19
+      },
+      {
+        "name": "Sylvestor George",
+        "current": 1076,
+        "next": 1100,
+        "gap": 24
+      },
+      {
+        "name": "Venkata Krishna Ravi",
+        "current": 376,
+        "next": 400,
+        "gap": 24
+      },
+      {
+        "name": "Arpan Dey",
+        "current": 375,
+        "next": 400,
+        "gap": 25
+      },
+      {
+        "name": "Anjan Kumar",
+        "current": 1425,
+        "next": 1450,
+        "gap": 25
+      },
+      {
+        "name": "Prashant Kumar",
+        "current": 622,
+        "next": 650,
+        "gap": 28
+      },
+      {
+        "name": "Meet Dhabalia",
+        "current": 72,
+        "next": 100,
+        "gap": 28
+      },
+      {
+        "name": "Yash Mehta",
+        "current": 921,
+        "next": 950,
+        "gap": 29
+      },
+      {
+        "name": "Rajeev Tirumala",
+        "current": 120,
+        "next": 150,
+        "gap": 30
+      },
+      {
+        "name": "Mithal Kothari",
+        "current": 219,
+        "next": 250,
+        "gap": 31
+      },
+      {
+        "name": "Praveen Karkhile",
+        "current": 568,
+        "next": 600,
+        "gap": 32
+      },
+      {
+        "name": "Ajay Joy",
+        "current": 67,
+        "next": 100,
+        "gap": 33
+      },
+      {
+        "name": "Vinay Bharbhari",
+        "current": 317,
+        "next": 350,
+        "gap": 33
+      },
+      {
+        "name": "Abhishek Lingwal",
+        "current": 266,
+        "next": 300,
+        "gap": 34
+      },
+      {
+        "name": "Anil Mallapur",
+        "current": 511,
+        "next": 550,
+        "gap": 39
+      },
+      {
+        "name": "Rohit Sharma",
+        "current": 111,
+        "next": 150,
+        "gap": 39
+      },
+      {
+        "name": "Lokesh Bala",
+        "current": 160,
+        "next": 200,
+        "gap": 40
+      },
+      {
+        "name": "Santosh Ghosh",
+        "current": 110,
+        "next": 150,
+        "gap": 40
+      },
+      {
+        "name": "Kunal Kokate",
+        "current": 208,
+        "next": 250,
+        "gap": 42
+      },
+      {
+        "name": "Piyush Jha",
+        "current": 108,
+        "next": 150,
+        "gap": 42
+      },
+      {
+        "name": "Eshwar Chaitanya Sarampati",
+        "current": 57,
+        "next": 100,
+        "gap": 43
+      },
+      {
+        "name": "Harsha Vardhan Reddy Vndavally",
+        "current": 57,
+        "next": 100,
+        "gap": 43
+      },
+      {
+        "name": "Rijwan Rana",
+        "current": 306,
+        "next": 350,
+        "gap": 44
+      },
+      {
+        "name": "Srinath Shah",
+        "current": 104,
+        "next": 150,
+        "gap": 46
+      },
+      {
+        "name": "Arjun Shukla",
+        "current": 350,
+        "next": 400,
+        "gap": 50
+      }
+    ]
+  },
+  "bowling": {
+    "big": [
+      {
+        "name": "Jay Shah",
+        "current": 22,
+        "next": 25,
+        "gap": 3
+      },
+      {
+        "name": "Kaushal Karkera",
+        "current": 46,
+        "next": 50,
+        "gap": 4
+      },
+      {
+        "name": "Akashdeep Balu",
+        "current": 21,
+        "next": 25,
+        "gap": 4
+      },
+      {
+        "name": "Prashant Kumar",
+        "current": 71,
+        "next": 75,
+        "gap": 4
+      },
+      {
+        "name": "Arjun Shukla",
+        "current": 71,
+        "next": 75,
+        "gap": 4
+      },
+      {
+        "name": "Vinay Bharbhari",
+        "current": 45,
+        "next": 50,
+        "gap": 5
+      },
+      {
+        "name": "Hari Vangipuram",
+        "current": 68,
+        "next": 75,
+        "gap": 7
+      }
+    ],
+    "all": [
+      {
+        "name": "Rijwan Rana",
+        "current": 29,
+        "next": 30,
+        "gap": 1
+      },
+      {
+        "name": "Sylvestor George",
+        "current": 14,
+        "next": 15,
+        "gap": 1
+      },
+      {
+        "name": "Yash Mehta",
+        "current": 58,
+        "next": 60,
+        "gap": 2
+      },
+      {
+        "name": "Gaurav Mehta",
+        "current": 58,
+        "next": 60,
+        "gap": 2
+      },
+      {
+        "name": "Rajeev Tirumala",
+        "current": 8,
+        "next": 10,
+        "gap": 2
+      },
+      {
+        "name": "Hari Vangipuram",
+        "current": 68,
+        "next": 70,
+        "gap": 2
+      },
+      {
+        "name": "Srinath Shah",
+        "current": 8,
+        "next": 10,
+        "gap": 2
+      },
+      {
+        "name": "Santosh Ghosh",
+        "current": 8,
+        "next": 10,
+        "gap": 2
+      },
+      {
+        "name": "Rohit Sharma",
+        "current": 12,
+        "next": 15,
+        "gap": 3
+      },
+      {
+        "name": "Praveen Karkhile",
+        "current": 57,
+        "next": 60,
+        "gap": 3
+      },
+      {
+        "name": "Soumya Smruti Mishra",
+        "current": 37,
+        "next": 40,
+        "gap": 3
+      },
+      {
+        "name": "Kunal Kokate",
+        "current": 7,
+        "next": 10,
+        "gap": 3
+      },
+      {
+        "name": "Abhishek Lingwal",
+        "current": 37,
+        "next": 40,
+        "gap": 3
+      },
+      {
+        "name": "Piyush Jha",
+        "current": 7,
+        "next": 10,
+        "gap": 3
+      },
+      {
+        "name": "Jay Shah",
+        "current": 22,
+        "next": 25,
+        "gap": 3
+      },
+      {
+        "name": "Arjun Deb",
+        "current": 12,
+        "next": 15,
+        "gap": 3
+      },
+      {
+        "name": "Harsha Vardhan Reddy Vndavally",
+        "current": 7,
+        "next": 10,
+        "gap": 3
+      },
+      {
+        "name": "Kaushal Karkera",
+        "current": 46,
+        "next": 50,
+        "gap": 4
+      },
+      {
+        "name": "Akashdeep Balu",
+        "current": 21,
+        "next": 25,
+        "gap": 4
+      },
+      {
+        "name": "Gaurav Kumar",
+        "current": 36,
+        "next": 40,
+        "gap": 4
+      },
+      {
+        "name": "Prashant Kumar",
+        "current": 71,
+        "next": 75,
+        "gap": 4
+      },
+      {
+        "name": "Arjun Shukla",
+        "current": 71,
+        "next": 75,
+        "gap": 4
+      },
+      {
+        "name": "Venkata Krishna  Ravi",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
+        "name": "tarun JOSHI",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
+        "name": "Vinay Bharbhari",
+        "current": 45,
+        "next": 50,
+        "gap": 5
+      }
+    ]
+  },
+  "catches": {
+    "big": [
+      {
+        "name": "Praveen K",
+        "current": 29,
+        "next": 30,
+        "gap": 1
+      },
+      {
+        "name": "Gaurav M",
+        "current": 18,
+        "next": 20,
+        "gap": 2
+      },
+      {
+        "name": "Anil M",
+        "current": 8,
+        "next": 10,
+        "gap": 2
+      },
+      {
+        "name": "Anjan K",
+        "current": 26,
+        "next": 30,
+        "gap": 4
+      },
+      {
+        "name": "Rohit S",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
+        "name": "Yash M",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
+        "name": "Lokesh",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
+        "name": "Arjun D",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
+        "name": "Kunal K",
+        "current": 5,
+        "next": 10,
+        "gap": 5
+      },
+      {
+        "name": "Akashdeep",
+        "current": 5,
+        "next": 10,
+        "gap": 5
+      },
+      {
+        "name": "Kaushal K",
+        "current": 15,
+        "next": 20,
+        "gap": 5
+      },
+      {
+        "name": "Prashant K",
+        "current": 15,
+        "next": 20,
+        "gap": 5
+      },
+      {
+        "name": "Vinay",
+        "current": 15,
+        "next": 20,
+        "gap": 5
+      }
+    ],
+    "all": [
+      {
+        "name": "Srinath S",
+        "current": 4,
+        "next": 5,
+        "gap": 1
+      },
+      {
+        "name": "Venkata Krishna R",
+        "current": 14,
+        "next": 15,
+        "gap": 1
+      },
+      {
+        "name": "Gaurav K",
+        "current": 24,
+        "next": 25,
+        "gap": 1
+      },
+      {
+        "name": "Hari V",
+        "current": 14,
+        "next": 15,
+        "gap": 1
+      },
+      {
+        "name": "Praveen K",
+        "current": 29,
+        "next": 30,
+        "gap": 1
+      },
+      {
+        "name": "Arjun S",
+        "current": 14,
+        "next": 15,
+        "gap": 1
+      },
+      {
+        "name": "Piyush J",
+        "current": 4,
+        "next": 5,
+        "gap": 1
+      },
+      {
+        "name": "Gaurav M",
+        "current": 18,
+        "next": 20,
+        "gap": 2
+      },
+      {
+        "name": "Meet D",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Ajay J",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Anil M",
+        "current": 8,
+        "next": 10,
+        "gap": 2
+      },
+      {
+        "name": "Subham S",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      }
+    ]
+  },
+  "keeper": {
+    "big": [
+      {
+        "name": "Anjan K",
+        "current": 7,
+        "next": 10,
+        "gap": 3
+      },
+      {
+        "name": "Eshwar Chaitanya S",
+        "current": 7,
+        "next": 10,
+        "gap": 3
+      },
+      {
+        "name": "Prashant K",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
+        "name": "Soumya Smruti M",
+        "current": 6,
+        "next": 10,
+        "gap": 4
+      },
+      {
+        "name": "Gaurav M",
+        "current": 5,
+        "next": 10,
+        "gap": 5
+      }
+    ],
+    "all": [
+      {
+        "name": "Arpan D",
+        "current": 4,
+        "next": 5,
+        "gap": 1
+      },
+      {
+        "name": "Hari V",
+        "current": 14,
+        "next": 15,
+        "gap": 1
+      },
+      {
+        "name": "Anil M",
+        "current": 38,
+        "next": 40,
+        "gap": 2
+      },
+      {
+        "name": "Sylvestor G",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      }
+    ]
+  },
+  "runOuts": {
+    "big": [
+      {
+        "name": "Gaurav M",
+        "current": 4,
+        "next": 5,
+        "gap": 1
+      },
+      {
+        "name": "Praveen K",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Soumya Smruti M",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Arpan D",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Hari V",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Yash M/Abhishek Kumar S",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Kaushal K",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Vinay B",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Yash M",
+        "current": 7,
+        "next": 10,
+        "gap": 3
+      },
+      {
+        "name": "Anjan K/Arjun S",
+        "current": 2,
+        "next": 5,
+        "gap": 3
+      },
+      {
+        "name": "Prashant K",
+        "current": 7,
+        "next": 10,
+        "gap": 3
+      },
+      {
+        "name": "Piyush J",
+        "current": 2,
+        "next": 5,
+        "gap": 3
+      },
+      {
+        "name": "Jimit M",
+        "current": 2,
+        "next": 5,
+        "gap": 3
+      },
+      {
+        "name": "Abhishek Kumar S",
+        "current": 2,
+        "next": 5,
+        "gap": 3
+      },
+      {
+        "name": "Gaurav K",
+        "current": 2,
+        "next": 5,
+        "gap": 3
+      },
+      {
+        "name": "Meet D",
+        "current": 2,
+        "next": 5,
+        "gap": 3
+      }
+    ],
+    "all": [
+      {
+        "name": "Anjan K/Arjun S",
+        "current": 2,
+        "next": 3,
+        "gap": 1
+      },
+      {
+        "name": "Gaurav M",
+        "current": 4,
+        "next": 5,
+        "gap": 1
+      },
+      {
+        "name": "Piyush J",
+        "current": 2,
+        "next": 3,
+        "gap": 1
+      },
+      {
+        "name": "Jimit M",
+        "current": 2,
+        "next": 3,
+        "gap": 1
+      },
+      {
+        "name": "Abhishek Kumar S",
+        "current": 2,
+        "next": 3,
+        "gap": 1
+      },
+      {
+        "name": "Gaurav K",
+        "current": 2,
+        "next": 3,
+        "gap": 1
+      },
+      {
+        "name": "Meet D",
+        "current": 2,
+        "next": 3,
+        "gap": 1
+      }
+    ]
+  }
 }

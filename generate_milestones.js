@@ -3,20 +3,36 @@
 const { getAllMatchesAllSeries, apiGet } = require('./config');
 const fs = require('fs');
 
+// Fine-grained milestones (all view)
 const RUN_MILESTONES    = [100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300,1350,1400,1450,1500,1600,1700,1800,1900,2000];
 const WKTS_MILESTONES   = [10,15,20,25,30,40,50,60,70,75,80,90,100];
 const CATCH_MILESTONES  = [5,10,15,20,25,30,40,50];
 const KEEPER_MILESTONES = [5,10,15,20,25,30,40,50];
 const RUNOUT_MILESTONES = [3,5,10,15,20];
 
+// Big milestones only (default view)
+const RUN_BIG    = [250,500,750,1000,1250,1500,2000];
+const WKTS_BIG   = [25,50,75,100];
+const CATCH_BIG  = [10,20,30,50];
+const KEEPER_BIG = [10,20,30,50];
+const RUNOUT_BIG = [5,10,20];
+
+// Windows for fine-grained
 const RUN_WINDOW    = 50;
 const WKT_WINDOW    = 5;
 const CATCH_WINDOW  = 2;
 const KEEPER_WINDOW = 2;
 const RUNOUT_WINDOW = 1;
 
+// Windows for big milestones (looser — show who's approaching)
+const RUN_BIG_WINDOW    = 100;
+const WKTS_BIG_WINDOW   = 10;
+const CATCH_BIG_WINDOW  = 5;
+const KEEPER_BIG_WINDOW = 5;
+const RUNOUT_BIG_WINDOW = 3;
+
 const isJunk = name =>
-  !name || name.includes('Dummy') || name.includes('Guest') ||
+  !name || name === 'null' || name.includes('Dummy') || name.includes('Guest') ||
   name.includes('Substitute') || name.includes('Sub)') || name.startsWith('&#');
 
 (async () => {
@@ -100,19 +116,19 @@ const isJunk = name =>
 
   const output = {
     updatedAt: new Date().toISOString(),
-    batting:  toList(batters,  RUN_MILESTONES,    RUN_WINDOW),
-    bowling:  toList(bowlers,  WKTS_MILESTONES,   WKT_WINDOW),
-    catches:  toList(catches,  CATCH_MILESTONES,  CATCH_WINDOW),
-    keeper:   toList(keeper,   KEEPER_MILESTONES, KEEPER_WINDOW),
-    runOuts:  toList(runouts,  RUNOUT_MILESTONES, RUNOUT_WINDOW),
+    batting:    { big: toList(batters,  RUN_BIG,    RUN_BIG_WINDOW),    all: toList(batters,  RUN_MILESTONES,    RUN_WINDOW) },
+    bowling:    { big: toList(bowlers,  WKTS_BIG,   WKTS_BIG_WINDOW),   all: toList(bowlers,  WKTS_MILESTONES,   WKT_WINDOW) },
+    catches:    { big: toList(catches,  CATCH_BIG,  CATCH_BIG_WINDOW),  all: toList(catches,  CATCH_MILESTONES,  CATCH_WINDOW) },
+    keeper:     { big: toList(keeper,   KEEPER_BIG, KEEPER_BIG_WINDOW), all: toList(keeper,   KEEPER_MILESTONES, KEEPER_WINDOW) },
+    runOuts:    { big: toList(runouts,  RUNOUT_BIG, RUNOUT_BIG_WINDOW), all: toList(runouts,  RUNOUT_MILESTONES, RUNOUT_WINDOW) },
   };
 
   fs.writeFileSync('milestones.json', JSON.stringify(output, null, 2));
   console.log('milestones.json written —',
-    output.batting.length, 'batting,',
-    output.bowling.length, 'bowling,',
-    output.catches.length, 'catches,',
-    output.keeper.length,  'keeper,',
-    output.runOuts.length, 'run-outs'
+    output.batting.all.length, 'batting,',
+    output.bowling.all.length, 'bowling,',
+    output.catches.all.length, 'catches,',
+    output.keeper.all.length,  'keeper,',
+    output.runOuts.all.length, 'run-outs'
   );
 })();
