@@ -752,7 +752,8 @@
     const inBuilder = new Set([...pool, ...teamA, ...teamB].map(p => p.name));
     const dl = document.getElementById('playerSuggestions');
     dl.innerHTML = Object.keys(STRENGTH)
-      .filter(name => !inBuilder.has(name) && name.toLowerCase().includes(q))
+      .filter(name => !inBuilder.has(name) && name.toLowerCase().includes(q) &&
+              !name.includes('Guest') && !name.includes('Dummy'))
       .slice(0, 8)
       .map(name => `<option value="${name}">`)
       .join('');
