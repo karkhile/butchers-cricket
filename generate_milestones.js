@@ -10,6 +10,7 @@ const CATCH_MILESTONES    = [5,10,15,20,25,30,40,50];
 const KEEPERCT_MILESTONES = [5,10,15,20,25,30,40,50];
 const STUMPING_MILESTONES = [1,5,10,15,20];
 const RUNOUT_MILESTONES   = [3,5,10,15,20];
+const MOM_MILESTONES      = [1,5,10,15,20,25,30];
 const FOURS_MILESTONES    = [25,50,75,100,125,150,200,250,300];
 const SIXES_MILESTONES    = [10,20,30,40,50,75,100];
 
@@ -21,6 +22,7 @@ const FAST_STUMPING = [1,5,10,15,20];
 const FAST_RUNOUT   = [5,10,15,20];
 const FAST_FOURS    = [50,100,150,200];
 const FAST_SIXES    = [10,25,50];
+const FAST_MOM      = [1,5,10,15,20];
 
 const RUN_BIG      = [250,500,750,1000,1250,1500,2000];
 const WKTS_BIG     = [25,50,75,100];
@@ -29,6 +31,7 @@ const KEEPERCT_BIG = [10,20,30,50];
 const STUMPING_BIG = [1,5,10,20];
 const FOURS_BIG    = [50,100,150,200,300];
 const SIXES_BIG    = [10,25,50,100];
+const MOM_BIG      = [1,5,10,15,20,25];
 const RUNOUT_BIG   = [5,10,20];
 
 // Windows for fine-grained
@@ -40,6 +43,7 @@ const STUMPING_WINDOW = 1;
 const RUNOUT_WINDOW   = 1;
 const FOURS_WINDOW    = 10;
 const SIXES_WINDOW    = 5;
+const MOM_WINDOW      = 1;
 
 // Windows for big milestones
 const RUN_BIG_WINDOW      = 100;
@@ -50,6 +54,7 @@ const STUMPING_BIG_WINDOW = 1;
 const RUNOUT_BIG_WINDOW   = 3;
 const FOURS_BIG_WINDOW    = 20;
 const SIXES_BIG_WINDOW    = 5;
+const MOM_BIG_WINDOW      = 2;
 
 const isJunk = name =>
   !name || name === 'null' || name.includes('Dummy') || name.includes('Guest') ||
@@ -82,11 +87,11 @@ function parseFielder(raw, howOut) {
   const matches = [...matchesRaw].reverse();
   console.log('Total matches:', matches.length);
   const batters = {}, bowlers = {}, catches = {}, keeperCt = {}, stumpings = {}, runouts = {};
-  const foursMap = {}, sixesMap = {};
+  const foursMap = {}, sixesMap = {}, momMap = {};
 
   // Fastest milestone tracking: { playerName: { hits: { threshold: playerMatchCount } } }
   // playerMatchCount = number of matches the player personally appeared in (not global match number)
-  const fastBat = {}, fastBowl = {}, fastFieldCt = {}, fastKeeperCt = {}, fastTotalCatch = {}, fastStumping = {}, fastRunOut = {}, fastFours = {}, fastSixes = {};
+  const fastBat = {}, fastBowl = {}, fastFieldCt = {}, fastKeeperCt = {}, fastTotalCatch = {}, fastStumping = {}, fastRunOut = {}, fastFours = {}, fastSixes = {}, fastMom = {};
   // Per-player match appearance counters
   const playerMatchCount = {};
 
@@ -98,6 +103,31 @@ function parseFielder(raw, howOut) {
     const seenInMatch = new Set();
     try {
       const root = (await apiGet('series/match/' + matchId + '/scorecard')).data || {};
+
+      // Resolve Player of the Match ID to a name via batting/bowling rows
+      const momId = root.playerOfTheMatch;
+      if (momId) {
+        let momName = '';
+        outer: for (const key of ['innings1','innings2','innings3','innings4']) {
+          for (const b of (root[key]?.batting || [])) {
+            if (b.playerID === momId && b.playerName) { momName = b.playerName.trim(); break outer; }
+          }
+          for (const b of (root[key]?.bowling || [])) {
+            if (b.playerID === momId && (b.firstName || b.lastName)) {
+              momName = ((b.firstName || '') + ' ' + (b.lastName || '')).trim(); break outer;
+            }
+          }
+        }
+        if (momName && !isJunk(momName)) {
+          momMap[momName] = (momMap[momName] || 0) + 1;
+          seenInMatch.add(momName);
+          const momMatchNum = (playerMatchCount[momName] || 0) + 1;
+          if (!fastMom[momName]) fastMom[momName] = { hits: {} };
+          for (const t of FAST_MOM)
+            if (!fastMom[momName].hits[t] && momMap[momName] >= t) fastMom[momName].hits[t] = momMatchNum;
+        }
+      }
+
       for (const key of ['innings1', 'innings2', 'innings3', 'innings4']) {
         const inn = root[key];
         if (!inn) continue;
@@ -241,11 +271,13 @@ function parseFielder(raw, howOut) {
     keeperCt:     { big: toList(keeperCt,     KEEPERCT_BIG,  KEEPERCT_BIG_WINDOW), all: toList(keeperCt,     KEEPERCT_MILESTONES, KEEPERCT_WINDOW), achieved: toAchieved(keeperCt,     KEEPERCT_BIG) },
     stumpings:    { big: toList(stumpings,    STUMPING_BIG,  STUMPING_BIG_WINDOW), all: toList(stumpings,    STUMPING_MILESTONES, STUMPING_WINDOW), achieved: toAchieved(stumpings,    STUMPING_BIG) },
     runOuts:      { big: toList(runouts,      RUNOUT_BIG,    RUNOUT_BIG_WINDOW),   all: toList(runouts,      RUNOUT_MILESTONES,   RUNOUT_WINDOW),   achieved: toAchieved(runouts,      RUNOUT_BIG) },
+    mom:          { big: toList(momMap,       MOM_BIG,       MOM_BIG_WINDOW),      all: toList(momMap,       MOM_MILESTONES,      MOM_WINDOW),      achieved: toAchieved(momMap,       MOM_BIG) },
     fastest: {
       batting:     toFastest(fastBat,        FAST_RUN),
       bowling:     toFastest(fastBowl,       FAST_WKTS),
       fours:       toFastest(fastFours,      FAST_FOURS),
       sixes:       toFastest(fastSixes,      FAST_SIXES),
+      mom:         toFastest(fastMom,        FAST_MOM),
       fieldCatch:  toFastest(fastFieldCt,    FAST_CATCH),
       keeperCatch: toFastest(fastKeeperCt,   FAST_CATCH),
       totalCatch:  toFastest(fastTotalCatch, FAST_CATCH),
