@@ -823,7 +823,18 @@
       log('Assigning Butchers-B (' + teamB.length + ' players)...');
       const rosterB = teamB.map(p => p.id);
       const rB = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: rosterB, lang: 'en' });
-      log(rB.status === 'Success' ? '✓ Butchers-B: ' + rosterB.length + ' players' : '✗ ' + JSON.stringify(rB).slice(0, 120), rB.status === 'Success' ? 'success' : 'error');
+      if (rB.status === 'Success') {
+        log('✓ Butchers-B: ' + rosterB.length + ' players', 'success');
+      } else {
+        log('✗ Butchers-B bulk failed — trying one by one to find bad ID...', 'error');
+        const good = [];
+        for (const player of teamB) {
+          const r = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: [player.id], lang: 'en' });
+          if (r.status === 'Success') { good.push(player.id); log('  ✓ ' + player.name, 'success'); }
+          else log('  ✗ ' + player.name + ' (' + player.id + ')', 'error');
+        }
+        if (good.length) await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: good, lang: 'en' });
+      }
 
       log('Checking for existing fixtures on ' + date + '...');
       const upcoming = await ccGet('series/' + SERIES_ID + '/matches?status=upcoming&lang=en&page=1');
