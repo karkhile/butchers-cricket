@@ -348,7 +348,6 @@
     projectId: "butchers-cricket",
   };
 
-  const CC_TOKEN    = sessionStorage.getItem('bcc-cc-token') || '';
   const LEAGUE_ID   = 'kroq2QrfcoPEe4neEeXrVA';
   const SERIES_ID   = 'wynmKh98CCp9qybL-NjEyQ';
   const TEAM_A      = '8LZsXms8mkRjsz07r42o5g';
@@ -358,6 +357,7 @@
   const DUMMY_B     = 'Fdjf-dllW75Sf4799EkAhg';
   const BASE_URL    = 'https://core-prod-origin.cricclubs.com/core';
   const PUB_KEY_B64 = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCNokj65NYc9LdYZshBi6I1BUVu8NdhcafSkzSugFVwUydw7t2DPaZcewxkko3G2R/0OS8s7ceSV/p4zljtgCNtls5A6TT2Ehsoxhqh6PHRRuK4gvhPn8gYtBXjQHkj0VWkr9VoPdEt3NQIr0MkBmwAgt5YkTCV1EZPOAnsLSnQrwIDAQAB';
+  const getToken    = () => sessionStorage.getItem('bcc-cc-token') || '';
 
   // ── HELPERS ─────────────────────────────────────────────────────────────────
 
@@ -400,7 +400,7 @@
 
   async function ccGet(path) {
     const sep = path.includes('?') ? '&' : '?';
-    const url = BASE_URL + '/' + path + sep + 'token=' + CC_TOKEN + '&leagueId=' + LEAGUE_ID;
+    const url = BASE_URL + '/' + path + sep + 'token=' + getToken() + '&leagueId=' + LEAGUE_ID;
     const r = await fetch(url, { headers: { accept: 'application/json', 'x-content-token': makeCCToken() } });
     return r.json();
   }
@@ -409,7 +409,7 @@
     const r = await fetch(BASE_URL + '/' + path, {
       method: 'POST',
       headers: { accept: 'application/json', 'content-type': 'application/json', 'x-content-token': makeCCToken(), origin: 'https://admin.cricclubs.com' },
-      body: JSON.stringify({ token: CC_TOKEN, leagueId: LEAGUE_ID, ...body })
+      body: JSON.stringify({ token: getToken(), leagueId: LEAGUE_ID, ...body })
     });
     return r.json();
   }
@@ -418,7 +418,7 @@
     const r = await fetch(BASE_URL + '/' + path, {
       method: 'PUT',
       headers: { accept: 'application/json', 'content-type': 'application/json', 'x-content-token': makeCCToken(), origin: 'https://admin.cricclubs.com' },
-      body: JSON.stringify({ token: CC_TOKEN, leagueId: LEAGUE_ID, ...body })
+      body: JSON.stringify({ token: getToken(), leagueId: LEAGUE_ID, ...body })
     });
     return r.json();
   }
@@ -428,6 +428,13 @@
 
   const fbApp = initializeApp(FIREBASE_CONFIG);
   const db    = getFirestore(fbApp);
+
+  // Re-fetch CC token from Firestore if missing in sessionStorage (e.g. different browser)
+  if (sessionStorage.getItem('bcc-admin') === '1' && !sessionStorage.getItem('bcc-cc-token')) {
+    getDoc(doc(db, 'config', 'admin')).then(s => {
+      if (s.exists() && s.data().ccToken) sessionStorage.setItem('bcc-cc-token', s.data().ccToken);
+    }).catch(() => {});
+  }
 
   async function loadVotes() {
     const snap = await getDocs(collection(db, 'votes'));
