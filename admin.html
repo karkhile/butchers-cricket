@@ -773,7 +773,7 @@
     const { pool, teamA, teamB } = window._state;
     const already = [...pool, ...teamA, ...teamB].find(p => p.name.toLowerCase() === name.toLowerCase());
     if (already) { alert(already.name + ' is already in the builder.'); return; }
-    pool.push({ name, strength: STRENGTH[name] || 50, days: [] });
+    pool.push({ name, id: (roster[name] || {}).id, strength: STRENGTH[name] || 50, days: [] });
     input.value = '';
     saveTeamState();
     renderTeamBuilder();
