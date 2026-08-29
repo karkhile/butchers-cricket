@@ -361,6 +361,13 @@
 
   // ── HELPERS ─────────────────────────────────────────────────────────────────
 
+  function localDateStr(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
   function nextSaturday() {
     const now = new Date();
     const day = now.getDay();
@@ -371,16 +378,16 @@
   }
 
   function getWeekKey() {
-    return nextSaturday().toISOString().slice(0, 10);
+    return localDateStr(nextSaturday());
   }
 
   function getNextGameDay(preferredDay) {
     const sat = nextSaturday();
     if (preferredDay === 'sunday') {
       const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
-      return sun.toISOString().slice(0, 10);
+      return localDateStr(sun);
     }
-    return sat.toISOString().slice(0, 10);
+    return localDateStr(sat);
   }
 
   function makeCCToken() {
@@ -944,7 +951,7 @@
     const isOpen = !pollSnap.exists() || pollData.open !== false;
 
     const today = new Date();
-    const todayISO = today.toISOString().slice(0, 10);
+    const todayISO = localDateStr(today);
     const isMatchDay = pollData.satDate && pollData.satDate === todayISO;
     const isAfterLastMatch = today.getHours() === 11 && today.getMinutes() >= 59;
 
@@ -953,7 +960,7 @@
     const daysUntilNextSat = day === 6 ? 7 : (6 - day) || 7;
     const nextSatDate = new Date(today);
     nextSatDate.setDate(today.getDate() + daysUntilNextSat);
-    const nextSat = nextSatDate.toISOString().slice(0, 10);
+    const nextSat = localDateStr(nextSatDate);
 
     if (isMatchDay && isAfterLastMatch) {
       // Auto-reset: clear this week's votes and open for next Saturday
