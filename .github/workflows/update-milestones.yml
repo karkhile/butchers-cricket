@@ -1,4 +1,4 @@
-name: Update Milestones
+name: Refresh Stats
 
 on:
   schedule:
@@ -23,6 +23,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install dependencies
+        run: npm install firebase-admin
+
       - name: Generate milestones
         env:
           CC_TOKEN: ${{ secrets.CC_TOKEN }}
@@ -39,3 +42,9 @@ jobs:
             git commit -m "chore: refresh milestones.json"
             git push
           fi
+
+      - name: Update strength scores
+        env:
+          CC_TOKEN: ${{ secrets.CC_TOKEN }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node update_points.js
