@@ -986,8 +986,9 @@
 
     const today = new Date();
     const todayISO = localDateStr(today);
-    const isMatchDay = pollData.satDate && pollData.satDate === todayISO;
-    const isAfterLastMatch = today.getHours() === 11 && today.getMinutes() >= 59;
+    const sunISO = pollData.satDate ? localDateStr(new Date(new Date(pollData.satDate + 'T12:00:00').getTime() + 86400000)) : '';
+    const isMatchDay = pollData.satDate && (pollData.satDate === todayISO || sunISO === todayISO);
+    const isAfterLastMatch = today.getHours() >= 12;
 
     // Next Saturday from today
     const day = today.getDay();
