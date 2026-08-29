@@ -817,13 +817,11 @@
 
       log('Assigning Butchers-A (' + teamA.length + ' players)...');
       const rosterA = teamA.map(p => p.id);
-      if (teamA.length < 11) rosterA.push(DUMMY_A);
       const rA = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_A + '/players', { players: rosterA, lang: 'en' });
       log(rA.status === 'Success' ? '✓ Butchers-A: ' + rosterA.length + ' players' : '✗ ' + JSON.stringify(rA).slice(0, 120), rA.status === 'Success' ? 'success' : 'error');
 
       log('Assigning Butchers-B (' + teamB.length + ' players)...');
       const rosterB = teamB.map(p => p.id);
-      if (teamB.length < 11) rosterB.push(DUMMY_B);
       const rB = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: rosterB, lang: 'en' });
       log(rB.status === 'Success' ? '✓ Butchers-B: ' + rosterB.length + ' players' : '✗ ' + JSON.stringify(rB).slice(0, 120), rB.status === 'Success' ? 'success' : 'error');
 
