@@ -599,9 +599,10 @@
     try {
       const saved = JSON.parse(localStorage.getItem('butchers_teams') || 'null');
       if (!saved || saved.weekKey !== window._state.weekKey) return false;
-      window._state.pool  = saved.pool  || [];
-      window._state.teamA = saved.teamA || [];
-      window._state.teamB = saved.teamB || [];
+      const fixIds = arr => (arr || []).map(p => ({ ...p, id: p.id || (roster[p.name] || {}).id }));
+      window._state.pool  = fixIds(saved.pool);
+      window._state.teamA = fixIds(saved.teamA);
+      window._state.teamB = fixIds(saved.teamB);
       return true;
     } catch(e) { return false; }
   }
