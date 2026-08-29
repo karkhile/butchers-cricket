@@ -355,6 +355,8 @@
   const GROUND_ID   = '1WsAYvg2aOUxiMXutmB0LA';
   const DUMMY_A     = 'Tqq4WqGl2d6EDkEnS0vvKA';
   const DUMMY_B     = 'Fdjf-dllW75Sf4799EkAhg';
+  const GUEST_ONE   = '8yJiFtIe1Cv68mXqefXZAQ';
+  const GUEST_TWO   = 'ymj0nRtQGTgEjBULjbOE6A';
   const BASE_URL    = 'https://core-prod-origin.cricclubs.com/core';
   const PUB_KEY_B64 = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCNokj65NYc9LdYZshBi6I1BUVu8NdhcafSkzSugFVwUydw7t2DPaZcewxkko3G2R/0OS8s7ceSV/p4zljtgCNtls5A6TT2Ehsoxhqh6PHRRuK4gvhPn8gYtBXjQHkj0VWkr9VoPdEt3NQIr0MkBmwAgt5YkTCV1EZPOAnsLSnQrwIDAQAB';
   const getToken    = () => sessionStorage.getItem('bcc-cc-token') || '';
@@ -824,15 +826,15 @@
       log('✓ Rosters cleared', 'success');
 
       log('Assigning Butchers-A (' + teamA.length + ' players)...');
-      const rosterA = teamA.map(p => p.id);
+      const rosterA = [...teamA.map(p => p.id), DUMMY_A, GUEST_ONE];
       const rA = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_A + '/players', { players: rosterA, lang: 'en' });
-      log(rA.status === 'Success' ? '✓ Butchers-A: ' + rosterA.length + ' players' : '✗ ' + JSON.stringify(rA).slice(0, 120), rA.status === 'Success' ? 'success' : 'error');
+      log(rA.status === 'Success' ? '✓ Butchers-A: ' + teamA.length + ' players + DummyA + Guest-One' : '✗ ' + JSON.stringify(rA).slice(0, 120), rA.status === 'Success' ? 'success' : 'error');
 
       log('Assigning Butchers-B (' + teamB.length + ' players)...');
-      const rosterB = teamB.map(p => p.id);
+      const rosterB = [...teamB.map(p => p.id), DUMMY_B, GUEST_TWO];
       const rB = await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: rosterB, lang: 'en' });
       if (rB.status === 'Success') {
-        log('✓ Butchers-B: ' + rosterB.length + ' players', 'success');
+        log('✓ Butchers-B: ' + teamB.length + ' players + DummyB + Guest-Two', 'success');
       } else {
         log('✗ Butchers-B bulk failed — trying one by one to find bad ID...', 'error');
         const good = [];
@@ -841,7 +843,7 @@
           if (r.status === 'Success') { good.push(player.id); log('  ✓ ' + player.name, 'success'); }
           else log('  ✗ ' + player.name + ' (' + player.id + ')', 'error');
         }
-        if (good.length) await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: good, lang: 'en' });
+        if (good.length) await ccPost('series/' + SERIES_ID + '/team/' + TEAM_B + '/players', { players: [...good, DUMMY_B, GUEST_TWO], lang: 'en' });
       }
 
       log('Checking for existing fixtures on ' + date + '...');
