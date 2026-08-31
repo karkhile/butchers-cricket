@@ -249,12 +249,38 @@
       { key: 'mom',         title: '⭐ Player of Match', unit: 'matches', suffix: 'awards'   },
     ];
 
+    function buildTopOversCard(topOvers) {
+      const card = document.createElement('div');
+      card.className = 'fastest-card';
+      card.innerHTML = '<div class="card-title">💥 Most Runs in an Over</div>';
+      if (!topOvers.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
+      const rankLabels = ['🥇','🥈','🥉'];
+      const rankClasses = ['gold','silver','bronze'];
+      topOvers.forEach((entry, i) => {
+        const sec = document.createElement('div');
+        sec.className = 'fastest-section';
+        const rankHtml = '<span class="fastest-rank ' + rankClasses[i] + '">' + rankLabels[i] + '</span>';
+        const batterLines = (entry.batters || []).map(b => b.name + ' ' + b.runs).join(', ');
+        sec.innerHTML =
+          '<div class="fastest-entry">' +
+            rankHtml +
+            '<span class="fastest-name">' + entry.runs + ' runs — ' + entry.over + '</span>' +
+            '<span class="fastest-badge">' + entry.date + '</span>' +
+          '</div>' +
+          '<div style="font-size:11px;color:#555;padding:2px 0 2px 28px;">🎳 ' + entry.bowler + '</div>' +
+          '<div style="font-size:11px;color:#555;padding:2px 0 6px 28px;">🏏 ' + batterLines + '</div>';
+        card.appendChild(sec);
+      });
+      return card;
+    }
+
     function renderFastest(el) {
       const fastest = (_data.fastest || {});
       for (const c of FASTEST_CARDS) {
         const thresholds = fastest[c.key] || [];
         el.appendChild(buildFastestCard(c.title, thresholds, c.suffix));
       }
+      el.appendChild(buildTopOversCard(_data.topOvers || []));
     }
 
     function buildFastestCard(title, thresholds, suffix) {

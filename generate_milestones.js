@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Computes upcoming batting/bowling/fielding milestones and writes milestones.json
-const { getAllMatchesAllSeries, apiGet } = require('./config');
+const { getAllMatchesAllSeries, apiGet, getCommentary } = require('./config');
 const fs = require('fs');
 
 // Fine-grained milestones (all view)
@@ -260,6 +260,40 @@ function parseFielder(raw, howOut) {
   for (const [name, n] of Object.entries(catches))  totalCatches[name] = (totalCatches[name] || 0) + n;
   for (const [name, n] of Object.entries(keeperCt)) totalCatches[name] = (totalCatches[name] || 0) + n;
 
+  // ── Top overs by runs ────────────────────────────────────────────────────────
+  const allOvers = [];
+  for (let i = 0; i < matches.length; i++) {
+    const m = matches[i];
+    const matchId = m.scoreSummary?.matchId || m.fixtureId;
+    const date = (m.matchDateTime || '').slice(0, 10);
+    const teams = (m.teamOne?.name || '') + ' vs ' + (m.teamTwo?.name || '');
+    try {
+      const commentary = await getCommentary(matchId);
+      for (let inn = 1; inn <= 4; inn++) {
+        const innData = commentary['innings' + inn + 'Balls'];
+        if (!innData?.oversMap) continue;
+        for (const [overKey, over] of Object.entries(innData.oversMap)) {
+          const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball');
+          if (!validBalls.length) continue;
+          let overRuns = 0;
+          for (const ball of validBalls) overRuns += (parseInt(ball.runs) || 0);
+          const bowler = validBalls[0]?.bowlerName || 'Unknown';
+          const batterContribs = {};
+          for (const ball of validBalls) {
+            const name = ball.strikerName;
+            if (name) batterContribs[name] = (batterContribs[name] || 0) + (parseInt(ball.runs) || 0);
+          }
+          const batters = Object.entries(batterContribs)
+            .sort((a, b) => b[1] - a[1])
+            .map(([name, runs]) => ({ name, runs }));
+          allOvers.push({ runs: overRuns, over: overKey, innings: inn, date, teams, bowler, batters });
+        }
+      }
+    } catch (e) {}
+  }
+  allOvers.sort((a, b) => b.runs - a.runs);
+  const topOvers = allOvers.slice(0, 3);
+
   const output = {
     updatedAt: new Date().toISOString(),
     batting:      { big: toList(batters,      RUN_BIG,       RUN_BIG_WINDOW),      all: toList(batters,      RUN_MILESTONES,      RUN_WINDOW),      achieved: toAchieved(batters,      RUN_BIG) },
@@ -284,6 +318,7 @@ function parseFielder(raw, howOut) {
       stumpings:   toFastest(fastStumping,   FAST_STUMPING),
       runOuts:     toFastest(fastRunOut,     FAST_RUNOUT),
     },
+    topOvers,
   };
 
   fs.writeFileSync('milestones.json', JSON.stringify(output, null, 2));
