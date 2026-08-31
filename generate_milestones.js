@@ -291,8 +291,11 @@ function parseFielder(raw, howOut) {
       }
     } catch (e) {}
   }
-  allOvers.sort((a, b) => b.runs - a.runs);
-  const topOvers = allOvers.slice(0, 3);
+  allOvers.sort((a, b) => b.runs - a.runs || b.date.localeCompare(a.date));
+  // Include all tied entries at the cutoff rank
+  const topN = 3;
+  const cutoff = allOvers[topN - 1]?.runs;
+  const topOvers = allOvers.filter(o => o.runs >= cutoff);
 
   const output = {
     updatedAt: new Date().toISOString(),

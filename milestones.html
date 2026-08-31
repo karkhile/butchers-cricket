@@ -256,10 +256,15 @@
       if (!topOvers.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
       const rankLabels = ['🥇','🥈','🥉'];
       const rankClasses = ['gold','silver','bronze'];
+      let displayRank = 0;
+      let prevRuns = null;
       topOvers.forEach((entry, i) => {
+        if (entry.runs !== prevRuns) { displayRank = i; prevRuns = entry.runs; }
         const sec = document.createElement('div');
         sec.className = 'fastest-section';
-        const rankHtml = '<span class="fastest-rank ' + rankClasses[i] + '">' + rankLabels[i] + '</span>';
+        const rankHtml = displayRank < 3
+          ? '<span class="fastest-rank ' + rankClasses[displayRank] + '">' + rankLabels[displayRank] + '</span>'
+          : '<span class="fastest-rank">' + (displayRank + 1) + '</span>';
         const batterLines = (entry.batters || []).map(b => b.name + ' ' + b.runs).join(', ');
         sec.innerHTML =
           '<div class="fastest-entry">' +

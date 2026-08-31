@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-31T23:41:48.214Z",
+  "updatedAt": "2026-08-31T23:45:06.912Z",
   "batting": {
     "big": [
       {
@@ -3324,6 +3324,24 @@
         {
           "name": "Gaurav K",
           "runs": 3
+        }
+      ]
+    },
+    {
+      "runs": 25,
+      "over": "Over6",
+      "innings": 2,
+      "date": "2026-05-31",
+      "teams": "Butchers-B vs Butchers-A",
+      "bowler": "Venkata Krishna R",
+      "batters": [
+        {
+          "name": "Kaushal K",
+          "runs": 20
+        },
+        {
+          "name": "Akashdeep B",
+          "runs": 5
         }
       ]
     },
