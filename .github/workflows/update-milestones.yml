@@ -48,3 +48,8 @@ jobs:
           CC_TOKEN: ${{ secrets.CC_TOKEN }}
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: node update_points.js
+
+      - name: Reset poll for next match week
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node reset_poll.js
