@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T07:43:30.389Z",
+  "updatedAt": "2026-09-01T18:13:39.879Z",
   "batting": {
     "big": [
       {
@@ -3967,77 +3967,121 @@
           "lowestWp": 2,
           "rescueWpa": 1.64,
           "date": "2026-07-11",
-          "matchId": "wqtuqAbhFcUoVgOve6bXYg"
+          "matchId": "wqtuqAbhFcUoVgOve6bXYg",
+          "needed": 24,
+          "oversLeft": 1.3,
+          "wickets": 8,
+          "target": 120
         },
         {
           "type": "bat",
           "lowestWp": 2.2,
           "rescueWpa": 0.37,
           "date": "2025-08-24",
-          "matchId": "QtU79P9BWW75TGH5_CN5aA"
+          "matchId": "QtU79P9BWW75TGH5_CN5aA",
+          "needed": 8,
+          "oversLeft": 0.3,
+          "wickets": 9,
+          "target": 89
         },
         {
           "type": "bat",
           "lowestWp": 4.3,
           "rescueWpa": 0.52,
           "date": "2026-08-29",
-          "matchId": "Tx2hoMivnkhaajYXGL2wcg"
+          "matchId": "Tx2hoMivnkhaajYXGL2wcg",
+          "needed": 27,
+          "oversLeft": 2.2,
+          "wickets": 4,
+          "target": 84
         },
         {
           "type": "bat",
           "lowestWp": 13,
           "rescueWpa": 0.49,
           "date": "2025-06-22",
-          "matchId": "Eou-mU4QzvG7CwuqtsM7mg"
+          "matchId": "Eou-mU4QzvG7CwuqtsM7mg",
+          "needed": 31,
+          "oversLeft": 2.7,
+          "wickets": 5,
+          "target": 82
         },
         {
           "type": "bat",
           "lowestWp": 15.7,
           "rescueWpa": 0.89,
           "date": "2026-06-06",
-          "matchId": "PosG_KpMepq1r-h0EVzkbw"
+          "matchId": "PosG_KpMepq1r-h0EVzkbw",
+          "needed": 53,
+          "oversLeft": 3.8,
+          "wickets": 6,
+          "target": 111
         },
         {
           "type": "bat",
           "lowestWp": 16.4,
           "rescueWpa": 0.2,
           "date": "2026-03-14",
-          "matchId": "F9H5HDu3uTCr-hQppym2Uw"
+          "matchId": "F9H5HDu3uTCr-hQppym2Uw",
+          "needed": 40,
+          "oversLeft": 2.5,
+          "wickets": 3,
+          "target": 98
         },
         {
           "type": "bat",
           "lowestWp": 22.1,
           "rescueWpa": 0.57,
           "date": "2025-10-25",
-          "matchId": "pcPlujYw7ww8CeAEo5EJRw"
+          "matchId": "pcPlujYw7ww8CeAEo5EJRw",
+          "needed": 18,
+          "oversLeft": 2.3,
+          "wickets": 6,
+          "target": 57
         },
         {
           "type": "bat",
           "lowestWp": 23.8,
           "rescueWpa": 0.49,
           "date": "2026-02-22",
-          "matchId": "DCzVsIqTTLKSVyTku0OzYQ"
+          "matchId": "DCzVsIqTTLKSVyTku0OzYQ",
+          "needed": 17,
+          "oversLeft": 2,
+          "wickets": 3,
+          "target": 70
         },
         {
           "type": "bowl",
           "lowestWp": 25.5,
           "rescueWpa": 0.28,
           "date": "2025-11-22",
-          "matchId": "1xYfBb2zbMuLKZ5h1sRmsg"
+          "matchId": "1xYfBb2zbMuLKZ5h1sRmsg",
+          "needed": 6,
+          "oversLeft": 1.7,
+          "wickets": 1,
+          "target": 74
         },
         {
           "type": "bat",
           "lowestWp": 26.1,
           "rescueWpa": 0.18,
           "date": "2025-11-22",
-          "matchId": "1xYfBb2zbMuLKZ5h1sRmsg"
+          "matchId": "1xYfBb2zbMuLKZ5h1sRmsg",
+          "needed": 4,
+          "oversLeft": 0.3,
+          "wickets": 3,
+          "target": 74
         },
         {
           "type": "bat",
           "lowestWp": 27.7,
           "rescueWpa": 0.64,
           "date": "2025-12-13",
-          "matchId": "aXt8X6-aEJEIyduVOKxjxA"
+          "matchId": "aXt8X6-aEJEIyduVOKxjxA",
+          "needed": 6,
+          "oversLeft": 0.8,
+          "wickets": 3,
+          "target": 57
         }
       ]
     },
@@ -4051,21 +4095,33 @@
           "lowestWp": 2.3,
           "rescueWpa": 0.12,
           "date": "2026-08-08",
-          "matchId": "lM_gfLqrI2cxp6fW3CKaOQ"
+          "matchId": "lM_gfLqrI2cxp6fW3CKaOQ",
+          "needed": 3,
+          "oversLeft": 0.2,
+          "wickets": 5,
+          "target": 94
         },
         {
           "type": "bat",
           "lowestWp": 5.7,
           "rescueWpa": 0.86,
           "date": "2026-05-25",
-          "matchId": "IREs3PP0PkLQLTAb2pwQeA"
+          "matchId": "IREs3PP0PkLQLTAb2pwQeA",
+          "needed": 38,
+          "oversLeft": 2.3,
+          "wickets": 4,
+          "target": 93
         },
         {
           "type": "bat",
           "lowestWp": 12,
           "rescueWpa": 0.7,
           "date": "2026-08-01",
-          "matchId": "Eex1XKkfKyjcp4bL9l5uiw"
+          "matchId": "Eex1XKkfKyjcp4bL9l5uiw",
+          "needed": 37,
+          "oversLeft": 3,
+          "wickets": 4,
+          "target": 107
         }
       ]
     },
@@ -4079,21 +4135,33 @@
           "lowestWp": 22.4,
           "rescueWpa": 0.15,
           "date": "2026-06-26",
-          "matchId": "u776IFKHeJo6xfD7m2Z4Mw"
+          "matchId": "u776IFKHeJo6xfD7m2Z4Mw",
+          "needed": 12,
+          "oversLeft": 1,
+          "wickets": 5,
+          "target": 111
         },
         {
           "type": "bat",
           "lowestWp": 24.8,
           "rescueWpa": 0.82,
           "date": "2025-10-11",
-          "matchId": "H8xcTikSx6U7KVIBiYQsMQ"
+          "matchId": "H8xcTikSx6U7KVIBiYQsMQ",
+          "needed": 30,
+          "oversLeft": 3.5,
+          "wickets": 2,
+          "target": 60
         },
         {
           "type": "bat",
           "lowestWp": 25.6,
           "rescueWpa": 0.63,
           "date": "2026-05-25",
-          "matchId": "XcYwt4oKxW5lSHAfR4w_og"
+          "matchId": "XcYwt4oKxW5lSHAfR4w_og",
+          "needed": 25,
+          "oversLeft": 2.5,
+          "wickets": 5,
+          "target": 107
         }
       ]
     },
@@ -4107,21 +4175,33 @@
           "lowestWp": 3.2,
           "rescueWpa": 0.47,
           "date": "2026-03-07",
-          "matchId": "4ws2jMJSsptBiBS4UD5VYw"
+          "matchId": "4ws2jMJSsptBiBS4UD5VYw",
+          "needed": 24,
+          "oversLeft": 0.8,
+          "wickets": 4,
+          "target": 131
         },
         {
           "type": "bat",
           "lowestWp": 4.2,
           "rescueWpa": 0.21,
           "date": "2025-08-09",
-          "matchId": "a7Gwib-v2prGCGPspZoZlg"
+          "matchId": "a7Gwib-v2prGCGPspZoZlg",
+          "needed": 22,
+          "oversLeft": 1.7,
+          "wickets": 7,
+          "target": 67
         },
         {
           "type": "bat",
           "lowestWp": 19.5,
           "rescueWpa": 0.45,
           "date": "2025-12-31",
-          "matchId": "40EhekSTnXzEienA_Q--Gg"
+          "matchId": "40EhekSTnXzEienA_Q--Gg",
+          "needed": 37,
+          "oversLeft": 3.5,
+          "wickets": 4,
+          "target": 86
         }
       ]
     },
@@ -4135,14 +4215,22 @@
           "lowestWp": 3,
           "rescueWpa": 0.82,
           "date": "2025-07-12",
-          "matchId": "zhHrIRwJ7RwU5TQGvCfWDw"
+          "matchId": "zhHrIRwJ7RwU5TQGvCfWDw",
+          "needed": 3,
+          "oversLeft": 0.2,
+          "wickets": 8,
+          "target": 104
         },
         {
           "type": "bat",
           "lowestWp": 26,
           "rescueWpa": 0.69,
           "date": "2025-08-16",
-          "matchId": "0ZJDqv6shbJ-ml_aBpJIwQ"
+          "matchId": "0ZJDqv6shbJ-ml_aBpJIwQ",
+          "needed": 33,
+          "oversLeft": 4,
+          "wickets": 5,
+          "target": 91
         }
       ]
     },
@@ -4156,14 +4244,22 @@
           "lowestWp": 21.9,
           "rescueWpa": 0.77,
           "date": "2025-10-04",
-          "matchId": "zeICf1NKMIc2mRtRNndxmw"
+          "matchId": "zeICf1NKMIc2mRtRNndxmw",
+          "needed": 17,
+          "oversLeft": 2,
+          "wickets": 5,
+          "target": 72
         },
         {
           "type": "bat",
           "lowestWp": 25.1,
           "rescueWpa": 0.43,
           "date": "2025-08-09",
-          "matchId": "QEO8a6nEzWjYvnJD3ZJwQw"
+          "matchId": "QEO8a6nEzWjYvnJD3ZJwQw",
+          "needed": 43,
+          "oversLeft": 3.8,
+          "wickets": 3,
+          "target": 98
         }
       ]
     },
@@ -4177,14 +4273,22 @@
           "lowestWp": 20,
           "rescueWpa": 0.35,
           "date": "2026-02-07",
-          "matchId": "vQufIWNOSy8Mw0_ZRcsR5A"
+          "matchId": "vQufIWNOSy8Mw0_ZRcsR5A",
+          "needed": 31,
+          "oversLeft": 2.5,
+          "wickets": 4,
+          "target": 100
         },
         {
           "type": "bat",
           "lowestWp": 23.5,
           "rescueWpa": 0.39,
           "date": "2026-02-07",
-          "matchId": "iiXV7xruX9vvJlqlGZHOBg"
+          "matchId": "iiXV7xruX9vvJlqlGZHOBg",
+          "needed": 32,
+          "oversLeft": 3.8,
+          "wickets": 3,
+          "target": 71
         }
       ]
     },
@@ -4198,7 +4302,11 @@
           "lowestWp": 2,
           "rescueWpa": 0.57,
           "date": "2026-03-28",
-          "matchId": "NVE0M9zszBi781wQfkVG_Q"
+          "matchId": "NVE0M9zszBi781wQfkVG_Q",
+          "needed": 9,
+          "oversLeft": 0.5,
+          "wickets": 9,
+          "target": 90
         }
       ]
     },
@@ -4212,7 +4320,11 @@
           "lowestWp": 3.4,
           "rescueWpa": 0.54,
           "date": "2026-01-16",
-          "matchId": "x3DRD71dsumVLMwhawcrKQ"
+          "matchId": "x3DRD71dsumVLMwhawcrKQ",
+          "needed": 18,
+          "oversLeft": 0.8,
+          "wickets": 4,
+          "target": 99
         }
       ]
     },
@@ -4226,7 +4338,11 @@
           "lowestWp": 21,
           "rescueWpa": 0.46,
           "date": "2025-09-06",
-          "matchId": "F71ZtK5wGkmCwzm2dojrMQ"
+          "matchId": "F71ZtK5wGkmCwzm2dojrMQ",
+          "needed": 41,
+          "oversLeft": 3.8,
+          "wickets": 3,
+          "target": 91
         }
       ]
     },
@@ -4240,7 +4356,11 @@
           "lowestWp": 13.1,
           "rescueWpa": 0.46,
           "date": "2026-06-14",
-          "matchId": "Vl3ybYaaPlqh7pCfLghqig"
+          "matchId": "Vl3ybYaaPlqh7pCfLghqig",
+          "needed": 23,
+          "oversLeft": 2.5,
+          "wickets": 8,
+          "target": 128
         }
       ]
     },
@@ -4254,7 +4374,11 @@
           "lowestWp": 29.9,
           "rescueWpa": 0.45,
           "date": "2026-08-29",
-          "matchId": "MEKT-EJejRoz2zFtYDpbRA"
+          "matchId": "MEKT-EJejRoz2zFtYDpbRA",
+          "needed": 50,
+          "oversLeft": 7.3,
+          "wickets": 4,
+          "target": 79
         }
       ]
     },
@@ -4268,7 +4392,11 @@
           "lowestWp": 8.4,
           "rescueWpa": 0.43,
           "date": "2026-08-07",
-          "matchId": "M-F9leF6CPeM7D4mp7xR2w"
+          "matchId": "M-F9leF6CPeM7D4mp7xR2w",
+          "needed": 4,
+          "oversLeft": 0.2,
+          "wickets": 6,
+          "target": 98
         }
       ]
     },
@@ -4282,7 +4410,11 @@
           "lowestWp": 15.2,
           "rescueWpa": 0.39,
           "date": "2025-06-28",
-          "matchId": "BaNO0GD7W3mI34NTa3PQkA"
+          "matchId": "BaNO0GD7W3mI34NTa3PQkA",
+          "needed": 23,
+          "oversLeft": 1.7,
+          "wickets": 3,
+          "target": 80
         }
       ]
     },
@@ -4296,7 +4428,11 @@
           "lowestWp": 21.5,
           "rescueWpa": 0.28,
           "date": "2025-08-02",
-          "matchId": "y9kCCRuPaNqt7GW4K1gGUg"
+          "matchId": "y9kCCRuPaNqt7GW4K1gGUg",
+          "needed": 15,
+          "oversLeft": 1.5,
+          "wickets": 5,
+          "target": 82
         }
       ]
     },
@@ -4310,7 +4446,11 @@
           "lowestWp": 9,
           "rescueWpa": 0.28,
           "date": "2026-08-16",
-          "matchId": "nPsBH1dpeNCbUajAM0PFnQ"
+          "matchId": "nPsBH1dpeNCbUajAM0PFnQ",
+          "needed": 24,
+          "oversLeft": 1.8,
+          "wickets": 6,
+          "target": 114
         }
       ]
     }
