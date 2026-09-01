@@ -517,7 +517,7 @@ function parseFielder(raw, howOut) {
         if (battingTeamWon && isChase) {
           // Chasing rescue: only innings 2 — we have a real target to measure against
           const lowestWp = Math.min(...allBalls.map(e => e.wpBefore));
-          if (lowestWp < 0.30) {
+          if (lowestWp < 0.40) {
             const lowestIdx = allBalls.findIndex(e => e.wpBefore === lowestWp);
             // Capture match state at lowest point for explanation
             const lowestBall = allBalls[lowestIdx];
@@ -568,7 +568,7 @@ function parseFielder(raw, howOut) {
         } else if (isChase) {
           // Defending rescue: only applies to innings 2 (chase) where chasing team lost = defending team won
           const highestBattingWp = Math.max(...allBalls.map(e => e.wpBefore));
-          if (highestBattingWp > 0.60) {
+          if (highestBattingWp > 0.60) { // defending rescue: chasing team wp rose above 60% (= defending team below 40%)
             const peakIdx = allBalls.findIndex(e => e.wpBefore === highestBattingWp);
             const peakBall = allBalls[peakIdx];
             let runsAtPeak = 0, wktsAtPeak = 0;
