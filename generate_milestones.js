@@ -88,7 +88,7 @@ function parseFielder(raw, howOut) {
   console.log('Total matches:', matches.length);
   const batters = {}, bowlers = {}, catches = {}, keeperCt = {}, stumpings = {}, runouts = {};
   const foursMap = {}, sixesMap = {}, momMap = {};
-  const widesMap = {}, noBallsMap = {}, bowlerBalls = {}, bowlerMatchCount = {};
+  const widesMap = {}, noBallsMap = {}, bowlerBalls = {}, dotBallsMap = {}, bowlerMatchCount = {};
   // Rivalries: keyed "batter|bowler"
   const dismissalsByPair = {}, sixesByPair = {}, foursByPair = {};
   const sixesOff = {}, foursOff = {}, commBalls = {};
@@ -228,9 +228,10 @@ function parseFielder(raw, howOut) {
           if (!name || name.includes('Guest') || name.includes('Dummy')) continue;
           if (!bowlers[name]) bowlers[name] = 0;
           bowlers[name] += parseInt(b.wickets) || 0;
-          widesMap[name]   = (widesMap[name]   || 0) + (parseInt(b.wides)   || 0);
-          noBallsMap[name] = (noBallsMap[name] || 0) + (parseInt(b.noBalls) || 0);
-          bowlerBalls[name]      = (bowlerBalls[name]      || 0) + (parseInt(b.balls)   || 0);
+          widesMap[name]   = (widesMap[name]   || 0) + (parseInt(b.wides)    || 0);
+          noBallsMap[name] = (noBallsMap[name] || 0) + (parseInt(b.noBalls)  || 0);
+          bowlerBalls[name]      = (bowlerBalls[name]      || 0) + (parseInt(b.balls)    || 0);
+          dotBallsMap[name]      = (dotBallsMap[name]      || 0) + (parseInt(b.dotBalls) || 0);
           bowlerMatchCount[name] = (bowlerMatchCount[name] || 0) + 1;
           seenInMatch.add(name);
 
@@ -388,6 +389,10 @@ function parseFielder(raw, howOut) {
         return { name, extras, balls: b, pct, wides: widesMap[name]||0, noBalls: noBallsMap[name]||0 };
       })
       .sort((a, b) => a.pct - b.pct),
+    dotBalls: Object.entries(dotBallsMap)
+      .filter(([n]) => (bowlerMatchCount[n]||0) >= 5 && bowlerBalls[n] >= 100)
+      .map(([name, d]) => ({ name, dots: d, balls: bowlerBalls[name], pct: Math.round(d / bowlerBalls[name] * 1000) / 10 }))
+      .sort((a, b) => b.pct - a.pct),
     sixesOffPct: Object.entries(sixesOff)
       .filter(([n]) => (commBalls[n]||0) >= 100)
       .map(([name, s]) => ({ name, sixes: s, balls: commBalls[name], pct: Math.round(s / commBalls[name] * 1000) / 10 }))
