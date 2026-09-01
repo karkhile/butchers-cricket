@@ -167,10 +167,6 @@
           const items = (_data[c.key] || {})[_view] || [];
           el.appendChild(buildCard(c.title, items, c.unit, c.gap));
         }
-        if (_view === 'big' || _view === 'all') {
-          el.appendChild(buildEconomyCard('🎯 Least Wides',   _data.leastWides   || [], 'wides'));
-          el.appendChild(buildEconomyCard('🎯 Least No-Balls', _data.leastNoBalls || [], 'no-balls'));
-        }
       }
     }
 
