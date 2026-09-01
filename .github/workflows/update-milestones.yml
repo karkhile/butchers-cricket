@@ -40,6 +40,7 @@ jobs:
             echo "No changes to milestones.json — skipping commit"
           else
             git commit -m "chore: refresh milestones.json"
+            git pull --rebase
             git push
           fi
 
