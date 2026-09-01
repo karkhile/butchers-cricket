@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T00:45:04.122Z",
+  "updatedAt": "2026-09-01T00:55:59.887Z",
   "batting": {
     "big": [
       {
@@ -4444,6 +4444,264 @@
       "name": "Prashant Kumar",
       "count": 31,
       "matches": 84
+    }
+  ],
+  "disciplined": [
+    {
+      "name": "Gaurav Mehta",
+      "extras": 29,
+      "balls": 814,
+      "pct": 3.6,
+      "wides": 28,
+      "noBalls": 1
+    },
+    {
+      "name": "Praveen Karkhile",
+      "extras": 58,
+      "balls": 977,
+      "pct": 5.9,
+      "wides": 45,
+      "noBalls": 13
+    },
+    {
+      "name": "Jay Shah",
+      "extras": 28,
+      "balls": 405,
+      "pct": 6.9,
+      "wides": 26,
+      "noBalls": 2
+    },
+    {
+      "name": "Vinay Bharbhari",
+      "extras": 36,
+      "balls": 459,
+      "pct": 7.8,
+      "wides": 32,
+      "noBalls": 4
+    },
+    {
+      "name": "Arpan Dey",
+      "extras": 123,
+      "balls": 1374,
+      "pct": 9,
+      "wides": 113,
+      "noBalls": 10
+    },
+    {
+      "name": "Anjan Kumar",
+      "extras": 107,
+      "balls": 1073,
+      "pct": 10,
+      "wides": 95,
+      "noBalls": 12
+    },
+    {
+      "name": "Yash Mehta",
+      "extras": 96,
+      "balls": 840,
+      "pct": 11.4,
+      "wides": 79,
+      "noBalls": 17
+    },
+    {
+      "name": "Hari Vangipuram",
+      "extras": 106,
+      "balls": 913,
+      "pct": 11.6,
+      "wides": 77,
+      "noBalls": 29
+    },
+    {
+      "name": "Gaurav Kumar",
+      "extras": 56,
+      "balls": 445,
+      "pct": 12.6,
+      "wides": 52,
+      "noBalls": 4
+    },
+    {
+      "name": "Soumya Smruti Mishra",
+      "extras": 66,
+      "balls": 495,
+      "pct": 13.3,
+      "wides": 60,
+      "noBalls": 6
+    },
+    {
+      "name": "Prashant Kumar",
+      "extras": 154,
+      "balls": 1091,
+      "pct": 14.1,
+      "wides": 123,
+      "noBalls": 31
+    },
+    {
+      "name": "Akashdeep Balu",
+      "extras": 68,
+      "balls": 443,
+      "pct": 15.3,
+      "wides": 56,
+      "noBalls": 12
+    },
+    {
+      "name": "Arjun Shukla",
+      "extras": 137,
+      "balls": 882,
+      "pct": 15.5,
+      "wides": 112,
+      "noBalls": 25
+    },
+    {
+      "name": "Lokesh Bala",
+      "extras": 19,
+      "balls": 120,
+      "pct": 15.8,
+      "wides": 19,
+      "noBalls": 0
+    },
+    {
+      "name": "tarun JOSHI",
+      "extras": 15,
+      "balls": 90,
+      "pct": 16.7,
+      "wides": 15,
+      "noBalls": 0
+    },
+    {
+      "name": "Kaushal Karkera",
+      "extras": 127,
+      "balls": 739,
+      "pct": 17.2,
+      "wides": 102,
+      "noBalls": 25
+    },
+    {
+      "name": "Piyush Jha",
+      "extras": 19,
+      "balls": 108,
+      "pct": 17.6,
+      "wides": 11,
+      "noBalls": 8
+    },
+    {
+      "name": "Santosh Ghosh",
+      "extras": 21,
+      "balls": 113,
+      "pct": 18.6,
+      "wides": 20,
+      "noBalls": 1
+    },
+    {
+      "name": "Abhishek Lingwal",
+      "extras": 89,
+      "balls": 442,
+      "pct": 20.1,
+      "wides": 59,
+      "noBalls": 30
+    },
+    {
+      "name": "Kunal Kokate",
+      "extras": 27,
+      "balls": 123,
+      "pct": 22,
+      "wides": 22,
+      "noBalls": 5
+    },
+    {
+      "name": "Harsha Vardhan Reddy Vndavally",
+      "extras": 22,
+      "balls": 96,
+      "pct": 22.9,
+      "wides": 21,
+      "noBalls": 1
+    },
+    {
+      "name": "Jimit Majmudar",
+      "extras": 14,
+      "balls": 60,
+      "pct": 23.3,
+      "wides": 9,
+      "noBalls": 5
+    },
+    {
+      "name": "Rohit Sharma",
+      "extras": 51,
+      "balls": 195,
+      "pct": 26.2,
+      "wides": 45,
+      "noBalls": 6
+    },
+    {
+      "name": "Anil Mallapur",
+      "extras": 147,
+      "balls": 550,
+      "pct": 26.7,
+      "wides": 119,
+      "noBalls": 28
+    },
+    {
+      "name": "Rijwan Rana",
+      "extras": 116,
+      "balls": 417,
+      "pct": 27.8,
+      "wides": 98,
+      "noBalls": 18
+    },
+    {
+      "name": "Eshwar Chaitanya Sarampati",
+      "extras": 25,
+      "balls": 83,
+      "pct": 30.1,
+      "wides": 20,
+      "noBalls": 5
+    },
+    {
+      "name": "Rajeev Tirumala",
+      "extras": 39,
+      "balls": 125,
+      "pct": 31.2,
+      "wides": 24,
+      "noBalls": 15
+    },
+    {
+      "name": "Mithal Kothari",
+      "extras": 17,
+      "balls": 54,
+      "pct": 31.5,
+      "wides": 11,
+      "noBalls": 6
+    },
+    {
+      "name": "Arjun Deb",
+      "extras": 52,
+      "balls": 162,
+      "pct": 32.1,
+      "wides": 32,
+      "noBalls": 20
+    },
+    {
+      "name": "Sylvestor George",
+      "extras": 87,
+      "balls": 222,
+      "pct": 39.2,
+      "wides": 68,
+      "noBalls": 19
+    },
+    {
+      "name": "Srinath Shah",
+      "extras": 37,
+      "balls": 84,
+      "pct": 44,
+      "wides": 32,
+      "noBalls": 5
+    },
+    {
+      "name": "Venkata Krishna  Ravi",
+      "extras": 80,
+      "balls": 81,
+      "pct": 98.8,
+      "wides": 67,
+      "noBalls": 13
     }
   ]
 }
