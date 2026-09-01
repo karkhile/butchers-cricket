@@ -241,7 +241,7 @@ function parseFielder(raw, howOut) {
   }
 
   // Convert a pair map ("batter|bowler" → count) to sorted top-N list
-  const toTopPairs = (pairMap, n = 20) =>
+  const toTopPairs = (pairMap, n = 50) =>
     Object.entries(pairMap)
       .map(([pair, count]) => { const [batter, bowler] = pair.split('|'); return { batter, bowler, count }; })
       .sort((a, b) => b.count - a.count)
