@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T00:22:05.166Z",
+  "updatedAt": "2026-09-01T00:32:05.693Z",
   "batting": {
     "big": [
       {
@@ -3465,6 +3465,156 @@
         "batter": "Anjan Kumar",
         "bowler": "Arpan D",
         "count": 6
+      },
+      {
+        "batter": "Gaurav Kumar",
+        "bowler": "Prashant K",
+        "count": 6
+      },
+      {
+        "batter": "Abhishek Kumar Singh",
+        "bowler": "Hari V",
+        "count": 5
+      },
+      {
+        "batter": "Gaurav Kumar",
+        "bowler": "Anil M",
+        "count": 5
+      },
+      {
+        "batter": "Vinay Bharbhari",
+        "bowler": "Anjan K",
+        "count": 5
+      },
+      {
+        "batter": "Gaurav Mehta",
+        "bowler": "Vinay B",
+        "count": 5
+      },
+      {
+        "batter": "Praveen Karkhile",
+        "bowler": "Hari V",
+        "count": 5
+      },
+      {
+        "batter": "Anjan Kumar",
+        "bowler": "Vinay B",
+        "count": 5
+      },
+      {
+        "batter": "Gaurav Mehta",
+        "bowler": "Yash M",
+        "count": 5
+      },
+      {
+        "batter": "Yash Mehta",
+        "bowler": "Hari V",
+        "count": 5
+      },
+      {
+        "batter": "Sylvestor George",
+        "bowler": "Abhishek L",
+        "count": 5
+      },
+      {
+        "batter": "Sylvestor George",
+        "bowler": "Kaushal K",
+        "count": 5
+      },
+      {
+        "batter": "Abhishek Kumar Singh",
+        "bowler": "Prashant K",
+        "count": 5
+      },
+      {
+        "batter": "Sylvestor George",
+        "bowler": "Prashant K",
+        "count": 5
+      },
+      {
+        "batter": "Arpan Dey",
+        "bowler": "Prashant K",
+        "count": 5
+      },
+      {
+        "batter": "Gaurav Mehta",
+        "bowler": "Gaurav K",
+        "count": 5
+      },
+      {
+        "batter": "Kaushal Karkera",
+        "bowler": "Rijwan R",
+        "count": 5
+      },
+      {
+        "batter": "Anjan Kumar",
+        "bowler": "Hari V",
+        "count": 4
+      },
+      {
+        "batter": "Gaurav Kumar",
+        "bowler": "Arjun S",
+        "count": 4
+      },
+      {
+        "batter": "Hari Vangipuram",
+        "bowler": "Anil M",
+        "count": 4
+      },
+      {
+        "batter": "Sylvestor George",
+        "bowler": "Arjun S",
+        "count": 4
+      },
+      {
+        "batter": "Anil Mallapur",
+        "bowler": "Hari V",
+        "count": 4
+      },
+      {
+        "batter": "Vinay Bharbhari",
+        "bowler": "Hari V",
+        "count": 4
+      },
+      {
+        "batter": "Gaurav Kumar",
+        "bowler": "Soumya Smruti M",
+        "count": 4
+      },
+      {
+        "batter": "Abhishek Lingwal",
+        "bowler": "Arjun S",
+        "count": 4
+      },
+      {
+        "batter": "Sylvestor George",
+        "bowler": "Hari V",
+        "count": 4
+      },
+      {
+        "batter": "Sylvestor George",
+        "bowler": "Anil M",
+        "count": 4
+      },
+      {
+        "batter": "Gaurav Mehta",
+        "bowler": "Arpan D",
+        "count": 4
+      },
+      {
+        "batter": "Sylvestor George",
+        "bowler": "Gaurav M",
+        "count": 4
+      },
+      {
+        "batter": "Anil Mallapur",
+        "bowler": "Yash M",
+        "count": 4
+      },
+      {
+        "batter": "Sylvestor George",
+        "bowler": "Arpan D",
+        "count": 4
       }
     ],
     "sixes": [
@@ -3567,6 +3717,156 @@
         "batter": "Yash M",
         "bowler": "Praveen K",
         "count": 4
+      },
+      {
+        "batter": "Abhishek Kumar S",
+        "bowler": "Arjun S",
+        "count": 4
+      },
+      {
+        "batter": "Kunal K",
+        "bowler": "Prashant K",
+        "count": 4
+      },
+      {
+        "batter": "Venkata Krishna R",
+        "bowler": "Anjan K",
+        "count": 4
+      },
+      {
+        "batter": "Anjan K",
+        "bowler": "Abhishek L",
+        "count": 3
+      },
+      {
+        "batter": "Praveen K",
+        "bowler": "Arpan D",
+        "count": 3
+      },
+      {
+        "batter": "Gaurav M",
+        "bowler": "Arjun S",
+        "count": 3
+      },
+      {
+        "batter": "Abhishek Kumar S",
+        "bowler": "Gaurav K",
+        "count": 3
+      },
+      {
+        "batter": "Prashant K",
+        "bowler": "Kaushal K",
+        "count": 3
+      },
+      {
+        "batter": "Abhishek Kumar S",
+        "bowler": "Arpan D",
+        "count": 3
+      },
+      {
+        "batter": "Anjan K",
+        "bowler": "Kaushal K",
+        "count": 3
+      },
+      {
+        "batter": "Anjan K",
+        "bowler": "Hari V",
+        "count": 3
+      },
+      {
+        "batter": "Anjan K",
+        "bowler": "Rijwan R",
+        "count": 3
+      },
+      {
+        "batter": "Akashdeep B",
+        "bowler": "Rijwan R",
+        "count": 3
+      },
+      {
+        "batter": "Venkata Krishna R",
+        "bowler": "Arjun S",
+        "count": 3
+      },
+      {
+        "batter": "Venkata Krishna R",
+        "bowler": "Hari V",
+        "count": 3
+      },
+      {
+        "batter": "Akashdeep B",
+        "bowler": "Anjan K",
+        "count": 3
+      },
+      {
+        "batter": "Anjan K",
+        "bowler": "Piyush J",
+        "count": 2
+      },
+      {
+        "batter": "Abhishek Kumar S",
+        "bowler": "Soumya Smruti M",
+        "count": 2
+      },
+      {
+        "batter": "Prashant K",
+        "bowler": "Arjun D",
+        "count": 2
+      },
+      {
+        "batter": "Gaurav M",
+        "bowler": "Abhishek L",
+        "count": 2
+      },
+      {
+        "batter": "Abhishek Kumar S",
+        "bowler": "Abhishek L",
+        "count": 2
+      },
+      {
+        "batter": "Anil M",
+        "bowler": "Prashant K",
+        "count": 2
+      },
+      {
+        "batter": "Abhishek Kumar S",
+        "bowler": "Praveen K",
+        "count": 2
+      },
+      {
+        "batter": "Vinay B",
+        "bowler": "Arpan D",
+        "count": 2
+      },
+      {
+        "batter": "Abhishek Kumar S",
+        "bowler": "Vinay B",
+        "count": 2
+      },
+      {
+        "batter": "Abhishek Kumar S",
+        "bowler": "Prashant K",
+        "count": 2
+      },
+      {
+        "batter": "Anjan K",
+        "bowler": "Vinay B",
+        "count": 2
+      },
+      {
+        "batter": "Abhishek Kumar S",
+        "bowler": "Anil M",
+        "count": 2
+      },
+      {
+        "batter": "Yash M",
+        "bowler": "Arjun S",
+        "count": 2
+      },
+      {
+        "batter": "Anil M",
+        "bowler": "Abhishek L",
+        "count": 2
       }
     ],
     "fours": [
@@ -3669,6 +3969,156 @@
         "batter": "Anjan K",
         "bowler": "Anil M",
         "count": 5
+      },
+      {
+        "batter": "Sylvestor G",
+        "bowler": "Kaushal K",
+        "count": 5
+      },
+      {
+        "batter": "Rijwan R",
+        "bowler": "Kaushal K",
+        "count": 5
+      },
+      {
+        "batter": "Rijwan R",
+        "bowler": "Arjun S",
+        "count": 5
+      },
+      {
+        "batter": "Gaurav M",
+        "bowler": "Srinath S",
+        "count": 5
+      },
+      {
+        "batter": "Anil M",
+        "bowler": "Praveen K",
+        "count": 4
+      },
+      {
+        "batter": "Sylvestor G",
+        "bowler": "Hari V",
+        "count": 4
+      },
+      {
+        "batter": "Prashant K",
+        "bowler": "Arjun S",
+        "count": 4
+      },
+      {
+        "batter": "Vinay B",
+        "bowler": "Anil M",
+        "count": 4
+      },
+      {
+        "batter": "Abhishek Kumar S",
+        "bowler": "Anil M",
+        "count": 4
+      },
+      {
+        "batter": "Vinay B",
+        "bowler": "Arpan D",
+        "count": 4
+      },
+      {
+        "batter": "Prashant K",
+        "bowler": "Kaushal K",
+        "count": 4
+      },
+      {
+        "batter": "Abhishek Kumar S",
+        "bowler": "Kaushal K",
+        "count": 4
+      },
+      {
+        "batter": "Anjan K",
+        "bowler": "Arjun S",
+        "count": 4
+      },
+      {
+        "batter": "Sylvestor G",
+        "bowler": "Anjan K",
+        "count": 4
+      },
+      {
+        "batter": "Rijwan R",
+        "bowler": "Akashdeep B",
+        "count": 4
+      },
+      {
+        "batter": "Anjan K",
+        "bowler": "Rijwan R",
+        "count": 4
+      },
+      {
+        "batter": "Rijwan R",
+        "bowler": "Rajeev T",
+        "count": 4
+      },
+      {
+        "batter": "Akashdeep B",
+        "bowler": "Rijwan R",
+        "count": 4
+      },
+      {
+        "batter": "Akashdeep B",
+        "bowler": "Kunal K",
+        "count": 4
+      },
+      {
+        "batter": "Rijwan R",
+        "bowler": "Gaurav M",
+        "count": 4
+      },
+      {
+        "batter": "Piyush J",
+        "bowler": "Arjun S",
+        "count": 3
+      },
+      {
+        "batter": "Anjan K",
+        "bowler": "Piyush J",
+        "count": 3
+      },
+      {
+        "batter": "Abhishek Kumar S",
+        "bowler": "Soumya Smruti M",
+        "count": 3
+      },
+      {
+        "batter": "Vinay B",
+        "bowler": "Gaurav M",
+        "count": 3
+      },
+      {
+        "batter": "Santosh G",
+        "bowler": "Vinay B",
+        "count": 3
+      },
+      {
+        "batter": "Gaurav K",
+        "bowler": "Anjan K",
+        "count": 3
+      },
+      {
+        "batter": "Anil M",
+        "bowler": "Prashant K",
+        "count": 3
+      },
+      {
+        "batter": "Sylvestor G",
+        "bowler": "Arpan D",
+        "count": 3
+      },
+      {
+        "batter": "Prashant K",
+        "bowler": "Praveen K",
+        "count": 3
+      },
+      {
+        "batter": "Santosh G",
+        "bowler": "Soumya Smruti M",
+        "count": 3
       }
     ]
   }
