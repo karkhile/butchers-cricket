@@ -519,6 +519,14 @@ function parseFielder(raw, howOut) {
           const lowestWp = Math.min(...allBalls.map(e => e.wpBefore));
           if (lowestWp < 0.30) {
             const lowestIdx = allBalls.findIndex(e => e.wpBefore === lowestWp);
+            // Capture match state at lowest point for explanation
+            const lowestBall = allBalls[lowestIdx];
+            let runsAtLow = 0, wktsAtLow = 0;
+            for (let i = 0; i < lowestIdx; i++) { runsAtLow += allBalls[i].ballRuns; if (allBalls[i].isWkt) wktsAtLow++; }
+            const overAtLow = lowestBall.overNum + (lowestBall.legalBallCount / 6);
+            const neededAtLow = target - runsAtLow;
+            const oversLeftAtLow = Math.max(0.1, totalOvers - overAtLow);
+
             const rescueWpaByBatter = {};
             for (let ri = lowestIdx; ri < allBalls.length; ri++) {
               const { ball, wpBefore, wpAfter } = allBalls[ri];
@@ -535,21 +543,34 @@ function parseFielder(raw, howOut) {
               if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
               rescueMap[topRescuer].count++;
               rescueMap[topRescuer].totalRescueWpa += rescueWpa;
-              rescueMap[topRescuer].instances.push({ type: 'bat', lowestWp: Math.round(lowestWp * 1000) / 10, rescueWpa: Math.round(rescueWpa * 100) / 100, date, matchId });
+              rescueMap[topRescuer].instances.push({
+                type: 'bat',
+                lowestWp: Math.round(lowestWp * 1000) / 10,
+                rescueWpa: Math.round(rescueWpa * 100) / 100,
+                date, matchId,
+                needed: neededAtLow,
+                oversLeft: Math.round(oversLeftAtLow * 10) / 10,
+                wickets: wktsAtLow,
+                target,
+              });
             }
           }
         } else if (isChase) {
           // Defending rescue: only applies to innings 2 (chase) where chasing team lost = defending team won
-          // If chasing team lost, it means the team that batted first successfully defended
           const highestBattingWp = Math.max(...allBalls.map(e => e.wpBefore));
           if (highestBattingWp > 0.70) {
-            // Find the ball where batting team wp was highest (fielding team's worst moment)
             const peakIdx = allBalls.findIndex(e => e.wpBefore === highestBattingWp);
-            // Credit bowlers from that peak onwards (they turned it around)
+            const peakBall = allBalls[peakIdx];
+            let runsAtPeak = 0, wktsAtPeak = 0;
+            for (let i = 0; i < peakIdx; i++) { runsAtPeak += allBalls[i].ballRuns; if (allBalls[i].isWkt) wktsAtPeak++; }
+            const overAtPeak = peakBall.overNum + (peakBall.legalBallCount / 6);
+            const neededAtPeak = target - runsAtPeak;
+            const oversLeftAtPeak = Math.max(0.1, totalOvers - overAtPeak);
+
             const rescueWpaByBowler = {};
             for (let ri = peakIdx; ri < allBalls.length; ri++) {
               const { bowlerName, wpBefore, wpAfter } = allBalls[ri];
-              const swing = wpBefore - wpAfter; // drop in batting team wp = good for fielding team
+              const swing = wpBefore - wpAfter;
               if (bowlerName && !isJunk(bowlerName) && swing > 0) {
                 rescueWpaByBowler[bowlerName] = (rescueWpaByBowler[bowlerName] || 0) + swing;
               }
@@ -561,7 +582,16 @@ function parseFielder(raw, howOut) {
               if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
               rescueMap[topRescuer].count++;
               rescueMap[topRescuer].totalRescueWpa += rescueWpa;
-              rescueMap[topRescuer].instances.push({ type: 'bowl', lowestWp: Math.round((1 - highestBattingWp) * 1000) / 10, rescueWpa: Math.round(rescueWpa * 100) / 100, date, matchId });
+              rescueMap[topRescuer].instances.push({
+                type: 'bowl',
+                lowestWp: Math.round((1 - highestBattingWp) * 1000) / 10,
+                rescueWpa: Math.round(rescueWpa * 100) / 100,
+                date, matchId,
+                needed: neededAtPeak,
+                oversLeft: Math.round(oversLeftAtPeak * 10) / 10,
+                wickets: wktsAtPeak,
+                target,
+              });
             }
           }
         }

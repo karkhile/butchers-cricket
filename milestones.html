@@ -581,10 +581,16 @@
           detail.style.cssText = 'display:none;padding:4px 0 8px 36px;';
           item.instances.forEach(inst => {
             const d = document.createElement('div');
-            d.style.cssText = 'font-size:11px;color:#555;padding:3px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;';
+            d.style.cssText = 'font-size:11px;color:#555;padding:4px 0;border-bottom:1px solid #f0f0f0;';
+            const situation = inst.type === 'bat'
+              ? 'Needed <strong>' + inst.needed + '</strong> off <strong>' + inst.oversLeft + '</strong> overs, <strong>' + inst.wickets + '</strong> wickets down'
+              : 'Opposition needed <strong>' + inst.needed + '</strong> off <strong>' + inst.oversLeft + '</strong> overs, <strong>' + inst.wickets + '</strong> wickets down';
             d.innerHTML =
-              '<span>' + (inst.date || '') + ' · ' + (inst.type === 'bowl' ? '🎳 defending' : '🏏 chasing') + ' · win% was <strong style="color:#c0392b;">' + inst.lowestWp + '%</strong> → won</span>' +
-              '<span style="color:#1b5e20;font-weight:600;">+' + inst.rescueWpa.toFixed(2) + ' WPA</span>';
+              '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+                '<span>' + (inst.date || '') + ' · ' + (inst.type === 'bowl' ? '🎳 defending' : '🏏 chasing') + ' · win% was <strong style="color:#c0392b;">' + inst.lowestWp + '%</strong> → won</span>' +
+                '<span style="color:#1b5e20;font-weight:600;white-space:nowrap;margin-left:8px;">+' + inst.rescueWpa.toFixed(2) + ' WPA</span>' +
+              '</div>' +
+              (inst.needed !== undefined ? '<div style="color:#888;margin-top:2px;">' + situation + '</div>' : '');
             detail.appendChild(d);
           });
           wrap.appendChild(detail);
