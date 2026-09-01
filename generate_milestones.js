@@ -432,7 +432,8 @@ function parseFielder(raw, howOut) {
     return Math.max(0.02, Math.min(0.98, prob));
   }
 
-  const wpaMap = {}; // name -> { wpa, matchIds }
+  const wpaMap = {};     // name -> { wpa, matchIds }
+  const rescueMap = {};  // name -> { count, totalRescueWpa, instances[] }
 
   for (let i = 0; i < matches.length; i++) {
     const m = matches[i];
@@ -451,53 +452,101 @@ function parseFielder(raw, howOut) {
         const innBalls = commentary[innKey + 'Balls'];
         if (!inn || !innBalls?.oversMap) continue;
 
-        // For innings 1: target is unknown, use actual total as proxy for par
-        // For innings 2: target is innings1 total + 1
         const isChase = innNum === 2;
         const target = isChase ? (root.innings1.total || 0) + 1 : (inn.total || 0) + 1;
         const battingTeamWon = inn.teamId === root.winner;
 
+        // Collect all balls in order for rescue detection
+        const allBalls = [];
         let cumRuns = 0, cumWkts = 0;
+        for (const [overKey, over] of Object.entries(innBalls.oversMap)) {
+          const overNum = parseInt(overKey.replace('Over', ''));
+          const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball');
+          for (let bi = 0; bi < validBalls.length; bi++) {
+            const ball = validBalls[bi];
+            const ballRuns = parseInt(ball.runs) || 0;
+            const isWkt = ball.outMethod && ball.outMethod !== 'Not Out';
+            const wpBefore = winProb(cumRuns, target, overNum + bi / 6, totalOvers, cumWkts);
+            cumRuns += ballRuns;
+            if (isWkt) cumWkts++;
+            const wpAfter = winProb(cumRuns, target, overNum + (bi + 1) / 6, totalOvers, cumWkts);
+            allBalls.push({ ball, overNum, bi, wpBefore, wpAfter, ballRuns, isWkt, bowlerName: validBalls[0]?.bowlerName || '' });
+          }
+        }
+
+        // WPA accumulation (unchanged logic)
+        for (const entry of allBalls) {
+          const { ball, wpBefore, wpAfter, bowlerName } = entry;
+          const swing = wpAfter - wpBefore;
+          const batter = ball.strikerName;
+          if (batter && !isJunk(batter)) {
+            const batterWpa = battingTeamWon ? swing : -swing;
+            if (!wpaMap[batter]) wpaMap[batter] = { wpa: 0, matchIds: new Set() };
+            wpaMap[batter].wpa += batterWpa;
+            wpaMap[batter].matchIds.add(matchId);
+          }
+        }
+        // Over-level WPA for bowlers
+        cumRuns = 0; cumWkts = 0;
         for (const [overKey, over] of Object.entries(innBalls.oversMap)) {
           const overNum = parseInt(overKey.replace('Over', ''));
           const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball');
           if (!validBalls.length) continue;
           const bowlerName = validBalls[0]?.bowlerName || '';
-
-          // Ball-level WPA for batters
-          for (let bi = 0; bi < validBalls.length; bi++) {
-            const ball = validBalls[bi];
-            const ballRuns = parseInt(ball.runs) || 0;
-            const isWkt = ball.outMethod && ball.outMethod !== 'Not Out';
-            const batter = ball.strikerName;
-            const wpBefore = winProb(cumRuns, target, overNum + bi / 6, totalOvers, cumWkts);
-            cumRuns += ballRuns;
-            if (isWkt) cumWkts++;
-            const wpAfter = winProb(cumRuns, target, overNum + (bi + 1) / 6, totalOvers, cumWkts);
-            const swing = wpAfter - wpBefore; // positive = better for batting team
-            if (batter && !isJunk(batter)) {
-              const batterWpa = battingTeamWon ? swing : -swing;
-              if (!wpaMap[batter]) wpaMap[batter] = { wpa: 0, matchIds: new Set() };
-              wpaMap[batter].wpa += batterWpa;
-              wpaMap[batter].matchIds.add(matchId);
-            }
-          }
-
-          // Over-level WPA for bowler (recompute over delta)
-          const wpOverStart = winProb(cumRuns - validBalls.reduce((s,b)=>s+(parseInt(b.runs)||0),0), target, overNum, totalOvers, cumWkts - validBalls.filter(b=>b.outMethod&&b.outMethod!=='Not Out').length);
+          const wpOverStart = winProb(cumRuns, target, overNum, totalOvers, cumWkts);
+          for (const b of validBalls) { cumRuns += parseInt(b.runs) || 0; if (b.outMethod && b.outMethod !== 'Not Out') cumWkts++; }
           const wpOverEnd = winProb(cumRuns, target, overNum + 1, totalOvers, cumWkts);
           const overSwing = wpOverEnd - wpOverStart;
           if (bowlerName && !isJunk(bowlerName)) {
-            // Bowler is on the fielding team — good bowling helps fielding team (reduces batting team wp)
             const bowlerWpa = battingTeamWon ? -overSwing : overSwing;
             if (!wpaMap[bowlerName]) wpaMap[bowlerName] = { wpa: 0, matchIds: new Set() };
             wpaMap[bowlerName].wpa += bowlerWpa;
             wpaMap[bowlerName].matchIds.add(matchId);
           }
         }
+
+        // ── Rescue detection ──────────────────────────────────────────────────
+        // Only count matches where batting team won AND win% dropped below 50%
+        if (!battingTeamWon) continue;
+        const lowestWp = Math.min(...allBalls.map(e => e.wpBefore));
+        if (lowestWp >= 0.50) continue; // never in trouble — not a rescue
+
+        // Find the ball where win% was lowest
+        const lowestIdx = allBalls.findIndex(e => e.wpBefore === lowestWp);
+
+        // Sum WPA per batter from that point to end of innings
+        const rescueWpaByBatter = {};
+        for (let ri = lowestIdx; ri < allBalls.length; ri++) {
+          const { ball, wpBefore, wpAfter } = allBalls[ri];
+          const swing = wpAfter - wpBefore; // batting team perspective (won=true here)
+          const batter = ball.strikerName;
+          if (batter && !isJunk(batter) && swing > 0) {
+            rescueWpaByBatter[batter] = (rescueWpaByBatter[batter] || 0) + swing;
+          }
+        }
+
+        // Top contributor in this rescue
+        const entries = Object.entries(rescueWpaByBatter).sort((a, b) => b[1] - a[1]);
+        if (!entries.length) continue;
+        const [topRescuer, rescueWpa] = entries[0];
+        const date = (m.matchDateTime || '').slice(0, 10);
+        if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
+        rescueMap[topRescuer].count++;
+        rescueMap[topRescuer].totalRescueWpa += rescueWpa;
+        rescueMap[topRescuer].instances.push({ lowestWp: Math.round(lowestWp * 100), rescueWpa: Math.round(rescueWpa * 100) / 100, date, matchId });
       }
     } catch (e) {}
   }
+
+  const matchRescuers = Object.entries(rescueMap)
+    .map(([name, v]) => ({
+      name,
+      count: v.count,
+      totalRescueWpa: Math.round(v.totalRescueWpa * 100) / 100,
+      instances: v.instances.sort((a, b) => a.lowestWp - b.lowestWp).slice(0, 5),
+    }))
+    .filter(r => r.count >= 1)
+    .sort((a, b) => b.count - a.count || b.totalRescueWpa - a.totalRescueWpa);
 
   const wpa = Object.entries(wpaMap)
     .map(([name, v]) => ({ name, wpa: Math.round(v.wpa * 100) / 100, matches: v.matchIds.size }))
@@ -533,7 +582,7 @@ function parseFielder(raw, howOut) {
       rescuers:  toGameChangers(rescuers),
       defenders: toGameChangers(defenders),
     },
-    wpa,
+    matchRescuers,
     rivalries: {      dismissals: toTopPairs(dismissalsByPair),
       sixes:      toTopPairs(sixesByPair),
       fours:      toTopPairs(foursByPair),
