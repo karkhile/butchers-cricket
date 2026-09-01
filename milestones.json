@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T02:35:33.394Z",
+  "updatedAt": "2026-09-01T02:38:54.995Z",
   "batting": {
     "big": [
       {
@@ -4706,100 +4706,70 @@
   ],
   "sixesOffPct": [
     {
-      "name": "Piyush J",
-      "sixes": 7,
-      "balls": 127,
-      "pct": 5.5
+      "name": "Srinath S",
+      "sixes": 1,
+      "balls": 121,
+      "pct": 0.8
     },
     {
-      "name": "Rajeev T",
-      "sixes": 8,
-      "balls": 164,
-      "pct": 4.9
-    },
-    {
-      "name": "Soumya Smruti M",
-      "sixes": 20,
-      "balls": 561,
-      "pct": 3.6
-    },
-    {
-      "name": "Rijwan R",
-      "sixes": 19,
-      "balls": 533,
-      "pct": 3.6
-    },
-    {
-      "name": "Arjun S",
-      "sixes": 35,
-      "balls": 1007,
-      "pct": 3.5
-    },
-    {
-      "name": "Santosh G",
+      "name": "Jay S",
       "sixes": 4,
-      "balls": 134,
-      "pct": 3
+      "balls": 433,
+      "pct": 0.9
     },
     {
-      "name": "Prashant K",
-      "sixes": 36,
-      "balls": 1245,
-      "pct": 2.9
+      "name": "Harsha Vardhan Reddy V",
+      "sixes": 1,
+      "balls": 104,
+      "pct": 1
     },
     {
-      "name": "tarun J",
+      "name": "Rohit S",
       "sixes": 3,
-      "balls": 105,
-      "pct": 2.9
+      "balls": 246,
+      "pct": 1.2
     },
     {
-      "name": "Eshwar Chaitanya S",
+      "name": "Lokesh B",
+      "sixes": 2,
+      "balls": 139,
+      "pct": 1.4
+    },
+    {
+      "name": "Kaushal K",
+      "sixes": 14,
+      "balls": 866,
+      "pct": 1.6
+    },
+    {
+      "name": "Vinay B",
+      "sixes": 8,
+      "balls": 476,
+      "pct": 1.7
+    },
+    {
+      "name": "Anjan K",
+      "sixes": 20,
+      "balls": 1173,
+      "pct": 1.7
+    },
+    {
+      "name": "Yash M",
+      "sixes": 17,
+      "balls": 936,
+      "pct": 1.8
+    },
+    {
+      "name": "Arjun D",
+      "sixes": 4,
+      "balls": 214,
+      "pct": 1.9
+    },
+    {
+      "name": "Venkata Krishna R",
       "sixes": 3,
-      "balls": 108,
-      "pct": 2.8
-    },
-    {
-      "name": "Gaurav M",
-      "sixes": 22,
-      "balls": 843,
-      "pct": 2.6
-    },
-    {
-      "name": "Praveen K",
-      "sixes": 25,
-      "balls": 1017,
-      "pct": 2.5
-    },
-    {
-      "name": "Arpan D",
-      "sixes": 35,
-      "balls": 1480,
-      "pct": 2.4
-    },
-    {
-      "name": "Abhishek L",
-      "sixes": 12,
-      "balls": 532,
-      "pct": 2.3
-    },
-    {
-      "name": "Sylvestor G",
-      "sixes": 7,
-      "balls": 309,
-      "pct": 2.3
-    },
-    {
-      "name": "Akashdeep B",
-      "sixes": 12,
-      "balls": 511,
-      "pct": 2.3
-    },
-    {
-      "name": "Anil M",
-      "sixes": 15,
-      "balls": 697,
-      "pct": 2.2
+      "balls": 161,
+      "pct": 1.9
     },
     {
       "name": "Gaurav K",
@@ -4820,216 +4790,126 @@
       "pct": 2
     },
     {
-      "name": "Arjun D",
-      "sixes": 4,
-      "balls": 214,
-      "pct": 1.9
-    },
-    {
-      "name": "Venkata Krishna R",
-      "sixes": 3,
-      "balls": 161,
-      "pct": 1.9
-    },
-    {
-      "name": "Yash M",
-      "sixes": 17,
-      "balls": 936,
-      "pct": 1.8
-    },
-    {
-      "name": "Vinay B",
-      "sixes": 8,
-      "balls": 476,
-      "pct": 1.7
-    },
-    {
-      "name": "Anjan K",
-      "sixes": 20,
-      "balls": 1173,
-      "pct": 1.7
-    },
-    {
-      "name": "Kaushal K",
-      "sixes": 14,
-      "balls": 866,
-      "pct": 1.6
-    },
-    {
-      "name": "Lokesh B",
-      "sixes": 2,
-      "balls": 139,
-      "pct": 1.4
-    },
-    {
-      "name": "Rohit S",
-      "sixes": 3,
-      "balls": 246,
-      "pct": 1.2
-    },
-    {
-      "name": "Harsha Vardhan Reddy V",
-      "sixes": 1,
-      "balls": 104,
-      "pct": 1
-    },
-    {
-      "name": "Jay S",
-      "sixes": 4,
-      "balls": 433,
-      "pct": 0.9
-    },
-    {
-      "name": "Srinath S",
-      "sixes": 1,
-      "balls": 121,
-      "pct": 0.8
-    }
-  ],
-  "foursOffPct": [
-    {
-      "name": "Piyush J",
-      "fours": 15,
-      "balls": 127,
-      "pct": 11.8
-    },
-    {
-      "name": "Srinath S",
-      "fours": 7,
-      "balls": 121,
-      "pct": 5.8
-    },
-    {
-      "name": "Rajeev T",
-      "fours": 9,
-      "balls": 164,
-      "pct": 5.5
-    },
-    {
-      "name": "Arjun S",
-      "fours": 48,
-      "balls": 1007,
-      "pct": 4.8
-    },
-    {
       "name": "Anil M",
-      "fours": 32,
+      "sixes": 15,
       "balls": 697,
-      "pct": 4.6
+      "pct": 2.2
     },
     {
-      "name": "Kaushal K",
-      "fours": 39,
-      "balls": 866,
-      "pct": 4.5
+      "name": "Abhishek L",
+      "sixes": 12,
+      "balls": 532,
+      "pct": 2.3
     },
     {
-      "name": "Rohit S",
-      "fours": 11,
-      "balls": 246,
-      "pct": 4.5
-    },
-    {
-      "name": "Praveen K",
-      "fours": 44,
-      "balls": 1017,
-      "pct": 4.3
-    },
-    {
-      "name": "Vinay B",
-      "fours": 19,
-      "balls": 476,
-      "pct": 4
-    },
-    {
-      "name": "Kunal K",
-      "fours": 6,
-      "balls": 150,
-      "pct": 4
-    },
-    {
-      "name": "tarun J",
-      "fours": 4,
-      "balls": 105,
-      "pct": 3.8
-    },
-    {
-      "name": "Soumya Smruti M",
-      "fours": 21,
-      "balls": 561,
-      "pct": 3.7
-    },
-    {
-      "name": "Lokesh B",
-      "fours": 5,
-      "balls": 139,
-      "pct": 3.6
-    },
-    {
-      "name": "Prashant K",
-      "fours": 43,
-      "balls": 1245,
-      "pct": 3.5
-    },
-    {
-      "name": "Hari V",
-      "fours": 32,
-      "balls": 1000,
-      "pct": 3.2
-    },
-    {
-      "name": "Rijwan R",
-      "fours": 17,
-      "balls": 533,
-      "pct": 3.2
+      "name": "Sylvestor G",
+      "sixes": 7,
+      "balls": 309,
+      "pct": 2.3
     },
     {
       "name": "Akashdeep B",
-      "fours": 16,
+      "sixes": 12,
       "balls": 511,
-      "pct": 3.1
+      "pct": 2.3
+    },
+    {
+      "name": "Arpan D",
+      "sixes": 35,
+      "balls": 1480,
+      "pct": 2.4
+    },
+    {
+      "name": "Praveen K",
+      "sixes": 25,
+      "balls": 1017,
+      "pct": 2.5
+    },
+    {
+      "name": "Gaurav M",
+      "sixes": 22,
+      "balls": 843,
+      "pct": 2.6
+    },
+    {
+      "name": "Eshwar Chaitanya S",
+      "sixes": 3,
+      "balls": 108,
+      "pct": 2.8
+    },
+    {
+      "name": "Prashant K",
+      "sixes": 36,
+      "balls": 1245,
+      "pct": 2.9
+    },
+    {
+      "name": "tarun J",
+      "sixes": 3,
+      "balls": 105,
+      "pct": 2.9
     },
     {
       "name": "Santosh G",
-      "fours": 4,
+      "sixes": 4,
       "balls": 134,
       "pct": 3
     },
     {
-      "name": "Arpan D",
-      "fours": 44,
-      "balls": 1480,
-      "pct": 3
+      "name": "Arjun S",
+      "sixes": 35,
+      "balls": 1007,
+      "pct": 3.5
     },
     {
-      "name": "Sylvestor G",
-      "fours": 9,
-      "balls": 309,
-      "pct": 2.9
+      "name": "Soumya Smruti M",
+      "sixes": 20,
+      "balls": 561,
+      "pct": 3.6
     },
     {
-      "name": "Harsha Vardhan Reddy V",
-      "fours": 3,
-      "balls": 104,
-      "pct": 2.9
+      "name": "Rijwan R",
+      "sixes": 19,
+      "balls": 533,
+      "pct": 3.6
     },
     {
-      "name": "Anjan K",
-      "fours": 33,
-      "balls": 1173,
-      "pct": 2.8
+      "name": "Rajeev T",
+      "sixes": 8,
+      "balls": 164,
+      "pct": 4.9
     },
     {
-      "name": "Gaurav M",
-      "fours": 24,
-      "balls": 843,
-      "pct": 2.8
+      "name": "Piyush J",
+      "sixes": 7,
+      "balls": 127,
+      "pct": 5.5
+    }
+  ],
+  "foursOffPct": [
+    {
+      "name": "Venkata Krishna R",
+      "fours": 1,
+      "balls": 161,
+      "pct": 0.6
     },
     {
-      "name": "Yash M",
-      "fours": 25,
-      "balls": 936,
-      "pct": 2.7
+      "name": "Eshwar Chaitanya S",
+      "fours": 1,
+      "balls": 108,
+      "pct": 0.9
+    },
+    {
+      "name": "Arjun D",
+      "fours": 4,
+      "balls": 214,
+      "pct": 1.9
+    },
+    {
+      "name": "Gaurav K",
+      "fours": 10,
+      "balls": 501,
+      "pct": 2
     },
     {
       "name": "Abhishek L",
@@ -5044,28 +4924,148 @@
       "pct": 2.3
     },
     {
-      "name": "Gaurav K",
-      "fours": 10,
-      "balls": 501,
-      "pct": 2
+      "name": "Yash M",
+      "fours": 25,
+      "balls": 936,
+      "pct": 2.7
     },
     {
-      "name": "Arjun D",
+      "name": "Anjan K",
+      "fours": 33,
+      "balls": 1173,
+      "pct": 2.8
+    },
+    {
+      "name": "Gaurav M",
+      "fours": 24,
+      "balls": 843,
+      "pct": 2.8
+    },
+    {
+      "name": "Sylvestor G",
+      "fours": 9,
+      "balls": 309,
+      "pct": 2.9
+    },
+    {
+      "name": "Harsha Vardhan Reddy V",
+      "fours": 3,
+      "balls": 104,
+      "pct": 2.9
+    },
+    {
+      "name": "Santosh G",
       "fours": 4,
-      "balls": 214,
-      "pct": 1.9
+      "balls": 134,
+      "pct": 3
     },
     {
-      "name": "Eshwar Chaitanya S",
-      "fours": 1,
-      "balls": 108,
-      "pct": 0.9
+      "name": "Arpan D",
+      "fours": 44,
+      "balls": 1480,
+      "pct": 3
     },
     {
-      "name": "Venkata Krishna R",
-      "fours": 1,
-      "balls": 161,
-      "pct": 0.6
+      "name": "Akashdeep B",
+      "fours": 16,
+      "balls": 511,
+      "pct": 3.1
+    },
+    {
+      "name": "Hari V",
+      "fours": 32,
+      "balls": 1000,
+      "pct": 3.2
+    },
+    {
+      "name": "Rijwan R",
+      "fours": 17,
+      "balls": 533,
+      "pct": 3.2
+    },
+    {
+      "name": "Prashant K",
+      "fours": 43,
+      "balls": 1245,
+      "pct": 3.5
+    },
+    {
+      "name": "Lokesh B",
+      "fours": 5,
+      "balls": 139,
+      "pct": 3.6
+    },
+    {
+      "name": "Soumya Smruti M",
+      "fours": 21,
+      "balls": 561,
+      "pct": 3.7
+    },
+    {
+      "name": "tarun J",
+      "fours": 4,
+      "balls": 105,
+      "pct": 3.8
+    },
+    {
+      "name": "Vinay B",
+      "fours": 19,
+      "balls": 476,
+      "pct": 4
+    },
+    {
+      "name": "Kunal K",
+      "fours": 6,
+      "balls": 150,
+      "pct": 4
+    },
+    {
+      "name": "Praveen K",
+      "fours": 44,
+      "balls": 1017,
+      "pct": 4.3
+    },
+    {
+      "name": "Kaushal K",
+      "fours": 39,
+      "balls": 866,
+      "pct": 4.5
+    },
+    {
+      "name": "Rohit S",
+      "fours": 11,
+      "balls": 246,
+      "pct": 4.5
+    },
+    {
+      "name": "Anil M",
+      "fours": 32,
+      "balls": 697,
+      "pct": 4.6
+    },
+    {
+      "name": "Arjun S",
+      "fours": 48,
+      "balls": 1007,
+      "pct": 4.8
+    },
+    {
+      "name": "Rajeev T",
+      "fours": 9,
+      "balls": 164,
+      "pct": 5.5
+    },
+    {
+      "name": "Srinath S",
+      "fours": 7,
+      "balls": 121,
+      "pct": 5.8
+    },
+    {
+      "name": "Piyush J",
+      "fours": 15,
+      "balls": 127,
+      "pct": 11.8
     }
   ]
 }
