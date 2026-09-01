@@ -106,6 +106,7 @@
     <button class="toggle-btn inactive" id="btn-achieved" onclick="setView('achieved')">🏆 Achieved</button>
     <button class="toggle-btn inactive" id="btn-fastest"  onclick="setView('fastest')">⚡ Fastest</button>
     <button class="toggle-btn inactive" id="btn-rivalries" onclick="setView('rivalries')">⚔️ Rivalries</button>
+    <button class="toggle-btn inactive" id="btn-analysis" onclick="setView('analysis')">📊 Analysis</button>
   </div>
 
   <div id="content" class="loading">Fetching milestones…</div>
@@ -143,7 +144,7 @@
 
     function setView(v) {
       _view = v;
-      ['big','all','achieved','fastest','rivalries'].forEach(k => {
+      ['big','all','achieved','fastest','rivalries','analysis'].forEach(k => {
         document.getElementById('btn-' + k).className = 'toggle-btn ' + (v === k ? 'active' : 'inactive');
       });
       if (_data) render();
@@ -160,17 +161,14 @@
         }
       } else if (_view === 'rivalries') {
         renderRivalries(el);
+      } else if (_view === 'analysis') {
+        renderAnalysis(el);
       } else if (_view === 'fastest') {
         renderFastest(el);
       } else {
         for (const c of CARDS) {
           const items = (_data[c.key] || {})[_view] || [];
           el.appendChild(buildCard(c.title, items, c.unit, c.gap));
-        }
-        if (_view === 'big' || _view === 'all') {
-          el.appendChild(buildDisciplinedCard(_data.disciplined || []));
-          el.appendChild(buildBoundaryOffCard('6️⃣ Most Sixes Conceded %', _data.sixesOffPct || [], 'sixes', 'six'));
-          el.appendChild(buildBoundaryOffCard('4️⃣ Most Fours Conceded %', _data.foursOffPct || [], 'fours', 'four'));
         }
       }
     }
@@ -450,6 +448,12 @@
         card.appendChild(btnWrap);
       }
       return card;
+    }
+
+    function renderAnalysis(el) {
+      el.appendChild(buildDisciplinedCard(_data.disciplined || []));
+      el.appendChild(buildBoundaryOffCard('6️⃣ Sixes Conceded %', _data.sixesOffPct || [], 'sixes', 'six'));
+      el.appendChild(buildBoundaryOffCard('4️⃣ Fours Conceded %', _data.foursOffPct || [], 'fours', 'four'));
     }
 
     function renderRivalries(el) {
