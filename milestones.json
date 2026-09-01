@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T18:21:23.348Z",
+  "updatedAt": "2026-09-01T18:30:56.650Z",
   "batting": {
     "big": [
       {
@@ -4193,6 +4193,24 @@
           "oversLeft": 3.8,
           "wickets": 3,
           "target": 71
+        }
+      ]
+    },
+    {
+      "name": "Santosh G",
+      "count": 1,
+      "totalRescueWpa": 0.18,
+      "instances": [
+        {
+          "type": "bowl",
+          "lowestWp": 38.7,
+          "rescueWpa": 0.18,
+          "date": "2025-08-09",
+          "matchId": "a7Gwib-v2prGCGPspZoZlg",
+          "needed": 23,
+          "oversLeft": 4.5,
+          "wickets": 2,
+          "target": 67
         }
       ]
     }
