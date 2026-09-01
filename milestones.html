@@ -590,7 +590,8 @@
                 '<span>' + (inst.date || '') + ' · ' + (inst.type === 'bowl' ? '🎳 defending' : '🏏 chasing') + ' · win% was <strong style="color:#c0392b;">' + inst.lowestWp + '%</strong> → won</span>' +
                 '<span style="color:#1b5e20;font-weight:600;white-space:nowrap;margin-left:8px;">+' + inst.rescueWpa.toFixed(2) + ' WPA</span>' +
               '</div>' +
-              (inst.needed !== undefined ? '<div style="color:#888;margin-top:2px;">' + situation + '</div>' : '');
+              (inst.needed !== undefined ? '<div style="color:#888;margin-top:2px;">' + situation + '</div>' : '') +
+              (inst.contributed ? '<div style="color:#1b5e20;font-size:11px;margin-top:2px;">Contributed: ' + inst.contributed + '</div>' : '');
             detail.appendChild(d);
           });
           wrap.appendChild(detail);
