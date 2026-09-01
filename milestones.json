@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T18:30:56.650Z",
+  "updatedAt": "2026-09-01T18:53:38.567Z",
   "batting": {
     "big": [
       {
@@ -3971,7 +3971,8 @@
           "needed": 24,
           "oversLeft": 1.3,
           "wickets": 8,
-          "target": 120
+          "target": 120,
+          "contributed": "24 runs from that point"
         },
         {
           "type": "bat",
@@ -3982,7 +3983,8 @@
           "needed": 27,
           "oversLeft": 2.2,
           "wickets": 4,
-          "target": 84
+          "target": 84,
+          "contributed": "22 runs from that point"
         },
         {
           "type": "bat",
@@ -3993,7 +3995,8 @@
           "needed": 53,
           "oversLeft": 3.8,
           "wickets": 6,
-          "target": 111
+          "target": 111,
+          "contributed": "54 runs from that point"
         },
         {
           "type": "bat",
@@ -4004,7 +4007,8 @@
           "needed": 17,
           "oversLeft": 2,
           "wickets": 3,
-          "target": 70
+          "target": 70,
+          "contributed": "7 runs from that point"
         },
         {
           "type": "bowl",
@@ -4015,7 +4019,8 @@
           "needed": 6,
           "oversLeft": 1.7,
           "wickets": 1,
-          "target": 74
+          "target": 74,
+          "contributed": "1 wkt / 0 runs from that point"
         },
         {
           "type": "bat",
@@ -4026,7 +4031,8 @@
           "needed": 6,
           "oversLeft": 0.8,
           "wickets": 3,
-          "target": 57
+          "target": 57,
+          "contributed": "7 runs from that point"
         }
       ]
     },
@@ -4044,7 +4050,8 @@
           "needed": 3,
           "oversLeft": 0.2,
           "wickets": 8,
-          "target": 104
+          "target": 104,
+          "contributed": "3 runs from that point"
         },
         {
           "type": "bat",
@@ -4055,7 +4062,8 @@
           "needed": 33,
           "oversLeft": 4,
           "wickets": 5,
-          "target": 91
+          "target": 91,
+          "contributed": "24 runs from that point"
         }
       ]
     },
@@ -4073,7 +4081,8 @@
           "needed": 30,
           "oversLeft": 3.5,
           "wickets": 2,
-          "target": 60
+          "target": 60,
+          "contributed": "20 runs from that point"
         },
         {
           "type": "bat",
@@ -4084,7 +4093,8 @@
           "needed": 25,
           "oversLeft": 2.5,
           "wickets": 5,
-          "target": 107
+          "target": 107,
+          "contributed": "17 runs from that point"
         }
       ]
     },
@@ -4102,7 +4112,8 @@
           "needed": 37,
           "oversLeft": 3,
           "wickets": 4,
-          "target": 107
+          "target": 107,
+          "contributed": "26 runs from that point"
         }
       ]
     },
@@ -4120,7 +4131,8 @@
           "needed": 23,
           "oversLeft": 2.5,
           "wickets": 8,
-          "target": 128
+          "target": 128,
+          "contributed": "17 runs from that point"
         }
       ]
     },
@@ -4138,7 +4150,8 @@
           "needed": 37,
           "oversLeft": 3.5,
           "wickets": 4,
-          "target": 86
+          "target": 86,
+          "contributed": "12 runs from that point"
         }
       ]
     },
@@ -4156,7 +4169,8 @@
           "needed": 50,
           "oversLeft": 7.3,
           "wickets": 4,
-          "target": 79
+          "target": 79,
+          "contributed": "34 runs from that point"
         }
       ]
     },
@@ -4174,7 +4188,8 @@
           "needed": 4,
           "oversLeft": 0.2,
           "wickets": 6,
-          "target": 98
+          "target": 98,
+          "contributed": "1 runs from that point"
         }
       ]
     },
@@ -4192,7 +4207,8 @@
           "needed": 32,
           "oversLeft": 3.8,
           "wickets": 3,
-          "target": 71
+          "target": 71,
+          "contributed": "16 runs from that point"
         }
       ]
     },
@@ -4210,7 +4226,8 @@
           "needed": 23,
           "oversLeft": 4.5,
           "wickets": 2,
-          "target": 67
+          "target": 67,
+          "contributed": "3 wkts / 5 runs from that point"
         }
       ]
     }
