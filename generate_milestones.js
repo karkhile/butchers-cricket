@@ -462,15 +462,18 @@ function parseFielder(raw, howOut) {
         for (const [overKey, over] of Object.entries(innBalls.oversMap)) {
           const overNum = parseInt(overKey.replace('Over', ''));
           const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball');
+          let legalBallCount = 0; // only Good Ball advances the over fraction
           for (let bi = 0; bi < validBalls.length; bi++) {
             const ball = validBalls[bi];
+            const isExtras = ball.ballType === 'Wide' || ball.ballType === 'No Ball';
             const ballRuns = parseInt(ball.runs) || 0;
             const isWkt = ball.outMethod && ball.outMethod !== 'Not Out';
-            const wpBefore = winProb(cumRuns, target, overNum + bi / 6, totalOvers, cumWkts);
+            const wpBefore = winProb(cumRuns, target, Math.min(overNum + legalBallCount / 6, totalOvers - 0.01), totalOvers, cumWkts);
             cumRuns += ballRuns;
             if (isWkt) cumWkts++;
-            const wpAfter = winProb(cumRuns, target, overNum + (bi + 1) / 6, totalOvers, cumWkts);
-            allBalls.push({ ball, overNum, bi, wpBefore, wpAfter, ballRuns, isWkt, bowlerName: validBalls[0]?.bowlerName || '' });
+            if (!isExtras) legalBallCount++;
+            const wpAfter = winProb(cumRuns, target, Math.min(overNum + legalBallCount / 6, totalOvers - 0.01), totalOvers, cumWkts);
+            allBalls.push({ ball, overNum, legalBallCount, wpBefore, wpAfter, ballRuns, isWkt, bowlerName: validBalls[0]?.bowlerName || '' });
           }
         }
 
