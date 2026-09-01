@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T00:32:05.693Z",
+  "updatedAt": "2026-09-01T00:45:04.122Z",
   "batting": {
     "big": [
       {
@@ -4121,5 +4121,329 @@
         "count": 3
       }
     ]
-  }
+  },
+  "leastWides": [
+    {
+      "name": "Jimit Majmudar",
+      "count": 9,
+      "matches": 9
+    },
+    {
+      "name": "Piyush Jha",
+      "count": 11,
+      "matches": 13
+    },
+    {
+      "name": "Mithal Kothari",
+      "count": 11,
+      "matches": 7
+    },
+    {
+      "name": "tarun JOSHI",
+      "count": 15,
+      "matches": 6
+    },
+    {
+      "name": "Lokesh Bala",
+      "count": 19,
+      "matches": 10
+    },
+    {
+      "name": "Santosh Ghosh",
+      "count": 20,
+      "matches": 12
+    },
+    {
+      "name": "Eshwar Chaitanya Sarampati",
+      "count": 20,
+      "matches": 6
+    },
+    {
+      "name": "Harsha Vardhan Reddy Vndavally",
+      "count": 21,
+      "matches": 7
+    },
+    {
+      "name": "Kunal Kokate",
+      "count": 22,
+      "matches": 9
+    },
+    {
+      "name": "Rajeev Tirumala",
+      "count": 24,
+      "matches": 19
+    },
+    {
+      "name": "Jay Shah",
+      "count": 26,
+      "matches": 26
+    },
+    {
+      "name": "Gaurav Mehta",
+      "count": 28,
+      "matches": 62
+    },
+    {
+      "name": "Vinay Bharbhari",
+      "count": 32,
+      "matches": 35
+    },
+    {
+      "name": "Arjun Deb",
+      "count": 32,
+      "matches": 18
+    },
+    {
+      "name": "Srinath Shah",
+      "count": 32,
+      "matches": 10
+    },
+    {
+      "name": "Praveen Karkhile",
+      "count": 45,
+      "matches": 63
+    },
+    {
+      "name": "Rohit Sharma",
+      "count": 45,
+      "matches": 18
+    },
+    {
+      "name": "Gaurav Kumar",
+      "count": 52,
+      "matches": 42
+    },
+    {
+      "name": "Akashdeep Balu",
+      "count": 56,
+      "matches": 30
+    },
+    {
+      "name": "Abhishek Lingwal",
+      "count": 59,
+      "matches": 33
+    },
+    {
+      "name": "Soumya Smruti Mishra",
+      "count": 60,
+      "matches": 44
+    },
+    {
+      "name": "Venkata Krishna  Ravi",
+      "count": 67,
+      "matches": 9
+    },
+    {
+      "name": "Sylvestor George",
+      "count": 68,
+      "matches": 35
+    },
+    {
+      "name": "Hari Vangipuram",
+      "count": 77,
+      "matches": 69
+    },
+    {
+      "name": "Yash Mehta",
+      "count": 79,
+      "matches": 58
+    },
+    {
+      "name": "Anjan Kumar",
+      "count": 95,
+      "matches": 78
+    },
+    {
+      "name": "Rijwan Rana",
+      "count": 98,
+      "matches": 33
+    },
+    {
+      "name": "Kaushal Karkera",
+      "count": 102,
+      "matches": 50
+    },
+    {
+      "name": "Arjun Shukla",
+      "count": 112,
+      "matches": 70
+    },
+    {
+      "name": "Arpan Dey",
+      "count": 113,
+      "matches": 89
+    },
+    {
+      "name": "Anil Mallapur",
+      "count": 119,
+      "matches": 62
+    },
+    {
+      "name": "Prashant Kumar",
+      "count": 123,
+      "matches": 84
+    }
+  ],
+  "leastNoBalls": [
+    {
+      "name": "tarun JOSHI",
+      "count": 0,
+      "matches": 6
+    },
+    {
+      "name": "Lokesh Bala",
+      "count": 0,
+      "matches": 10
+    },
+    {
+      "name": "Santosh Ghosh",
+      "count": 1,
+      "matches": 12
+    },
+    {
+      "name": "Gaurav Mehta",
+      "count": 1,
+      "matches": 62
+    },
+    {
+      "name": "Harsha Vardhan Reddy Vndavally",
+      "count": 1,
+      "matches": 7
+    },
+    {
+      "name": "Jay Shah",
+      "count": 2,
+      "matches": 26
+    },
+    {
+      "name": "Vinay Bharbhari",
+      "count": 4,
+      "matches": 35
+    },
+    {
+      "name": "Gaurav Kumar",
+      "count": 4,
+      "matches": 42
+    },
+    {
+      "name": "Jimit Majmudar",
+      "count": 5,
+      "matches": 9
+    },
+    {
+      "name": "Kunal Kokate",
+      "count": 5,
+      "matches": 9
+    },
+    {
+      "name": "Srinath Shah",
+      "count": 5,
+      "matches": 10
+    },
+    {
+      "name": "Eshwar Chaitanya Sarampati",
+      "count": 5,
+      "matches": 6
+    },
+    {
+      "name": "Soumya Smruti Mishra",
+      "count": 6,
+      "matches": 44
+    },
+    {
+      "name": "Mithal Kothari",
+      "count": 6,
+      "matches": 7
+    },
+    {
+      "name": "Rohit Sharma",
+      "count": 6,
+      "matches": 18
+    },
+    {
+      "name": "Piyush Jha",
+      "count": 8,
+      "matches": 13
+    },
+    {
+      "name": "Arpan Dey",
+      "count": 10,
+      "matches": 89
+    },
+    {
+      "name": "Anjan Kumar",
+      "count": 12,
+      "matches": 78
+    },
+    {
+      "name": "Akashdeep Balu",
+      "count": 12,
+      "matches": 30
+    },
+    {
+      "name": "Praveen Karkhile",
+      "count": 13,
+      "matches": 63
+    },
+    {
+      "name": "Venkata Krishna  Ravi",
+      "count": 13,
+      "matches": 9
+    },
+    {
+      "name": "Rajeev Tirumala",
+      "count": 15,
+      "matches": 19
+    },
+    {
+      "name": "Yash Mehta",
+      "count": 17,
+      "matches": 58
+    },
+    {
+      "name": "Rijwan Rana",
+      "count": 18,
+      "matches": 33
+    },
+    {
+      "name": "Sylvestor George",
+      "count": 19,
+      "matches": 35
+    },
+    {
+      "name": "Arjun Deb",
+      "count": 20,
+      "matches": 18
+    },
+    {
+      "name": "Arjun Shukla",
+      "count": 25,
+      "matches": 70
+    },
+    {
+      "name": "Kaushal Karkera",
+      "count": 25,
+      "matches": 50
+    },
+    {
+      "name": "Anil Mallapur",
+      "count": 28,
+      "matches": 62
+    },
+    {
+      "name": "Hari Vangipuram",
+      "count": 29,
+      "matches": 69
+    },
+    {
+      "name": "Abhishek Lingwal",
+      "count": 30,
+      "matches": 33
+    },
+    {
+      "name": "Prashant Kumar",
+      "count": 31,
+      "matches": 84
+    }
+  ]
 }
