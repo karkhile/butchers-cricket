@@ -544,8 +544,7 @@ function parseFielder(raw, howOut) {
             const entries = Object.entries(rescueWpaByBatter).sort((a, b) => b[1] - a[1]);
             if (entries.length) {
               const [topRescuer, rescueWpa] = entries[0];
-              if (rescueWpa < 0.10) continue;
-              if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
+              if (rescueWpa < 0.25) continue;              if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
               rescueMap[topRescuer].count++;
               rescueMap[topRescuer].totalRescueWpa += rescueWpa;
               const myRuns = batterRuns[topRescuer] || 0;
@@ -591,8 +590,7 @@ function parseFielder(raw, howOut) {
             const entries = Object.entries(rescueWpaByBowler).sort((a, b) => b[1] - a[1]);
             if (entries.length) {
               const [topRescuer, rescueWpa] = entries[0];
-              if (rescueWpa < 0.10) continue;
-              if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
+              if (rescueWpa < 0.25) continue;              if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
               rescueMap[topRescuer].count++;
               rescueMap[topRescuer].totalRescueWpa += rescueWpa;
               const wkts = bowlerWkts[topRescuer] || 0;
