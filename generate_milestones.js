@@ -91,6 +91,7 @@ function parseFielder(raw, howOut) {
   const widesMap = {}, noBallsMap = {}, bowlerBalls = {}, bowlerMatchCount = {};
   // Rivalries: keyed "batter|bowler"
   const dismissalsByPair = {}, sixesByPair = {}, foursByPair = {};
+  const sixesOff = {}, foursOff = {}, commBalls = {};
 
   // Fastest milestone tracking: { playerName: { hits: { threshold: playerMatchCount } } }
   // playerMatchCount = number of matches the player personally appeared in (not global match number)
@@ -320,6 +321,12 @@ function parseFielder(raw, howOut) {
               if (ball.isSix) sixesByPair[pair]  = (sixesByPair[pair]  || 0) + 1;
               if (ball.isFour) foursByPair[pair] = (foursByPair[pair] || 0) + 1;
             }
+            // Bowler totals for % calculation
+            if (bowler && !isJunk(bowler)) {
+              commBalls[bowler] = (commBalls[bowler] || 0) + 1;
+              if (ball.isSix)  sixesOff[bowler]  = (sixesOff[bowler]  || 0) + 1;
+              if (ball.isFour) foursOff[bowler] = (foursOff[bowler] || 0) + 1;
+            }
           }
           const bowler = validBalls[0]?.bowlerName || 'Unknown';
           const batterContribs = {};
@@ -381,6 +388,14 @@ function parseFielder(raw, howOut) {
         return { name, extras, balls: b, pct, wides: widesMap[name]||0, noBalls: noBallsMap[name]||0 };
       })
       .sort((a, b) => a.pct - b.pct),
+    sixesOffPct: Object.entries(sixesOff)
+      .filter(([n]) => (commBalls[n]||0) >= 100)
+      .map(([name, s]) => ({ name, sixes: s, balls: commBalls[name], pct: Math.round(s / commBalls[name] * 1000) / 10 }))
+      .sort((a, b) => b.pct - a.pct),
+    foursOffPct: Object.entries(foursOff)
+      .filter(([n]) => (commBalls[n]||0) >= 100)
+      .map(([name, f]) => ({ name, fours: f, balls: commBalls[name], pct: Math.round(f / commBalls[name] * 1000) / 10 }))
+      .sort((a, b) => b.pct - a.pct),
   };
 
   fs.writeFileSync('milestones.json', JSON.stringify(output, null, 2));
