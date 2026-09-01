@@ -349,6 +349,75 @@ function parseFielder(raw, howOut) {
   const cutoff = allOvers[topN - 1]?.runs;
   const topOvers = allOvers.filter(o => o.runs >= cutoff);
 
+  // ── Game Changers ─────────────────────────────────────────────────────────────
+  const rescuers = {};   // batters who scored 25+ when team was 3 down under 40
+  const defenders = {};  // bowlers who took 3+ wkts when their team scored under 90
+
+  for (let i = 0; i < matches.length; i++) {
+    const m = matches[i];
+    const matchId = m.scoreSummary?.matchId || m.fixtureId;
+    if (!matchId) continue;
+    try {
+      const root = (await apiGet('series/match/' + matchId + '/scorecard')).data || {};
+      if (!root.winner) continue;
+      const date = (m.matchDateTime || '').slice(0, 10);
+
+      for (const innKey of ['innings1', 'innings2', 'innings3', 'innings4']) {
+        const inn = root[innKey];
+        if (!inn || !inn.batting?.length) continue;
+        const isWinnerInn = inn.teamId === root.winner;
+
+        // Rescuer: batter who scored 25+ at position 4+ when 3 wkts fell for < 40
+        let wickets = 0, runsWhen3rdFell = null;
+        for (const b of inn.batting) {
+          const ho = (b.howOut || '').toLowerCase();
+          const os = (b.outStringNoLink || '').toLowerCase();
+          if (ho && !['ab','rtno','rt','rto',''].includes(ho) && os !== 'dnb' && os !== 'not out' && os !== 'did not bat') {
+            wickets++;
+            if (wickets === 3) {
+              runsWhen3rdFell = inn.batting.slice(0, inn.batting.indexOf(b) + 1).reduce((s, x) => s + (parseInt(x.runsScored) || 0), 0);
+            }
+          }
+        }
+        if (runsWhen3rdFell !== null && runsWhen3rdFell <= 40) {
+          let pos = 0;
+          for (const b of inn.batting) {
+            pos++;
+            if (pos < 4) continue;
+            const runs = parseInt(b.runsScored) || 0;
+            const name = (b.playerName || '').trim();
+            if (runs < 25 || isJunk(name)) continue;
+            if (!rescuers[name]) rescuers[name] = { count: 0, wins: 0, instances: [] };
+            rescuers[name].count++;
+            if (isWinnerInn) rescuers[name].wins++;
+            rescuers[name].instances.push({ runs, runsWhen3rdFell, won: isWinnerInn, date });
+          }
+        }
+
+        // Defender: bowler who took 3+ wkts when winning team scored under 90
+        const bowlingInnKey = { innings1:'innings2', innings2:'innings1', innings3:'innings4', innings4:'innings3' }[innKey];
+        const bowlInn = root[bowlingInnKey];
+        if (!bowlInn || bowlInn.teamId !== root.winner) continue;
+        const teamTotal = inn.total || 0;
+        if (teamTotal > 90) continue;
+        for (const b of (bowlInn.bowling || [])) {
+          const name = ((b.firstName || '') + ' ' + (b.lastName || '')).trim();
+          if (isJunk(name)) continue;
+          const wkts = parseInt(b.wickets) || 0;
+          if (wkts < 3) continue;
+          if (!defenders[name]) defenders[name] = { count: 0, instances: [] };
+          defenders[name].count++;
+          defenders[name].instances.push({ wkts, teamTotal, date });
+        }
+      }
+    } catch (e) {}
+  }
+
+  const toGameChangers = (map) =>
+    Object.entries(map)
+      .map(([name, v]) => ({ name, ...v }))
+      .sort((a, b) => b.count - a.count);
+
   const output = {
     updatedAt: new Date().toISOString(),
     batting:      { big: toList(batters,      RUN_BIG,       RUN_BIG_WINDOW),      all: toList(batters,      RUN_MILESTONES,      RUN_WINDOW),      achieved: toAchieved(batters,      RUN_BIG) },
@@ -374,8 +443,11 @@ function parseFielder(raw, howOut) {
       runOuts:     toFastest(fastRunOut,     FAST_RUNOUT),
     },
     topOvers,
-    rivalries: {
-      dismissals: toTopPairs(dismissalsByPair),
+    gameChangers: {
+      rescuers:  toGameChangers(rescuers),
+      defenders: toGameChangers(defenders),
+    },
+    rivalries: {      dismissals: toTopPairs(dismissalsByPair),
       sixes:      toTopPairs(sixesByPair),
       fours:      toTopPairs(foursByPair),
     },

@@ -332,6 +332,50 @@
       }
       return card;
     }
+    function buildGameChangerCard(title, items, role) {
+      const card = document.createElement('div');
+      card.className = 'fastest-card';
+      card.innerHTML = '<div class="card-title">' + title + '</div>';
+      if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
+      const rankLabels = ['🥇','🥈','🥉'];
+      const rankClasses = ['gold','silver','bronze'];
+      const SHOW = 10;
+      const makeRow = (item, i) => {
+        const row = document.createElement('div');
+        row.className = 'rivalry-row';
+        const rankHtml = i < 3
+          ? '<span class="rivalry-rank ' + rankClasses[i] + '">' + rankLabels[i] + '</span>'
+          : '<span class="rivalry-rank">' + (i + 1) + '</span>';
+        const detail = role === 'batter'
+          ? item.wins + ' wins · scores: ' + (item.instances||[]).map(x => x.runs + (x.won?'✓':'')).join(', ')
+          : (item.instances||[]).map(x => x.wkts + 'wkt vs ' + x.teamTotal).join(', ');
+        row.innerHTML = rankHtml +
+          '<div class="rivalry-names">' +
+            '<div class="rivalry-batter">' + item.name + '</div>' +
+            '<div class="rivalry-bowler" style="font-size:10px;">' + detail + '</div>' +
+          '</div>' +
+          '<span class="rivalry-badge">' + item.count + 'x</span>';
+        return row;
+      };
+      for (const [i, item] of items.slice(0, SHOW).entries()) card.appendChild(makeRow(item, i));
+      const extra = items.slice(SHOW);
+      if (extra.length) {
+        const extraWrap = document.createElement('div');
+        extraWrap.className = 'extra-rows';
+        extra.forEach((item, j) => extraWrap.appendChild(makeRow(item, SHOW + j)));
+        card.appendChild(extraWrap);
+        const btnWrap = document.createElement('div');
+        btnWrap.className = 'view-more-wrap';
+        const btn = document.createElement('button');
+        btn.className = 'view-more-btn';
+        btn.textContent = '+ ' + extra.length + ' more';
+        btn.onclick = () => { const open = extraWrap.classList.toggle('open'); btn.textContent = open ? '− Show less' : '+ ' + extra.length + ' more'; };
+        btnWrap.appendChild(btn);
+        card.appendChild(btnWrap);
+      }
+      return card;
+    }
+
     function buildDotBallsCard(items) {
       const card = document.createElement('div');
       card.className = 'fastest-card';
@@ -495,6 +539,9 @@
       el.appendChild(buildBoundaryOffCard('6️⃣ Sixes Conceded %', _data.sixesOffPct || [], 'sixes', 'six'));
       el.appendChild(buildBoundaryOffCard('4️⃣ Fours Conceded %', _data.foursOffPct || [], 'fours', 'four'));
       el.appendChild(buildDotBallsCard(_data.dotBalls || []));
+      const gc = _data.gameChangers || {};
+      el.appendChild(buildGameChangerCard('🦸 Chase Rescuers', gc.rescuers || [], 'batter'));
+      el.appendChild(buildGameChangerCard('🛡️ Low-Score Defenders', gc.defenders || [], 'bowler'));
     }
 
     function renderRivalries(el) {
