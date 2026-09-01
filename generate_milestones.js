@@ -88,6 +88,8 @@ function parseFielder(raw, howOut) {
   console.log('Total matches:', matches.length);
   const batters = {}, bowlers = {}, catches = {}, keeperCt = {}, stumpings = {}, runouts = {};
   const foursMap = {}, sixesMap = {}, momMap = {};
+  // Rivalries: keyed "batter|bowler"
+  const dismissalsByPair = {}, sixesByPair = {}, foursByPair = {};
 
   // Fastest milestone tracking: { playerName: { hits: { threshold: playerMatchCount } } }
   // playerMatchCount = number of matches the player personally appeared in (not global match number)
@@ -160,6 +162,17 @@ function parseFielder(raw, howOut) {
             if (!fastSixes[name].hits[t] && sixesMap[name] >= t) fastSixes[name].hits[t] = batMatchNum;
           }
 
+          // Dismissals rivalry: extract bowler from outStringNoLink for all bowler-credited dismissals
+          if (['b', 'ct', 'ctw', 'st', 'lbw'].includes(howOut)) {
+            const outRaw = b.outStringNoLink || '';
+            const bm = outRaw.match(/\sb\s+([^(]+?)(?:\s*$)/i);
+            const bowlerName = bm ? bm[1].replace(/&#\d+;/g, '').trim() : '';
+            if (bowlerName && !isJunk(bowlerName) && !isJunk(name)) {
+              const pair = name + '|' + bowlerName;
+              dismissalsByPair[pair] = (dismissalsByPair[pair] || 0) + 1;
+            }
+          }
+
           if (['ct', 'ctw', 'st', 'ro'].includes(howOut)) {
             const fielder = parseFielder(b.outStringNoLink || '', howOut);
             if (!isJunk(fielder)) {
@@ -220,6 +233,13 @@ function parseFielder(raw, howOut) {
     if ((i + 1) % 20 === 0) process.stdout.write((i + 1) + '/' + matches.length + '\n');
   }
 
+  // Convert a pair map ("batter|bowler" → count) to sorted top-N list
+  const toTopPairs = (pairMap, n = 20) =>
+    Object.entries(pairMap)
+      .map(([pair, count]) => { const [batter, bowler] = pair.split('|'); return { batter, bowler, count }; })
+      .sort((a, b) => b.count - a.count)
+      .slice(0, n);
+
   const nearMilestone = (current, milestones, window) => {
     const next = milestones.find(ms => ms > current);
     if (!next) return null;
@@ -276,7 +296,17 @@ function parseFielder(raw, howOut) {
           const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball');
           if (!validBalls.length) continue;
           let overRuns = 0;
-          for (const ball of validBalls) overRuns += (parseInt(ball.runs) || 0);
+          for (const ball of validBalls) {
+            overRuns += (parseInt(ball.runs) || 0);
+            // Rivalry: sixes and fours per batter-bowler pair
+            const batter = ball.strikerName;
+            const bowler = ball.bowlerName;
+            if (batter && bowler && !isJunk(batter) && !isJunk(bowler)) {
+              const pair = batter + '|' + bowler;
+              if (ball.isSix) sixesByPair[pair]  = (sixesByPair[pair]  || 0) + 1;
+              if (ball.isFour) foursByPair[pair] = (foursByPair[pair] || 0) + 1;
+            }
+          }
           const bowler = validBalls[0]?.bowlerName || 'Unknown';
           const batterContribs = {};
           for (const ball of validBalls) {
@@ -322,6 +352,11 @@ function parseFielder(raw, howOut) {
       runOuts:     toFastest(fastRunOut,     FAST_RUNOUT),
     },
     topOvers,
+    rivalries: {
+      dismissals: toTopPairs(dismissalsByPair),
+      sixes:      toTopPairs(sixesByPair),
+      fours:      toTopPairs(foursByPair),
+    },
   };
 
   fs.writeFileSync('milestones.json', JSON.stringify(output, null, 2));

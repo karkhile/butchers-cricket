@@ -77,6 +77,18 @@
     .fastest-name  { font-size: 13px; font-weight: 600; color: #222; flex: 1; }
     .fastest-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: #e8f5e9; color: #1b5e20; white-space: nowrap; }
 
+    /* rivalry tab */
+    .rivalry-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f0f0f0; }
+    .rivalry-row:last-child { border-bottom: none; }
+    .rivalry-rank { font-size: 12px; font-weight: 700; color: #888; width: 22px; flex-shrink: 0; }
+    .rivalry-rank.gold   { color: #f0b429; }
+    .rivalry-rank.silver { color: #8f9ba8; }
+    .rivalry-rank.bronze { color: #c17b3d; }
+    .rivalry-names { flex: 1; }
+    .rivalry-batter { font-size: 13px; font-weight: 600; color: #222; }
+    .rivalry-bowler { font-size: 11px; color: #888; margin-top: 1px; }
+    .rivalry-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: #e8f5e9; color: #1b5e20; white-space: nowrap; }
+
     .loading { color: #9ecfb0; text-align: center; padding: 40px; font-size: 14px; }
     .error   { color: #e74c3c; text-align: center; padding: 40px; font-size: 14px; }
   </style>
@@ -93,6 +105,7 @@
     <button class="toggle-btn inactive" id="btn-all"      onclick="setView('all')">All upcoming</button>
     <button class="toggle-btn inactive" id="btn-achieved" onclick="setView('achieved')">🏆 Achieved</button>
     <button class="toggle-btn inactive" id="btn-fastest"  onclick="setView('fastest')">⚡ Fastest</button>
+    <button class="toggle-btn inactive" id="btn-rivalries" onclick="setView('rivalries')">⚔️ Rivalries</button>
   </div>
 
   <div id="content" class="loading">Fetching milestones…</div>
@@ -130,7 +143,7 @@
 
     function setView(v) {
       _view = v;
-      ['big','all','achieved','fastest'].forEach(k => {
+      ['big','all','achieved','fastest','rivalries'].forEach(k => {
         document.getElementById('btn-' + k).className = 'toggle-btn ' + (v === k ? 'active' : 'inactive');
       });
       if (_data) render();
@@ -145,6 +158,8 @@
           const items = (_data[c.key] || {}).achieved || [];
           el.appendChild(buildAchievedCard(c.title, items, c.unit));
         }
+      } else if (_view === 'rivalries') {
+        renderRivalries(el);
       } else if (_view === 'fastest') {
         renderFastest(el);
       } else {
@@ -311,6 +326,57 @@
           sec.appendChild(row);
         });
         card.appendChild(sec);
+      }
+      return card;
+    }
+    function renderRivalries(el) {
+      const r = _data.rivalries || {};
+      el.appendChild(buildRivalryCard('⚔️ Most Sixes off a Bowler', r.sixes || [], '6️⃣', 'sixes'));
+      el.appendChild(buildRivalryCard('⚔️ Most Fours off a Bowler', r.fours || [], '4️⃣', 'fours'));
+      el.appendChild(buildRivalryCard('⚔️ Most Times Dismissed by a Bowler', r.dismissals || [], '🎯', 'dismissals'));
+    }
+
+    function buildRivalryCard(title, items, icon, type) {
+      const card = document.createElement('div');
+      card.className = 'fastest-card';
+      card.innerHTML = '<div class="card-title">' + title + '</div>';
+      if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
+
+      const rankLabels = ['🥇','🥈','🥉'];
+      const rankClasses = ['gold','silver','bronze'];
+      const suffix = type === 'sixes' ? 'sixes' : type === 'fours' ? 'fours' : 'times';
+
+      const SHOW = 10;
+      const makeRivalryRow = (item, i) => {
+        const row = document.createElement('div');
+        row.className = 'rivalry-row';
+        const rankHtml = i < 3
+          ? '<span class="rivalry-rank ' + rankClasses[i] + '">' + rankLabels[i] + '</span>'
+          : '<span class="rivalry-rank">' + (i + 1) + '</span>';
+        row.innerHTML = rankHtml +
+          '<div class="rivalry-names">' +
+            '<div class="rivalry-batter">' + item.batter + '</div>' +
+            '<div class="rivalry-bowler">off ' + item.bowler + '</div>' +
+          '</div>' +
+          '<span class="rivalry-badge">' + item.count + ' ' + suffix + '</span>';
+        return row;
+      };
+
+      for (const [i, item] of items.slice(0, SHOW).entries()) card.appendChild(makeRivalryRow(item, i));
+      const extra = items.slice(SHOW);
+      if (extra.length) {
+        const extraWrap = document.createElement('div');
+        extraWrap.className = 'extra-rows';
+        extra.forEach((item, j) => extraWrap.appendChild(makeRivalryRow(item, SHOW + j)));
+        card.appendChild(extraWrap);
+        const btnWrap = document.createElement('div');
+        btnWrap.className = 'view-more-wrap';
+        const btn = document.createElement('button');
+        btn.className = 'view-more-btn';
+        btn.textContent = '+ ' + extra.length + ' more';
+        btn.onclick = () => { const open = extraWrap.classList.toggle('open'); btn.textContent = open ? '− Show less' : '+ ' + extra.length + ' more'; };
+        btnWrap.appendChild(btn);
+        card.appendChild(btnWrap);
       }
       return card;
     }
