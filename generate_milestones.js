@@ -531,7 +531,7 @@ function parseFielder(raw, howOut) {
               if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
               rescueMap[topRescuer].count++;
               rescueMap[topRescuer].totalRescueWpa += rescueWpa;
-              rescueMap[topRescuer].instances.push({ type: 'bat', lowestWp: Math.round(lowestWp * 100), rescueWpa: Math.round(rescueWpa * 100) / 100, date, matchId });
+              rescueMap[topRescuer].instances.push({ type: 'bat', lowestWp: Math.round(lowestWp * 1000) / 10, rescueWpa: Math.round(rescueWpa * 100) / 100, date, matchId });
             }
           }
         } else {
@@ -556,7 +556,7 @@ function parseFielder(raw, howOut) {
               if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
               rescueMap[topRescuer].count++;
               rescueMap[topRescuer].totalRescueWpa += rescueWpa;
-              rescueMap[topRescuer].instances.push({ type: 'bowl', lowestWp: Math.round((1 - highestBattingWp) * 100), rescueWpa: Math.round(rescueWpa * 100) / 100, date, matchId });
+              rescueMap[topRescuer].instances.push({ type: 'bowl', lowestWp: Math.round((1 - highestBattingWp) * 1000) / 10, rescueWpa: Math.round(rescueWpa * 100) / 100, date, matchId });
             }
           }
         }
