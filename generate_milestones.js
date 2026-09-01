@@ -514,7 +514,7 @@ function parseFielder(raw, howOut) {
         if (battingTeamWon) {
           // Chasing rescue: win% from batting team perspective
           const lowestWp = Math.min(...allBalls.map(e => e.wpBefore));
-          if (lowestWp < 0.50) {
+          if (lowestWp < 0.30) {
             const lowestIdx = allBalls.findIndex(e => e.wpBefore === lowestWp);
             const rescueWpaByBatter = {};
             for (let ri = lowestIdx; ri < allBalls.length; ri++) {
@@ -538,7 +538,7 @@ function parseFielder(raw, howOut) {
           // Defending rescue: fielding team won — check if batting team wp ever rose above 50%
           // (meaning fielding team's chance dropped below 50% at some point)
           const highestBattingWp = Math.max(...allBalls.map(e => e.wpBefore));
-          if (highestBattingWp > 0.50) {
+          if (highestBattingWp > 0.70) {
             // Find the ball where batting team wp was highest (fielding team's worst moment)
             const peakIdx = allBalls.findIndex(e => e.wpBefore === highestBattingWp);
             // Credit bowlers from that peak onwards (they turned it around)
