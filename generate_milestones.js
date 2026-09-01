@@ -391,11 +391,11 @@ function parseFielder(raw, howOut) {
     sixesOffPct: Object.entries(sixesOff)
       .filter(([n]) => (commBalls[n]||0) >= 100)
       .map(([name, s]) => ({ name, sixes: s, balls: commBalls[name], pct: Math.round(s / commBalls[name] * 1000) / 10 }))
-      .sort((a, b) => b.pct - a.pct),
+      .sort((a, b) => a.pct - b.pct),
     foursOffPct: Object.entries(foursOff)
       .filter(([n]) => (commBalls[n]||0) >= 100)
       .map(([name, f]) => ({ name, fours: f, balls: commBalls[name], pct: Math.round(f / commBalls[name] * 1000) / 10 }))
-      .sort((a, b) => b.pct - a.pct),
+      .sort((a, b) => a.pct - b.pct),
   };
 
   fs.writeFileSync('milestones.json', JSON.stringify(output, null, 2));
