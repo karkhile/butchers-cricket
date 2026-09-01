@@ -88,7 +88,7 @@ function parseFielder(raw, howOut) {
   console.log('Total matches:', matches.length);
   const batters = {}, bowlers = {}, catches = {}, keeperCt = {}, stumpings = {}, runouts = {};
   const foursMap = {}, sixesMap = {}, momMap = {};
-  const widesMap = {}, noBallsMap = {}, bowlerMatchCount = {};
+  const widesMap = {}, noBallsMap = {}, bowlerBalls = {}, bowlerMatchCount = {};
   // Rivalries: keyed "batter|bowler"
   const dismissalsByPair = {}, sixesByPair = {}, foursByPair = {};
 
@@ -229,6 +229,7 @@ function parseFielder(raw, howOut) {
           bowlers[name] += parseInt(b.wickets) || 0;
           widesMap[name]   = (widesMap[name]   || 0) + (parseInt(b.wides)   || 0);
           noBallsMap[name] = (noBallsMap[name] || 0) + (parseInt(b.noBalls) || 0);
+          bowlerBalls[name]      = (bowlerBalls[name]      || 0) + (parseInt(b.balls)   || 0);
           bowlerMatchCount[name] = (bowlerMatchCount[name] || 0) + 1;
           seenInMatch.add(name);
 
@@ -372,6 +373,14 @@ function parseFielder(raw, howOut) {
     },
     leastWides:   Object.entries(widesMap)  .filter(([n]) => (bowlerMatchCount[n]||0) >= 5).map(([name,count])=>({name,count,matches:bowlerMatchCount[name]})).sort((a,b)=>a.count-b.count),
     leastNoBalls: Object.entries(noBallsMap).filter(([n]) => (bowlerMatchCount[n]||0) >= 5).map(([name,count])=>({name,count,matches:bowlerMatchCount[name]})).sort((a,b)=>a.count-b.count),
+    disciplined: Object.entries(bowlerBalls)
+      .filter(([n]) => (bowlerMatchCount[n]||0) >= 5 && bowlerBalls[n] >= 50)
+      .map(([name, b]) => {
+        const extras = (widesMap[name]||0) + (noBallsMap[name]||0);
+        const pct = Math.round(extras / b * 1000) / 10;
+        return { name, extras, balls: b, pct, wides: widesMap[name]||0, noBalls: noBallsMap[name]||0 };
+      })
+      .sort((a, b) => a.pct - b.pct),
   };
 
   fs.writeFileSync('milestones.json', JSON.stringify(output, null, 2));
