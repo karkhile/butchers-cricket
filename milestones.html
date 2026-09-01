@@ -579,7 +579,7 @@
             const d = document.createElement('div');
             d.style.cssText = 'font-size:11px;color:#555;padding:3px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;';
             d.innerHTML =
-              '<span>' + (inst.date || '') + ' · win% was <strong style="color:#c0392b;">' + inst.lowestWp + '%</strong> → won</span>' +
+              '<span>' + (inst.date || '') + ' · ' + (inst.type === 'bowl' ? '🎳 defending' : '🏏 chasing') + ' · win% was <strong style="color:#c0392b;">' + inst.lowestWp + '%</strong> → won</span>' +
               '<span style="color:#1b5e20;font-weight:600;">+' + inst.rescueWpa.toFixed(2) + ' WPA</span>';
             detail.appendChild(d);
           });

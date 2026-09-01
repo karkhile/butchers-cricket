@@ -506,34 +506,60 @@ function parseFielder(raw, howOut) {
         }
 
         // ── Rescue detection ──────────────────────────────────────────────────
-        // Only count matches where batting team won AND win% dropped below 50%
-        if (!battingTeamWon) continue;
-        const lowestWp = Math.min(...allBalls.map(e => e.wpBefore));
-        if (lowestWp >= 0.50) continue; // never in trouble — not a rescue
+        // Batting rescue (chasing): batting team win% dropped below 50%, team won — credit top batter
+        // Bowling rescue (defending): fielding team's win% (= 1 - batting wp) dropped below 50%
+        //   i.e. batting team wp rose above 50% at some point, but fielding team still won — credit top bowler
+        const date = (m.matchDateTime || '').slice(0, 10);
 
-        // Find the ball where win% was lowest
-        const lowestIdx = allBalls.findIndex(e => e.wpBefore === lowestWp);
-
-        // Sum WPA per batter from that point to end of innings
-        const rescueWpaByBatter = {};
-        for (let ri = lowestIdx; ri < allBalls.length; ri++) {
-          const { ball, wpBefore, wpAfter } = allBalls[ri];
-          const swing = wpAfter - wpBefore; // batting team perspective (won=true here)
-          const batter = ball.strikerName;
-          if (batter && !isJunk(batter) && swing > 0) {
-            rescueWpaByBatter[batter] = (rescueWpaByBatter[batter] || 0) + swing;
+        if (battingTeamWon) {
+          // Chasing rescue: win% from batting team perspective
+          const lowestWp = Math.min(...allBalls.map(e => e.wpBefore));
+          if (lowestWp < 0.50) {
+            const lowestIdx = allBalls.findIndex(e => e.wpBefore === lowestWp);
+            const rescueWpaByBatter = {};
+            for (let ri = lowestIdx; ri < allBalls.length; ri++) {
+              const { ball, wpBefore, wpAfter } = allBalls[ri];
+              const swing = wpAfter - wpBefore;
+              const batter = ball.strikerName;
+              if (batter && !isJunk(batter) && swing > 0) {
+                rescueWpaByBatter[batter] = (rescueWpaByBatter[batter] || 0) + swing;
+              }
+            }
+            const entries = Object.entries(rescueWpaByBatter).sort((a, b) => b[1] - a[1]);
+            if (entries.length) {
+              const [topRescuer, rescueWpa] = entries[0];
+              if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
+              rescueMap[topRescuer].count++;
+              rescueMap[topRescuer].totalRescueWpa += rescueWpa;
+              rescueMap[topRescuer].instances.push({ type: 'bat', lowestWp: Math.round(lowestWp * 100), rescueWpa: Math.round(rescueWpa * 100) / 100, date, matchId });
+            }
+          }
+        } else {
+          // Defending rescue: fielding team won — check if batting team wp ever rose above 50%
+          // (meaning fielding team's chance dropped below 50% at some point)
+          const highestBattingWp = Math.max(...allBalls.map(e => e.wpBefore));
+          if (highestBattingWp > 0.50) {
+            // Find the ball where batting team wp was highest (fielding team's worst moment)
+            const peakIdx = allBalls.findIndex(e => e.wpBefore === highestBattingWp);
+            // Credit bowlers from that peak onwards (they turned it around)
+            const rescueWpaByBowler = {};
+            for (let ri = peakIdx; ri < allBalls.length; ri++) {
+              const { bowlerName, wpBefore, wpAfter } = allBalls[ri];
+              const swing = wpBefore - wpAfter; // drop in batting team wp = good for fielding team
+              if (bowlerName && !isJunk(bowlerName) && swing > 0) {
+                rescueWpaByBowler[bowlerName] = (rescueWpaByBowler[bowlerName] || 0) + swing;
+              }
+            }
+            const entries = Object.entries(rescueWpaByBowler).sort((a, b) => b[1] - a[1]);
+            if (entries.length) {
+              const [topRescuer, rescueWpa] = entries[0];
+              if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
+              rescueMap[topRescuer].count++;
+              rescueMap[topRescuer].totalRescueWpa += rescueWpa;
+              rescueMap[topRescuer].instances.push({ type: 'bowl', lowestWp: Math.round((1 - highestBattingWp) * 100), rescueWpa: Math.round(rescueWpa * 100) / 100, date, matchId });
+            }
           }
         }
-
-        // Top contributor in this rescue
-        const entries = Object.entries(rescueWpaByBatter).sort((a, b) => b[1] - a[1]);
-        if (!entries.length) continue;
-        const [topRescuer, rescueWpa] = entries[0];
-        const date = (m.matchDateTime || '').slice(0, 10);
-        if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
-        rescueMap[topRescuer].count++;
-        rescueMap[topRescuer].totalRescueWpa += rescueWpa;
-        rescueMap[topRescuer].instances.push({ lowestWp: Math.round(lowestWp * 100), rescueWpa: Math.round(rescueWpa * 100) / 100, date, matchId });
       }
     } catch (e) {}
   }
