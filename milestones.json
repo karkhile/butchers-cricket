@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T19:35:12.678Z",
+  "updatedAt": "2026-09-01T19:52:37.109Z",
   "batting": {
     "big": [
       {
@@ -3959,8 +3959,8 @@
   "matchRescuers": [
     {
       "name": "Anjan K",
-      "count": 7,
-      "totalRescueWpa": 4.4,
+      "count": 11,
+      "totalRescueWpa": 6.79,
       "instances": [
         {
           "type": "bat",
@@ -4035,6 +4035,30 @@
           "contributed": "16 runs from that point (team scored 30)"
         },
         {
+          "type": "bat",
+          "lowestWp": 32.2,
+          "rescueWpa": 0.55,
+          "date": "2025-09-13",
+          "matchId": "PGidlaJfQCen6FPj_BcoZg",
+          "needed": 44,
+          "oversLeft": 5.7,
+          "wickets": 1,
+          "target": 60,
+          "contributed": "22 runs from that point (team scored 47)"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 38.2,
+          "rescueWpa": 0.74,
+          "date": "2025-09-21",
+          "matchId": "C2z7tV5iHcAFHn2v-fnjhA",
+          "needed": 69,
+          "oversLeft": 8.2,
+          "wickets": 1,
+          "target": 88,
+          "contributed": "50 runs from that point (team scored 70)"
+        },
+        {
           "type": "bowl",
           "lowestWp": 38.4,
           "rescueWpa": 0.36,
@@ -4045,6 +4069,104 @@
           "wickets": 0,
           "target": 74,
           "contributed": "1 wkt / 4 runs from that point"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 39.4,
+          "rescueWpa": 0.65,
+          "date": "2025-10-04",
+          "matchId": "-cQ2hPvgQM4NncNVfgVH2g",
+          "needed": 33,
+          "oversLeft": 4.2,
+          "wickets": 2,
+          "target": 87,
+          "contributed": "24 runs from that point (team scored 33)"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 39.4,
+          "rescueWpa": 0.45,
+          "date": "2026-08-16",
+          "matchId": "SJOrzyyabgZmne2Q5z9qww",
+          "needed": 54,
+          "oversLeft": 9.2,
+          "wickets": 3,
+          "target": 88,
+          "contributed": "39 runs from that point (team scored 55)"
+        }
+      ]
+    },
+    {
+      "name": "Kaushal K",
+      "count": 3,
+      "totalRescueWpa": 1.26,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 18,
+          "rescueWpa": 0.37,
+          "date": "2026-06-06",
+          "matchId": "NaiysrNXqHcZUTroOTSW9w",
+          "needed": 8,
+          "oversLeft": 1,
+          "wickets": 6,
+          "target": 82,
+          "contributed": "4 runs from that point (team scored 8)"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 18.9,
+          "rescueWpa": 0.46,
+          "date": "2026-06-14",
+          "matchId": "Vl3ybYaaPlqh7pCfLghqig",
+          "needed": 25,
+          "oversLeft": 2.8,
+          "wickets": 7,
+          "target": 128,
+          "contributed": "17 runs from that point (team scored 25)"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 31.7,
+          "rescueWpa": 0.43,
+          "date": "2026-06-21",
+          "matchId": "I9wfSBpj-nqjJRRRy3RPAQ",
+          "needed": 62,
+          "oversLeft": 7.5,
+          "wickets": 2,
+          "target": 101,
+          "contributed": "16 runs from that point (team scored 64)"
+        }
+      ]
+    },
+    {
+      "name": "Sylvestor G",
+      "count": 2,
+      "totalRescueWpa": 1.6,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 10.7,
+          "rescueWpa": 0.75,
+          "date": "2026-05-25",
+          "matchId": "XcYwt4oKxW5lSHAfR4w_og",
+          "needed": 2,
+          "oversLeft": 0.2,
+          "wickets": 7,
+          "target": 107,
+          "contributed": "2 runs from that point"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 34.1,
+          "rescueWpa": 0.85,
+          "date": "2026-02-14",
+          "matchId": "V-oIMagKRR9hlNIt4xTvbw",
+          "needed": 60,
+          "oversLeft": 9.8,
+          "wickets": 3,
+          "target": 63,
+          "contributed": "21 runs from that point (team scored 60)"
         }
       ]
     },
@@ -4080,33 +4202,64 @@
       ]
     },
     {
-      "name": "Kaushal K",
+      "name": "Venkata Krishna R",
       "count": 2,
-      "totalRescueWpa": 0.84,
+      "totalRescueWpa": 0.94,
       "instances": [
         {
           "type": "bat",
-          "lowestWp": 18,
-          "rescueWpa": 0.37,
-          "date": "2026-06-06",
-          "matchId": "NaiysrNXqHcZUTroOTSW9w",
-          "needed": 8,
-          "oversLeft": 1,
-          "wickets": 6,
-          "target": 82,
-          "contributed": "4 runs from that point (team scored 8)"
+          "lowestWp": 10.9,
+          "rescueWpa": 0.69,
+          "date": "2026-08-01",
+          "matchId": "Eex1XKkfKyjcp4bL9l5uiw",
+          "needed": 26,
+          "oversLeft": 2,
+          "wickets": 4,
+          "target": 107,
+          "contributed": "15 runs from that point (team scored 29)"
         },
         {
           "type": "bat",
-          "lowestWp": 18.9,
-          "rescueWpa": 0.46,
-          "date": "2026-06-14",
-          "matchId": "Vl3ybYaaPlqh7pCfLghqig",
-          "needed": 25,
-          "oversLeft": 2.8,
-          "wickets": 7,
-          "target": 128,
-          "contributed": "17 runs from that point (team scored 25)"
+          "lowestWp": 39.8,
+          "rescueWpa": 0.25,
+          "date": "2026-08-01",
+          "matchId": "HdG9AeH7dF8CDr89DzPz2A",
+          "needed": 73,
+          "oversLeft": 8.2,
+          "wickets": 1,
+          "target": 109,
+          "contributed": "9 runs from that point (team scored 78)"
+        }
+      ]
+    },
+    {
+      "name": "Prashant K",
+      "count": 2,
+      "totalRescueWpa": 0.81,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 33.5,
+          "rescueWpa": 0.55,
+          "date": "2025-11-15",
+          "matchId": "vYoqGbyq4Gzn1clNA3hdHg",
+          "needed": 7,
+          "oversLeft": 1,
+          "wickets": 5,
+          "target": 67,
+          "contributed": "7 runs from that point"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 38.7,
+          "rescueWpa": 0.26,
+          "date": "2026-05-31",
+          "matchId": "YXjcDk-t9F0OM3KbQ1U_aQ",
+          "needed": 6,
+          "oversLeft": 1,
+          "wickets": 5,
+          "target": 117,
+          "contributed": "2 wkts / 1 runs from that point"
         }
       ]
     },
@@ -4126,44 +4279,6 @@
           "wickets": 6,
           "target": 98,
           "contributed": "5 runs from that point"
-        }
-      ]
-    },
-    {
-      "name": "Sylvestor G",
-      "count": 1,
-      "totalRescueWpa": 0.75,
-      "instances": [
-        {
-          "type": "bat",
-          "lowestWp": 10.7,
-          "rescueWpa": 0.75,
-          "date": "2026-05-25",
-          "matchId": "XcYwt4oKxW5lSHAfR4w_og",
-          "needed": 2,
-          "oversLeft": 0.2,
-          "wickets": 7,
-          "target": 107,
-          "contributed": "2 runs from that point"
-        }
-      ]
-    },
-    {
-      "name": "Venkata Krishna R",
-      "count": 1,
-      "totalRescueWpa": 0.69,
-      "instances": [
-        {
-          "type": "bat",
-          "lowestWp": 10.9,
-          "rescueWpa": 0.69,
-          "date": "2026-08-01",
-          "matchId": "Eex1XKkfKyjcp4bL9l5uiw",
-          "needed": 26,
-          "oversLeft": 2,
-          "wickets": 4,
-          "target": 107,
-          "contributed": "15 runs from that point (team scored 29)"
         }
       ]
     },
@@ -4206,21 +4321,40 @@
       ]
     },
     {
-      "name": "Prashant K",
+      "name": "Akashdeep B",
       "count": 1,
-      "totalRescueWpa": 0.26,
+      "totalRescueWpa": 0.48,
       "instances": [
         {
-          "type": "bowl",
-          "lowestWp": 38.7,
-          "rescueWpa": 0.26,
-          "date": "2026-05-31",
-          "matchId": "YXjcDk-t9F0OM3KbQ1U_aQ",
-          "needed": 6,
-          "oversLeft": 1,
-          "wickets": 5,
-          "target": 117,
-          "contributed": "2 wkts / 1 runs from that point"
+          "type": "bat",
+          "lowestWp": 39.8,
+          "rescueWpa": 0.48,
+          "date": "2026-08-22",
+          "matchId": "YGfz5He1fVzOaZOk7l162g",
+          "needed": 37,
+          "oversLeft": 4.8,
+          "wickets": 1,
+          "target": 92,
+          "contributed": "29 runs from that point (team scored 38)"
+        }
+      ]
+    },
+    {
+      "name": "Piyush J",
+      "count": 1,
+      "totalRescueWpa": 0.48,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 31.3,
+          "rescueWpa": 0.48,
+          "date": "2026-08-29",
+          "matchId": "MEKT-EJejRoz2zFtYDpbRA",
+          "needed": 63,
+          "oversLeft": 9.5,
+          "wickets": 4,
+          "target": 79,
+          "contributed": "19 runs from that point (team scored 63)"
         }
       ]
     }
