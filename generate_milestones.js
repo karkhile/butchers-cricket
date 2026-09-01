@@ -514,8 +514,8 @@ function parseFielder(raw, howOut) {
         //   i.e. batting team wp rose above 50% at some point, but fielding team still won — credit top bowler
         const date = (m.matchDateTime || '').slice(0, 10);
 
-        if (battingTeamWon) {
-          // Chasing rescue: win% from batting team perspective
+        if (battingTeamWon && isChase) {
+          // Chasing rescue: only innings 2 — we have a real target to measure against
           const lowestWp = Math.min(...allBalls.map(e => e.wpBefore));
           if (lowestWp < 0.30) {
             const lowestIdx = allBalls.findIndex(e => e.wpBefore === lowestWp);
