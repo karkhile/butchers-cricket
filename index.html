@@ -171,9 +171,11 @@
   function getUpcomingDates() {
     if (window._pollDates) return window._pollDates;
     const sat = nextSaturday();
+    const fri = new Date(sat); fri.setDate(sat.getDate() - 1);
     const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
+    const mon = new Date(sat); mon.setDate(sat.getDate() + 2);
     const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    return { sat: fmt(sat), sun: fmt(sun) };
+    return { fri: fmt(fri), sat: fmt(sat), sun: fmt(sun), mon: fmt(mon), extraDates: [] };
   }
 
   function getWeekKey() {
@@ -181,9 +183,10 @@
     return nextSaturday().toISOString().slice(0, 10);
   }
 
-  function formatVoteSummary(days, sat, sun) {
+  function formatVoteSummary(days, fri, sat, sun, mon) {
     if (!days || days.length === 0) return '❌ Not Available';
-    return days.map(d => d === 'saturday' ? '📅 Saturday, ' + sat : '📅 Sunday, ' + sun).join('<br>');
+    const labels = { friday: '📅 Friday, ' + fri, saturday: '📅 Saturday, ' + sat, sunday: '📅 Sunday, ' + sun, monday: '📅 Monday, ' + mon };
+    return days.map(d => labels[d] || d).join('<br>');
   }
 
   function getDays(v) {
@@ -195,7 +198,7 @@
   }
 
   async function showSuccess(name, days, voteRef, weekKey) {
-    const { sat, sun } = getUpcomingDates();
+    const { fri, sat, sun, mon } = getUpcomingDates();
     const unavailable = !days || days.length === 0;
     document.getElementById('content').innerHTML = `
       <div class="success">
@@ -205,7 +208,7 @@
           ? 'Hope to see you next week, ' + name.split(' ')[0] + '!'
           : 'See you on the field, ' + name.split(' ')[0] + '! 🏏'
         }</p>
-        <div class="vote-summary">Your availability:<br><strong>${formatVoteSummary(days, sat, sun)}</strong></div>
+        <div class="vote-summary">Your availability:<br><strong>${formatVoteSummary(days, fri, sat, sun, mon)}</strong></div>
         <div class="dashboard" id="dashboard"><h3>📊 Loading poll results...</h3></div>
         <button class="submit-btn" id="changeBtn" style="margin-top:16px;background:#666;font-size:14px;padding:12px">✏️ Change my vote</button>
         <button class="submit-btn" id="undoBtn" style="margin-top:8px;background:white;color:#c0392b;border:2px solid #c0392b;font-size:14px;padding:12px">🗑️ Undo — I'll decide later</button>
@@ -220,10 +223,10 @@
   }
 
   async function renderDashboard(containerId, weekKey) {
-    const { sat, sun } = getUpcomingDates();
+    const { fri, sat, sun, mon, extraDates } = getUpcomingDates();
     try {
       const snap = await getDocs(collection(db, 'votes'));
-      const groups = { saturday: [], sunday: [], unavailable: [] };
+      const groups = { friday: [], saturday: [], sunday: [], monday: [], unavailable: [] };
       let total = 0;
       snap.forEach(d => {
         const v = d.data();
@@ -233,8 +236,10 @@
         const parts = (v.player || d.id).trim().split(/\s+/);
         const firstName = parts[0] + (parts.length > 1 ? ' ' + parts[parts.length - 1][0] : '');
         if (vdays.length === 0) groups.unavailable.push(firstName);
+        if (vdays.includes('friday'))   groups.friday.push(firstName);
         if (vdays.includes('saturday')) groups.saturday.push(firstName);
         if (vdays.includes('sunday'))   groups.sunday.push(firstName);
+        if (vdays.includes('monday'))   groups.monday.push(firstName);
       });
       const renderGroup = (label, icon, names) => {
         const pills = names.map(n => `<span class="player-pill">${n}</span>`).join('');
@@ -243,40 +248,46 @@
           <div class="player-pills">${pills || '<span style="color:#aaa;font-size:12px">No responses yet</span>'}</div>
         </div>`;
       };
+      const hasFri = (extraDates||[]).includes('friday');
+      const hasMon = (extraDates||[]).includes('monday');
       document.getElementById(containerId).innerHTML = `
         <h3>📊 Who's playing this week? (${total} responded)</h3>
+        ${hasFri ? renderGroup('Friday, '   + fri, '📅', groups.friday)   : ''}
         ${renderGroup('Saturday, ' + sat, '📅', groups.saturday)}
         ${renderGroup('Sunday, '   + sun, '📅', groups.sunday)}
-        ${renderGroup('Not Available',    '❌', groups.unavailable)}`;
+        ${hasMon ? renderGroup('Monday, '   + mon, '📅', groups.monday)   : ''}
+        ${renderGroup('Not Available', '❌', groups.unavailable)}`;
     } catch(e) {
       document.getElementById(containerId).innerHTML = '';
     }
   }
 
   function showVoteForm(name, voteRef, weekKey, currentDays) {
-    const { sat, sun } = getUpcomingDates();
-    // selected is a Set of 'saturday'/'sunday', or empty = unavailable
+    const { fri, sat, sun, mon, extraDates } = getUpcomingDates();
+    // selected is a Set of day keys, or empty = unavailable
     const selected = new Set(currentDays && currentDays.length ? currentDays : []);
     let unavailable = !currentDays || currentDays.length === 0;
     if (currentDays === null) unavailable = false; // fresh vote — nothing pre-selected
 
+    const dayCount = 2 + (extraDates||[]).length;
     document.getElementById('content').innerHTML = `
       <div class="greeting">
         <h2>Hey ${name.split(' ')[0]}! 👋</h2>
         <p>Can you play this weekend?</p>
       </div>
       <div class="question">Select the days you can play:</div>
-      <div class="hint">You can select both days</div>
+      <div class="hint">You can select multiple days</div>
       <div class="options" id="options"></div>
       <button class="submit-btn" id="submitBtn" disabled>Submit Vote</button>
       <div class="error-msg" id="errorMsg">Something went wrong. Please try again.</div>
       <div class="dashboard" id="dashboard"><h3>📊 Loading who's playing...</h3></div>
     `;
 
-    const days = [
-      { value: 'saturday', label: 'Saturday, ' + sat, icon: '📅' },
-      { value: 'sunday',   label: 'Sunday, '   + sun, icon: '📅' },
-    ];
+    const days = [];
+    if ((extraDates||[]).includes('friday'))  days.push({ value: 'friday',   label: 'Friday, '   + fri, icon: '📅' });
+    days.push({ value: 'saturday', label: 'Saturday, ' + sat, icon: '📅' });
+    days.push({ value: 'sunday',   label: 'Sunday, '   + sun, icon: '📅' });
+    if ((extraDates||[]).includes('monday'))  days.push({ value: 'monday',   label: 'Monday, '   + mon, icon: '📅' });
 
     const updateSubmit = () => {
       document.getElementById('submitBtn').disabled = (!unavailable && selected.size === 0);
@@ -358,22 +369,28 @@
     // Check Firestore for poll open/closed state and game date
     let pollOpen = true;
     let pollSatDate = null;
+    let pollExtraDates = [];
     try {
       const pollSnap = await getDoc(doc(db, 'config', 'poll'));
       if (pollSnap.exists()) {
         const pd = pollSnap.data();
         pollOpen = pd.open !== false;
         if (pd.satDate) pollSatDate = pd.satDate; // YYYY-MM-DD
+        if (pd.extraDates) pollExtraDates = pd.extraDates; // ['friday'] or ['monday'] or both
       }
     } catch(e) {}
 
     // Override upcoming dates with admin-set date if available
     if (pollSatDate) {
       const sat = new Date(pollSatDate + 'T12:00:00');
+      const fri = new Date(sat); fri.setDate(sat.getDate() - 1);
       const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
+      const mon = new Date(sat); mon.setDate(sat.getDate() + 2);
       const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      // Monkey-patch getUpcomingDates for this session
-      window._pollDates = { sat: fmt(sat), sun: fmt(sun) };
+      window._pollDates = {
+        fri: fmt(fri), sat: fmt(sat), sun: fmt(sun), mon: fmt(mon),
+        extraDates: pollExtraDates,
+      };
       window._pollWeekKey = pollSatDate;
     }
 
