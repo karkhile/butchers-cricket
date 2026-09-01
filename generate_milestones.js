@@ -163,13 +163,15 @@ function parseFielder(raw, howOut) {
           }
 
           // Dismissals rivalry: extract bowler from outStringNoLink for all bowler-credited dismissals
-          if (['b', 'ct', 'ctw', 'st', 'lbw'].includes(howOut)) {
+          if (['b', 'ct', 'ctw', 'st', 'lbw', 'ht'].includes(howOut)) {
             const outRaw = b.outStringNoLink || '';
             let bowlerName = '';
             if (/^c&b\s+/i.test(outRaw)) {
               bowlerName = outRaw.replace(/^c&b\s+/i, '').trim();
             } else if (/^b\s+/i.test(outRaw)) {
               bowlerName = outRaw.replace(/^b\s+/i, '').trim();
+            } else if (/^hit\s+wicket\s+/i.test(outRaw)) {
+              bowlerName = outRaw.replace(/^hit\s+wicket\s+/i, '').trim();
             } else {
               const bm = outRaw.match(/\sb\s+([^(]+?)(?:\s*$)/i);
               bowlerName = bm ? bm[1].replace(/&#\d+;/g, '').trim() : '';
