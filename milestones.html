@@ -353,11 +353,15 @@
         const rankHtml = i < 3
           ? '<span class="rivalry-rank ' + rankClasses[i] + '">' + rankLabels[i] + '</span>'
           : '<span class="rivalry-rank">' + (i + 1) + '</span>';
-        row.innerHTML = rankHtml +
-          '<div class="rivalry-names">' +
-            '<div class="rivalry-batter">' + item.batter + '</div>' +
-            '<div class="rivalry-bowler">off ' + item.bowler + '</div>' +
-          '</div>' +
+        const namesHtml = type === 'dismissals'
+          ? '<div class="rivalry-names">' +
+              '<div class="rivalry-batter"><strong>' + item.bowler + '</strong> dismissed ' + item.batter + '</div>' +
+            '</div>'
+          : '<div class="rivalry-names">' +
+              '<div class="rivalry-batter">' + item.batter + '</div>' +
+              '<div class="rivalry-bowler">off ' + item.bowler + '</div>' +
+            '</div>';
+        row.innerHTML = rankHtml + namesHtml +
           '<span class="rivalry-badge">' + item.count + ' ' + suffix + '</span>';
         return row;
       };
