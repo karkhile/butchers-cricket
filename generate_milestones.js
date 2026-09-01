@@ -529,13 +529,16 @@ function parseFielder(raw, howOut) {
 
             const rescueWpaByBatter = {};
             const batterRuns = {};
+            let teamRunsFromLow = 0;
             for (let ri = lowestIdx; ri < allBalls.length; ri++) {
               const { ball, wpBefore, wpAfter } = allBalls[ri];
               const swing = wpAfter - wpBefore;
               const batter = ball.strikerName;
+              const ballR = allBalls[ri].ballRuns || 0;
+              teamRunsFromLow += ballR;
               if (batter && !isJunk(batter)) {
                 if (swing > 0) rescueWpaByBatter[batter] = (rescueWpaByBatter[batter] || 0) + swing;
-                batterRuns[batter] = (batterRuns[batter] || 0) + (allBalls[ri].ballRuns || 0);
+                batterRuns[batter] = (batterRuns[batter] || 0) + ballR;
               }
             }
             const entries = Object.entries(rescueWpaByBatter).sort((a, b) => b[1] - a[1]);
@@ -545,6 +548,10 @@ function parseFielder(raw, howOut) {
               if (!rescueMap[topRescuer]) rescueMap[topRescuer] = { count: 0, totalRescueWpa: 0, instances: [] };
               rescueMap[topRescuer].count++;
               rescueMap[topRescuer].totalRescueWpa += rescueWpa;
+              const myRuns = batterRuns[topRescuer] || 0;
+              const contribStr = myRuns === teamRunsFromLow
+                ? myRuns + ' runs from that point'
+                : myRuns + ' runs from that point (team scored ' + teamRunsFromLow + ')';
               rescueMap[topRescuer].instances.push({
                 type: 'bat',
                 lowestWp: Math.round(lowestWp * 1000) / 10,
@@ -554,7 +561,7 @@ function parseFielder(raw, howOut) {
                 oversLeft: Math.round(oversLeftAtLow * 10) / 10,
                 wickets: wktsAtLow,
                 target,
-                contributed: batterRuns[topRescuer] + ' runs from that point',
+                contributed: contribStr,
               });
             }
           }
