@@ -309,7 +309,7 @@ function parseFielder(raw, howOut) {
         const innData = commentary['innings' + inn + 'Balls'];
         if (!innData?.oversMap) continue;
         for (const [overKey, over] of Object.entries(innData.oversMap)) {
-          const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball');
+          const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball').sort((a, b) => (a.ball || 0) - (b.ball || 0));
           if (!validBalls.length) continue;
           let overRuns = 0;
           for (const ball of validBalls) {
@@ -461,7 +461,7 @@ function parseFielder(raw, howOut) {
         let cumRuns = 0, cumWkts = 0;
         for (const [overKey, over] of Object.entries(innBalls.oversMap)) {
           const overNum = parseInt(overKey.replace('Over', ''));
-          const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball');
+          const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball').sort((a, b) => (a.ball || 0) - (b.ball || 0));
           let legalBallCount = 0; // only Good Ball advances the over fraction
           for (let bi = 0; bi < validBalls.length; bi++) {
             const ball = validBalls[bi];
@@ -493,7 +493,7 @@ function parseFielder(raw, howOut) {
         cumRuns = 0; cumWkts = 0;
         for (const [overKey, over] of Object.entries(innBalls.oversMap)) {
           const overNum = parseInt(overKey.replace('Over', ''));
-          const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball');
+          const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball').sort((a, b) => (a.ball || 0) - (b.ball || 0));
           if (!validBalls.length) continue;
           const bowlerName = validBalls[0]?.bowlerName || '';
           const wpOverStart = winProb(cumRuns, target, overNum, totalOvers, cumWkts);
