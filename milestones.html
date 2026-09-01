@@ -347,14 +347,17 @@
           ? '<span class="rivalry-rank ' + rankClasses[i] + '">' + rankLabels[i] + '</span>'
           : '<span class="rivalry-rank">' + (i + 1) + '</span>';
         const detail = role === 'batter'
-          ? item.wins + ' wins · scores: ' + (item.instances||[]).map(x => x.runs + (x.won?'✓':'')).join(', ')
-          : (item.instances||[]).map(x => x.wkts + 'wkt vs ' + x.teamTotal).join(', ');
+          ? (item.instances||[]).map(x => x.runs + (x.won ? '✓' : '✗')).join(', ')
+          : (item.instances||[]).map(x => x.wkts + 'wkt vs ' + x.teamTotal + '✓').join(', ');
+        const badge = role === 'batter'
+          ? item.wins + '/' + item.count + ' wins'
+          : item.count + 'x';
         row.innerHTML = rankHtml +
           '<div class="rivalry-names">' +
             '<div class="rivalry-batter">' + item.name + '</div>' +
             '<div class="rivalry-bowler" style="font-size:10px;">' + detail + '</div>' +
           '</div>' +
-          '<span class="rivalry-badge">' + item.count + 'x</span>';
+          '<span class="rivalry-badge">' + badge + '</span>';
         return row;
       };
       for (const [i, item] of items.slice(0, SHOW).entries()) card.appendChild(makeRow(item, i));
