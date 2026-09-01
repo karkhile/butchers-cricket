@@ -88,6 +88,7 @@ function parseFielder(raw, howOut) {
   console.log('Total matches:', matches.length);
   const batters = {}, bowlers = {}, catches = {}, keeperCt = {}, stumpings = {}, runouts = {};
   const foursMap = {}, sixesMap = {}, momMap = {};
+  const widesMap = {}, noBallsMap = {}, bowlerMatchCount = {};
   // Rivalries: keyed "batter|bowler"
   const dismissalsByPair = {}, sixesByPair = {}, foursByPair = {};
 
@@ -226,6 +227,9 @@ function parseFielder(raw, howOut) {
           if (!name || name.includes('Guest') || name.includes('Dummy')) continue;
           if (!bowlers[name]) bowlers[name] = 0;
           bowlers[name] += parseInt(b.wickets) || 0;
+          widesMap[name]   = (widesMap[name]   || 0) + (parseInt(b.wides)   || 0);
+          noBallsMap[name] = (noBallsMap[name] || 0) + (parseInt(b.noBalls) || 0);
+          bowlerMatchCount[name] = (bowlerMatchCount[name] || 0) + 1;
           seenInMatch.add(name);
 
           // Fastest bowling — use this player's own match count
@@ -366,6 +370,8 @@ function parseFielder(raw, howOut) {
       sixes:      toTopPairs(sixesByPair),
       fours:      toTopPairs(foursByPair),
     },
+    leastWides:   Object.entries(widesMap)  .filter(([n]) => (bowlerMatchCount[n]||0) >= 5).map(([name,count])=>({name,count,matches:bowlerMatchCount[name]})).sort((a,b)=>a.count-b.count),
+    leastNoBalls: Object.entries(noBallsMap).filter(([n]) => (bowlerMatchCount[n]||0) >= 5).map(([name,count])=>({name,count,matches:bowlerMatchCount[name]})).sort((a,b)=>a.count-b.count),
   };
 
   fs.writeFileSync('milestones.json', JSON.stringify(output, null, 2));
