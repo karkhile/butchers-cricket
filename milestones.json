@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T06:46:57.810Z",
+  "updatedAt": "2026-09-01T07:00:51.395Z",
   "batting": {
     "big": [
       {
@@ -3959,104 +3959,463 @@
   "matchRescuers": [
     {
       "name": "Anjan K",
-      "count": 16,
-      "totalRescueWpa": 8.49,
+      "count": 22,
+      "totalRescueWpa": 11.02,
       "instances": [
         {
+          "type": "bat",
           "lowestWp": 0,
           "rescueWpa": 1.59,
           "date": "2026-07-11",
           "matchId": "wqtuqAbhFcUoVgOve6bXYg"
         },
         {
+          "type": "bat",
           "lowestWp": 2,
           "rescueWpa": 0.37,
           "date": "2025-08-24",
           "matchId": "QtU79P9BWW75TGH5_CN5aA"
         },
         {
+          "type": "bat",
           "lowestWp": 12,
           "rescueWpa": 0.46,
           "date": "2025-06-22",
           "matchId": "Eou-mU4QzvG7CwuqtsM7mg"
         },
         {
+          "type": "bowl",
+          "lowestWp": 16,
+          "rescueWpa": 0.08,
+          "date": "2025-10-25",
+          "matchId": "ot-FF2TUHydln0S8YwKcZA"
+        },
+        {
+          "type": "bat",
           "lowestWp": 16,
           "rescueWpa": 0.18,
           "date": "2026-03-14",
           "matchId": "F9H5HDu3uTCr-hQppym2Uw"
         },
         {
+          "type": "bat",
           "lowestWp": 16,
           "rescueWpa": 0.86,
           "date": "2026-06-06",
           "matchId": "PosG_KpMepq1r-h0EVzkbw"
         },
         {
+          "type": "bowl",
+          "lowestWp": 21,
+          "rescueWpa": 0.79,
+          "date": "2026-08-29",
+          "matchId": "MEKT-EJejRoz2zFtYDpbRA"
+        },
+        {
+          "type": "bat",
           "lowestWp": 22,
           "rescueWpa": 0.57,
           "date": "2025-10-25",
           "matchId": "pcPlujYw7ww8CeAEo5EJRw"
         },
         {
+          "type": "bat",
           "lowestWp": 24,
           "rescueWpa": 0.49,
           "date": "2026-02-22",
           "matchId": "DCzVsIqTTLKSVyTku0OzYQ"
         },
         {
+          "type": "bowl",
+          "lowestWp": 25,
+          "rescueWpa": 0.28,
+          "date": "2025-11-22",
+          "matchId": "1xYfBb2zbMuLKZ5h1sRmsg"
+        },
+        {
+          "type": "bat",
           "lowestWp": 26,
           "rescueWpa": 0.18,
           "date": "2025-11-22",
           "matchId": "1xYfBb2zbMuLKZ5h1sRmsg"
         },
         {
+          "type": "bat",
           "lowestWp": 28,
           "rescueWpa": 0.64,
           "date": "2025-12-13",
           "matchId": "aXt8X6-aEJEIyduVOKxjxA"
         },
         {
+          "type": "bat",
           "lowestWp": 31,
           "rescueWpa": 0.59,
           "date": "2025-10-04",
           "matchId": "-cQ2hPvgQM4NncNVfgVH2g"
         },
         {
+          "type": "bat",
           "lowestWp": 33,
           "rescueWpa": 0.49,
           "date": "2025-09-13",
           "matchId": "PGidlaJfQCen6FPj_BcoZg"
         },
         {
+          "type": "bat",
           "lowestWp": 39,
           "rescueWpa": 0.67,
           "date": "2025-09-21",
           "matchId": "C2z7tV5iHcAFHn2v-fnjhA"
         },
         {
+          "type": "bat",
           "lowestWp": 39,
           "rescueWpa": 0.46,
           "date": "2026-08-16",
           "matchId": "SJOrzyyabgZmne2Q5z9qww"
         },
         {
+          "type": "bowl",
+          "lowestWp": 41,
+          "rescueWpa": 0.64,
+          "date": "2025-09-13",
+          "matchId": "PGidlaJfQCen6FPj_BcoZg"
+        },
+        {
+          "type": "bat",
           "lowestWp": 45,
           "rescueWpa": 0.3,
           "date": "2026-07-18",
           "matchId": "Lb93ucSe9-HwjBsQjakxwQ"
         },
         {
+          "type": "bat",
           "lowestWp": 46,
           "rescueWpa": 0.28,
           "date": "2026-07-18",
           "matchId": "PydfHjl1_M8IeR5uXrxgCw"
         },
         {
+          "type": "bowl",
+          "lowestWp": 47,
+          "rescueWpa": 0.23,
+          "date": "2025-09-06",
+          "matchId": "F71ZtK5wGkmCwzm2dojrMQ"
+        },
+        {
+          "type": "bat",
           "lowestWp": 48,
           "rescueWpa": 0.33,
           "date": "2025-09-13",
           "matchId": "qoUOWvzVMH4qKemcl_TEYw"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 50,
+          "rescueWpa": 0.52,
+          "date": "2026-04-18",
+          "matchId": "92ALRbP7AsZ2WL7f4tugMw"
+        }
+      ]
+    },
+    {
+      "name": "Praveen K",
+      "count": 11,
+      "totalRescueWpa": 4.88,
+      "instances": [
+        {
+          "type": "bowl",
+          "lowestWp": 21,
+          "rescueWpa": 0.86,
+          "date": "2026-08-29",
+          "matchId": "Tx2hoMivnkhaajYXGL2wcg"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 23,
+          "rescueWpa": 0.77,
+          "date": "2025-06-22",
+          "matchId": "bza_lbFRXmYB2n4sXrKyeg"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 29,
+          "rescueWpa": 0.71,
+          "date": "2026-05-23",
+          "matchId": "eP51qH7wzxj4sx-ZbEK96w"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 30,
+          "rescueWpa": 0.43,
+          "date": "2026-08-29",
+          "matchId": "MEKT-EJejRoz2zFtYDpbRA"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 33,
+          "rescueWpa": 0.23,
+          "date": "2026-04-04",
+          "matchId": "rgE4i4q29w6Vr6nhe84Zdw"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 35,
+          "rescueWpa": 0.5,
+          "date": "2026-02-07",
+          "matchId": "iiXV7xruX9vvJlqlGZHOBg"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 44,
+          "rescueWpa": 0.3,
+          "date": "2025-07-26",
+          "matchId": "8VyToF7jab18WJjmj6CGvA"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 46,
+          "rescueWpa": 0.41,
+          "date": "2026-02-14",
+          "matchId": "V-oIMagKRR9hlNIt4xTvbw"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 47,
+          "rescueWpa": 0.17,
+          "date": "2025-11-22",
+          "matchId": "kt3Fz4pO2G1dGBnj5uFSZQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 50,
+          "rescueWpa": 0.29,
+          "date": "2025-07-19",
+          "matchId": "nMA_kEGWP7GrHtFmkzZ71A"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 50,
+          "rescueWpa": 0.19,
+          "date": "2025-07-26",
+          "matchId": "8VyToF7jab18WJjmj6CGvA"
+        }
+      ]
+    },
+    {
+      "name": "Prashant K",
+      "count": 10,
+      "totalRescueWpa": 3.08,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 33,
+          "rescueWpa": 0.67,
+          "date": "2025-11-15",
+          "matchId": "vYoqGbyq4Gzn1clNA3hdHg"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 36,
+          "rescueWpa": 0.25,
+          "date": "2026-08-01",
+          "matchId": "HdG9AeH7dF8CDr89DzPz2A"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 42,
+          "rescueWpa": 0.38,
+          "date": "2026-02-22",
+          "matchId": "DCzVsIqTTLKSVyTku0OzYQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 43,
+          "rescueWpa": 0.33,
+          "date": "2026-02-28",
+          "matchId": "cC1MogwAKNO3EizMtRtB0A"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 45,
+          "rescueWpa": 0.32,
+          "date": "2026-05-31",
+          "matchId": "YXjcDk-t9F0OM3KbQ1U_aQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 47,
+          "rescueWpa": 0.27,
+          "date": "2025-10-11",
+          "matchId": "H8xcTikSx6U7KVIBiYQsMQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.12,
+          "date": "2026-01-24",
+          "matchId": "E4oGoLP69UzjsgSqDmuxTw"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 49,
+          "rescueWpa": 0.22,
+          "date": "2026-04-18",
+          "matchId": "9OyOpn1CTisNMK85dmnqCQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 49,
+          "rescueWpa": 0.31,
+          "date": "2026-08-22",
+          "matchId": "SyCJD7awu8EgxZ4kie1j5g"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 50,
+          "rescueWpa": 0.2,
+          "date": "2026-03-14",
+          "matchId": "F9H5HDu3uTCr-hQppym2Uw"
+        }
+      ]
+    },
+    {
+      "name": "Vinay B",
+      "count": 9,
+      "totalRescueWpa": 3.43,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 22,
+          "rescueWpa": 0.77,
+          "date": "2025-10-04",
+          "matchId": "zeICf1NKMIc2mRtRNndxmw"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 25,
+          "rescueWpa": 0.39,
+          "date": "2025-08-09",
+          "matchId": "QEO8a6nEzWjYvnJD3ZJwQw"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 43,
+          "rescueWpa": 0.59,
+          "date": "2025-08-16",
+          "matchId": "0ZJDqv6shbJ-ml_aBpJIwQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 44,
+          "rescueWpa": 0.49,
+          "date": "2025-09-21",
+          "matchId": "C2z7tV5iHcAFHn2v-fnjhA"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 46,
+          "rescueWpa": 0.19,
+          "date": "2025-06-22",
+          "matchId": "Eou-mU4QzvG7CwuqtsM7mg"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 46,
+          "rescueWpa": 0.3,
+          "date": "2025-06-22",
+          "matchId": "2Qlkp_ZF3FnsQ3d7XHitUQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.24,
+          "date": "2025-10-04",
+          "matchId": "zeICf1NKMIc2mRtRNndxmw"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 49,
+          "rescueWpa": 0.23,
+          "date": "2025-08-02",
+          "matchId": "y9kCCRuPaNqt7GW4K1gGUg"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 50,
+          "rescueWpa": 0.24,
+          "date": "2025-09-27",
+          "matchId": "mAV8n5ECSG0D9jCaBUkWqw"
+        }
+      ]
+    },
+    {
+      "name": "Gaurav M",
+      "count": 9,
+      "totalRescueWpa": 3,
+      "instances": [
+        {
+          "type": "bowl",
+          "lowestWp": 13,
+          "rescueWpa": 0.83,
+          "date": "2026-08-01",
+          "matchId": "HdG9AeH7dF8CDr89DzPz2A"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 16,
+          "rescueWpa": 0.02,
+          "date": "2025-08-09",
+          "matchId": "NXvOdrNH4trIVDOruIlKoA"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 36,
+          "rescueWpa": 0.28,
+          "date": "2026-07-11",
+          "matchId": "SVFnoHKJwqsDwIINbSxDug"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 42,
+          "rescueWpa": 0.58,
+          "date": "2026-07-18",
+          "matchId": "Lb93ucSe9-HwjBsQjakxwQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 45,
+          "rescueWpa": 0.26,
+          "date": "2026-01-16",
+          "matchId": "x3DRD71dsumVLMwhawcrKQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 47,
+          "rescueWpa": 0.22,
+          "date": "2026-08-08",
+          "matchId": "lM_gfLqrI2cxp6fW3CKaOQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.16,
+          "date": "2025-07-19",
+          "matchId": "6m43ds8jAQ9Vy9kKA839uQ"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 49,
+          "rescueWpa": 0.2,
+          "date": "2026-01-10",
+          "matchId": "U1ZWXQ00Pw01ifYEjFDfUQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 49,
+          "rescueWpa": 0.46,
+          "date": "2026-07-18",
+          "matchId": "PydfHjl1_M8IeR5uXrxgCw"
         }
       ]
     },
@@ -4066,46 +4425,165 @@
       "totalRescueWpa": 3.56,
       "instances": [
         {
+          "type": "bat",
           "lowestWp": 0,
           "rescueWpa": 1,
           "date": "2025-07-12",
           "matchId": "zhHrIRwJ7RwU5TQGvCfWDw"
         },
         {
+          "type": "bat",
           "lowestWp": 26,
           "rescueWpa": 0.81,
           "date": "2025-08-16",
           "matchId": "0ZJDqv6shbJ-ml_aBpJIwQ"
         },
         {
+          "type": "bat",
           "lowestWp": 33,
           "rescueWpa": 0.27,
           "date": "2025-11-08",
           "matchId": "szZ1wMB3X1z67m0zKVvO2Q"
         },
         {
+          "type": "bat",
           "lowestWp": 39,
           "rescueWpa": 0.28,
           "date": "2025-09-13",
           "matchId": "Ko3b_W52050ct18OHhA5qQ"
         },
         {
+          "type": "bat",
           "lowestWp": 41,
           "rescueWpa": 0.5,
           "date": "2025-07-26",
           "matchId": "14084XllfP56wSEjQbPnEQ"
         },
         {
+          "type": "bat",
           "lowestWp": 42,
           "rescueWpa": 0.43,
           "date": "2025-11-08",
           "matchId": "o-Dg365FWnRDhBMjAAu0Fw"
         },
         {
+          "type": "bat",
           "lowestWp": 48,
           "rescueWpa": 0.27,
           "date": "2025-08-02",
           "matchId": "57Onph4Fvk2Uz8NIaKOxEw"
+        }
+      ]
+    },
+    {
+      "name": "Hari V",
+      "count": 7,
+      "totalRescueWpa": 2.65,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 15,
+          "rescueWpa": 0.39,
+          "date": "2025-06-28",
+          "matchId": "BaNO0GD7W3mI34NTa3PQkA"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 19,
+          "rescueWpa": 0.03,
+          "date": "2025-12-13",
+          "matchId": "aXt8X6-aEJEIyduVOKxjxA"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 36,
+          "rescueWpa": 0.59,
+          "date": "2025-12-31",
+          "matchId": "40EhekSTnXzEienA_Q--Gg"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 44,
+          "rescueWpa": 0.79,
+          "date": "2025-10-04",
+          "matchId": "-cQ2hPvgQM4NncNVfgVH2g"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 47,
+          "rescueWpa": 0.39,
+          "date": "2026-06-26",
+          "matchId": "u776IFKHeJo6xfD7m2Z4Mw"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.2,
+          "date": "2026-03-07",
+          "matchId": "3xnExVeaSZ5dp9T4_ptd0w"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 50,
+          "rescueWpa": 0.25,
+          "date": "2026-06-26",
+          "matchId": "s1MWIKEfMGUrregiMARVAw"
+        }
+      ]
+    },
+    {
+      "name": "Yash M",
+      "count": 7,
+      "totalRescueWpa": 2.16,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 13,
+          "rescueWpa": 0.24,
+          "date": "2026-03-21",
+          "matchId": "zBtpLVzILFH1gewezyd6gw"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 20,
+          "rescueWpa": 0.41,
+          "date": "2025-09-06",
+          "matchId": "F71ZtK5wGkmCwzm2dojrMQ"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 31,
+          "rescueWpa": 0.52,
+          "date": "2026-03-21",
+          "matchId": "2az5siNhnftNQoHUtPQNZA"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 39,
+          "rescueWpa": 0.43,
+          "date": "2025-12-06",
+          "matchId": "iympowG3Qu96-2BBuIN9ig"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 46,
+          "rescueWpa": 0.19,
+          "date": "2025-09-06",
+          "matchId": "vvbVc1dbQHDE0i5ojDPKwg"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.18,
+          "date": "2025-11-08",
+          "matchId": "szZ1wMB3X1z67m0zKVvO2Q"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 49,
+          "rescueWpa": 0.17,
+          "date": "2025-10-25",
+          "matchId": "ot-FF2TUHydln0S8YwKcZA"
         }
       ]
     },
@@ -4115,36 +4593,42 @@
       "totalRescueWpa": 3.01,
       "instances": [
         {
+          "type": "bat",
           "lowestWp": 22,
           "rescueWpa": 0.95,
           "date": "2026-05-25",
           "matchId": "XcYwt4oKxW5lSHAfR4w_og"
         },
         {
+          "type": "bat",
           "lowestWp": 22,
           "rescueWpa": 0.15,
           "date": "2026-06-26",
           "matchId": "u776IFKHeJo6xfD7m2Z4Mw"
         },
         {
+          "type": "bat",
           "lowestWp": 24,
           "rescueWpa": 0.61,
           "date": "2025-10-11",
           "matchId": "H8xcTikSx6U7KVIBiYQsMQ"
         },
         {
+          "type": "bat",
           "lowestWp": 33,
           "rescueWpa": 0.64,
           "date": "2026-02-14",
           "matchId": "V-oIMagKRR9hlNIt4xTvbw"
         },
         {
+          "type": "bat",
           "lowestWp": 46,
           "rescueWpa": 0.45,
           "date": "2026-02-14",
           "matchId": "It9INeoY5z-E9PZ-C5Yliw"
         },
         {
+          "type": "bat",
           "lowestWp": 49,
           "rescueWpa": 0.21,
           "date": "2026-04-18",
@@ -4153,70 +4637,345 @@
       ]
     },
     {
-      "name": "Yash M",
-      "count": 5,
-      "totalRescueWpa": 1.79,
+      "name": "Soumya Smruti M",
+      "count": 6,
+      "totalRescueWpa": 2.18,
       "instances": [
         {
-          "lowestWp": 13,
-          "rescueWpa": 0.24,
-          "date": "2026-03-21",
-          "matchId": "zBtpLVzILFH1gewezyd6gw"
+          "type": "bowl",
+          "lowestWp": 24,
+          "rescueWpa": 0.76,
+          "date": "2025-07-12",
+          "matchId": "u97-oZq6FQanjntxv7jqyQ"
         },
         {
+          "type": "bowl",
+          "lowestWp": 32,
+          "rescueWpa": 0.62,
+          "date": "2026-07-11",
+          "matchId": "wqtuqAbhFcUoVgOve6bXYg"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 42,
+          "rescueWpa": 0.33,
+          "date": "2026-05-31",
+          "matchId": "6elH1hdV1YzmYdQ8zGj5zA"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 47,
+          "rescueWpa": 0.15,
+          "date": "2026-08-16",
+          "matchId": "nPsBH1dpeNCbUajAM0PFnQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.16,
+          "date": "2026-01-24",
+          "matchId": "x9QJKsDQW6kc3QGzcUvK_A"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 50,
+          "rescueWpa": 0.15,
+          "date": "2026-06-21",
+          "matchId": "TqBd2jmi-0wWu5_Mr-mFzw"
+        }
+      ]
+    },
+    {
+      "name": "Arpan D",
+      "count": 6,
+      "totalRescueWpa": 1.89,
+      "instances": [
+        {
+          "type": "bowl",
+          "lowestWp": 17,
+          "rescueWpa": 0.01,
+          "date": "2025-09-13",
+          "matchId": "qoUOWvzVMH4qKemcl_TEYw"
+        },
+        {
+          "type": "bat",
           "lowestWp": 20,
-          "rescueWpa": 0.41,
-          "date": "2025-09-06",
-          "matchId": "F71ZtK5wGkmCwzm2dojrMQ"
+          "rescueWpa": 0.16,
+          "date": "2025-08-02",
+          "matchId": "y9kCCRuPaNqt7GW4K1gGUg"
         },
         {
-          "lowestWp": 31,
-          "rescueWpa": 0.52,
-          "date": "2026-03-21",
-          "matchId": "2az5siNhnftNQoHUtPQNZA"
+          "type": "bowl",
+          "lowestWp": 26,
+          "rescueWpa": 0.09,
+          "date": "2025-12-13",
+          "matchId": "ldQ-_scm5vI3iFOGsTM-KA"
         },
         {
-          "lowestWp": 39,
-          "rescueWpa": 0.43,
-          "date": "2025-12-06",
-          "matchId": "iympowG3Qu96-2BBuIN9ig"
+          "type": "bowl",
+          "lowestWp": 35,
+          "rescueWpa": 0.65,
+          "date": "2025-12-31",
+          "matchId": "E39RwodLxvwcWOJijP9gQQ"
         },
         {
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.67,
+          "date": "2025-07-26",
+          "matchId": "14084XllfP56wSEjQbPnEQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.31,
+          "date": "2026-07-26",
+          "matchId": "DV58Iut5mc7VkzoQTaae9A"
+        }
+      ]
+    },
+    {
+      "name": "Arjun S",
+      "count": 6,
+      "totalRescueWpa": 1.67,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 8,
+          "rescueWpa": 0.56,
+          "date": "2026-08-07",
+          "matchId": "M-F9leF6CPeM7D4mp7xR2w"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 13,
+          "rescueWpa": 0.02,
+          "date": "2026-07-05",
+          "matchId": "Dcw5Vz2K0QyApWw6PoYOhw"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.21,
+          "date": "2026-02-07",
+          "matchId": "vQufIWNOSy8Mw0_ZRcsR5A"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.24,
+          "date": "2026-06-21",
+          "matchId": "I9wfSBpj-nqjJRRRy3RPAQ"
+        },
+        {
+          "type": "bowl",
           "lowestWp": 49,
-          "rescueWpa": 0.17,
-          "date": "2025-10-25",
-          "matchId": "ot-FF2TUHydln0S8YwKcZA"
+          "rescueWpa": 0.3,
+          "date": "2025-06-28",
+          "matchId": "BaNO0GD7W3mI34NTa3PQkA"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 50,
+          "rescueWpa": 0.35,
+          "date": "2025-08-02",
+          "matchId": "57Onph4Fvk2Uz8NIaKOxEw"
         }
       ]
     },
     {
       "name": "Kaushal K",
-      "count": 4,
-      "totalRescueWpa": 1.96,
+      "count": 5,
+      "totalRescueWpa": 2.35,
       "instances": [
         {
+          "type": "bat",
           "lowestWp": 4,
           "rescueWpa": 0.96,
           "date": "2026-06-06",
           "matchId": "NaiysrNXqHcZUTroOTSW9w"
         },
         {
+          "type": "bat",
           "lowestWp": 11,
           "rescueWpa": 0.36,
           "date": "2026-06-14",
           "matchId": "Vl3ybYaaPlqh7pCfLghqig"
         },
         {
+          "type": "bat",
           "lowestWp": 31,
           "rescueWpa": 0.35,
           "date": "2026-06-21",
           "matchId": "I9wfSBpj-nqjJRRRy3RPAQ"
         },
         {
+          "type": "bowl",
+          "lowestWp": 39,
+          "rescueWpa": 0.39,
+          "date": "2025-11-08",
+          "matchId": "o-Dg365FWnRDhBMjAAu0Fw"
+        },
+        {
+          "type": "bat",
           "lowestWp": 44,
           "rescueWpa": 0.29,
           "date": "2025-10-18",
           "matchId": "bwbdvxSUXujIKUCHG8e_1g"
+        }
+      ]
+    },
+    {
+      "name": "Akashdeep B",
+      "count": 5,
+      "totalRescueWpa": 1.77,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 3,
+          "rescueWpa": 0.67,
+          "date": "2026-08-29",
+          "matchId": "Tx2hoMivnkhaajYXGL2wcg"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 13,
+          "rescueWpa": 0,
+          "date": "2026-07-05",
+          "matchId": "zWbKj01T4iZpZ09ayqeV-w"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 38,
+          "rescueWpa": 0.44,
+          "date": "2026-08-22",
+          "matchId": "YGfz5He1fVzOaZOk7l162g"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 42,
+          "rescueWpa": 0.28,
+          "date": "2026-06-06",
+          "matchId": "PosG_KpMepq1r-h0EVzkbw"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 46,
+          "rescueWpa": 0.38,
+          "date": "2026-08-16",
+          "matchId": "SJOrzyyabgZmne2Q5z9qww"
+        }
+      ]
+    },
+    {
+      "name": "Gaurav K",
+      "count": 5,
+      "totalRescueWpa": 1.09,
+      "instances": [
+        {
+          "type": "bowl",
+          "lowestWp": 16,
+          "rescueWpa": 0.05,
+          "date": "2025-09-13",
+          "matchId": "Ko3b_W52050ct18OHhA5qQ"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 34,
+          "rescueWpa": 0.28,
+          "date": "2025-12-31",
+          "matchId": "E39RwodLxvwcWOJijP9gQQ"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 46,
+          "rescueWpa": 0.29,
+          "date": "2025-07-12",
+          "matchId": "u97-oZq6FQanjntxv7jqyQ"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 49,
+          "rescueWpa": 0.23,
+          "date": "2025-08-30",
+          "matchId": "lvjQLsGcsUvWcgwOeuEjnQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 50,
+          "rescueWpa": 0.24,
+          "date": "2026-03-07",
+          "matchId": "4ws2jMJSsptBiBS4UD5VYw"
+        }
+      ]
+    },
+    {
+      "name": "Jay S",
+      "count": 4,
+      "totalRescueWpa": 1.11,
+      "instances": [
+        {
+          "type": "bowl",
+          "lowestWp": 16,
+          "rescueWpa": 0,
+          "date": "2025-08-30",
+          "matchId": "lvjQLsGcsUvWcgwOeuEjnQ"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 43,
+          "rescueWpa": 0.36,
+          "date": "2026-01-31",
+          "matchId": "u3zpwV1hEP_Zot8OMeWGog"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 45,
+          "rescueWpa": 0.32,
+          "date": "2025-10-25",
+          "matchId": "pcPlujYw7ww8CeAEo5EJRw"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 45,
+          "rescueWpa": 0.43,
+          "date": "2026-01-10",
+          "matchId": "U1ZWXQ00Pw01ifYEjFDfUQ"
+        }
+      ]
+    },
+    {
+      "name": "Rijwan R",
+      "count": 4,
+      "totalRescueWpa": 1.11,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 27,
+          "rescueWpa": 0.23,
+          "date": "2026-06-21",
+          "matchId": "TqBd2jmi-0wWu5_Mr-mFzw"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 40,
+          "rescueWpa": 0.38,
+          "date": "2026-08-07",
+          "matchId": "M-F9leF6CPeM7D4mp7xR2w"
+        },
+        {
+          "type": "bat",
+          "lowestWp": 44,
+          "rescueWpa": 0.29,
+          "date": "2026-07-05",
+          "matchId": "zWbKj01T4iZpZ09ayqeV-w"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.21,
+          "date": "2026-05-23",
+          "matchId": "EqNbQ3m09QZdO-mhXdJrbQ"
         }
       ]
     },
@@ -4226,24 +4985,28 @@
       "totalRescueWpa": 0.99,
       "instances": [
         {
+          "type": "bat",
           "lowestWp": 2,
           "rescueWpa": 0.21,
           "date": "2025-08-09",
           "matchId": "a7Gwib-v2prGCGPspZoZlg"
         },
         {
+          "type": "bat",
           "lowestWp": 2,
           "rescueWpa": 0.08,
           "date": "2026-01-24",
           "matchId": "E4oGoLP69UzjsgSqDmuxTw"
         },
         {
+          "type": "bat",
           "lowestWp": 19,
           "rescueWpa": 0.43,
           "date": "2025-12-31",
           "matchId": "40EhekSTnXzEienA_Q--Gg"
         },
         {
+          "type": "bat",
           "lowestWp": 38,
           "rescueWpa": 0.26,
           "date": "2026-01-10",
@@ -4252,52 +5015,30 @@
       ]
     },
     {
-      "name": "Praveen K",
+      "name": "Santosh G",
       "count": 3,
-      "totalRescueWpa": 0.97,
+      "totalRescueWpa": 0.76,
       "instances": [
         {
-          "lowestWp": 30,
-          "rescueWpa": 0.43,
-          "date": "2026-08-29",
-          "matchId": "MEKT-EJejRoz2zFtYDpbRA"
+          "type": "bowl",
+          "lowestWp": 42,
+          "rescueWpa": 0.19,
+          "date": "2025-08-09",
+          "matchId": "a7Gwib-v2prGCGPspZoZlg"
         },
         {
-          "lowestWp": 33,
-          "rescueWpa": 0.23,
-          "date": "2026-04-04",
-          "matchId": "rgE4i4q29w6Vr6nhe84Zdw"
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.25,
+          "date": "2025-08-24",
+          "matchId": "469v81KIrp-DxSAyC7ma9w"
         },
         {
-          "lowestWp": 44,
-          "rescueWpa": 0.3,
-          "date": "2025-07-26",
-          "matchId": "8VyToF7jab18WJjmj6CGvA"
-        }
-      ]
-    },
-    {
-      "name": "Gaurav K",
-      "count": 3,
-      "totalRescueWpa": 0.79,
-      "instances": [
-        {
-          "lowestWp": 34,
-          "rescueWpa": 0.28,
-          "date": "2025-12-31",
-          "matchId": "E39RwodLxvwcWOJijP9gQQ"
-        },
-        {
-          "lowestWp": 46,
-          "rescueWpa": 0.29,
-          "date": "2025-07-12",
-          "matchId": "u97-oZq6FQanjntxv7jqyQ"
-        },
-        {
+          "type": "bowl",
           "lowestWp": 49,
-          "rescueWpa": 0.23,
-          "date": "2025-08-30",
-          "matchId": "lvjQLsGcsUvWcgwOeuEjnQ"
+          "rescueWpa": 0.32,
+          "date": "2025-07-12",
+          "matchId": "zhHrIRwJ7RwU5TQGvCfWDw"
         }
       ]
     },
@@ -4307,73 +5048,18 @@
       "totalRescueWpa": 1.45,
       "instances": [
         {
+          "type": "bat",
           "lowestWp": 4,
           "rescueWpa": 0.78,
           "date": "2026-05-25",
           "matchId": "IREs3PP0PkLQLTAb2pwQeA"
         },
         {
+          "type": "bat",
           "lowestWp": 12,
           "rescueWpa": 0.67,
           "date": "2026-08-01",
           "matchId": "Eex1XKkfKyjcp4bL9l5uiw"
-        }
-      ]
-    },
-    {
-      "name": "Vinay B",
-      "count": 2,
-      "totalRescueWpa": 1.16,
-      "instances": [
-        {
-          "lowestWp": 22,
-          "rescueWpa": 0.77,
-          "date": "2025-10-04",
-          "matchId": "zeICf1NKMIc2mRtRNndxmw"
-        },
-        {
-          "lowestWp": 25,
-          "rescueWpa": 0.39,
-          "date": "2025-08-09",
-          "matchId": "QEO8a6nEzWjYvnJD3ZJwQw"
-        }
-      ]
-    },
-    {
-      "name": "Akashdeep B",
-      "count": 2,
-      "totalRescueWpa": 1.11,
-      "instances": [
-        {
-          "lowestWp": 3,
-          "rescueWpa": 0.67,
-          "date": "2026-08-29",
-          "matchId": "Tx2hoMivnkhaajYXGL2wcg"
-        },
-        {
-          "lowestWp": 38,
-          "rescueWpa": 0.44,
-          "date": "2026-08-22",
-          "matchId": "YGfz5He1fVzOaZOk7l162g"
-        }
-      ]
-    },
-    {
-      "name": "Prashant K",
-      "count": 2,
-      "totalRescueWpa": 0.92,
-      "instances": [
-        {
-          "lowestWp": 33,
-          "rescueWpa": 0.67,
-          "date": "2025-11-15",
-          "matchId": "vYoqGbyq4Gzn1clNA3hdHg"
-        },
-        {
-          "lowestWp": 36,
-          "rescueWpa": 0.25,
-          "date": "2026-08-01",
-          "matchId": "HdG9AeH7dF8CDr89DzPz2A"
         }
       ]
     },
@@ -4383,12 +5069,14 @@
       "totalRescueWpa": 0.69,
       "instances": [
         {
+          "type": "bat",
           "lowestWp": 20,
           "rescueWpa": 0.35,
           "date": "2026-02-07",
           "matchId": "vQufIWNOSy8Mw0_ZRcsR5A"
         },
         {
+          "type": "bat",
           "lowestWp": 24,
           "rescueWpa": 0.34,
           "date": "2026-02-07",
@@ -4397,40 +5085,23 @@
       ]
     },
     {
-      "name": "Rijwan R",
+      "name": "Abhishek L",
       "count": 2,
-      "totalRescueWpa": 0.52,
+      "totalRescueWpa": 0.58,
       "instances": [
         {
-          "lowestWp": 27,
-          "rescueWpa": 0.23,
-          "date": "2026-06-21",
-          "matchId": "TqBd2jmi-0wWu5_Mr-mFzw"
-        },
-        {
-          "lowestWp": 44,
-          "rescueWpa": 0.29,
-          "date": "2026-07-05",
-          "matchId": "zWbKj01T4iZpZ09ayqeV-w"
-        }
-      ]
-    },
-    {
-      "name": "Gaurav M",
-      "count": 2,
-      "totalRescueWpa": 0.48,
-      "instances": [
-        {
-          "lowestWp": 36,
-          "rescueWpa": 0.28,
-          "date": "2026-07-11",
-          "matchId": "SVFnoHKJwqsDwIINbSxDug"
-        },
-        {
-          "lowestWp": 49,
+          "type": "bowl",
+          "lowestWp": 47,
           "rescueWpa": 0.2,
-          "date": "2026-01-10",
-          "matchId": "U1ZWXQ00Pw01ifYEjFDfUQ"
+          "date": "2025-08-24",
+          "matchId": "QtU79P9BWW75TGH5_CN5aA"
+        },
+        {
+          "type": "bowl",
+          "lowestWp": 48,
+          "rescueWpa": 0.38,
+          "date": "2025-08-16",
+          "matchId": "kTisAbfS31rbQLRVJ-9HwQ"
         }
       ]
     },
@@ -4440,23 +5111,11 @@
       "totalRescueWpa": 0.57,
       "instances": [
         {
+          "type": "bat",
           "lowestWp": 2,
           "rescueWpa": 0.57,
           "date": "2026-03-28",
           "matchId": "NVE0M9zszBi781wQfkVG_Q"
-        }
-      ]
-    },
-    {
-      "name": "Arjun S",
-      "count": 1,
-      "totalRescueWpa": 0.56,
-      "instances": [
-        {
-          "lowestWp": 8,
-          "rescueWpa": 0.56,
-          "date": "2026-08-07",
-          "matchId": "M-F9leF6CPeM7D4mp7xR2w"
         }
       ]
     },
@@ -4466,6 +5125,7 @@
       "totalRescueWpa": 0.45,
       "instances": [
         {
+          "type": "bat",
           "lowestWp": 42,
           "rescueWpa": 0.45,
           "date": "2026-05-23",
@@ -4479,23 +5139,11 @@
       "totalRescueWpa": 0.43,
       "instances": [
         {
+          "type": "bat",
           "lowestWp": 42,
           "rescueWpa": 0.43,
           "date": "2025-06-22",
           "matchId": "bza_lbFRXmYB2n4sXrKyeg"
-        }
-      ]
-    },
-    {
-      "name": "Hari V",
-      "count": 1,
-      "totalRescueWpa": 0.39,
-      "instances": [
-        {
-          "lowestWp": 15,
-          "rescueWpa": 0.39,
-          "date": "2025-06-28",
-          "matchId": "BaNO0GD7W3mI34NTa3PQkA"
         }
       ]
     },
@@ -4505,6 +5153,7 @@
       "totalRescueWpa": 0.39,
       "instances": [
         {
+          "type": "bat",
           "lowestWp": 37,
           "rescueWpa": 0.39,
           "date": "2026-07-05",
@@ -4518,6 +5167,7 @@
       "totalRescueWpa": 0.29,
       "instances": [
         {
+          "type": "bat",
           "lowestWp": 45,
           "rescueWpa": 0.29,
           "date": "2026-02-28",
@@ -4526,15 +5176,16 @@
       ]
     },
     {
-      "name": "Arpan D",
+      "name": "Mithal K",
       "count": 1,
-      "totalRescueWpa": 0.16,
+      "totalRescueWpa": 0.15,
       "instances": [
         {
-          "lowestWp": 20,
-          "rescueWpa": 0.16,
-          "date": "2025-08-02",
-          "matchId": "y9kCCRuPaNqt7GW4K1gGUg"
+          "type": "bowl",
+          "lowestWp": 50,
+          "rescueWpa": 0.15,
+          "date": "2026-04-04",
+          "matchId": "rgE4i4q29w6Vr6nhe84Zdw"
         }
       ]
     }
