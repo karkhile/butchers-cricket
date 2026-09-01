@@ -538,6 +538,7 @@
     }
 
     function renderAnalysis(el) {
+      el.appendChild(buildWpaCard(_data.wpa || []));
       el.appendChild(buildDisciplinedCard(_data.disciplined || []));
       el.appendChild(buildBoundaryOffCard('6️⃣ Sixes Conceded %', _data.sixesOffPct || [], 'sixes', 'six'));
       el.appendChild(buildBoundaryOffCard('4️⃣ Fours Conceded %', _data.foursOffPct || [], 'fours', 'four'));
@@ -545,6 +546,48 @@
       const gc = _data.gameChangers || {};
       el.appendChild(buildGameChangerCard('🦸 Chase Rescuers', gc.rescuers || [], 'batter'));
       el.appendChild(buildGameChangerCard('🛡️ Low-Score Defenders', gc.defenders || [], 'bowler'));
+    }
+
+    function buildWpaCard(items) {
+      const card = document.createElement('div');
+      card.className = 'fastest-card';
+      card.innerHTML = '<div class="card-title">📈 Win Probability Added (WPA)</div>';
+      if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
+      const rankLabels = ['🥇','🥈','🥉'];
+      const rankClasses = ['gold','silver','bronze'];
+      const SHOW = 10;
+      const makeRow = (item, i) => {
+        const row = document.createElement('div');
+        row.className = 'fastest-entry';
+        const rankHtml = i < 3
+          ? '<span class="fastest-rank ' + rankClasses[i] + '">' + rankLabels[i] + '</span>'
+          : '<span class="fastest-rank">' + (i + 1) + '</span>';
+        const wpaDisplay = (item.wpa >= 0 ? '+' : '') + item.wpa.toFixed(2);
+        const color = item.wpa >= 0 ? '#1b5e20' : '#b71c1c';
+        row.innerHTML = rankHtml +
+          '<span class="fastest-name">' + item.name +
+            '<span style="font-size:10px;color:#aaa;font-weight:400;margin-left:6px;">' + item.matches + ' matches</span>' +
+          '</span>' +
+          '<span class="fastest-badge" style="background:' + (item.wpa>=0?'#e8f5e9':'#ffebee') + ';color:' + color + ';">' + wpaDisplay + '</span>';
+        return row;
+      };
+      for (const [i, item] of items.slice(0, SHOW).entries()) card.appendChild(makeRow(item, i));
+      const extra = items.slice(SHOW);
+      if (extra.length) {
+        const extraWrap = document.createElement('div');
+        extraWrap.className = 'extra-rows';
+        extra.forEach((item, j) => extraWrap.appendChild(makeRow(item, SHOW + j)));
+        card.appendChild(extraWrap);
+        const btnWrap = document.createElement('div');
+        btnWrap.className = 'view-more-wrap';
+        const btn = document.createElement('button');
+        btn.className = 'view-more-btn';
+        btn.textContent = '+ ' + extra.length + ' more';
+        btn.onclick = () => { const open = extraWrap.classList.toggle('open'); btn.textContent = open ? '− Show less' : '+ ' + extra.length + ' more'; };
+        btnWrap.appendChild(btn);
+        card.appendChild(btnWrap);
+      }
+      return card;
     }
 
     function renderRivalries(el) {

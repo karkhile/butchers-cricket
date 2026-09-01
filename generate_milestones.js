@@ -418,6 +418,92 @@ function parseFielder(raw, howOut) {
       .map(([name, v]) => ({ name, ...v }))
       .sort((a, b) => b.count - a.count);
 
+  // ── Win Probability Added (WPA) ───────────────────────────────────────────────
+  function winProb(runsScored, target, oversPlayed, totalOvers, wickets) {
+    const oversLeft = totalOvers - oversPlayed;
+    if (oversLeft <= 0) return runsScored >= target ? 1 : 0;
+    if (wickets >= 10) return 0;
+    const needed = target - runsScored;
+    const rrr = needed / oversLeft;
+    const crrAtStart = target / totalOvers;
+    const wicketPenalty = wickets * 0.04;
+    const rrrPressure = (rrr - crrAtStart) / crrAtStart;
+    const prob = 1 / (1 + Math.exp(2.5 * (rrrPressure + wicketPenalty)));
+    return Math.max(0.02, Math.min(0.98, prob));
+  }
+
+  const wpaMap = {}; // name -> { wpa, matchIds }
+
+  for (let i = 0; i < matches.length; i++) {
+    const m = matches[i];
+    const matchId = m.scoreSummary?.matchId || m.fixtureId;
+    if (!matchId) continue;
+    try {
+      const root = (await apiGet('series/match/' + matchId + '/scorecard')).data || {};
+      if (!root.winner || !root.innings1 || !root.innings2) continue;
+      const totalOvers = parseInt(root.matchInfo?.overs || 14);
+      const commentary = await getCommentary(matchId);
+
+      // Process both innings: innings1 = first batting, innings2 = chase
+      for (const innNum of [1, 2]) {
+        const innKey = 'innings' + innNum;
+        const inn = root[innKey];
+        const innBalls = commentary[innKey + 'Balls'];
+        if (!inn || !innBalls?.oversMap) continue;
+
+        // For innings 1: target is unknown, use actual total as proxy for par
+        // For innings 2: target is innings1 total + 1
+        const isChase = innNum === 2;
+        const target = isChase ? (root.innings1.total || 0) + 1 : (inn.total || 0) + 1;
+        const battingTeamWon = inn.teamId === root.winner;
+
+        let cumRuns = 0, cumWkts = 0;
+        for (const [overKey, over] of Object.entries(innBalls.oversMap)) {
+          const overNum = parseInt(overKey.replace('Over', ''));
+          const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball');
+          if (!validBalls.length) continue;
+          const bowlerName = validBalls[0]?.bowlerName || '';
+
+          // Ball-level WPA for batters
+          for (let bi = 0; bi < validBalls.length; bi++) {
+            const ball = validBalls[bi];
+            const ballRuns = parseInt(ball.runs) || 0;
+            const isWkt = ball.outMethod && ball.outMethod !== 'Not Out';
+            const batter = ball.strikerName;
+            const wpBefore = winProb(cumRuns, target, overNum + bi / 6, totalOvers, cumWkts);
+            cumRuns += ballRuns;
+            if (isWkt) cumWkts++;
+            const wpAfter = winProb(cumRuns, target, overNum + (bi + 1) / 6, totalOvers, cumWkts);
+            const swing = wpAfter - wpBefore; // positive = better for batting team
+            if (batter && !isJunk(batter)) {
+              const batterWpa = battingTeamWon ? swing : -swing;
+              if (!wpaMap[batter]) wpaMap[batter] = { wpa: 0, matchIds: new Set() };
+              wpaMap[batter].wpa += batterWpa;
+              wpaMap[batter].matchIds.add(matchId);
+            }
+          }
+
+          // Over-level WPA for bowler (recompute over delta)
+          const wpOverStart = winProb(cumRuns - validBalls.reduce((s,b)=>s+(parseInt(b.runs)||0),0), target, overNum, totalOvers, cumWkts - validBalls.filter(b=>b.outMethod&&b.outMethod!=='Not Out').length);
+          const wpOverEnd = winProb(cumRuns, target, overNum + 1, totalOvers, cumWkts);
+          const overSwing = wpOverEnd - wpOverStart;
+          if (bowlerName && !isJunk(bowlerName)) {
+            // Bowler is on the fielding team — good bowling helps fielding team (reduces batting team wp)
+            const bowlerWpa = battingTeamWon ? -overSwing : overSwing;
+            if (!wpaMap[bowlerName]) wpaMap[bowlerName] = { wpa: 0, matchIds: new Set() };
+            wpaMap[bowlerName].wpa += bowlerWpa;
+            wpaMap[bowlerName].matchIds.add(matchId);
+          }
+        }
+      }
+    } catch (e) {}
+  }
+
+  const wpa = Object.entries(wpaMap)
+    .map(([name, v]) => ({ name, wpa: Math.round(v.wpa * 100) / 100, matches: v.matchIds.size }))
+    .filter(r => r.matches >= 5)
+    .sort((a, b) => b.wpa - a.wpa);
+
   const output = {
     updatedAt: new Date().toISOString(),
     batting:      { big: toList(batters,      RUN_BIG,       RUN_BIG_WINDOW),      all: toList(batters,      RUN_MILESTONES,      RUN_WINDOW),      achieved: toAchieved(batters,      RUN_BIG) },
@@ -447,6 +533,7 @@ function parseFielder(raw, howOut) {
       rescuers:  toGameChangers(rescuers),
       defenders: toGameChangers(defenders),
     },
+    wpa,
     rivalries: {      dismissals: toTopPairs(dismissalsByPair),
       sixes:      toTopPairs(sixesByPair),
       fours:      toTopPairs(foursByPair),
