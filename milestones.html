@@ -355,7 +355,8 @@
           : '<span class="rivalry-rank">' + (i + 1) + '</span>';
         const namesHtml = type === 'dismissals'
           ? '<div class="rivalry-names">' +
-              '<div class="rivalry-batter"><strong>' + item.bowler + '</strong> dismissed ' + item.batter + '</div>' +
+              '<div class="rivalry-batter">' + item.bowler + '</div>' +
+              '<div class="rivalry-bowler">dismissed ' + item.batter + '</div>' +
             '</div>'
           : '<div class="rivalry-names">' +
               '<div class="rivalry-batter">' + item.batter + '</div>' +
