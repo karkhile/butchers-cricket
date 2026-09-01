@@ -552,26 +552,44 @@
       const card = document.createElement('div');
       card.className = 'fastest-card';
       card.innerHTML = '<div class="card-title">🚨 Match Rescuers</div>' +
-        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Times top WPA contributor when team win% was below 50%</div>';
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Times top WPA contributor when team win% was below 50% — and team still won</div>';
       if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
       const rankLabels = ['🥇','🥈','🥉'];
       const rankClasses = ['gold','silver','bronze'];
       const SHOW = 10;
       const makeRow = (item, i) => {
+        const wrap = document.createElement('div');
+        // Header row
         const row = document.createElement('div');
         row.className = 'fastest-entry';
+        row.style.cursor = 'pointer';
         const rankHtml = i < 3
           ? '<span class="fastest-rank ' + rankClasses[i] + '">' + rankLabels[i] + '</span>'
           : '<span class="fastest-rank">' + (i + 1) + '</span>';
-        // Show lowest win% from instances
-        const lowestWp = item.instances.length ? Math.min(...item.instances.map(x => x.lowestWp)) : null;
-        const lowestStr = lowestWp !== null ? ' · lowest ' + lowestWp + '%' : '';
         row.innerHTML = rankHtml +
-          '<span class="fastest-name">' + item.name +
-            '<span style="font-size:10px;color:#aaa;font-weight:400;margin-left:6px;">' + lowestStr + '</span>' +
-          '</span>' +
+          '<span class="fastest-name">' + item.name + '</span>' +
           '<span class="fastest-badge" style="background:#e8f5e9;color:#1b5e20;">' + item.count + ' rescue' + (item.count > 1 ? 's' : '') + '</span>';
-        return row;
+        wrap.appendChild(row);
+
+        // Instance rows (hidden by default, toggle on click)
+        if (item.instances && item.instances.length) {
+          const detail = document.createElement('div');
+          detail.style.cssText = 'display:none;padding:4px 0 8px 36px;';
+          item.instances.forEach(inst => {
+            const d = document.createElement('div');
+            d.style.cssText = 'font-size:11px;color:#555;padding:3px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;';
+            d.innerHTML =
+              '<span>' + (inst.date || '') + ' · win% was <strong style="color:#c0392b;">' + inst.lowestWp + '%</strong> → won</span>' +
+              '<span style="color:#1b5e20;font-weight:600;">+' + inst.rescueWpa.toFixed(2) + ' WPA</span>';
+            detail.appendChild(d);
+          });
+          wrap.appendChild(detail);
+          row.addEventListener('click', () => {
+            const open = detail.style.display === 'none';
+            detail.style.display = open ? 'block' : 'none';
+          });
+        }
+        return wrap;
       };
       for (const [i, item] of items.slice(0, SHOW).entries()) card.appendChild(makeRow(item, i));
       const extra = items.slice(SHOW);

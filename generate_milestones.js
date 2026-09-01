@@ -543,7 +543,7 @@ function parseFielder(raw, howOut) {
       name,
       count: v.count,
       totalRescueWpa: Math.round(v.totalRescueWpa * 100) / 100,
-      instances: v.instances.sort((a, b) => a.lowestWp - b.lowestWp).slice(0, 5),
+      instances: v.instances.sort((a, b) => a.lowestWp - b.lowestWp),
     }))
     .filter(r => r.count >= 1)
     .sort((a, b) => b.count - a.count || b.totalRescueWpa - a.totalRescueWpa);
