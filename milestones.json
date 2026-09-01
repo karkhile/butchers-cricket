@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T07:26:06.846Z",
+  "updatedAt": "2026-09-01T07:43:30.389Z",
   "batting": {
     "big": [
       {
@@ -3959,8 +3959,8 @@
   "matchRescuers": [
     {
       "name": "Anjan K",
-      "count": 12,
-      "totalRescueWpa": 7.04,
+      "count": 11,
+      "totalRescueWpa": 6.27,
       "instances": [
         {
           "type": "bat",
@@ -4005,13 +4005,6 @@
           "matchId": "F9H5HDu3uTCr-hQppym2Uw"
         },
         {
-          "type": "bowl",
-          "lowestWp": 21.2,
-          "rescueWpa": 0.77,
-          "date": "2026-08-29",
-          "matchId": "MEKT-EJejRoz2zFtYDpbRA"
-        },
-        {
           "type": "bat",
           "lowestWp": 22.1,
           "rescueWpa": 0.57,
@@ -4045,41 +4038,6 @@
           "rescueWpa": 0.64,
           "date": "2025-12-13",
           "matchId": "aXt8X6-aEJEIyduVOKxjxA"
-        }
-      ]
-    },
-    {
-      "name": "Praveen K",
-      "count": 4,
-      "totalRescueWpa": 2.74,
-      "instances": [
-        {
-          "type": "bowl",
-          "lowestWp": 20.9,
-          "rescueWpa": 0.84,
-          "date": "2026-08-29",
-          "matchId": "Tx2hoMivnkhaajYXGL2wcg"
-        },
-        {
-          "type": "bowl",
-          "lowestWp": 22.7,
-          "rescueWpa": 0.75,
-          "date": "2025-06-22",
-          "matchId": "bza_lbFRXmYB2n4sXrKyeg"
-        },
-        {
-          "type": "bowl",
-          "lowestWp": 29,
-          "rescueWpa": 0.69,
-          "date": "2026-05-23",
-          "matchId": "eP51qH7wzxj4sx-ZbEK96w"
-        },
-        {
-          "type": "bat",
-          "lowestWp": 29.9,
-          "rescueWpa": 0.45,
-          "date": "2026-08-29",
-          "matchId": "MEKT-EJejRoz2zFtYDpbRA"
         }
       ]
     },
@@ -4231,34 +4189,6 @@
       ]
     },
     {
-      "name": "Gaurav M",
-      "count": 1,
-      "totalRescueWpa": 0.81,
-      "instances": [
-        {
-          "type": "bowl",
-          "lowestWp": 13.3,
-          "rescueWpa": 0.81,
-          "date": "2026-08-01",
-          "matchId": "HdG9AeH7dF8CDr89DzPz2A"
-        }
-      ]
-    },
-    {
-      "name": "Soumya Smruti M",
-      "count": 1,
-      "totalRescueWpa": 0.74,
-      "instances": [
-        {
-          "type": "bowl",
-          "lowestWp": 24.2,
-          "rescueWpa": 0.74,
-          "date": "2025-07-12",
-          "matchId": "u97-oZq6FQanjntxv7jqyQ"
-        }
-      ]
-    },
-    {
       "name": "Tarang T",
       "count": 1,
       "totalRescueWpa": 0.57,
@@ -4311,6 +4241,20 @@
           "rescueWpa": 0.46,
           "date": "2026-06-14",
           "matchId": "Vl3ybYaaPlqh7pCfLghqig"
+        }
+      ]
+    },
+    {
+      "name": "Praveen K",
+      "count": 1,
+      "totalRescueWpa": 0.45,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 29.9,
+          "rescueWpa": 0.45,
+          "date": "2026-08-29",
+          "matchId": "MEKT-EJejRoz2zFtYDpbRA"
         }
       ]
     },
