@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T02:59:59.796Z",
+  "updatedAt": "2026-09-01T04:22:50.961Z",
   "batting": {
     "big": [
       {
@@ -3956,6 +3956,193 @@
       }
     ]
   },
+  "wpa": [
+    {
+      "name": "Arjun S",
+      "wpa": 3.9,
+      "matches": 83
+    },
+    {
+      "name": "Abhishek Kumar S",
+      "wpa": 3.57,
+      "matches": 80
+    },
+    {
+      "name": "Anjan K",
+      "wpa": 3.24,
+      "matches": 81
+    },
+    {
+      "name": "Rohit S",
+      "wpa": 1.55,
+      "matches": 18
+    },
+    {
+      "name": "Sylvestor G",
+      "wpa": 1.33,
+      "matches": 88
+    },
+    {
+      "name": "Kunal K",
+      "wpa": 1,
+      "matches": 18
+    },
+    {
+      "name": "Gaurav K",
+      "wpa": 0.64,
+      "matches": 92
+    },
+    {
+      "name": "Mithal K",
+      "wpa": 0.63,
+      "matches": 34
+    },
+    {
+      "name": "Hari V",
+      "wpa": 0.43,
+      "matches": 67
+    },
+    {
+      "name": "Rajeev T",
+      "wpa": 0.43,
+      "matches": 23
+    },
+    {
+      "name": "Arjun D",
+      "wpa": 0.38,
+      "matches": 17
+    },
+    {
+      "name": "Ajay J",
+      "wpa": 0.28,
+      "matches": 5
+    },
+    {
+      "name": "Praveen K",
+      "wpa": 0.27,
+      "matches": 61
+    },
+    {
+      "name": "Subham S",
+      "wpa": 0.18,
+      "matches": 12
+    },
+    {
+      "name": "Harsha Vardhan Reddy V",
+      "wpa": 0.16,
+      "matches": 7
+    },
+    {
+      "name": "Kaushal K",
+      "wpa": 0.14,
+      "matches": 49
+    },
+    {
+      "name": "Piyush J",
+      "wpa": 0.02,
+      "matches": 13
+    },
+    {
+      "name": "Shriganesh S",
+      "wpa": 0,
+      "matches": 5
+    },
+    {
+      "name": "tarun J",
+      "wpa": -0.09,
+      "matches": 5
+    },
+    {
+      "name": "Eshwar Chaitanya S",
+      "wpa": -0.15,
+      "matches": 6
+    },
+    {
+      "name": "Srinath S",
+      "wpa": -0.2,
+      "matches": 13
+    },
+    {
+      "name": "Abhishek L",
+      "wpa": -0.24,
+      "matches": 33
+    },
+    {
+      "name": "Jimit M",
+      "wpa": -0.24,
+      "matches": 11
+    },
+    {
+      "name": "Lokesh B",
+      "wpa": -0.45,
+      "matches": 11
+    },
+    {
+      "name": "Arpan D",
+      "wpa": -0.48,
+      "matches": 88
+    },
+    {
+      "name": "Akashdeep B",
+      "wpa": -0.74,
+      "matches": 31
+    },
+    {
+      "name": "Meet D",
+      "wpa": -1.07,
+      "matches": 14
+    },
+    {
+      "name": "Santosh G",
+      "wpa": -1.15,
+      "matches": 12
+    },
+    {
+      "name": "Venkata Krishna R",
+      "wpa": -1.17,
+      "matches": 23
+    },
+    {
+      "name": "Jay S",
+      "wpa": -1.24,
+      "matches": 29
+    },
+    {
+      "name": "Rijwan R",
+      "wpa": -1.38,
+      "matches": 34
+    },
+    {
+      "name": "Anil M",
+      "wpa": -1.62,
+      "matches": 68
+    },
+    {
+      "name": "Prashant K",
+      "wpa": -1.76,
+      "matches": 87
+    },
+    {
+      "name": "Gaurav M",
+      "wpa": -1.94,
+      "matches": 84
+    },
+    {
+      "name": "Vinay B",
+      "wpa": -2.03,
+      "matches": 36
+    },
+    {
+      "name": "Soumya Smruti M",
+      "wpa": -2.58,
+      "matches": 53
+    },
+    {
+      "name": "Yash M",
+      "wpa": -3.3,
+      "matches": 68
+    }
+  ],
   "rivalries": {
     "dismissals": [
       {
