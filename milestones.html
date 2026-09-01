@@ -335,7 +335,11 @@
     function buildGameChangerCard(title, items, role) {
       const card = document.createElement('div');
       card.className = 'fastest-card';
-      card.innerHTML = '<div class="card-title">' + title + '</div>';
+      const desc = role === 'batter'
+        ? 'Batters who scored 25+ runs coming in at position 4 or lower, when the top 3 wickets fell for 40 or fewer runs.'
+        : 'Bowlers who took 3+ wickets in a match where their team\'s total was under 90 runs — winning with the ball when the bat couldn\'t.';
+      card.innerHTML = '<div class="card-title">' + title + '</div>' +
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">' + desc + '</div>';
       if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
       const rankLabels = ['🥇','🥈','🥉'];
       const rankClasses = ['gold','silver','bronze'];
@@ -382,7 +386,8 @@
     function buildDotBallsCard(items) {
       const card = document.createElement('div');
       card.className = 'fastest-card';
-      card.innerHTML = '<div class="card-title">🔴 Most Dot Balls %</div>';
+      card.innerHTML = '<div class="card-title">🔴 Most Dot Balls %</div>' +
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Bowlers ranked by the percentage of dot balls (no runs) they deliver. Higher % means tighter bowling and more pressure on the batting side.</div>';
       if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
       const rankLabels = ['🥇','🥈','🥉'];
       const rankClasses = ['gold','silver','bronze'];
@@ -419,10 +424,11 @@
       return card;
     }
 
-    function buildBoundaryOffCard(title, items, countKey, label) {
+    function buildBoundaryOffCard(title, items, countKey, label, desc) {
       const card = document.createElement('div');
       card.className = 'fastest-card';
-      card.innerHTML = '<div class="card-title">' + title + '</div>';
+      card.innerHTML = '<div class="card-title">' + title + '</div>' +
+        (desc ? '<div style="font-size:11px;color:#888;margin-bottom:10px;">' + desc + '</div>' : '');
       if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
       const rankLabels = ['🥇','🥈','🥉'];
       const rankClasses = ['gold','silver','bronze'];
@@ -462,7 +468,8 @@
     function buildDisciplinedCard(items) {
       const card = document.createElement('div');
       card.className = 'fastest-card';
-      card.innerHTML = '<div class="card-title">🎯 Most Disciplined Bowler</div>';
+      card.innerHTML = '<div class="card-title">🎯 Most Disciplined Bowler</div>' +
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Bowlers with the highest dot ball % (balls where no runs were scored), minimum 60 balls bowled across all matches.</div>';
       if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
       const rankLabels = ['🥇','🥈','🥉'];
       const rankClasses = ['gold','silver','bronze'];
@@ -499,10 +506,11 @@
       return card;
     }
 
-    function buildEconomyCard(title, items, unit) {
+    function buildEconomyCard(title, items, unit, desc) {
       const card = document.createElement('div');
       card.className = 'fastest-card';
-      card.innerHTML = '<div class="card-title">' + title + '</div>';
+      card.innerHTML = '<div class="card-title">' + title + '</div>' +
+        (desc ? '<div style="font-size:11px;color:#888;margin-bottom:10px;">' + desc + '</div>' : '');
       if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
       const rankLabels = ['🥇','🥈','🥉'];
       const rankClasses = ['gold','silver','bronze'];
@@ -540,8 +548,8 @@
     function renderAnalysis(el) {
       el.appendChild(buildMatchRescuersCard(_data.matchRescuers || []));
       el.appendChild(buildDisciplinedCard(_data.disciplined || []));
-      el.appendChild(buildBoundaryOffCard('6️⃣ Sixes Conceded %', _data.sixesOffPct || [], 'sixes', 'six'));
-      el.appendChild(buildBoundaryOffCard('4️⃣ Fours Conceded %', _data.foursOffPct || [], 'fours', 'four'));
+      el.appendChild(buildBoundaryOffCard('6️⃣ Sixes Conceded %', _data.sixesOffPct || [], 'sixes', 'six', 'Bowlers ranked by the % of balls they bowled that were hit for a six. Lower is better — helps identify who gets hit over the ropes most often.'));
+      el.appendChild(buildBoundaryOffCard('4️⃣ Fours Conceded %', _data.foursOffPct || [], 'fours', 'four', 'Bowlers ranked by the % of balls they bowled that were hit for a four. Lower is better — shows who concedes the most boundaries.'));
       el.appendChild(buildDotBallsCard(_data.dotBalls || []));
       const gc = _data.gameChangers || {};
       el.appendChild(buildGameChangerCard('🦸 Chase Rescuers', gc.rescuers || [], 'batter'));
@@ -552,7 +560,7 @@
       const card = document.createElement('div');
       card.className = 'fastest-card';
       card.innerHTML = '<div class="card-title">🚨 Match Rescuers</div>' +
-        '<div style="font-size:11px;color:#888;margin-bottom:10px;">🏏 chasing: win% dropped below 30% · 🎳 defending: opposition reached 60%+ win% — and team still won</div>';
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Players who turned near-certain defeats into wins. 🏏 Chasing: team win% dropped below 40% but won — top WPA contributor credited. 🎳 Defending: opposition win% rose above 60% but defending team won — top WPA bowler credited.</div>';
       if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
       const rankLabels = ['🥇','🥈','🥉'];
       const rankClasses = ['gold','silver','bronze'];

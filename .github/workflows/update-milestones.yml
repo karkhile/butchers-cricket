@@ -41,6 +41,7 @@ jobs:
           else
             git fetch origin main
             git reset --soft origin/main
+            git restore --staged .
             git add milestones.json
             git commit -m "chore: refresh milestones.json"
             git push
