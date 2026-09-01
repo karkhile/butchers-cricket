@@ -558,7 +558,7 @@ function parseFielder(raw, howOut) {
         } else if (isChase) {
           // Defending rescue: only applies to innings 2 (chase) where chasing team lost = defending team won
           const highestBattingWp = Math.max(...allBalls.map(e => e.wpBefore));
-          if (highestBattingWp > 0.70) {
+          if (highestBattingWp > 0.60) {
             const peakIdx = allBalls.findIndex(e => e.wpBefore === highestBattingWp);
             const peakBall = allBalls[peakIdx];
             let runsAtPeak = 0, wktsAtPeak = 0;
