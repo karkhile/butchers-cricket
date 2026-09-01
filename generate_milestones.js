@@ -538,9 +538,9 @@ function parseFielder(raw, howOut) {
               rescueMap[topRescuer].instances.push({ type: 'bat', lowestWp: Math.round(lowestWp * 1000) / 10, rescueWpa: Math.round(rescueWpa * 100) / 100, date, matchId });
             }
           }
-        } else {
-          // Defending rescue: fielding team won — check if batting team wp ever rose above 50%
-          // (meaning fielding team's chance dropped below 50% at some point)
+        } else if (isChase) {
+          // Defending rescue: only applies to innings 2 (chase) where chasing team lost = defending team won
+          // If chasing team lost, it means the team that batted first successfully defended
           const highestBattingWp = Math.max(...allBalls.map(e => e.wpBefore));
           if (highestBattingWp > 0.70) {
             // Find the ball where batting team wp was highest (fielding team's worst moment)
