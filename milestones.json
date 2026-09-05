@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T19:52:37.109Z",
+  "updatedAt": "2026-09-05T18:27:56.085Z",
   "batting": {
     "big": [
       {
@@ -4202,37 +4202,6 @@
       ]
     },
     {
-      "name": "Venkata Krishna R",
-      "count": 2,
-      "totalRescueWpa": 0.94,
-      "instances": [
-        {
-          "type": "bat",
-          "lowestWp": 10.9,
-          "rescueWpa": 0.69,
-          "date": "2026-08-01",
-          "matchId": "Eex1XKkfKyjcp4bL9l5uiw",
-          "needed": 26,
-          "oversLeft": 2,
-          "wickets": 4,
-          "target": 107,
-          "contributed": "15 runs from that point (team scored 29)"
-        },
-        {
-          "type": "bat",
-          "lowestWp": 39.8,
-          "rescueWpa": 0.25,
-          "date": "2026-08-01",
-          "matchId": "HdG9AeH7dF8CDr89DzPz2A",
-          "needed": 73,
-          "oversLeft": 8.2,
-          "wickets": 1,
-          "target": 109,
-          "contributed": "9 runs from that point (team scored 78)"
-        }
-      ]
-    },
-    {
       "name": "Prashant K",
       "count": 2,
       "totalRescueWpa": 0.81,
@@ -4279,6 +4248,25 @@
           "wickets": 6,
           "target": 98,
           "contributed": "5 runs from that point"
+        }
+      ]
+    },
+    {
+      "name": "Venkata Krishna R",
+      "count": 1,
+      "totalRescueWpa": 0.69,
+      "instances": [
+        {
+          "type": "bat",
+          "lowestWp": 10.9,
+          "rescueWpa": 0.69,
+          "date": "2026-08-01",
+          "matchId": "Eex1XKkfKyjcp4bL9l5uiw",
+          "needed": 26,
+          "oversLeft": 2,
+          "wickets": 4,
+          "target": 107,
+          "contributed": "15 runs from that point (team scored 29)"
         }
       ]
     },
