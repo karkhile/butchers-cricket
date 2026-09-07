@@ -216,6 +216,46 @@
       text-decoration: underline;
     }
     .switch-link:hover { color: #555; }
+
+    @keyframes navSlideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+    @keyframes cardBounceIn {
+      0%   { transform: translateY(40px) scale(0.95); opacity: 0; }
+      60%  { transform: translateY(-8px) scale(1.02); opacity: 1; }
+      80%  { transform: translateY(4px)  scale(0.99); }
+      100% { transform: translateY(0)    scale(1); }
+    }
+    @keyframes optionSlideIn {
+      from { transform: translateX(-20px); opacity: 0; }
+      to   { transform: translateX(0);     opacity: 1; }
+    }
+    @keyframes tada {
+      0%   { transform: scale(1); }
+      10%  { transform: scale(0.9) rotate(-3deg); }
+      20%  { transform: scale(0.9) rotate(-3deg); }
+      30%  { transform: scale(1.1) rotate(3deg); }
+      40%  { transform: scale(1.1) rotate(-3deg); }
+      50%  { transform: scale(1.1) rotate(3deg); }
+      60%  { transform: scale(1.1) rotate(-3deg); }
+      70%  { transform: scale(1.1) rotate(3deg); }
+      80%  { transform: scale(1.1) rotate(-3deg); }
+      90%  { transform: scale(1.1) rotate(3deg); }
+      100% { transform: scale(1)   rotate(0); }
+    }
+    .site-nav { animation: navSlideDown 0.4s cubic-bezier(0.22,1,0.36,1) both; }
+    .card { animation: cardBounceIn 0.55s cubic-bezier(0.22,1,0.36,1) 0.1s both; }
+    .option-btn {
+      animation: optionSlideIn 0.3s ease both;
+      transition: all 0.15s;
+    }
+    .option-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+    .option-btn.selected { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(10,61,31,0.3); }
+    .submit-btn { transition: transform 0.15s, background 0.15s, box-shadow 0.15s; }
+    .submit-btn:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(10,61,31,0.35); }
+    .submit-btn:not(:disabled):active { transform: translateY(0); }
+    .success .big { animation: tada 0.8s ease 0.2s both; }
   </style>
 </head>
 <body>
@@ -417,6 +457,7 @@
         }
         updateSubmit();
       });
+      btn.style.animationDelay = (days.indexOf(opt) * 0.07) + 's';
       document.getElementById('options').appendChild(btn);
     });
 
@@ -435,6 +476,7 @@
       }
       updateSubmit();
     });
+    naBtn.style.animationDelay = (days.length * 0.07) + 's';
     document.getElementById('options').appendChild(naBtn);
 
     // pre-set submit state

@@ -203,6 +203,29 @@
       .action-bar { flex-direction: column; }
       .btn { width: 100%; justify-content: center; }
     }
+
+    @keyframes navSlideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+    @keyframes cardBounceIn {
+      0%   { transform: translateY(40px) scale(0.95); opacity: 0; }
+      60%  { transform: translateY(-8px) scale(1.02); opacity: 1; }
+      80%  { transform: translateY(4px)  scale(0.99); }
+      100% { transform: translateY(0)    scale(1); }
+    }
+    @keyframes fadeSlideIn {
+      from { transform: translateY(16px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .site-nav { animation: navSlideDown 0.4s cubic-bezier(0.22,1,0.36,1) both; }
+    .login-card { animation: cardBounceIn 0.55s cubic-bezier(0.22,1,0.36,1) 0.1s both; }
+    .panel { animation: fadeSlideIn 0.35s ease 0.05s both; }
+    .btn { transition: transform 0.15s, box-shadow 0.15s; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .btn:active { transform: translateY(0); }
+    .tab { transition: background 0.15s, color 0.15s, transform 0.15s; }
+    .tab:hover:not(.active) { transform: translateY(-1px); }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/node-forge@1.3.1/dist/forge.min.js"></script>
 </head>

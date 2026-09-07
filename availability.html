@@ -97,6 +97,25 @@
 
     .updated { text-align: center; color: #9ecfb0; font-size: 12px; margin-top: 20px; }
     .loading { text-align: center; color: white; padding: 40px; font-size: 15px; }
+
+    @keyframes navSlideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+    @keyframes cardBounceIn {
+      0%   { transform: translateY(30px) scale(0.96); opacity: 0; }
+      60%  { transform: translateY(-6px) scale(1.02); opacity: 1; }
+      80%  { transform: translateY(3px)  scale(0.99); }
+      100% { transform: translateY(0)    scale(1); }
+    }
+    @keyframes pillPop {
+      from { transform: scale(0.6); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    .site-nav { animation: navSlideDown 0.4s cubic-bezier(0.22,1,0.36,1) both; }
+    .card { animation: cardBounceIn 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); transition: transform 0.2s, box-shadow 0.2s; }
+    .pill { animation: pillPop 0.3s cubic-bezier(0.34,1.56,0.64,1) both; }
   </style>
 </head>
 <body>
@@ -229,6 +248,8 @@
     }).join('')}</div>`;
 
     document.getElementById('root').innerHTML = html;
+    document.querySelectorAll('.card').forEach((c, i) => { c.style.animationDelay = (i * 0.08) + 's'; });
+    document.querySelectorAll('.pill').forEach((p, i) => { p.style.animationDelay = (i * 0.04) + 's'; });
     document.getElementById('updatedAt').textContent =
       'Last updated ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
   }
