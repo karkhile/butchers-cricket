@@ -15,6 +15,12 @@
       background: #0a3d1f;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
+      padding: 0;
+    }
+    .card-wrapper {
+      flex: 1;
+      display: flex;
       align-items: center;
       justify-content: center;
       padding: 20px;
@@ -125,27 +131,126 @@
       display: none;
     }
 
-    .unknown-player { text-align: center; padding: 20px 0; }
-    .unknown-player .big { font-size: 48px; }
-    .unknown-player h2 { font-size: 20px; font-weight: 700; color: #333; margin-top: 12px; }
-    .unknown-player p { font-size: 14px; color: #666; margin-top: 8px; line-height: 1.5; }
-
     .poll-closed { text-align: center; padding: 20px 0; }
     .poll-closed .big { font-size: 48px; }
     .poll-closed h2 { font-size: 20px; font-weight: 700; color: #0a3d1f; margin-top: 12px; }
     .poll-closed p { font-size: 14px; color: #666; margin-top: 8px; line-height: 1.5; }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #062910;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      height: 48px;
+    }
+    .site-nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .site-nav-brand img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .site-nav-brand span {
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .site-nav-links {
+      display: flex;
+      gap: 4px;
+    }
+    .site-nav-links a {
+      color: #9ecfb0;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+    .site-nav-links a:hover { background: rgba(255,255,255,0.1); color: white; }
+    .site-nav-links a.active { color: white; font-weight: 700; background: rgba(255,255,255,0.15); }
+
+    .name-picker { text-align: center; padding: 20px 0; }
+    .name-picker .big { font-size: 48px; }
+    .name-picker h2 { font-size: 20px; font-weight: 700; color: #333; margin-top: 12px; }
+    .name-picker p { font-size: 14px; color: #666; margin-top: 8px; }
+    .name-picker select {
+      display: block;
+      width: 100%;
+      margin: 16px 0 12px;
+      padding: 10px 12px;
+      font-size: 15px;
+      border: 2px solid #d0e8d8;
+      border-radius: 10px;
+      background: white;
+      color: #333;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230a3d1f' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+    }
+    .name-picker select:focus { outline: none; border-color: #0a3d1f; }
+    .name-picker .go-btn {
+      width: 100%;
+      padding: 14px;
+      background: #0a3d1f;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .name-picker .go-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .switch-link {
+      display: block;
+      text-align: right;
+      font-size: 12px;
+      color: #999;
+      margin-top: -16px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .switch-link:hover { color: #555; }
   </style>
 </head>
 <body>
-<div class="card" id="app">
-  <div class="logo">
-    <img src="logo.jpg" alt="Butchers Cricket" style="width:96px;height:96px;border-radius:50%;object-fit:cover;">
-    <h1>Butchers Cricket</h1>
-    <p>Weekly Game Day Poll</p>
+<nav class="site-nav">
+  <a class="site-nav-brand" href="index.html">
+    <img src="logo.jpg" alt="">
+    <span>Butchers Cricket</span>
+  </a>
+  <div class="site-nav-links">
+    <a href="index.html" class="active">Vote</a>
+    <a href="availability.html">Availability</a>
+    <a href="milestones.html">Milestones</a>
+    <a href="admin.html">Admin</a>
   </div>
-  <div id="content">Loading...</div>
+</nav>
+<div class="card-wrapper">
+  <div class="card" id="app">
+    <div class="logo">
+      <img src="logo.jpg" alt="Butchers Cricket" style="width:96px;height:96px;border-radius:50%;object-fit:cover;">
+      <h1>Butchers Cricket</h1>
+      <p>Weekly Game Day Poll</p>
+    </div>
+    <div id="content">Loading...</div>
+  </div>
 </div>
 
+<script src="roster.js"></script>
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
   import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, getDocs } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
@@ -195,6 +300,10 @@
     if (v.vote === 'unavailable') return [];
     if (v.vote) return [v.vote];
     return [];
+  }
+
+  function sanitizeName(name) {
+    return (name || '').replace(/[<>"&]/g, '').trim();
   }
 
   async function showSuccess(name, days, voteRef, weekKey) {
@@ -275,6 +384,7 @@
         <h2>Hey ${name.split(' ')[0]}! 👋</h2>
         <p>Can you play this weekend?</p>
       </div>
+      <span class="switch-link" id="switchLink">Not you? Switch</span>
       <div class="question">Select the days you can play:</div>
       <div class="hint">You can select multiple days</div>
       <div class="options" id="options"></div>
@@ -282,6 +392,11 @@
       <div class="error-msg" id="errorMsg">Something went wrong. Please try again.</div>
       <div class="dashboard" id="dashboard"><h3>📊 Loading who's playing...</h3></div>
     `;
+
+    document.getElementById('switchLink').addEventListener('click', () => {
+      localStorage.removeItem('playerName');
+      location.reload();
+    });
 
     const days = [];
     if ((extraDates||[]).includes('friday'))  days.push({ value: 'friday',   label: 'Friday, '   + fri, icon: '📅' });
@@ -352,17 +467,38 @@
   }
 
   (async () => {
-    const params     = new URLSearchParams(window.location.search);
-    const playerName = params.get('player');
-    const content    = document.getElementById('content');
+    const params  = new URLSearchParams(window.location.search);
+    const content = document.getElementById('content');
+
+    // Resolve identity: URL param → localStorage → picker
+    let playerName = sanitizeName(params.get('player'));
+    if (playerName) {
+      localStorage.setItem('playerName', playerName);
+    } else {
+      playerName = sanitizeName(localStorage.getItem('playerName'));
+    }
 
     if (!playerName) {
       content.innerHTML = `
-        <div class="unknown-player">
-          <div class="big">🤔</div>
+        <div class="name-picker">
+          <div class="big">🏏</div>
           <h2>Who are you?</h2>
-          <p>Please use the personal link shared in the WhatsApp group to vote.</p>
+          <p>Pick your name to vote</p>
+          <select id="namePicker">
+            <option value="">Select your name…</option>
+            ${ROSTER_NAMES.map(n => `<option value="${n}">${n}</option>`).join('')}
+          </select>
+          <button class="go-btn" id="goBtn" disabled>Let's go</button>
         </div>`;
+
+      const sel = document.getElementById('namePicker');
+      const btn = document.getElementById('goBtn');
+      sel.addEventListener('change', () => { btn.disabled = !sel.value; });
+      btn.addEventListener('click', () => {
+        if (!sel.value) return;
+        localStorage.setItem('playerName', sel.value);
+        location.reload();
+      });
       return;
     }
 
