@@ -288,8 +288,8 @@
         document.getElementById('pwInput').focus();
       }
     } catch (e) {
-      console.error('Login error:', e);
       const errEl = document.getElementById('pwErr');
+      errEl.textContent = 'Error: ' + e.message;
       errEl.classList.remove('hidden'); errEl.style.display = 'block';
     } finally {
       btn.disabled = false;
