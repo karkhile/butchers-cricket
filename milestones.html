@@ -140,11 +140,75 @@
       from { transform: translateY(28px) scale(0.97); opacity: 0; }
       to   { transform: translateY(0)    scale(1);    opacity: 1; }
     }
+    @keyframes barFill {
+      from { width: 0 !important; }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+    @keyframes hotPulse {
+      0%, 100% { box-shadow: none; }
+      50%       { box-shadow: 0 0 10px 2px rgba(243,156,18,0.45); }
+    }
+    @keyframes trophyWiggle {
+      0%,100% { transform: rotate(0deg); }
+      20%     { transform: rotate(-12deg) scale(1.2); }
+      40%     { transform: rotate(10deg)  scale(1.15); }
+      60%     { transform: rotate(-8deg)  scale(1.1); }
+      80%     { transform: rotate(6deg)   scale(1.05); }
+    }
+    @keyframes medalPop {
+      0%   { transform: scale(0) rotate(-30deg); opacity: 0; }
+      60%  { transform: scale(1.3) rotate(5deg);  opacity: 1; }
+      80%  { transform: scale(0.9) rotate(-2deg); }
+      100% { transform: scale(1)   rotate(0deg); }
+    }
+    @keyframes rowSlideIn {
+      from { transform: translateX(-16px); opacity: 0; }
+      to   { transform: translateX(0);     opacity: 1; }
+    }
+
     .site-nav { animation: navSlideDown 0.4s cubic-bezier(0.22,1,0.36,1) both; }
     .card { animation: cardSlideUp 0.45s cubic-bezier(0.22,1,0.36,1) both; }
-    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover {
+      transform: translateY(-4px) rotate3d(1, 0.5, 0, 1.5deg);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.22);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
     .toggle-btn { transition: transform 0.15s, box-shadow 0.15s; }
     .toggle-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+
+    /* progress bar: animate fill + shimmer highlight */
+    .progress-bar {
+      animation: barFill 0.7s cubic-bezier(0.22,1,0.36,1) both;
+      background: linear-gradient(90deg, #2ecc71 0%, #27ae60 40%, #a8f5c8 55%, #27ae60 70%, #2ecc71 100%) !important;
+      background-size: 200% 100% !important;
+      animation: barFill 0.7s cubic-bezier(0.22,1,0.36,1) both, shimmer 2.5s linear 0.8s infinite;
+    }
+    .milestone-row.hot .progress-bar {
+      background: linear-gradient(90deg, #f39c12 0%, #e67e22 40%, #ffd97a 55%, #e67e22 70%, #f39c12 100%) !important;
+      background-size: 200% 100% !important;
+      animation: barFill 0.7s cubic-bezier(0.22,1,0.36,1) both, shimmer 1.8s linear 0.8s infinite;
+    }
+
+    /* hot row pulse glow */
+    .milestone-row.hot { animation: hotPulse 2s ease-in-out 1s infinite; }
+
+    /* milestone rows slide in */
+    .milestone-row, .achieved-row, .fastest-entry, .rivalry-row {
+      animation: rowSlideIn 0.35s ease both;
+    }
+
+    /* trophy wiggle on achieved rows */
+    .achieved-name .trophy-emoji { display: inline-block; animation: trophyWiggle 0.7s ease both; }
+
+    /* medal pop for rank labels */
+    .fastest-rank.gold, .fastest-rank.silver, .fastest-rank.bronze,
+    .rivalry-rank.gold, .rivalry-rank.silver, .rivalry-rank.bronze {
+      display: inline-block;
+      animation: medalPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
   </style>
 </head>
 <body>
@@ -238,6 +302,15 @@
         }
       }
       el.querySelectorAll('.card').forEach((c, i) => { c.style.animationDelay = (i * 0.07) + 's'; });
+      // stagger rows within each card
+      el.querySelectorAll('.card').forEach(c => {
+        c.querySelectorAll('.milestone-row, .achieved-row, .fastest-entry, .rivalry-row').forEach((r, j) => {
+          r.style.animationDelay = (j * 0.05) + 's';
+        });
+        c.querySelectorAll('.fastest-rank.gold, .fastest-rank.silver, .fastest-rank.bronze, .rivalry-rank.gold, .rivalry-rank.silver, .rivalry-rank.bronze').forEach((m, j) => {
+          m.style.animationDelay = (j * 0.12 + 0.2) + 's';
+        });
+      });
     }
 
     function buildCard(title, items, unit, gapLabel) {
@@ -314,7 +387,7 @@
       row.className = 'achieved-row';
       row.innerHTML =
         '<div>' +
-          '<div class="achieved-name">🏆 ' + item.name + '</div>' +
+          '<div class="achieved-name"><span class="trophy-emoji">🏆</span> ' + item.name + '</div>' +
           '<div class="achieved-sub">' + item.current + ' ' + unit + ' total</div>' +
         '</div>' +
         '<span class="achieved-badge">✓ ' + item.achieved + ' ' + unit + '</span>';
