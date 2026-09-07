@@ -3,189 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.gstatic.com https://*.firebaseio.com https://*.googleapis.com https://cdn.jsdelivr.net; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://firestore.googleapis.com https://core-prod-origin.cricclubs.com https://api.github.com; style-src 'self' 'unsafe-inline';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.gstatic.com https://*.firebaseio.com https://*.googleapis.com https://cdn.jsdelivr.net https://cdn.tailwindcss.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://firestore.googleapis.com https://core-prod-origin.cricclubs.com https://api.github.com; style-src 'self' 'unsafe-inline';">
   <title>Butchers Cricket — Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .site-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: #062910;
-    }
-    .site-nav-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 16px 6px;
-    }
-    .site-nav-header img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .site-nav-header span {
-      color: white;
-      font-size: 15px;
-      font-weight: 700;
-    }
-    .site-nav-links {
-      display: flex;
-      gap: 2px;
-      padding: 0 10px 6px;
-    }
-    .site-nav-links a {
-      color: #9ecfb0;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 5px 10px;
-      border-radius: 8px;
-      transition: background 0.15s;
-    }
-    .site-nav-links a:hover { background: rgba(255,255,255,0.1); color: white; }
-    .site-nav-links a.active { color: white; font-weight: 700; background: rgba(255,255,255,0.15); }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0a3d1f;
-      min-height: 100vh;
-      padding: 20px;
-      color: #333;
-
-    /* ── Login overlay ── */
-    #login-screen {
-      display: flex; align-items: center; justify-content: center;
-      min-height: 100vh; padding: 20px;
-    }
-    .login-card {
-      background: white; border-radius: 20px; padding: 36px 28px;
-      max-width: 360px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      text-align: center;
-    }
-    .login-card .emoji { font-size: 48px; }
-    .login-card h2 { font-size: 20px; font-weight: 700; color: #0a3d1f; margin: 12px 0 4px; }
-    .login-card p { font-size: 13px; color: #888; margin-bottom: 24px; }
-    .login-card input {
-      width: 100%; padding: 14px 16px; border: 2px solid #e0e0e0; border-radius: 12px;
-      font-size: 16px; margin-bottom: 12px; outline: none;
-    }
-    .login-card input:focus { border-color: #0a3d1f; }
-    .login-card .err { color: #c0392b; font-size: 13px; margin-bottom: 8px; display: none; }
+    /* ── structural classes used by JS (kept as plain CSS) ── */
+    * { box-sizing: border-box; }
     #main-content { display: none; }
-    }
-    h1 { color: white; font-size: 24px; margin-bottom: 4px; }
-    .subtitle { color: #9ecfb0; font-size: 14px; margin-bottom: 24px; }
-
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 24px; }
-
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    }
-    .card h2 { font-size: 16px; font-weight: 700; color: #0a3d1f; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-
-    .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
-    .stat-row:last-child { border-bottom: none; }
-    .stat-label { font-size: 14px; color: #555; display: flex; align-items: center; gap: 8px; }
-    .stat-value { font-size: 18px; font-weight: 700; }
-    .stat-value.saturday { color: #2ecc71; }
-    .stat-value.sunday { color: #3498db; }
-    .stat-value.unavailable { color: #e74c3c; }
-    .stat-value.pending { color: #999; }
-
-    .winner-badge {
-      background: #fff8e1;
-      border: 2px solid #f39c12;
-      border-radius: 10px;
-      padding: 12px 16px;
-      text-align: center;
-      margin-bottom: 16px;
-    }
-    .winner-badge .day { font-size: 20px; font-weight: 700; color: #f39c12; }
-    .winner-badge .sub { font-size: 12px; color: #888; margin-top: 2px; }
-
-    .player-list { display: flex; flex-direction: column; gap: 6px; max-height: 300px; overflow-y: auto; }
-    .player-chip {
-      display: flex; align-items: center; gap: 10px;
-      padding: 8px 12px; border-radius: 8px; font-size: 13px;
-    }
-    .player-chip.saturday { background: #f0fff4; }
-    .player-chip.sunday   { background: #eff6ff; }
-    .player-chip.unavailable { background: #fff0f0; }
-    .player-chip.pending  { background: #f9f9f9; color: #999; }
-    .player-chip .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .dot.saturday { background: #2ecc71; }
-    .dot.sunday   { background: #3498db; }
-    .dot.unavailable { background: #e74c3c; }
-    .dot.pending  { background: #ccc; }
-    .player-chip .str { margin-left: auto; font-size: 11px; color: #aaa; }
-
-    /* ── Teams tab ── */
-    .teams-section { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); margin-bottom: 16px; }
-    .teams-section h2 { font-size: 16px; font-weight: 700; color: #0a3d1f; margin-bottom: 12px; }
 
     .team-builder { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
     @media (max-width: 700px) { .team-builder { grid-template-columns: 1fr; } }
 
-    .drop-zone {
-      border: 2px dashed #ccc;
-      border-radius: 12px;
-      padding: 10px;
-      min-height: 120px;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .drop-zone.drag-over { background: #e8f5e9; border-color: #0a3d1f; }
-    .drop-zone h3 {
-      font-size: 13px; font-weight: 700; padding: 6px 10px;
-      border-radius: 8px; margin-bottom: 8px; text-align: center;
-    }
+    .drop-zone { border: 2px dashed #ccc; border-radius: 12px; padding: 10px; min-height: 120px; transition: background 0.15s, border-color 0.15s; }
+    .drop-zone.drag-over { background: #d1fae5; border-color: #059669; }
+    .drop-zone h3 { font-size: 13px; font-weight: 700; padding: 6px 10px; border-radius: 8px; margin-bottom: 8px; text-align: center; }
     .drop-zone.pool h3  { background: #f0f0f0; color: #555; }
-    .drop-zone.team-a h3 { background: #0a3d1f; color: white; }
-    .drop-zone.team-b h3 { background: #1a5c8a; color: white; }
+    .drop-zone.team-a h3 { background: #064e3b; color: white; }
+    .drop-zone.team-b h3 { background: #1e3a5f; color: white; }
 
-    .draggable {
-      display: flex; align-items: center; gap: 8px;
-      padding: 7px 10px; background: white; border: 1px solid #e0e0e0;
-      border-radius: 8px; font-size: 12px; margin-bottom: 5px;
-      cursor: grab; user-select: none; transition: box-shadow 0.1s, background 0.15s;
-    }
+    .draggable { display: flex; align-items: center; gap: 8px; padding: 7px 10px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 12px; margin-bottom: 5px; cursor: grab; user-select: none; transition: box-shadow 0.1s, background 0.15s; }
     .draggable:active { cursor: grabbing; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     .draggable.dragging { opacity: 0.4; }
-    .draggable.long-press { background: #fff3cd; border-color: #f39c12; }
-    .draggable .str-badge { margin-left: auto; background: #e8f5e9; color: #2e7d32; font-size: 10px; padding: 2px 6px; border-radius: 10px; flex-shrink: 0; }
+    .draggable.long-press { background: #fef3c7; border-color: #f59e0b; }
+    .draggable .str-badge { margin-left: auto; background: #d1fae5; color: #065f46; font-size: 10px; padding: 2px 6px; border-radius: 10px; flex-shrink: 0; }
     .draggable .day-badge { font-size: 10px; color: #aaa; }
-
     .zone-count { font-size: 11px; color: #aaa; text-align: center; margin-top: 4px; }
-    .balance-info { font-size: 13px; color: #888; margin-bottom: 12px; }
 
-    .action-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
-    .btn {
-      padding: 14px 24px; border: none; border-radius: 12px;
-      font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.15s;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .btn-primary { background: #0a3d1f; color: white; }
-    .btn-primary:hover { background: #0d5229; }
-    .btn-secondary { background: white; color: #0a3d1f; border: 2px solid #0a3d1f; }
-    .btn-secondary:hover { background: #f0faf4; }
-    .btn-warn { background: #e67e22; color: white; }
-    .btn-warn:hover { background: #d35400; }
-    .btn:disabled { background: #ccc; color: #888; cursor: not-allowed; border-color: #ccc; }
-
-    .date-input {
-      padding: 14px 16px; border: 2px solid #e0e0e0; border-radius: 12px;
-      font-size: 15px; color: #333; background: white;
-    }
-
-    .log {
-      background: #1a1a1a; color: #00ff88; border-radius: 12px;
-      padding: 16px; font-family: monospace; font-size: 13px;
-      max-height: 200px; overflow-y: auto; margin-top: 12px;
-      display: none;
-    }
+    .log { background: #1a1a1a; color: #00ff88; border-radius: 12px; padding: 16px; font-family: monospace; font-size: 13px; max-height: 200px; overflow-y: auto; margin-top: 12px; display: none; }
     .log.visible { display: block; }
     .log .line { margin-bottom: 4px; }
     .log .line.error { color: #ff6b6b; }
@@ -193,16 +37,25 @@
     .log .line.info { color: #87ceeb; }
 
     .strength-bar { height: 4px; background: #e0e0e0; border-radius: 2px; margin-top: 8px; }
-    .strength-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, #0a3d1f, #2ecc71); transition: width 0.5s; }
+    .strength-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, #064e3b, #34d399); transition: width 0.5s; }
 
-    .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
-    .tab { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: rgba(255,255,255,0.15); color: white; }
-    .tab.active { background: white; color: #0a3d1f; }
+    .player-list { display: flex; flex-direction: column; gap: 6px; max-height: 300px; overflow-y: auto; }
+    .player-chip { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; font-size: 13px; }
+    .player-chip.saturday   { background: #f0fdf4; }
+    .player-chip.sunday     { background: #eff6ff; }
+    .player-chip.unavailable{ background: #fff1f2; }
+    .player-chip.pending    { background: #f9f9f9; color: #999; }
+    .player-chip .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dot.saturday   { background: #22c55e; }
+    .dot.sunday     { background: #3b82f6; }
+    .dot.unavailable{ background: #ef4444; }
+    .dot.pending    { background: #ccc; }
+    .player-chip .str { margin-left: auto; font-size: 11px; color: #aaa; }
 
-    @media (max-width: 600px) {
-      .action-bar { flex-direction: column; }
-      .btn { width: 100%; justify-content: center; }
-    }
+    .stat-value.saturday   { color: #16a34a; }
+    .stat-value.sunday     { color: #2563eb; }
+    .stat-value.unavailable{ color: #dc2626; }
+    .stat-value.pending    { color: #999; }
 
     @keyframes navSlideDown {
       from { transform: translateY(-100%); opacity: 0; }
@@ -218,116 +71,129 @@
       from { transform: translateY(16px); opacity: 0; }
       to   { transform: translateY(0);    opacity: 1; }
     }
-    .site-nav { animation: navSlideDown 0.4s cubic-bezier(0.22,1,0.36,1) both; }
-    .login-card { animation: cardBounceIn 0.55s cubic-bezier(0.22,1,0.36,1) 0.1s both; }
-    .panel { animation: fadeSlideIn 0.35s ease 0.05s both; }
-    .btn { transition: transform 0.15s, box-shadow 0.15s; }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-    .btn:active { transform: translateY(0); }
-    .tab { transition: background 0.15s, color 0.15s, transform 0.15s; }
-    .tab:hover:not(.active) { transform: translateY(-1px); }
+    .nav-animate   { animation: navSlideDown 0.4s cubic-bezier(0.22,1,0.36,1) both; }
+    .card-animate  { animation: cardBounceIn 0.55s cubic-bezier(0.22,1,0.36,1) 0.1s both; }
+    .panel-animate { animation: fadeSlideIn 0.35s ease 0.05s both; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/node-forge@1.3.1/dist/forge.min.js"></script>
 </head>
-<body>
+<body class="bg-gradient-to-br from-green-950 via-green-900 to-emerald-950 min-h-screen font-sans text-gray-800">
 
-  <nav class="site-nav">
-    <div class="site-nav-header">
-      <img src="logo.jpg" alt="">
-      <span>Butchers Cricket</span>
+  <nav class="nav-animate sticky top-0 z-50 bg-white/10 backdrop-blur-md border-b border-white/10">
+    <div class="flex items-center gap-2.5 px-4 pt-3 pb-1.5">
+      <img src="logo.jpg" alt="" class="w-8 h-8 rounded-full object-cover ring-2 ring-white/30">
+      <span class="text-white font-bold text-sm tracking-wide">Butchers Cricket</span>
     </div>
-    <div class="site-nav-links">
-      <a href="index.html">Vote</a>
-      <a href="availability.html">Availability</a>
-      <a href="milestones.html">Milestones</a>
-      <a href="admin.html" class="active">Admin</a>
+    <div class="flex gap-1 px-3 pb-2">
+      <a href="index.html"        class="text-emerald-300 text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-white/10 transition no-underline">Vote</a>
+      <a href="availability.html" class="text-emerald-300 text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-white/10 transition no-underline">Availability</a>
+      <a href="milestones.html"   class="text-emerald-300 text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-white/10 transition no-underline">Milestones</a>
+      <a href="admin.html"        class="text-white text-xs font-bold px-3 py-1.5 rounded-lg bg-white/20 no-underline">Admin</a>
     </div>
   </nav>
 
   <!-- Login screen -->
-  <div id="login-screen">
-    <div class="login-card">
-      <div class="emoji"><img src="logo.jpg" alt="Butchers Cricket" style="width:72px;height:72px;border-radius:50%;object-fit:cover;"></div>
-      <h2>Admin Panel</h2>
-      <p>Butchers Cricket Club</p>
-      <input type="password" id="pwInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkLogin()">
-      <div class="err" id="pwErr">Incorrect password</div>
-      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="checkLogin()">Login</button>
+  <div id="login-screen" class="flex items-center justify-center min-h-[calc(100vh-60px)] p-5">
+    <div class="card-animate bg-white/95 backdrop-blur-sm rounded-3xl p-9 max-w-sm w-full shadow-2xl ring-1 ring-white/20 text-center">
+      <img src="logo.jpg" alt="Butchers Cricket" class="w-20 h-20 rounded-full object-cover mx-auto shadow-lg ring-4 ring-emerald-100 mb-4">
+      <h2 class="text-xl font-bold text-emerald-900 mb-1">Admin Panel</h2>
+      <p class="text-gray-400 text-sm mb-6">Butchers Cricket Club</p>
+      <input type="password" id="pwInput" placeholder="Enter password"
+        class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-xl text-base mb-3 outline-none focus:border-emerald-500 transition"
+        onkeydown="if(event.key==='Enter')checkLogin()">
+      <div class="err hidden text-red-500 text-sm mb-3" id="pwErr">Incorrect password</div>
+      <button onclick="checkLogin()"
+        class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-green-700 text-white font-bold rounded-2xl text-sm shadow-lg hover:-translate-y-0.5 hover:shadow-emerald-500/30 transition">
+        Login
+      </button>
     </div>
   </div>
 
   <!-- Main content (hidden until login) -->
-  <div id="main-content">
-  <h1><img src="logo.jpg" alt="" style="width:36px;height:36px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;"> Butchers Cricket</h1>
-  <p class="subtitle" id="weekLabel">Loading...</p>
-  <div style="margin-bottom:16px">
-    <button class="btn btn-secondary" id="refreshStatsBtn" onclick="refreshStats()" style="font-size:13px;padding:8px 14px;">🔄 Refresh Stats</button>
-    <span id="refreshStatsStatus" style="font-size:12px;color:#9ecfb0;margin-left:10px;"></span>
-  </div>
-
-  <div class="tabs">
-    <button class="tab active" onclick="showTab('poll')">📊 Poll</button>
-    <button class="tab" onclick="showTab('teams')">👥 Teams</button>
-  </div>
-
-  <!-- Poll Tab -->
-  <div id="tab-poll">
-    <div class="card" style="margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-      <span style="font-size:13px;font-weight:600;color:#555;">Poll status:</span>
-      <span id="pollStatusBadge" style="font-size:13px;font-weight:700;">...</span>
-      <input type="date" id="pollSatDate" class="date-input" style="font-size:13px;padding:7px 10px;" title="Select the Saturday for this poll" onchange="document.getElementById('btnOpenPoll').disabled = !this.value;">
-      <button class="btn btn-primary" id="btnOpenPoll" onclick="setPollOpen(true)" style="padding:8px 14px;font-size:13px;" disabled>🔓 Open Poll</button>
-      <button class="btn btn-secondary" id="btnClosePoll" onclick="setPollOpen(false)" style="padding:8px 14px;font-size:13px;">🔒 Close Poll</button>
-      <button class="btn" id="btnResetPoll" onclick="resetPoll()" style="padding:8px 14px;font-size:13px;background:#c0392b;color:white;border:none;border-radius:8px;cursor:pointer;">🗑️ Reset Poll</button>
+  <div id="main-content" class="panel-animate px-5 py-6 max-w-5xl mx-auto">
+    <div class="flex items-center gap-3 mb-1">
+      <img src="logo.jpg" alt="" class="w-10 h-10 rounded-full object-cover ring-2 ring-white/30">
+      <h1 class="text-white font-bold text-xl tracking-tight">Butchers Cricket</h1>
     </div>
-    <div class="grid">
-      <div class="card">
-        <h2>📊 This Week's Votes</h2>
-        <div id="winnerBadge"></div>
-        <div class="stat-row">
-          <span class="stat-label">📅 Saturday</span>
-          <span class="stat-value saturday" id="countSat">—</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">📅 Sunday</span>
-          <span class="stat-value sunday" id="countSun">—</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">🙌 Both Days</span>
-          <span class="stat-value" style="color:#9b59b6" id="countBoth">—</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">❌ Not Available</span>
-          <span class="stat-value unavailable" id="countNA">—</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">⏳ Not Voted Yet</span>
-          <span class="stat-value pending" id="countPending">—</span>
-        </div>
-        <div class="strength-bar"><div class="strength-fill" id="responseBar" style="width:0%"></div></div>
-      </div>
-
-      <div class="card">
-        <h2>👥 Player Availability</h2>
-        <div class="player-list" id="playerList">Loading...</div>
-      </div>
+    <p class="text-emerald-300 text-sm mb-4" id="weekLabel">Loading...</p>
+    <div class="mb-4 flex items-center gap-3">
+      <button onclick="refreshStats()" id="refreshStatsBtn"
+        class="px-4 py-2 bg-white/15 hover:bg-white/25 text-emerald-200 text-xs font-semibold rounded-xl border border-white/20 transition hover:-translate-y-0.5">
+        🔄 Refresh Stats
+      </button>
+      <span id="refreshStatsStatus" class="text-emerald-300 text-xs"></span>
     </div>
 
-    <div class="card" style="margin-bottom:16px">
-      <h2>⚙️ Build Teams</h2>
-      <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:12px">
-        <input type="date" class="date-input" id="gameDate">
-        <button class="btn btn-secondary" onclick="goToTeams()">👥 Build Teams →</button>
+    <div class="flex gap-2 mb-5" id="tabBar">
+      <button onclick="showTab('poll')"  class="tab px-4 py-2 rounded-xl text-xs font-semibold border-0 cursor-pointer transition bg-white text-emerald-900 active">📊 Poll</button>
+      <button onclick="showTab('teams')" class="tab px-4 py-2 rounded-xl text-xs font-semibold border-0 cursor-pointer transition bg-white/15 text-white">👥 Teams</button>
+    </div>
+
+    <!-- Poll Tab -->
+    <div id="tab-poll">
+      <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-4 mb-4 shadow-xl ring-1 ring-white/20 flex items-center gap-3 flex-wrap">
+        <span class="text-sm font-semibold text-gray-600">Poll status:</span>
+        <span id="pollStatusBadge" class="text-sm font-bold">...</span>
+        <input type="date" id="pollSatDate"
+          class="px-3 py-2 border-2 border-gray-200 rounded-xl text-sm outline-none focus:border-emerald-500 transition"
+          title="Select the Saturday for this poll"
+          onchange="document.getElementById('btnOpenPoll').disabled = !this.value;">
+        <button id="btnOpenPoll" onclick="setPollOpen(true)" disabled
+          class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-green-700 text-white text-xs font-bold rounded-xl transition hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed">🔓 Open Poll</button>
+        <button id="btnClosePoll" onclick="setPollOpen(false)"
+          class="px-4 py-2 bg-white border-2 border-emerald-600 text-emerald-700 text-xs font-bold rounded-xl transition hover:bg-emerald-50">🔒 Close Poll</button>
+        <button id="btnResetPoll" onclick="resetPoll()"
+          class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-xs font-bold rounded-xl transition hover:-translate-y-0.5">🗑️ Reset Poll</button>
       </div>
-      <p style="font-size:13px;color:#888">Select a date, then build teams manually or auto-balance.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-xl ring-1 ring-white/20">
+          <h2 class="text-sm font-bold text-emerald-900 mb-4 flex items-center gap-2">📊 This Week's Votes</h2>
+          <div id="winnerBadge"></div>
+          <div class="stat-row flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="stat-label text-sm text-gray-500 flex items-center gap-2">📅 Saturday</span>
+            <span class="stat-value saturday font-bold text-lg" id="countSat">—</span>
+          </div>
+          <div class="stat-row flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="stat-label text-sm text-gray-500 flex items-center gap-2">📅 Sunday</span>
+            <span class="stat-value sunday font-bold text-lg" id="countSun">—</span>
+          </div>
+          <div class="stat-row flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="stat-label text-sm text-gray-500 flex items-center gap-2">🙌 Both Days</span>
+            <span class="font-bold text-lg text-purple-600" id="countBoth">—</span>
+          </div>
+          <div class="stat-row flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="stat-label text-sm text-gray-500 flex items-center gap-2">❌ Not Available</span>
+            <span class="stat-value unavailable font-bold text-lg" id="countNA">—</span>
+          </div>
+          <div class="stat-row flex justify-between items-center py-2">
+            <span class="stat-label text-sm text-gray-500 flex items-center gap-2">⏳ Not Voted Yet</span>
+            <span class="stat-value pending font-bold text-lg" id="countPending">—</span>
+          </div>
+          <div class="strength-bar"><div class="strength-fill" id="responseBar" style="width:0%"></div></div>
+        </div>
+
+        <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-xl ring-1 ring-white/20">
+          <h2 class="text-sm font-bold text-emerald-900 mb-4">👥 Player Availability</h2>
+          <div class="player-list" id="playerList">Loading...</div>
+        </div>
+      </div>
+
+      <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-xl ring-1 ring-white/20 mb-4">
+        <h2 class="text-sm font-bold text-emerald-900 mb-4">⚙️ Build Teams</h2>
+        <div class="flex gap-3 items-center flex-wrap mb-4">
+        <input type="date" class="px-3 py-2 border-2 border-gray-200 rounded-xl text-sm outline-none focus:border-emerald-500 transition" id="gameDate">
+        <button onclick="goToTeams()" class="px-4 py-2 bg-white border-2 border-emerald-600 text-emerald-700 text-xs font-bold rounded-xl hover:bg-emerald-50 transition">👥 Build Teams →</button>
+      </div>
+      <p class="text-xs text-gray-400">Select a date, then build teams manually or auto-balance.</p>
     </div>
   </div>
 
   <!-- Teams Tab -->
   <div id="tab-teams" style="display:none">
-    <div class="teams-section">
-      <h2>👥 Build Teams</h2>
-      <div class="balance-info" id="balanceInfo">Drag players into each team, or use Auto Balance.</div>
+    <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-xl ring-1 ring-white/20 mb-4">
+      <h2 class="text-sm font-bold text-emerald-900 mb-3">👥 Build Teams</h2>
+      <div class="text-xs text-gray-400 mb-4" id="balanceInfo">Drag players into each team, or use Auto Balance.</div>
 
       <div class="team-builder">
         <!-- Pool -->
@@ -338,7 +204,7 @@
           <div style="display:flex;gap:6px;margin-top:8px;">
             <input id="addPlayerInput" type="text" list="playerSuggestions" placeholder="Add player by name…" style="flex:1;padding:6px 8px;border:1px solid #ccc;border-radius:6px;font-size:13px;" onkeydown="if(event.key==='Enter')addPlayerToPool()" oninput="updatePlayerSuggestions()">
             <datalist id="playerSuggestions"></datalist>
-            <button onclick="addPlayerToPool()" style="padding:6px 12px;background:#0a3d1f;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px;">Add</button>
+            <button onclick="addPlayerToPool()" style="padding:6px 12px;background:#059669;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px;">Add</button>
           </div>
         </div>
         <!-- Butchers-A -->
@@ -356,16 +222,16 @@
       </div>
     </div>
 
-    <div class="action-bar">
-      <input type="date" class="date-input" id="gameDate2">
-      <button class="btn btn-secondary" onclick="autoBalance()">⚖️ Auto Balance</button>
-      <button class="btn btn-warn" onclick="resetTeams()">↺ Reset</button>
-      <button class="btn btn-primary" id="createBtn" onclick="createTeamsAndSchedule()" disabled>
+    <div class="flex gap-3 flex-wrap mb-3">
+      <input type="date" class="px-3 py-2 border-2 border-gray-200 rounded-xl text-sm outline-none focus:border-emerald-500 transition" id="gameDate2">
+      <button onclick="autoBalance()" class="px-4 py-2 bg-white border-2 border-emerald-600 text-emerald-700 text-xs font-bold rounded-xl hover:bg-emerald-50 transition hover:-translate-y-0.5">⚖️ Auto Balance</button>
+      <button onclick="resetTeams()" class="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-xl transition hover:-translate-y-0.5">↺ Reset</button>
+      <button id="createBtn" onclick="createTeamsAndSchedule()" disabled class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-green-700 text-white text-xs font-bold rounded-xl transition hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed">
         🚀 Create Teams &amp; Schedule
       </button>
     </div>
-    <div class="action-bar" style="margin-top:8px">
-      <button class="btn btn-secondary" onclick="showTab('poll')">← Back to Poll</button>
+    <div class="mb-3">
+      <button onclick="showTab('poll')" class="px-4 py-2 bg-white/15 hover:bg-white/25 text-white text-xs font-semibold rounded-xl border border-white/20 transition">← Back to Poll</button>
     </div>
     <div class="log" id="log"></div>
   </div><!-- end tab-teams -->
@@ -383,7 +249,7 @@
 
   window.checkLogin = async function() {
     const pw = document.getElementById('pwInput').value;
-    const btn = document.querySelector('#login-screen .btn-primary');
+    const btn = document.querySelector('#login-screen button');
     btn.disabled = true;
     btn.textContent = 'Checking...';
     try {
@@ -397,13 +263,15 @@
         sessionStorage.setItem('bcc-cc-token', snap.data().ccToken || '');
       } else {
         const err = document.getElementById('pwErr');
+        err.classList.remove('hidden');
         err.style.display = 'block';
         document.getElementById('pwInput').value = '';
         document.getElementById('pwInput').focus();
       }
     } catch (e) {
       console.error('Login error:', e);
-      document.getElementById('pwErr').style.display = 'block';
+      const errEl = document.getElementById('pwErr');
+      errEl.classList.remove('hidden'); errEl.style.display = 'block';
     } finally {
       btn.disabled = false;
       btn.textContent = 'Login';
@@ -977,7 +845,11 @@
   window.showTab = function(tab) {
     document.getElementById('tab-poll').style.display  = tab === 'poll'  ? 'block' : 'none';
     document.getElementById('tab-teams').style.display = tab === 'teams' ? 'block' : 'none';
-    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', (i === 0) === (tab === 'poll')));
+    document.querySelectorAll('#tabBar .tab').forEach((t, i) => {
+      const active = (i === 0) === (tab === 'poll');
+      t.style.background = active ? 'white' : 'rgba(255,255,255,0.15)';
+      t.style.color = active ? '#064e3b' : 'white';
+    });
   };
 
   // ── REFRESH STATS ────────────────────────────────────────────────────────────

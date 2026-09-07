@@ -4,100 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Butchers Cricket — Availability</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .site-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: #062910;
-      margin: -20px -20px 20px -20px;
-    }
-    .site-nav-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 16px 6px;
-    }
-    .site-nav-header img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .site-nav-header span {
-      color: white;
-      font-size: 15px;
-      font-weight: 700;
-    }
-    .site-nav-links {
-      display: flex;
-      gap: 2px;
-      padding: 0 10px 6px;
-    }
-    .site-nav-links a {
-      color: #9ecfb0;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 5px 10px;
-      border-radius: 8px;
-      transition: background 0.15s;
-    }
-    .site-nav-links a:hover { background: rgba(255,255,255,0.1); color: white; }
-    .site-nav-links a.active { color: white; font-weight: 700; background: rgba(255,255,255,0.15); }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0a3d1f;
-      min-height: 100vh;
-      padding: 20px;
-      color: #333;
-    }
-    .header { text-align: center; margin-bottom: 24px; }
-    .header img { width: 56px; height: 56px; border-radius: 50%; margin-bottom: 8px; }
-    .header h1 { color: white; font-size: 22px; font-weight: 700; }
-    .header p { color: #9ecfb0; font-size: 13px; margin-top: 4px; }
-
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; max-width: 900px; margin: 0 auto; }
-
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 18px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    }
-    .card-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .card-title { font-size: 15px; font-weight: 700; color: #0a3d1f; display: flex; align-items: center; gap: 6px; }
-    .count-badge {
-      font-size: 13px; font-weight: 700; padding: 3px 10px;
-      border-radius: 20px; color: white;
-    }
-    .badge-friday    { background: #9b59b6; }
-    .badge-saturday  { background: #2ecc71; }
-    .badge-sunday    { background: #3498db; }
-    .badge-monday    { background: #e67e22; }
-    .badge-both      { background: #8e44ad; }
-    .badge-unavailable { background: #e74c3c; }
-
-    .player-list { display: flex; flex-wrap: wrap; gap: 6px; }
-    .pill {
-      font-size: 13px; padding: 5px 12px; border-radius: 20px; font-weight: 500;
-    }
-    .pill-friday     { background: #f9f0ff; color: #6c2fa0; }
-    .pill-saturday   { background: #f0fff4; color: #1a7a3e; }
-    .pill-sunday     { background: #eff6ff; color: #1a5c8a; }
-    .pill-monday     { background: #fff5eb; color: #a04000; }
-    .pill-both       { background: #f5eeff; color: #6c2fa0; }
-    .pill-unavailable { background: #fff0f0; color: #a93226; }
-
-    .empty { color: #bbb; font-size: 13px; font-style: italic; }
-
-    .updated { text-align: center; color: #9ecfb0; font-size: 12px; margin-top: 20px; }
-    .loading { text-align: center; color: white; padding: 40px; font-size: 15px; }
-
     @keyframes navSlideDown {
       from { transform: translateY(-100%); opacity: 0; }
       to   { transform: translateY(0);     opacity: 1; }
@@ -112,33 +20,36 @@
       from { transform: scale(0.6); opacity: 0; }
       to   { transform: scale(1);   opacity: 1; }
     }
-    .site-nav { animation: navSlideDown 0.4s cubic-bezier(0.22,1,0.36,1) both; }
-    .card { animation: cardBounceIn 0.5s cubic-bezier(0.22,1,0.36,1) both; }
-    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); transition: transform 0.2s, box-shadow 0.2s; }
-    .pill { animation: pillPop 0.3s cubic-bezier(0.34,1.56,0.64,1) both; }
+    .nav-animate  { animation: navSlideDown 0.4s cubic-bezier(0.22,1,0.36,1) both; }
+    .card-animate { animation: cardBounceIn 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+    .pill-animate { animation: pillPop 0.3s cubic-bezier(0.34,1.56,0.64,1) both; }
   </style>
 </head>
-<body>
-  <nav class="site-nav">
-    <div class="site-nav-header">
-      <img src="logo.jpg" alt="">
-      <span>Butchers Cricket</span>
-    </div>
-    <div class="site-nav-links">
-      <a href="index.html">Vote</a>
-      <a href="availability.html" class="active">Availability</a>
-      <a href="milestones.html">Milestones</a>
-      <a href="admin.html">Admin</a>
-    </div>
-  </nav>
-  <div class="header">
-    <img src="logo.jpg" alt="Butchers Cricket">
-    <h1>Butchers Cricket</h1>
-    <p id="weekLabel">Loading availability...</p>
+<body class="bg-gradient-to-br from-green-950 via-green-900 to-emerald-950 min-h-screen">
+
+<nav class="nav-animate sticky top-0 z-50 bg-white/10 backdrop-blur-md border-b border-white/10">
+  <div class="flex items-center gap-2.5 px-4 pt-3 pb-1.5">
+    <img src="logo.jpg" alt="" class="w-8 h-8 rounded-full object-cover ring-2 ring-white/30">
+    <span class="text-white font-bold text-sm tracking-wide">Butchers Cricket</span>
+  </div>
+  <div class="flex gap-1 px-3 pb-2">
+    <a href="index.html"        class="text-emerald-300 text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-white/10 transition">Vote</a>
+    <a href="availability.html" class="text-white text-xs font-bold px-3 py-1.5 rounded-lg bg-white/20">Availability</a>
+    <a href="milestones.html"   class="text-emerald-300 text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-white/10 transition">Milestones</a>
+    <a href="admin.html"        class="text-emerald-300 text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-white/10 transition">Admin</a>
+  </div>
+</nav>
+
+<div class="px-5 py-6 max-w-4xl mx-auto">
+  <div class="text-center mb-6">
+    <img src="logo.jpg" alt="Butchers Cricket" class="w-14 h-14 rounded-full object-cover mx-auto mb-3 shadow-lg ring-4 ring-white/20">
+    <h1 class="text-white font-bold text-xl tracking-tight">Butchers Cricket</h1>
+    <p id="weekLabel" class="text-emerald-300 text-xs mt-1">Loading availability...</p>
   </div>
 
-  <div id="root" class="loading">Loading...</div>
-  <p class="updated" id="updatedAt"></p>
+  <div id="root" class="text-white text-center py-10 text-sm">Loading...</div>
+  <p id="updatedAt" class="text-center text-emerald-400/60 text-xs mt-5"></p>
+</div>
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
@@ -152,6 +63,15 @@
 
   const app = initializeApp(FIREBASE_CONFIG);
   const db  = getFirestore(app);
+
+  // pill colour schemes per day
+  const SCHEMES = {
+    friday:      { badge: 'bg-purple-600',  pill: 'bg-purple-50 text-purple-800 border border-purple-200'  },
+    saturday:    { badge: 'bg-emerald-600', pill: 'bg-emerald-50 text-emerald-800 border border-emerald-200' },
+    sunday:      { badge: 'bg-blue-600',    pill: 'bg-blue-50 text-blue-800 border border-blue-200'         },
+    monday:      { badge: 'bg-orange-500',  pill: 'bg-orange-50 text-orange-800 border border-orange-200'   },
+    unavailable: { badge: 'bg-red-500',     pill: 'bg-red-50 text-red-700 border border-red-200'            },
+  };
 
   function nextSaturday() {
     const now = new Date();
@@ -182,7 +102,6 @@
   }
 
   async function load() {
-    // Get poll config for dates and week key
     let weekKey = nextSaturday().toISOString().slice(0, 10);
     let extraDates = [];
     let friLabel = 'Friday', satLabel = 'Saturday', sunLabel = 'Sunday', monLabel = 'Monday';
@@ -216,47 +135,54 @@
       if (v.week !== weekKey) return;
       const name = firstName(v.player || d.id);
       const days = getDays(v);
-      const hasAny = days.length > 0;
       if (days.includes('friday'))   groups.friday.push(name);
       if (days.includes('saturday')) groups.saturday.push(name);
       if (days.includes('sunday'))   groups.sunday.push(name);
       if (days.includes('monday'))   groups.monday.push(name);
-      if (!hasAny) groups.unavailable.push(name);
+      if (!days.length) groups.unavailable.push(name);
     });
 
     const sections = [
       ...(extraDates.includes('friday')  ? [{ key: 'friday',      label: friLabel,       icon: '📅' }] : []),
-      { key: 'saturday',    label: satLabel,       icon: '📅' },
-      { key: 'sunday',      label: sunLabel,       icon: '📅' },
+      { key: 'saturday',    label: satLabel,        icon: '📅' },
+      { key: 'sunday',      label: sunLabel,        icon: '📅' },
       ...(extraDates.includes('monday')  ? [{ key: 'monday',      label: monLabel,       icon: '📅' }] : []),
       { key: 'unavailable', label: 'Not Available', icon: '❌' },
     ];
 
-    const html = `<div class="grid">${sections.map(s => {
-      const names = groups[s.key];
-      const pills = names.length
-        ? names.map(n => `<span class="pill pill-${s.key}">${n}</span>`).join('')
-        : `<span class="empty">No responses yet</span>`;
-      return `
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">${s.icon} ${s.label}</span>
-            <span class="count-badge badge-${s.key}">${names.length}</span>
-          </div>
-          <div class="player-list">${pills}</div>
-        </div>`;
-    }).join('')}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4';
 
-    document.getElementById('root').innerHTML = html;
-    document.querySelectorAll('.card').forEach((c, i) => { c.style.animationDelay = (i * 0.08) + 's'; });
-    document.querySelectorAll('.pill').forEach((p, i) => { p.style.animationDelay = (i * 0.04) + 's'; });
+    sections.forEach((s, i) => {
+      const scheme = SCHEMES[s.key];
+      const names  = groups[s.key];
+      const card = document.createElement('div');
+      card.className = 'card-animate bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl ring-1 ring-white/20';
+      card.style.animationDelay = (i * 0.08) + 's';
+
+      const pillsHtml = names.length
+        ? names.map((n, j) => `<span class="pill-animate ${scheme.pill} text-xs font-medium px-3 py-1 rounded-full" style="animation-delay:${j*0.04}s">${n}</span>`).join('')
+        : `<span class="text-gray-400 text-xs italic">No responses yet</span>`;
+
+      card.innerHTML = `
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-emerald-900 font-bold text-sm">${s.icon} ${s.label}</span>
+          <span class="text-xs font-bold text-white px-2.5 py-0.5 rounded-full ${scheme.badge}">${names.length}</span>
+        </div>
+        <div class="flex flex-wrap gap-2">${pillsHtml}</div>`;
+
+      grid.appendChild(card);
+    });
+
+    document.getElementById('root').className = '';
+    document.getElementById('root').innerHTML = '';
+    document.getElementById('root').appendChild(grid);
     document.getElementById('updatedAt').textContent =
       'Last updated ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
   }
 
-  load().catch(e => {
-    document.getElementById('root').innerHTML = '<p style="color:white;text-align:center">Failed to load. Please refresh.</p>';
-    console.error(e);
+  load().catch(() => {
+    document.getElementById('root').innerHTML = '<p class="text-white text-center">Failed to load. Please refresh.</p>';
   });
 </script>
 </body>

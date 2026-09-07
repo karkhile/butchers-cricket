@@ -4,121 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Butchers Cricket — Upcoming Milestones</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .site-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: #062910;
-      margin: -20px -20px 20px -20px;
+    /* card/row classes used by JS — kept as plain CSS so JS doesn't need Tailwind awareness */
+    * { box-sizing: border-box; }
+    .card, .fastest-card {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(4px);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      ring: 1px solid rgba(255,255,255,0.2);
     }
-    .site-nav-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 16px 6px;
-    }
-    .site-nav-header img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .site-nav-header span {
-      color: white;
-      font-size: 15px;
-      font-weight: 700;
-    }
-    .site-nav-links {
-      display: flex;
-      gap: 2px;
-      padding: 0 10px 6px;
-    }
-    .site-nav-links a {
-      color: #9ecfb0;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 5px 10px;
-      border-radius: 8px;
-      transition: background 0.15s;
-    }
-    .site-nav-links a:hover { background: rgba(255,255,255,0.1); color: white; }
-    .site-nav-links a.active { color: white; font-weight: 700; background: rgba(255,255,255,0.15); }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0a3d1f;
-      min-height: 100vh;
-      padding: 20px;
-      color: #333;
-    }
-    .header { text-align: center; margin-bottom: 20px; }
-    .header img { width: 52px; height: 52px; border-radius: 50%; margin-bottom: 8px; }
-    .header h1 { color: white; font-size: 22px; font-weight: 700; }
-    .header p { color: #9ecfb0; font-size: 13px; margin-top: 4px; }
+    .card-title { font-size: 14px; font-weight: 700; color: #064e3b; margin-bottom: 14px; font-family: -apple-system, sans-serif; }
+    .empty { color: #bbb; font-size: 13px; text-align: center; padding: 10px 0; font-family: -apple-system, sans-serif; }
 
-    .toggle-bar { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-    .toggle-btn {
-      padding: 7px 18px; border-radius: 20px; border: none; cursor: pointer;
-      font-size: 13px; font-weight: 600; transition: all 0.2s;
-    }
-    .toggle-btn.active   { background: white; color: #0a3d1f; }
-    .toggle-btn.inactive { background: rgba(255,255,255,0.15); color: #9ecfb0; }
-    .toggle-btn.inactive:hover { background: rgba(255,255,255,0.25); }
-
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; max-width: 1100px; margin: 0 auto; }
-
-    .card { background: white; border-radius: 16px; padding: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
-    .card-title { font-size: 14px; font-weight: 700; color: #0a3d1f; margin-bottom: 14px; }
-    .empty { color: #bbb; font-size: 13px; text-align: center; padding: 10px 0; }
-
-    /* upcoming rows */
-    .milestone-row { padding: 9px 0; border-bottom: 1px solid #f0f0f0; }
+    .milestone-row { padding: 9px 0; border-bottom: 1px solid #f0f0f0; font-family: -apple-system, sans-serif; }
     .milestone-row:last-child { border-bottom: none; }
     .milestone-row.hot { background: #fffbea; border-radius: 8px; padding: 9px 8px; margin: 2px -8px; }
     .row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
     .player-name { font-size: 13px; font-weight: 600; color: #222; }
     .milestone-row.hot .player-name { color: #a05f00; }
-    .gap-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: #e8f5e9; color: #1b5e20; white-space: nowrap; }
-    .milestone-row.hot .gap-badge { background: #fff3cd; color: #856404; }
-    .progress-wrap { height: 5px; background: #eee; border-radius: 3px; overflow: hidden; }
-    .progress-bar  { height: 100%; border-radius: 3px; background: #2ecc71; }
-    .milestone-row.hot .progress-bar { background: #f39c12; }
+    .gap-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: #d1fae5; color: #065f46; white-space: nowrap; }
+    .milestone-row.hot .gap-badge { background: #fef3c7; color: #92400e; }
+    .progress-wrap { height: 6px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
+    .progress-bar  { height: 100%; border-radius: 4px; }
+    .milestone-row.hot .progress-bar { }
     .row-bottom { display: flex; justify-content: space-between; font-size: 11px; color: #aaa; margin-top: 4px; }
 
-    /* achieved rows */
-    .achieved-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+    .achieved-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-family: -apple-system, sans-serif; }
     .achieved-row:last-child { border-bottom: none; }
     .achieved-name { font-size: 13px; font-weight: 600; color: #222; }
-    .achieved-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: #e8f5e9; color: #1b5e20; white-space: nowrap; }
+    .achieved-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: #d1fae5; color: #065f46; white-space: nowrap; }
     .achieved-sub { font-size: 11px; color: #aaa; margin-top: 1px; }
 
     .view-more-wrap { text-align: center; margin-top: 8px; }
-    .view-more-btn {
-      background: none; border: none; color: #0a3d1f; font-size: 12px; font-weight: 600;
-      cursor: pointer; padding: 4px 0; text-decoration: underline; text-underline-offset: 2px;
-    }
+    .view-more-btn { background: none; border: none; color: #059669; font-size: 12px; font-weight: 600; cursor: pointer; padding: 4px 0; text-decoration: underline; text-underline-offset: 2px; }
     .extra-rows { display: none; }
     .extra-rows.open { display: block; }
 
-    /* fastest tab */
-    .fastest-card { background: white; border-radius: 16px; padding: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
-    .fastest-card .card-title { font-size: 14px; font-weight: 700; color: #0a3d1f; margin-bottom: 14px; }
-    .fastest-section { margin-bottom: 16px; }
+    .fastest-section { margin-bottom: 16px; font-family: -apple-system, sans-serif; }
     .fastest-section:last-child { margin-bottom: 0; }
-    .fastest-threshold { font-size: 12px; font-weight: 700; color: #0a3d1f; background: #e8f5e9; border-radius: 8px; padding: 4px 10px; display: inline-block; margin-bottom: 6px; }
-    .fastest-entry { display: flex; align-items: center; gap: 8px; padding: 4px 0; border-bottom: 1px solid #f5f5f5; }
+    .fastest-threshold { font-size: 12px; font-weight: 700; color: #065f46; background: #d1fae5; border-radius: 8px; padding: 4px 10px; display: inline-block; margin-bottom: 6px; }
+    .fastest-entry { display: flex; align-items: center; gap: 8px; padding: 4px 0; border-bottom: 1px solid #f5f5f5; font-family: -apple-system, sans-serif; }
     .fastest-entry:last-child { border-bottom: none; }
     .fastest-rank { font-size: 12px; font-weight: 700; color: #888; width: 20px; flex-shrink: 0; }
     .fastest-rank.gold   { color: #f0b429; }
     .fastest-rank.silver { color: #8f9ba8; }
     .fastest-rank.bronze { color: #c17b3d; }
     .fastest-name  { font-size: 13px; font-weight: 600; color: #222; flex: 1; }
-    .fastest-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: #e8f5e9; color: #1b5e20; white-space: nowrap; }
+    .fastest-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: #d1fae5; color: #065f46; white-space: nowrap; }
 
-    /* rivalry tab */
-    .rivalry-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f0f0f0; }
+    .rivalry-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-family: -apple-system, sans-serif; }
     .rivalry-row:last-child { border-bottom: none; }
     .rivalry-rank { font-size: 12px; font-weight: 700; color: #888; width: 22px; flex-shrink: 0; }
     .rivalry-rank.gold   { color: #f0b429; }
@@ -127,22 +64,9 @@
     .rivalry-names { flex: 1; }
     .rivalry-batter { font-size: 13px; font-weight: 600; color: #222; }
     .rivalry-bowler { font-size: 11px; color: #888; margin-top: 1px; }
-    .rivalry-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: #e8f5e9; color: #1b5e20; white-space: nowrap; }
-
-    .loading { color: #9ecfb0; text-align: center; padding: 40px; font-size: 14px; }
-    .error   { color: #e74c3c; text-align: center; padding: 40px; font-size: 14px; }
+    .rivalry-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: #d1fae5; color: #065f46; white-space: nowrap; }
 
     @keyframes navSlideDown {
-      from { transform: translateY(-100%); opacity: 0; }
-      to   { transform: translateY(0);     opacity: 1; }
-    }
-    @keyframes cardSlideUp {
-      from { transform: translateY(28px) scale(0.97); opacity: 0; }
-      to   { transform: translateY(0)    scale(1);    opacity: 1; }
-    }
-    @keyframes barFill {
-      from { width: 0 !important; }
-    }
     @keyframes shimmer {
       0%   { background-position: -200% center; }
       100% { background-position:  200% center; }
@@ -168,9 +92,23 @@
       from { transform: translateX(-16px); opacity: 0; }
       to   { transform: translateX(0);     opacity: 1; }
     }
-
-    .site-nav { animation: navSlideDown 0.4s cubic-bezier(0.22,1,0.36,1) both; }
-    .card { animation: cardSlideUp 0.45s cubic-bezier(0.22,1,0.36,1) both; }
+    @keyframes navSlideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+    @keyframes cardSlideUp {
+      from { transform: translateY(28px) scale(0.97); opacity: 0; }
+      to   { transform: translateY(0)    scale(1);    opacity: 1; }
+    }
+    @keyframes barFill { from { width: 0 !important; } }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+    @keyframes hotPulse {
+      0%, 100% { box-shadow: none; }
+      50%       { box-shadow: 0 0 10px 2px rgba(243,156,18,0.45); }
+    }
     .card:hover {
       transform: translateY(-4px) rotate3d(1, 0.5, 0, 1.5deg);
       box-shadow: 0 12px 32px rgba(0,0,0,0.22);
@@ -209,37 +147,49 @@
       display: inline-block;
       animation: medalPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
     }
+    .nav-animate { animation: navSlideDown 0.4s cubic-bezier(0.22,1,0.36,1) both; }
+    .card { animation: cardSlideUp 0.45s cubic-bezier(0.22,1,0.36,1) both; }
+    .fastest-card { animation: cardSlideUp 0.45s cubic-bezier(0.22,1,0.36,1) both; }
+    .card:hover, .fastest-card:hover {
+      transform: translateY(-4px) rotate3d(1, 0.5, 0, 1.5deg);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.22);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
   </style>
 </head>
-<body>
-  <nav class="site-nav">
-    <div class="site-nav-header">
-      <img src="logo.jpg" alt="">
-      <span>Butchers Cricket</span>
-    </div>
-    <div class="site-nav-links">
-      <a href="index.html">Vote</a>
-      <a href="availability.html">Availability</a>
-      <a href="milestones.html" class="active">Milestones</a>
-      <a href="admin.html">Admin</a>
-    </div>
-  </nav>
-  <div class="header">
-    <img src="https://karkhile.github.io/butchers-cricket/logo.png" onerror="this.style.display='none'" alt="">
-    <h1>Milestones</h1>
-    <p id="updated-at">Loading…</p>
+<body class="bg-gradient-to-br from-green-950 via-green-900 to-emerald-950 min-h-screen font-sans">
+
+<nav class="nav-animate sticky top-0 z-50 bg-white/10 backdrop-blur-md border-b border-white/10">
+  <div class="flex items-center gap-2.5 px-4 pt-3 pb-1.5">
+    <img src="logo.jpg" alt="" class="w-8 h-8 rounded-full object-cover ring-2 ring-white/30">
+    <span class="text-white font-bold text-sm tracking-wide">Butchers Cricket</span>
+  </div>
+  <div class="flex gap-1 px-3 pb-2">
+    <a href="index.html"        class="text-emerald-300 text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-white/10 transition no-underline">Vote</a>
+    <a href="availability.html" class="text-emerald-300 text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-white/10 transition no-underline">Availability</a>
+    <a href="milestones.html"   class="text-white text-xs font-bold px-3 py-1.5 rounded-lg bg-white/20 no-underline">Milestones</a>
+    <a href="admin.html"        class="text-emerald-300 text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-white/10 transition no-underline">Admin</a>
+  </div>
+</nav>
+
+<div class="px-5 py-6 max-w-5xl mx-auto">
+  <div class="text-center mb-5">
+    <img src="logo.jpg" onerror="this.style.display='none'" alt="" class="w-14 h-14 rounded-full object-cover mx-auto mb-3 shadow-lg ring-4 ring-white/20">
+    <h1 class="text-white font-bold text-xl tracking-tight">Milestones</h1>
+    <p id="updated-at" class="text-emerald-300 text-xs mt-1">Loading…</p>
   </div>
 
-  <div class="toggle-bar">
-    <button class="toggle-btn active"   id="btn-big"      onclick="setView('big')">Major upcoming</button>
-    <button class="toggle-btn inactive" id="btn-all"      onclick="setView('all')">All upcoming</button>
-    <button class="toggle-btn inactive" id="btn-achieved" onclick="setView('achieved')">🏆 Achieved</button>
-    <button class="toggle-btn inactive" id="btn-fastest"  onclick="setView('fastest')">⚡ Fastest</button>
-    <button class="toggle-btn inactive" id="btn-rivalries" onclick="setView('rivalries')">⚔️ Rivalries</button>
-    <button class="toggle-btn inactive" id="btn-analysis" onclick="setView('analysis')">📊 Analysis</button>
+  <div class="flex justify-center gap-2 mb-5 flex-wrap">
+    <button id="btn-big"       onclick="setView('big')"       class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition active">Major upcoming</button>
+    <button id="btn-all"       onclick="setView('all')"       class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">All upcoming</button>
+    <button id="btn-achieved"  onclick="setView('achieved')"  class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">🏆 Achieved</button>
+    <button id="btn-fastest"   onclick="setView('fastest')"   class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">⚡ Fastest</button>
+    <button id="btn-rivalries" onclick="setView('rivalries')" class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">⚔️ Rivalries</button>
+    <button id="btn-analysis"  onclick="setView('analysis')"  class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">📊 Analysis</button>
   </div>
 
-  <div id="content" class="loading">Fetching milestones…</div>
+  <div id="content" class="text-emerald-300 text-center py-10 text-sm">Fetching milestones…</div>
+</div>
 
   <script>
     let _data = null;
@@ -265,24 +215,30 @@
         const d = new Date(data.updatedAt);
         document.getElementById('updated-at').textContent =
           'Updated ' + d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
-        render();
+        // init toggle styles
+        setView(_view);
       })
       .catch(() => {
-        document.getElementById('content').className = 'error';
+        document.getElementById('content').className = 'text-red-400 text-center py-10 text-sm';
         document.getElementById('content').textContent = 'Could not load milestones data.';
       });
 
     function setView(v) {
       _view = v;
       ['big','all','achieved','fastest','rivalries','analysis'].forEach(k => {
-        document.getElementById('btn-' + k).className = 'toggle-btn ' + (v === k ? 'active' : 'inactive');
+        const btn = document.getElementById('btn-' + k);
+        if (v === k) {
+          btn.style.background = 'white'; btn.style.color = '#064e3b';
+        } else {
+          btn.style.background = 'rgba(255,255,255,0.15)'; btn.style.color = '#6ee7b7';
+        }
       });
       if (_data) render();
     }
 
     function render() {
       const el = document.getElementById('content');
-      el.className = 'grid';
+      el.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto px-5 pb-8';
       el.innerHTML = '';
       if (_view === 'achieved') {
         for (const c of CARDS) {
