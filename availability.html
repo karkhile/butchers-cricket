@@ -97,7 +97,7 @@
   function fmt(dateStr) {
     if (!dateStr) return '';
     const d = new Date(dateStr + 'T12:00:00');
-    return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
   }
 
   function getDays(v) {
@@ -128,10 +128,10 @@
           const fri = new Date(sat); fri.setDate(sat.getDate() - 1);
           const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
           const mon = new Date(sat); mon.setDate(sat.getDate() + 2);
-          friLabel = 'Friday '   + fmt(fri.toISOString().slice(0, 10));
-          satLabel = 'Saturday ' + fmt(pd.satDate);
-          sunLabel = 'Sunday '   + fmt(sun.toISOString().slice(0, 10));
-          monLabel = 'Monday '   + fmt(mon.toISOString().slice(0, 10));
+          friLabel = 'Friday, '   + fmt(fri.toISOString().slice(0, 10));
+          satLabel = 'Saturday, ' + fmt(pd.satDate);
+          sunLabel = 'Sunday, '   + fmt(sun.toISOString().slice(0, 10));
+          monLabel = 'Monday, '   + fmt(mon.toISOString().slice(0, 10));
         }
         if (pd.extraDates) extraDates = pd.extraDates;
       }
