@@ -941,6 +941,7 @@
 
   // ── INIT (called after login) ─────────────────────────────────────────────────
   async function initAdmin() {
+    try {
     const weekKey = getWeekKey();
     document.getElementById('weekLabel').textContent = 'Week of ' + weekKey + '  •  Admin Panel';
 
@@ -1002,6 +1003,10 @@
     if (window._state.teamA.length > 0 || window._state.teamB.length > 0) {
       showTab('teams');
     }
+  }
+  } catch(e) {
+    document.getElementById('weekLabel').textContent = 'Error loading: ' + e.message;
+    document.getElementById('playerList').innerHTML = '<div style="color:red">Error: ' + e.message + '</div>';
   }
   } // end initAdmin
 
