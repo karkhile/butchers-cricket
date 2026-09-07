@@ -10,40 +10,36 @@
       top: 0;
       z-index: 100;
       background: #062910;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      height: 48px;
       margin: -20px -20px 20px -20px;
     }
-    .site-nav-brand {
+    .site-nav-header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      text-decoration: none;
+      gap: 10px;
+      padding: 10px 16px 6px;
     }
-    .site-nav-brand img {
-      width: 28px;
-      height: 28px;
+    .site-nav-header img {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       object-fit: cover;
     }
-    .site-nav-brand span {
+    .site-nav-header span {
       color: white;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
     }
     .site-nav-links {
       display: flex;
-      gap: 4px;
+      gap: 2px;
+      padding: 0 10px 6px;
     }
     .site-nav-links a {
       color: #9ecfb0;
       text-decoration: none;
       font-size: 13px;
       font-weight: 500;
-      padding: 6px 10px;
+      padding: 5px 10px;
       border-radius: 8px;
       transition: background 0.15s;
     }
@@ -105,10 +101,10 @@
 </head>
 <body>
   <nav class="site-nav">
-    <a class="site-nav-brand" href="index.html">
+    <div class="site-nav-header">
       <img src="logo.jpg" alt="">
       <span>Butchers Cricket</span>
-    </a>
+    </div>
     <div class="site-nav-links">
       <a href="index.html">Vote</a>
       <a href="availability.html" class="active">Availability</a>

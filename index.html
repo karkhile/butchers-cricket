@@ -141,39 +141,36 @@
       top: 0;
       z-index: 100;
       background: #062910;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      height: 48px;
     }
-    .site-nav-brand {
+    .site-nav-header {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      padding: 10px 16px 6px;
       text-decoration: none;
     }
-    .site-nav-brand img {
-      width: 28px;
-      height: 28px;
+    .site-nav-header img {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       object-fit: cover;
     }
-    .site-nav-brand span {
+    .site-nav-header span {
       color: white;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
     }
     .site-nav-links {
       display: flex;
-      gap: 4px;
+      gap: 2px;
+      padding: 0 10px 6px;
     }
     .site-nav-links a {
       color: #9ecfb0;
       text-decoration: none;
       font-size: 13px;
       font-weight: 500;
-      padding: 6px 10px;
+      padding: 5px 10px;
       border-radius: 8px;
       transition: background 0.15s;
     }
@@ -184,7 +181,7 @@
     .name-picker .big { font-size: 48px; }
     .name-picker h2 { font-size: 20px; font-weight: 700; color: #333; margin-top: 12px; }
     .name-picker p { font-size: 14px; color: #666; margin-top: 8px; }
-    .name-picker select {
+    .name-picker input[list] {
       display: block;
       width: 100%;
       margin: 16px 0 12px;
@@ -194,13 +191,8 @@
       border-radius: 10px;
       background: white;
       color: #333;
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230a3d1f' stroke-width='2' fill='none'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
     }
-    .name-picker select:focus { outline: none; border-color: #0a3d1f; }
+    .name-picker input[list]:focus { outline: none; border-color: #0a3d1f; }
     .name-picker .go-btn {
       width: 100%;
       padding: 14px;
@@ -228,10 +220,10 @@
 </head>
 <body>
 <nav class="site-nav">
-  <a class="site-nav-brand" href="index.html">
+  <div class="site-nav-header">
     <img src="logo.jpg" alt="">
     <span>Butchers Cricket</span>
-  </a>
+  </div>
   <div class="site-nav-links">
     <a href="index.html" class="active">Vote</a>
     <a href="availability.html">Availability</a>
@@ -483,20 +475,20 @@
         <div class="name-picker">
           <div class="big">🏏</div>
           <h2>Who are you?</h2>
-          <p>Pick your name to vote</p>
-          <select id="namePicker">
-            <option value="">Select your name…</option>
-            ${ROSTER_NAMES.map(n => `<option value="${n}">${n}</option>`).join('')}
-          </select>
+          <p>Start typing your name</p>
+          <input list="rosterList" id="namePicker" placeholder="Type your name…" autocomplete="off">
+          <datalist id="rosterList">
+            ${ROSTER_NAMES.map(n => `<option value="${n}">`).join('')}
+          </datalist>
           <button class="go-btn" id="goBtn" disabled>Let's go</button>
         </div>`;
 
-      const sel = document.getElementById('namePicker');
+      const inp = document.getElementById('namePicker');
       const btn = document.getElementById('goBtn');
-      sel.addEventListener('change', () => { btn.disabled = !sel.value; });
+      inp.addEventListener('input', () => { btn.disabled = !ROSTER_NAMES.includes(inp.value); });
       btn.addEventListener('click', () => {
-        if (!sel.value) return;
-        localStorage.setItem('playerName', sel.value);
+        if (!ROSTER_NAMES.includes(inp.value)) return;
+        localStorage.setItem('playerName', inp.value);
         location.reload();
       });
       return;
