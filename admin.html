@@ -190,8 +190,8 @@
     </div>
   </div>
 
-  <!-- Teams section (always visible) -->
-  <div id="tab-teams">
+  <!-- Teams section (hidden until Go to Teams) -->
+  <div id="tab-teams" style="display:none">
     <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-xl ring-1 ring-white/20 mb-4">
       <h2 class="text-sm font-bold text-emerald-900 mb-3">👥 Build Teams</h2>
       <div class="text-xs text-gray-400 mb-4" id="balanceInfo">Drag players into each team, or use Auto Balance.</div>
@@ -232,6 +232,7 @@
       </button>
     </div>
     <div class="mb-3">
+      <button onclick="showTab('poll')" class="px-4 py-2 bg-white/15 hover:bg-white/25 text-white text-xs font-semibold rounded-xl border border-white/20 transition">← Back to Poll</button>
     </div>
     <div class="log" id="log"></div>
   </div><!-- end tab-teams -->
@@ -836,8 +837,11 @@
     document.getElementById('createBtn').disabled = false;
   };
 
-  // ── TABS (no-op — all content is always visible) ─────────────────────────────
-  window.showTab = function(tab) {};
+  // ── TABS ──────────────────────────────────────────────────────────────────────
+  window.showTab = function(tab) {
+    document.getElementById('tab-poll').style.display  = tab === 'poll'  ? 'block' : 'none';
+    document.getElementById('tab-teams').style.display = tab === 'teams' ? 'block' : 'none';
+  };
 
   // ── REFRESH STATS ────────────────────────────────────────────────────────────
   window.refreshStats = async function() {
