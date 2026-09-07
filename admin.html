@@ -937,8 +937,11 @@
       alert('Poll reset — all votes cleared and poll reopened.');
     } catch(e) { alert('Failed: ' + e.message); }
   };
-  const weekKey = getWeekKey();
-  document.getElementById('weekLabel').textContent = 'Week of ' + weekKey + '  •  Admin Panel';
+
+  // ── INIT (called after login) ─────────────────────────────────────────────────
+  async function initAdmin() {
+    const weekKey = getWeekKey();
+    document.getElementById('weekLabel').textContent = 'Week of ' + weekKey + '  •  Admin Panel';
 
   // Load poll open/closed state — auto-reset on match day at 11:59 PM, open for next weekend
   try {
@@ -991,15 +994,25 @@
 
   window._state.votes  = votes;
   window._state.roster = roster;
-  renderPoll(votes, roster);  // strength is already loaded above, so points are correct
+  renderPoll(votes, roster);
 
-  // Restore saved team state for this week (but stay on Poll tab — only switch if teams exist)
   if (loadTeamState()) {
     renderTeamBuilder();
     if (window._state.teamA.length > 0 || window._state.teamB.length > 0) {
       showTab('teams');
     }
   }
+  } // end initAdmin
+
+  // Call initAdmin after login succeeds
+  const _origCheckLogin = window.checkLogin;
+  window.checkLogin = async function() {
+    await _origCheckLogin();
+    if (sessionStorage.getItem('bcc-admin') === '1') initAdmin();
+  };
+
+  // Also run if already logged in (session restore)
+  if (sessionStorage.getItem('bcc-admin') === '1') initAdmin();
 </script>
 <script>
   // Plain script — wires login after module has had time to set window.checkLogin
