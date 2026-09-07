@@ -28,8 +28,8 @@
     .gap-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: #d1fae5; color: #065f46; white-space: nowrap; }
     .milestone-row.hot .gap-badge { background: #fef3c7; color: #92400e; }
     .progress-wrap { height: 6px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
-    .progress-bar  { height: 100%; border-radius: 4px; }
-    .milestone-row.hot .progress-bar { }
+    .progress-bar  { height: 6px; border-radius: 4px; min-height: 6px; display: block; }
+    .milestone-row.hot .progress-bar { display: block; }
     .row-bottom { display: flex; justify-content: space-between; font-size: 11px; color: #aaa; margin-top: 4px; }
 
     .achieved-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-family: -apple-system, sans-serif; }
@@ -74,7 +74,7 @@
       from { transform: translateY(28px) scale(0.97); opacity: 0; }
       to   { transform: translateY(0)    scale(1);    opacity: 1; }
     }
-    @keyframes barFill { from { width: 0 !important; } }
+    @keyframes barFill { from { width: 0; } }
     @keyframes shimmer {
       0%   { background-position: -200% center; }
       100% { background-position:  200% center; }
@@ -111,13 +111,13 @@
 
     /* progress bar: animate fill + shimmer highlight */
     .progress-bar {
-      background: linear-gradient(90deg, #2ecc71 0%, #27ae60 40%, #a8f5c8 55%, #27ae60 70%, #2ecc71 100%) !important;
-      background-size: 200% 100% !important;
+      background: linear-gradient(90deg, #2ecc71 0%, #27ae60 40%, #a8f5c8 55%, #27ae60 70%, #2ecc71 100%);
+      background-size: 200% 100%;
       animation: barFill 0.7s cubic-bezier(0.22,1,0.36,1) both, shimmer 2.5s linear 0.8s infinite;
     }
     .milestone-row.hot .progress-bar {
-      background: linear-gradient(90deg, #f39c12 0%, #e67e22 40%, #ffd97a 55%, #e67e22 70%, #f39c12 100%) !important;
-      background-size: 200% 100% !important;
+      background: linear-gradient(90deg, #f39c12 0%, #e67e22 40%, #ffd97a 55%, #e67e22 70%, #f39c12 100%);
+      background-size: 200% 100%;
       animation: barFill 0.7s cubic-bezier(0.22,1,0.36,1) both, shimmer 1.8s linear 0.8s infinite;
     }
 
@@ -138,6 +138,18 @@
   <div class="flex items-center gap-2.5 px-4 pt-3 pb-1.5">
     <img src="logo.jpg" alt="" class="w-8 h-8 rounded-full object-cover ring-2 ring-white/30">
     <span class="text-white font-bold text-sm tracking-wide">Butchers Cricket</span>
+    <div class="ml-auto flex items-center gap-2">
+      <a href="https://youtube.com/@butcherscricketteam-x8o" target="_blank" rel="noopener"
+         class="flex items-center gap-1.5 text-xs text-white/70 hover:text-red-400 transition px-2 py-1 rounded-lg hover:bg-white/10">
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+        <span class="hidden sm:inline">YouTube</span>
+      </a>
+      <a href="https://www.instagram.com/butchers_cricket_team" target="_blank" rel="noopener"
+         class="flex items-center gap-1.5 text-xs text-white/70 hover:text-pink-400 transition px-2 py-1 rounded-lg hover:bg-white/10">
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        <span class="hidden sm:inline">Instagram</span>
+      </a>
+    </div>
   </div>
   <div class="flex gap-1 px-3 pb-2">
     <a href="index.html"        class="text-emerald-300 text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-white/10 transition no-underline">Vote</a>
