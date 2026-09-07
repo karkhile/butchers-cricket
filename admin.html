@@ -271,6 +271,7 @@
         document.getElementById('main-content').style.display = 'block';
         sessionStorage.setItem('bcc-admin', '1');
         sessionStorage.setItem('bcc-cc-token', snap.data().ccToken || '');
+        initAdmin();
       } else {
         const err = document.getElementById('pwErr');
         err.classList.remove('hidden');
@@ -1004,14 +1005,7 @@
   }
   } // end initAdmin
 
-  // Call initAdmin after login succeeds
-  const _origCheckLogin = window.checkLogin;
-  window.checkLogin = async function() {
-    await _origCheckLogin();
-    if (sessionStorage.getItem('bcc-admin') === '1') initAdmin();
-  };
-
-  // Also run if already logged in (session restore)
+  // Run initAdmin if already logged in (session restore)
   if (sessionStorage.getItem('bcc-admin') === '1') initAdmin();
 </script>
 <script>
