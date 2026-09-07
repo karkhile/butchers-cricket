@@ -507,9 +507,15 @@
     // Resolve identity: URL param → localStorage → picker
     let playerName = sanitizeName(params.get('player'));
     if (playerName) {
-      localStorage.setItem('playerName', playerName);
-    } else {
+      if (ROSTER_NAMES.includes(playerName)) {
+        localStorage.setItem('playerName', playerName);
+      } else {
+        playerName = '';
+      }
+    }
+    if (!playerName) {
       playerName = sanitizeName(localStorage.getItem('playerName'));
+      if (!ROSTER_NAMES.includes(playerName)) playerName = '';
     }
 
     if (!playerName) {
