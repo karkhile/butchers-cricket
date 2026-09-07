@@ -1005,13 +1005,22 @@
     }
   }
   } catch(e) {
-    document.getElementById('weekLabel').textContent = 'Error loading: ' + e.message;
-    document.getElementById('playerList').innerHTML = '<div style="color:red">Error: ' + e.message + '</div>';
+    const wl = document.getElementById('weekLabel');
+    const pl = document.getElementById('playerList');
+    if (wl) wl.textContent = 'Error: ' + e.message;
+    if (pl) pl.innerHTML = '<div style="color:red">Error: ' + e.message + '<br>' + (e.stack||'').split('\n').slice(0,3).join('<br>') + '</div>';
+    else alert('initAdmin error: ' + e.message + '\n' + e.stack);
   }
   } // end initAdmin
 
   // Run initAdmin if already logged in (session restore)
-  if (sessionStorage.getItem('bcc-admin') === '1') initAdmin();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      if (sessionStorage.getItem('bcc-admin') === '1') initAdmin();
+    });
+  } else {
+    if (sessionStorage.getItem('bcc-admin') === '1') initAdmin();
+  }
 </script>
 <script>
   // Plain script — wires login after module has had time to set window.checkLogin
