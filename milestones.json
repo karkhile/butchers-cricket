@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-07T07:10:18.247Z",
+  "updatedAt": "2026-09-07T21:42:41.446Z",
   "batting": {
     "big": [
       {
@@ -1899,6 +1899,48 @@
         "current": 4,
         "next": 5,
         "gap": 1
+      },
+      {
+        "name": "Anil M",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Arjun S",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Hari V",
+        "current": 2,
+        "next": 5,
+        "gap": 3
+      },
+      {
+        "name": "Sylvestor G",
+        "current": 2,
+        "next": 5,
+        "gap": 3
+      },
+      {
+        "name": "Eshwar Chaitanya S",
+        "current": 2,
+        "next": 5,
+        "gap": 3
+      },
+      {
+        "name": "Lokesh",
+        "current": 1,
+        "next": 5,
+        "gap": 4
+      },
+      {
+        "name": "Arpan D",
+        "current": 1,
+        "next": 5,
+        "gap": 4
       }
     ],
     "all": [
@@ -1907,6 +1949,48 @@
         "current": 4,
         "next": 5,
         "gap": 1
+      },
+      {
+        "name": "Anil M",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Arjun S",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Hari V",
+        "current": 2,
+        "next": 5,
+        "gap": 3
+      },
+      {
+        "name": "Sylvestor G",
+        "current": 2,
+        "next": 5,
+        "gap": 3
+      },
+      {
+        "name": "Eshwar Chaitanya S",
+        "current": 2,
+        "next": 5,
+        "gap": 3
+      },
+      {
+        "name": "Lokesh",
+        "current": 1,
+        "next": 5,
+        "gap": 4
+      },
+      {
+        "name": "Arpan D",
+        "current": 1,
+        "next": 5,
+        "gap": 4
       }
     ],
     "achieved": [
@@ -2107,6 +2191,366 @@
         "current": 2,
         "next": 3,
         "gap": 1
+      },
+      {
+        "name": "Chaitanya Teja G/Sylvestor G",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Vinay B/Sylvestor G",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Sylvestor G/Gaurav K",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Vinay B",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Soumya Smruti M",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Shriganesh S",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Arpan D",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Praveen K/Soumya Smruti M",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Arjun S/Hari V",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Hari V",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Arpan D/Abhishek L",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Abhishek L/Yash M",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Gaurav M/Yash M",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Hari V/Arjun S",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Santosh G",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Arjun S/Praveen K",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Subham S",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Vinay B/Arjun S",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Praveen K/Sylvestor G",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Arjun D/Arjun S",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Arpan D/Prashant K",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Kaushal K",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Sylvestor G/Hari V",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Yash M/Abhishek Kumar S",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Abhishek L/Abhishek Kumar S",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Gaurav M/Jay S",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Jay S",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Sylvestor G/Abhishek Kumar S",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Vinay B/Yash M",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Sylvestor G/Jay S",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Praveen K",
+        "current": 3,
+        "next": 5,
+        "gap": 2
+      },
+      {
+        "name": "Harsha Vardhan Reddy V",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Arpan D/Praveen K",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Mohan C",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Kaushal K/Arpan D",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Shivang S/Kunal K",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Arjun S/Jimit M",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Prashant K/Anjan K",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Soumya Smruti M/Prashant K",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Venkata Krishna R",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "tarun J/Kunal K",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Rajeev T",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Prashant K/Rajeev T",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Lokesh B",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Akashdeep B/Rajeev T",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Lokesh B/Anil M",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Rajeev T/Anil M",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Abhishek Kumar S/Venkata Krishna R",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Rijwan R",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Prashant K/Anil M",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Prashant K/Shashank D",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Gaurav M/Rijwan R",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Prashant K/Srinath S",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Akashdeep B",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Gaurav K/Anil M",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Gaurav K/Eshwar Chaitanya S",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Anjan K/Rajeev T",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Arpan D/Hari V",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Hari V/Prashant K",
+        "current": 1,
+        "next": 3,
+        "gap": 2
+      },
+      {
+        "name": "Kunal K",
+        "current": 1,
+        "next": 3,
+        "gap": 2
       }
     ],
     "achieved": [
