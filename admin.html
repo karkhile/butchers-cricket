@@ -300,8 +300,6 @@
   // Wire up login button and Enter key from within the module
   document.getElementById('loginBtn').addEventListener('click', window.checkLogin);
   document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') window.checkLogin(); });
-
-  // Auto-login if already authenticated this session
   if (sessionStorage.getItem('bcc-admin') === '1') {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('main-content').style.display = 'block';
@@ -1024,6 +1022,15 @@
       showTab('teams');
     }
   }
+</script>
+<script>
+  // Plain script — wires login after module has had time to set window.checkLogin
+  window.addEventListener('load', function() {
+    var btn = document.getElementById('loginBtn');
+    var inp = document.getElementById('pwInput');
+    if (btn) btn.onclick = function() { if (window.checkLogin) window.checkLogin(); else alert('Page not fully loaded yet, please wait a moment.'); };
+    if (inp) inp.onkeydown = function(e) { if (e.key === 'Enter' && window.checkLogin) window.checkLogin(); };
+  });
 </script>
 </body>
 </html>
