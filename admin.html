@@ -646,7 +646,6 @@
 
     document.getElementById('countSat').textContent     = counts.saturday;
     document.getElementById('countSun').textContent     = counts.sunday;
-    document.getElementById('countBoth').textContent    = thisWeek.filter(([, v]) => { const d = getDays(v); return d.includes('saturday') && d.includes('sunday'); }).length;
     document.getElementById('countNA').textContent      = counts.unavailable;
     document.getElementById('countPending').textContent = total - voted;
     document.getElementById('responseBar').style.width  = Math.round(voted / total * 100) + '%';
