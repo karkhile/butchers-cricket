@@ -134,12 +134,7 @@
       <span id="refreshStatsStatus" class="text-emerald-300 text-xs"></span>
     </div>
 
-    <div class="flex gap-2 mb-5" id="tabBar">
-      <button onclick="showTab('poll')"  class="tab px-4 py-2 rounded-xl text-xs font-semibold border-0 cursor-pointer transition bg-white text-emerald-900 active">📊 Poll</button>
-      <button onclick="showTab('teams')" class="tab px-4 py-2 rounded-xl text-xs font-semibold border-0 cursor-pointer transition bg-white/15 text-white">👥 Teams</button>
-    </div>
-
-    <!-- Poll Tab -->
+    <!-- Poll + Teams content (no tabs) -->
     <div id="tab-poll">
       <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-4 mb-4 shadow-xl ring-1 ring-white/20 flex items-center gap-3 flex-wrap">
         <span class="text-sm font-semibold text-gray-600">Poll status:</span>
@@ -169,10 +164,6 @@
             <span class="stat-value sunday font-bold text-lg" id="countSun">—</span>
           </div>
           <div class="stat-row flex justify-between items-center py-2 border-b border-gray-100">
-            <span class="stat-label text-sm text-gray-500 flex items-center gap-2">🙌 Both Days</span>
-            <span class="font-bold text-lg text-purple-600" id="countBoth">—</span>
-          </div>
-          <div class="stat-row flex justify-between items-center py-2 border-b border-gray-100">
             <span class="stat-label text-sm text-gray-500 flex items-center gap-2">❌ Not Available</span>
             <span class="stat-value unavailable font-bold text-lg" id="countNA">—</span>
           </div>
@@ -199,8 +190,8 @@
     </div>
   </div>
 
-  <!-- Teams Tab -->
-  <div id="tab-teams" style="display:none">
+  <!-- Teams section (always visible) -->
+  <div id="tab-teams">
     <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-xl ring-1 ring-white/20 mb-4">
       <h2 class="text-sm font-bold text-emerald-900 mb-3">👥 Build Teams</h2>
       <div class="text-xs text-gray-400 mb-4" id="balanceInfo">Drag players into each team, or use Auto Balance.</div>
@@ -241,7 +232,6 @@
       </button>
     </div>
     <div class="mb-3">
-      <button onclick="showTab('poll')" class="px-4 py-2 bg-white/15 hover:bg-white/25 text-white text-xs font-semibold rounded-xl border border-white/20 transition">← Back to Poll</button>
     </div>
     <div class="log" id="log"></div>
   </div><!-- end tab-teams -->
@@ -846,16 +836,8 @@
     document.getElementById('createBtn').disabled = false;
   };
 
-  // ── TABS ──────────────────────────────────────────────────────────────────────
-  window.showTab = function(tab) {
-    document.getElementById('tab-poll').style.display  = tab === 'poll'  ? 'block' : 'none';
-    document.getElementById('tab-teams').style.display = tab === 'teams' ? 'block' : 'none';
-    document.querySelectorAll('#tabBar .tab').forEach((t, i) => {
-      const active = (i === 0) === (tab === 'poll');
-      t.style.background = active ? 'white' : 'rgba(255,255,255,0.15)';
-      t.style.color = active ? '#064e3b' : 'white';
-    });
-  };
+  // ── TABS (no-op — all content is always visible) ─────────────────────────────
+  window.showTab = function(tab) {};
 
   // ── REFRESH STATS ────────────────────────────────────────────────────────────
   window.refreshStats = async function() {
