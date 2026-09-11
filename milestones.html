@@ -629,7 +629,7 @@
     }
 
     function renderAnalysis(el) {
-      el.appendChild(buildCaptainCard(_data.captainStats || []));
+      el.appendChild(buildWinPctCard(_data.captainStats || []));
       el.appendChild(buildMatchRescuersCard(_data.matchRescuers || []));
       el.appendChild(buildDisciplinedCard(_data.disciplined || []));
       el.appendChild(buildBoundaryOffCard('6️⃣ Sixes Conceded %', _data.sixesOffPct || [], 'sixes', 'six', 'Bowlers ranked by the % of balls they bowled that were hit for a six. Lower is better — helps identify who gets hit over the ropes most often.'));
@@ -640,11 +640,35 @@
       el.appendChild(buildGameChangerCard('🛡️ Low-Score Defenders', gc.defenders || [], 'bowler'));
     }
 
+    function buildWinPctCard(items) {
+      const card = document.createElement('div');
+      card.className = 'fastest-card';
+      card.innerHTML = '<div class="card-title">📊 Captain Win %</div>' +
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Win percentage as captain (min 3 games).</div>';
+      const filtered = items.filter(c => c.total >= 3).sort((a, b) => b.winPct - a.winPct);
+      if (!filtered.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
+      filtered.forEach(cap => {
+        const color = cap.winPct >= 60 ? '#16a34a' : cap.winPct >= 45 ? '#d97706' : '#dc2626';
+        const row = document.createElement('div');
+        row.style.cssText = 'padding:7px 0;border-bottom:1px solid #f0f0f0;';
+        row.innerHTML =
+          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">' +
+            '<span style="font-size:13px;font-weight:600;color:#222;">' + cap.name + '</span>' +
+            '<span style="font-size:11px;font-weight:700;color:' + color + ';">' + cap.wins + 'W ' + cap.losses + 'L · ' + cap.winPct + '%</span>' +
+          '</div>' +
+          '<div style="height:6px;background:#e5e7eb;border-radius:4px;overflow:hidden;">' +
+            '<div style="height:100%;width:' + cap.winPct + '%;background:' + color + ';border-radius:4px;transition:width 0.6s ease;"></div>' +
+          '</div>';
+        card.appendChild(row);
+      });
+      return card;
+    }
+
     function buildCaptainCard(items) {
       const card = document.createElement('div');
       card.className = 'fastest-card';
-      card.innerHTML = '<div class="card-title">🏆 Captain Win Records</div>' +
-        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Overall win/loss record as captain. Tap a captain to see head-to-head breakdown.</div>';
+      card.innerHTML = '<div class="card-title">⚔️ Captain vs Captain</div>' +
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Head-to-head records between captains. Tap to expand.</div>';
       if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
       items.forEach((cap, i) => {
         const wrap = document.createElement('div');
@@ -761,6 +785,7 @@
     }
 
     function renderRivalries(el) {
+      el.appendChild(buildCaptainCard(_data.captainStats || []));
       const r = _data.rivalries || {};
       el.appendChild(buildRivalryCard('⚔️ Most Sixes off a Bowler', r.sixes || [], '6️⃣', 'sixes'));
       el.appendChild(buildRivalryCard('⚔️ Most Fours off a Bowler', r.fours || [], '4️⃣', 'fours'));
