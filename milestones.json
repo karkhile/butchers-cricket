@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-07T21:42:41.446Z",
+  "updatedAt": "2026-09-11T22:35:47.813Z",
   "batting": {
     "big": [
       {
@@ -529,7 +529,7 @@
         "gap": 4
       },
       {
-        "name": "tarun JOSHI",
+        "name": "Tarun Joshi",
         "current": 6,
         "next": 10,
         "gap": 4
@@ -811,7 +811,7 @@
         "gap": 9
       },
       {
-        "name": "Tarun JOSHI",
+        "name": "Tarun Joshi",
         "current": 1,
         "next": 10,
         "gap": 9
@@ -2433,7 +2433,7 @@
         "gap": 2
       },
       {
-        "name": "tarun J/Kunal K",
+        "name": "Tarun J/Kunal K",
         "current": 1,
         "next": 3,
         "gap": 2
@@ -5566,7 +5566,7 @@
       "matches": 7
     },
     {
-      "name": "tarun JOSHI",
+      "name": "Tarun Joshi",
       "count": 15,
       "matches": 6
     },
@@ -5713,7 +5713,7 @@
   ],
   "leastNoBalls": [
     {
-      "name": "tarun JOSHI",
+      "name": "Tarun Joshi",
       "count": 0,
       "matches": 6
     },
@@ -5987,7 +5987,7 @@
       "noBalls": 0
     },
     {
-      "name": "tarun JOSHI",
+      "name": "Tarun Joshi",
       "extras": 15,
       "balls": 90,
       "pct": 16.7,
@@ -6423,7 +6423,7 @@
       "pct": 2.9
     },
     {
-      "name": "tarun J",
+      "name": "Tarun J",
       "sixes": 3,
       "balls": 105,
       "pct": 2.9
@@ -6581,7 +6581,7 @@
       "pct": 3.7
     },
     {
-      "name": "tarun J",
+      "name": "Tarun J",
       "fours": 4,
       "balls": 105,
       "pct": 3.8
@@ -6645,6 +6645,511 @@
       "fours": 15,
       "balls": 127,
       "pct": 11.8
+    }
+  ],
+  "captainStats": [
+    {
+      "name": "Sylvestor George",
+      "wins": 15,
+      "losses": 12,
+      "total": 27,
+      "winPct": 56,
+      "against": [
+        {
+          "opponent": "Anjan Kumar",
+          "wins": 5,
+          "losses": 3,
+          "total": 8,
+          "winPct": 63
+        },
+        {
+          "opponent": "Prashant Kumar",
+          "wins": 5,
+          "losses": 3,
+          "total": 8,
+          "winPct": 63
+        },
+        {
+          "opponent": "Yash Mehta",
+          "wins": 1,
+          "losses": 2,
+          "total": 3,
+          "winPct": 33
+        },
+        {
+          "opponent": "Vinay Bharbhari",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
+        },
+        {
+          "opponent": "Abhishek Kumar Singh",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
+        },
+        {
+          "opponent": "Gaurav Mehta",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
+        },
+        {
+          "opponent": "Piyush Jha",
+          "wins": 0,
+          "losses": 1,
+          "total": 1,
+          "winPct": 0
+        },
+        {
+          "opponent": "Praveen Karkhile",
+          "wins": 1,
+          "losses": 0,
+          "total": 1,
+          "winPct": 100
+        }
+      ]
+    },
+    {
+      "name": "Praveen Karkhile",
+      "wins": 13,
+      "losses": 13,
+      "total": 26,
+      "winPct": 50,
+      "against": [
+        {
+          "opponent": "Abhishek Kumar Singh",
+          "wins": 9,
+          "losses": 11,
+          "total": 20,
+          "winPct": 45
+        },
+        {
+          "opponent": "Gaurav Mehta",
+          "wins": 2,
+          "losses": 0,
+          "total": 2,
+          "winPct": 100
+        },
+        {
+          "opponent": "Soumya Smruti Mishra",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
+        },
+        {
+          "opponent": "Sylvestor George",
+          "wins": 0,
+          "losses": 1,
+          "total": 1,
+          "winPct": 0
+        },
+        {
+          "opponent": "Yash Mehta",
+          "wins": 1,
+          "losses": 0,
+          "total": 1,
+          "winPct": 100
+        }
+      ]
+    },
+    {
+      "name": "Abhishek Kumar Singh",
+      "wins": 12,
+      "losses": 10,
+      "total": 22,
+      "winPct": 55,
+      "against": [
+        {
+          "opponent": "Praveen Karkhile",
+          "wins": 11,
+          "losses": 9,
+          "total": 20,
+          "winPct": 55
+        },
+        {
+          "opponent": "Sylvestor George",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
+        }
+      ]
+    },
+    {
+      "name": "Arjun Shukla",
+      "wins": 4,
+      "losses": 15,
+      "total": 19,
+      "winPct": 21,
+      "against": [
+        {
+          "opponent": "Soumya Smruti Mishra",
+          "wins": 3,
+          "losses": 6,
+          "total": 9,
+          "winPct": 33
+        },
+        {
+          "opponent": "Arpan Dey",
+          "wins": 0,
+          "losses": 4,
+          "total": 4,
+          "winPct": 0
+        },
+        {
+          "opponent": "Anil Mallapur",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
+        },
+        {
+          "opponent": "Piyush Jha",
+          "wins": 0,
+          "losses": 2,
+          "total": 2,
+          "winPct": 0
+        },
+        {
+          "opponent": "Gaurav Mehta",
+          "wins": 0,
+          "losses": 2,
+          "total": 2,
+          "winPct": 0
+        }
+      ]
+    },
+    {
+      "name": "Gaurav Mehta",
+      "wins": 7,
+      "losses": 11,
+      "total": 18,
+      "winPct": 39,
+      "against": [
+        {
+          "opponent": "Vinay Bharbhari",
+          "wins": 3,
+          "losses": 6,
+          "total": 9,
+          "winPct": 33
+        },
+        {
+          "opponent": "Praveen Karkhile",
+          "wins": 0,
+          "losses": 2,
+          "total": 2,
+          "winPct": 0
+        },
+        {
+          "opponent": "Arjun Shukla",
+          "wins": 2,
+          "losses": 0,
+          "total": 2,
+          "winPct": 100
+        },
+        {
+          "opponent": "Sylvestor George",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
+        },
+        {
+          "opponent": "Yash Mehta",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
+        },
+        {
+          "opponent": "Prashant Kumar",
+          "wins": 0,
+          "losses": 1,
+          "total": 1,
+          "winPct": 0
+        }
+      ]
+    },
+    {
+      "name": "Yash Mehta",
+      "wins": 9,
+      "losses": 4,
+      "total": 13,
+      "winPct": 69,
+      "against": [
+        {
+          "opponent": "Arpan Dey",
+          "wins": 6,
+          "losses": 1,
+          "total": 7,
+          "winPct": 86
+        },
+        {
+          "opponent": "Sylvestor George",
+          "wins": 2,
+          "losses": 1,
+          "total": 3,
+          "winPct": 67
+        },
+        {
+          "opponent": "Gaurav Mehta",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
+        },
+        {
+          "opponent": "Praveen Karkhile",
+          "wins": 0,
+          "losses": 1,
+          "total": 1,
+          "winPct": 0
+        }
+      ]
+    },
+    {
+      "name": "Soumya Smruti Mishra",
+      "wins": 7,
+      "losses": 4,
+      "total": 11,
+      "winPct": 64,
+      "against": [
+        {
+          "opponent": "Arjun Shukla",
+          "wins": 6,
+          "losses": 3,
+          "total": 9,
+          "winPct": 67
+        },
+        {
+          "opponent": "Praveen Karkhile",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
+        }
+      ]
+    },
+    {
+      "name": "Vinay Bharbhari",
+      "wins": 7,
+      "losses": 4,
+      "total": 11,
+      "winPct": 64,
+      "against": [
+        {
+          "opponent": "Gaurav Mehta",
+          "wins": 6,
+          "losses": 3,
+          "total": 9,
+          "winPct": 67
+        },
+        {
+          "opponent": "Sylvestor George",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
+        }
+      ]
+    },
+    {
+      "name": "Arpan Dey",
+      "wins": 5,
+      "losses": 6,
+      "total": 11,
+      "winPct": 45,
+      "against": [
+        {
+          "opponent": "Yash Mehta",
+          "wins": 1,
+          "losses": 6,
+          "total": 7,
+          "winPct": 14
+        },
+        {
+          "opponent": "Arjun Shukla",
+          "wins": 4,
+          "losses": 0,
+          "total": 4,
+          "winPct": 100
+        }
+      ]
+    },
+    {
+      "name": "Anil Mallapur",
+      "wins": 4,
+      "losses": 6,
+      "total": 10,
+      "winPct": 40,
+      "against": [
+        {
+          "opponent": "Abhishek Lingwal",
+          "wins": 1,
+          "losses": 5,
+          "total": 6,
+          "winPct": 17
+        },
+        {
+          "opponent": "Arjun Shukla",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
+        },
+        {
+          "opponent": "Gaurav Kumar",
+          "wins": 1,
+          "losses": 0,
+          "total": 1,
+          "winPct": 100
+        },
+        {
+          "opponent": "Kaushal Karkera",
+          "wins": 1,
+          "losses": 0,
+          "total": 1,
+          "winPct": 100
+        }
+      ]
+    },
+    {
+      "name": "Prashant Kumar",
+      "wins": 4,
+      "losses": 5,
+      "total": 9,
+      "winPct": 44,
+      "against": [
+        {
+          "opponent": "Sylvestor George",
+          "wins": 3,
+          "losses": 5,
+          "total": 8,
+          "winPct": 38
+        },
+        {
+          "opponent": "Gaurav Mehta",
+          "wins": 1,
+          "losses": 0,
+          "total": 1,
+          "winPct": 100
+        }
+      ]
+    },
+    {
+      "name": "Anjan Kumar",
+      "wins": 3,
+      "losses": 5,
+      "total": 8,
+      "winPct": 38,
+      "against": [
+        {
+          "opponent": "Sylvestor George",
+          "wins": 3,
+          "losses": 5,
+          "total": 8,
+          "winPct": 38
+        }
+      ]
+    },
+    {
+      "name": "Kaushal Karkera",
+      "wins": 4,
+      "losses": 4,
+      "total": 8,
+      "winPct": 50,
+      "against": [
+        {
+          "opponent": "Hari Vangipuram",
+          "wins": 4,
+          "losses": 3,
+          "total": 7,
+          "winPct": 57
+        },
+        {
+          "opponent": "Anil Mallapur",
+          "wins": 0,
+          "losses": 1,
+          "total": 1,
+          "winPct": 0
+        }
+      ]
+    },
+    {
+      "name": "Hari Vangipuram",
+      "wins": 3,
+      "losses": 4,
+      "total": 7,
+      "winPct": 43,
+      "against": [
+        {
+          "opponent": "Kaushal Karkera",
+          "wins": 3,
+          "losses": 4,
+          "total": 7,
+          "winPct": 43
+        }
+      ]
+    },
+    {
+      "name": "Abhishek Lingwal",
+      "wins": 5,
+      "losses": 1,
+      "total": 6,
+      "winPct": 83,
+      "against": [
+        {
+          "opponent": "Anil Mallapur",
+          "wins": 5,
+          "losses": 1,
+          "total": 6,
+          "winPct": 83
+        }
+      ]
+    },
+    {
+      "name": "Piyush Jha",
+      "wins": 3,
+      "losses": 0,
+      "total": 3,
+      "winPct": 100,
+      "against": [
+        {
+          "opponent": "Arjun Shukla",
+          "wins": 2,
+          "losses": 0,
+          "total": 2,
+          "winPct": 100
+        },
+        {
+          "opponent": "Sylvestor George",
+          "wins": 1,
+          "losses": 0,
+          "total": 1,
+          "winPct": 100
+        }
+      ]
+    },
+    {
+      "name": "Gaurav Kumar",
+      "wins": 0,
+      "losses": 1,
+      "total": 1,
+      "winPct": 0,
+      "against": [
+        {
+          "opponent": "Anil Mallapur",
+          "wins": 0,
+          "losses": 1,
+          "total": 1,
+          "winPct": 0
+        }
+      ]
     }
   ]
 }

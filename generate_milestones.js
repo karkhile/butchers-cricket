@@ -92,6 +92,7 @@ function parseFielder(raw, howOut) {
   // Rivalries: keyed "batter|bowler"
   const dismissalsByPair = {}, sixesByPair = {}, foursByPair = {};
   const sixesOff = {}, foursOff = {}, commBalls = {};
+  const captainStats = {}; // name -> { wins, losses, against: { opponentName -> {wins,losses} } }
 
   // Fastest milestone tracking: { playerName: { hits: { threshold: playerMatchCount } } }
   // playerMatchCount = number of matches the player personally appeared in (not global match number)
@@ -107,6 +108,43 @@ function parseFielder(raw, howOut) {
     const seenInMatch = new Set();
     try {
       const root = (await apiGet('series/match/' + matchId + '/scorecard')).data || {};
+
+      // ── Captain win/loss tracking ────────────────────────────────────────────
+      const mi = root.matchInfo || {};
+      const cap1Id = mi.team1Captain, cap2Id = mi.team2Captain;
+      const winnerId = root.winner;
+      if (cap1Id && cap2Id && winnerId && !root.isAbandoned) {
+        // Resolve captain IDs to names via batting/bowling rows
+        const idToName = {};
+        for (const key of ['innings1','innings2','innings3','innings4']) {
+          for (const p of [...(root[key]?.batting||[]), ...(root[key]?.bowling||[])]) {
+            if (p.playerID && !idToName[p.playerID]) {
+              idToName[p.playerID] = p.playerName?.trim() || ((p.firstName||'')+' '+(p.lastName||'')).trim();
+            }
+          }
+        }
+        const cap1Name = idToName[cap1Id];
+        const cap2Name = idToName[cap2Id];
+        const team1Id  = mi.teamOne;
+        if (cap1Name && cap2Name) {
+          if (!captainStats[cap1Name]) captainStats[cap1Name] = { wins: 0, losses: 0, against: {} };
+          if (!captainStats[cap2Name]) captainStats[cap2Name] = { wins: 0, losses: 0, against: {} };
+          if (!captainStats[cap1Name].against[cap2Name]) captainStats[cap1Name].against[cap2Name] = { wins: 0, losses: 0 };
+          if (!captainStats[cap2Name].against[cap1Name]) captainStats[cap2Name].against[cap1Name] = { wins: 0, losses: 0 };
+          const cap1Won = winnerId === team1Id;
+          if (cap1Won) {
+            captainStats[cap1Name].wins++;
+            captainStats[cap1Name].against[cap2Name].wins++;
+            captainStats[cap2Name].losses++;
+            captainStats[cap2Name].against[cap1Name].losses++;
+          } else {
+            captainStats[cap1Name].losses++;
+            captainStats[cap1Name].against[cap2Name].losses++;
+            captainStats[cap2Name].wins++;
+            captainStats[cap2Name].against[cap1Name].wins++;
+          }
+        }
+      }
 
       // Resolve Player of the Match ID to a name via batting/bowling rows
       const momId = root.playerOfTheMatch;
@@ -684,6 +722,22 @@ function parseFielder(raw, howOut) {
       .filter(([n]) => (commBalls[n]||0) >= 100)
       .map(([name, f]) => ({ name, fours: f, balls: commBalls[name], pct: Math.round(f / commBalls[name] * 1000) / 10 }))
       .sort((a, b) => a.pct - b.pct),
+    captainStats: Object.entries(captainStats)
+      .map(([name, s]) => ({
+        name,
+        wins: s.wins,
+        losses: s.losses,
+        total: s.wins + s.losses,
+        winPct: s.wins + s.losses > 0 ? Math.round(s.wins / (s.wins + s.losses) * 100) : 0,
+        against: Object.entries(s.against).map(([opp, r]) => ({
+          opponent: opp,
+          wins: r.wins,
+          losses: r.losses,
+          total: r.wins + r.losses,
+          winPct: r.wins + r.losses > 0 ? Math.round(r.wins / (r.wins + r.losses) * 100) : 0,
+        })).sort((a, b) => b.total - a.total),
+      }))
+      .sort((a, b) => b.total - a.total),
   };
 
   fs.writeFileSync('milestones.json', JSON.stringify(output, null, 2));
