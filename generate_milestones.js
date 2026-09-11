@@ -111,6 +111,17 @@ function parseFielder(raw, howOut) {
 
       // ── Captain win/loss tracking ────────────────────────────────────────────
       const mi = root.matchInfo || {};
+      // Hardcoded captain overrides for matches missing captain data in CricClubs:
+      // 2026-01-24 09:30 — Butchers-B (Abhishek Kumar Singh) vs Butchers-A (Praveen Karkhile)
+      const CAPTAIN_OVERRIDES = {
+        // fixtureId -> { team1Captain: id, team2Captain: id }
+      };
+      const override = CAPTAIN_OVERRIDES[m.fixtureId];
+      if (override) { mi.team1Captain = override.team1Captain; mi.team2Captain = override.team2Captain; }
+      if (!mi.team1Captain && m.date && m.date.startsWith('2026-01-24')) {
+        mi.team1Captain = 'F-4-1aQaOKGP_80zheL7-w'; // Abhishek Kumar Singh (Butchers-B)
+        mi.team2Captain = '_5Mc7iXkzNa9ihUc306PQw'; // Praveen Karkhile (Butchers-A)
+      }
       const cap1Id = mi.team1Captain, cap2Id = mi.team2Captain;
       const winnerId = root.winner;
       if (cap1Id && cap2Id && winnerId && !root.isAbandoned) {
