@@ -760,15 +760,16 @@ function parseFielder(raw, howOut) {
             cumBat[name] = (cumBat[name] || 0) + bp;
 
             // Fielding points from dismissal type
+            // wt1=bowler, wt2=fielder for ct/ctw/st; wt1=fielder for ro
             const how = b.howOut;
             if (how === 'ct') {
-              const fielder = idToName[b.wicketTaker1];
+              const fielder = idToName[b.wicketTaker2] || (b.howOut === 'ct' && /^c&b/i.test(b.outStringNoLink||'') ? idToName[b.wicketTaker1] : '');
               if (fielder) { cumPts[fielder] = (cumPts[fielder]||0) + 8; cumField[fielder] = (cumField[fielder]||0) + 8; }
             } else if (how === 'ctw') {
-              const keeper = idToName[b.wicketTaker1];
+              const keeper = idToName[b.wicketTaker2];
               if (keeper) { cumPts[keeper] = (cumPts[keeper]||0) + 8; cumField[keeper] = (cumField[keeper]||0) + 8; }
             } else if (how === 'st') {
-              const keeper = idToName[b.wicketTaker1];
+              const keeper = idToName[b.wicketTaker2];
               if (keeper) { cumPts[keeper] = (cumPts[keeper]||0) + 12; cumField[keeper] = (cumField[keeper]||0) + 12; }
             } else if (how === 'ro') {
               const direct = idToName[b.wicketTaker1];

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T06:56:04.344Z",
+  "updatedAt": "2026-09-12T07:02:52.701Z",
   "batting": {
     "big": [
       {
@@ -7155,27 +7155,31 @@
   "rankingHistory": [
     {
       "name": "Yash Mehta",
-      "matchCount": 42
+      "matchCount": 52
     },
     {
       "name": "Anjan Kumar",
-      "matchCount": 29
-    },
-    {
-      "name": "Hari Vangipuram",
-      "matchCount": 20
+      "matchCount": 25
     },
     {
       "name": "Vinay Bharbhari",
       "matchCount": 10
     },
     {
+      "name": "Hari Vangipuram",
+      "matchCount": 7
+    },
+    {
+      "name": "Abhishek Kumar Singh",
+      "matchCount": 7
+    },
+    {
       "name": "Abhishek Lingwal",
-      "matchCount": 4
+      "matchCount": 5
     },
     {
       "name": "Arjun Shukla",
-      "matchCount": 3
+      "matchCount": 2
     }
   ],
   "rankingTimeline": [
@@ -7188,6 +7192,18 @@
       "name": "Hari Vangipuram"
     },
     {
+      "date": "2025-07-12",
+      "name": "Abhishek Lingwal"
+    },
+    {
+      "date": "2025-07-12",
+      "name": "Hari Vangipuram"
+    },
+    {
+      "date": "2025-07-19",
+      "name": "Abhishek Lingwal"
+    },
+    {
       "date": "2025-07-19",
       "name": "Arjun Shukla"
     },
@@ -7197,34 +7213,42 @@
     },
     {
       "date": "2025-08-02",
-      "name": "Hari Vangipuram"
-    },
-    {
-      "date": "2025-08-09",
-      "name": "Abhishek Lingwal"
-    },
-    {
-      "date": "2025-08-09",
-      "name": "Hari Vangipuram"
-    },
-    {
-      "date": "2025-08-09",
-      "name": "Abhishek Lingwal"
+      "name": "Abhishek Kumar Singh"
     },
     {
       "date": "2025-08-16",
-      "name": "Hari Vangipuram"
-    },
-    {
-      "date": "2025-09-21",
       "name": "Vinay Bharbhari"
     },
     {
-      "date": "2025-10-25",
+      "date": "2025-08-24",
+      "name": "Abhishek Kumar Singh"
+    },
+    {
+      "date": "2025-08-24",
+      "name": "Vinay Bharbhari"
+    },
+    {
+      "date": "2025-08-30",
+      "name": "Hari Vangipuram"
+    },
+    {
+      "date": "2025-09-06",
+      "name": "Abhishek Kumar Singh"
+    },
+    {
+      "date": "2025-09-06",
       "name": "Yash Mehta"
     },
     {
-      "date": "2026-05-25",
+      "date": "2025-09-13",
+      "name": "Vinay Bharbhari"
+    },
+    {
+      "date": "2025-10-11",
+      "name": "Yash Mehta"
+    },
+    {
+      "date": "2026-06-06",
       "name": "Anjan Kumar"
     }
   ],
@@ -7342,94 +7366,78 @@
   ],
   "fieldingRankHistory": [
     {
-      "name": "Vinay Bharbhari",
-      "matchCount": 38
+      "name": "Abhishek Kumar Singh",
+      "matchCount": 81
     },
     {
-      "name": "Arpan Dey",
-      "matchCount": 33
+      "name": "Yash Mehta",
+      "matchCount": 17
     },
     {
-      "name": "Hari Vangipuram",
-      "matchCount": 12
-    },
-    {
-      "name": "Arjun Shukla",
+      "name": "Sylvestor George",
       "matchCount": 8
     },
     {
       "name": "Anjan Kumar",
-      "matchCount": 7
-    },
-    {
-      "name": "Prashant Kumar",
-      "matchCount": 6
-    },
-    {
-      "name": "Soumya Smruti Mishra",
-      "matchCount": 2
-    },
-    {
-      "name": "Yash Mehta",
       "matchCount": 2
     }
   ],
   "fieldingRankTimeline": [
     {
       "date": "2025-06-22",
-      "name": "Hari Vangipuram"
+      "name": "Sylvestor George"
     },
     {
-      "date": "2025-07-12",
-      "name": "Soumya Smruti Mishra"
-    },
-    {
-      "date": "2025-07-19",
-      "name": "Arjun Shukla"
-    },
-    {
-      "date": "2025-08-16",
-      "name": "Hari Vangipuram"
-    },
-    {
-      "date": "2025-08-24",
-      "name": "Vinay Bharbhari"
-    },
-    {
-      "date": "2025-08-30",
-      "name": "Hari Vangipuram"
-    },
-    {
-      "date": "2025-09-06",
-      "name": "Vinay Bharbhari"
-    },
-    {
-      "date": "2025-09-13",
-      "name": "Hari Vangipuram"
-    },
-    {
-      "date": "2025-09-13",
-      "name": "Vinay Bharbhari"
-    },
-    {
-      "date": "2026-02-07",
-      "name": "Arpan Dey"
-    },
-    {
-      "date": "2026-03-21",
+      "date": "2025-06-22",
       "name": "Yash Mehta"
     },
     {
-      "date": "2026-03-28",
-      "name": "Arpan Dey"
+      "date": "2025-06-28",
+      "name": "Sylvestor George"
     },
     {
-      "date": "2026-07-18",
-      "name": "Prashant Kumar"
-    },
-    {
-      "date": "2026-08-08",
+      "date": "2025-07-19",
       "name": "Anjan Kumar"
+    },
+    {
+      "date": "2025-07-26",
+      "name": "Sylvestor George"
+    },
+    {
+      "date": "2025-08-02",
+      "name": "Abhishek Kumar Singh"
+    },
+    {
+      "date": "2025-11-22",
+      "name": "Yash Mehta"
+    },
+    {
+      "date": "2025-11-22",
+      "name": "Abhishek Kumar Singh"
+    },
+    {
+      "date": "2025-12-13",
+      "name": "Yash Mehta"
+    },
+    {
+      "date": "2026-01-16",
+      "name": "Abhishek Kumar Singh"
+    },
+    {
+      "date": "2026-01-17",
+      "name": "Yash Mehta"
+    },
+    {
+      "date": "2026-01-24",
+      "name": "Abhishek Kumar Singh"
+    },
+    {
+      "date": "2026-04-18",
+      "name": "Yash Mehta"
+    },
+    {
+      "date": "2026-05-31",
+      "name": "Abhishek Kumar Singh"
     }
   ]
 }
