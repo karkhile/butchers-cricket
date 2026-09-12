@@ -682,38 +682,44 @@ function parseFielder(raw, howOut) {
   // Fielding points (catches/stumpings/run-outs) are included via existing maps.
   function calcBattingPts(runs, balls, fours, sixes, isOut) {
     let pts = runs + fours + sixes * 2;
-    if (isOut && runs === 0) pts -= 10;
-    if (runs >= 50) pts += runs; // runs*2 total for 50+
-    else if (runs >= 40) pts += 40;
-    else if (runs >= 30) pts += 30;
-    else if (runs >= 20) pts += 20;
-    else if (runs >= 10) pts += 10;
+    if (isOut && runs === 0) pts -= 2;
+    // milestone bonuses (cumulative — reaching 50 also means you passed 40, 30 etc.)
+    if (runs >= 100) pts += 20; // century bonus
+    if (runs >= 50) pts += 8;   // half-century bonus + on reaching 50
+    if (runs >= 50) pts += 8;   // on reaching 50 (separate from bonus)
+    else if (runs >= 40) pts += 6;
+    else if (runs >= 30) pts += 4;
+    else if (runs >= 20) pts += 2;
+    else if (runs >= 10) pts += 1;
     if (runs >= 10 && balls > 0) {
       const sr = runs / balls * 100;
-      if (sr < 50) pts -= 10;
-      else if (sr >= 200) pts += 50;
-      else if (sr >= 175) pts += 40;
-      else if (sr >= 150) pts += 30;
-      else if (sr >= 125) pts += 20;
-      else if (sr >= 100) pts += 10;
+      if (sr < 50)        pts -= 6;
+      else if (sr < 75)   pts -= 4;
+      else if (sr < 100)  pts -= 2;
+      else if (sr < 125)  pts += 1;
+      else if (sr < 150)  pts += 3;
+      else if (sr < 175)  pts += 5;
+      else if (sr < 200)  pts += 7;
+      else                pts += 9;
     }
     return pts;
   }
   function calcBowlingPts(runs, balls, wickets, maidens) {
     if (balls === 0) return 0;
-    let pts = wickets * 20 + maidens * 40;
-    if (wickets >= 5) pts += 80;
-    else if (wickets >= 4) pts += 40;
-    else if (wickets >= 3) pts += 20;
-    else if (wickets >= 2) pts += 10;
+    let pts = wickets * 20 + maidens * 15;
+    if (wickets >= 5)      pts += 12;
+    else if (wickets >= 4) pts += 8;
+    else if (wickets >= 3) pts += 5;
+    else if (wickets >= 2) pts += 3;
     if (balls >= 12) {
       const econ = runs / (balls / 6);
-      if (econ < 2) pts += 30;
-      else if (econ < 4) pts += 20;
-      else if (econ < 6) pts += 10;
-      else if (econ >= 8 && econ < 10) pts -= 10;
-      else if (econ >= 10 && econ < 12) pts -= 20;
-      else if (econ >= 12) pts -= 30;
+      if (econ < 2)        pts += 10;
+      else if (econ < 4)   pts += 7;
+      else if (econ < 6)   pts += 5;
+      else if (econ < 8)   pts += 2;
+      else if (econ < 10)  pts -= 1;
+      else if (econ < 12)  pts -= 3;
+      else                 pts -= 5;
     }
     return pts;
   }
@@ -729,6 +735,17 @@ function parseFielder(raw, howOut) {
       if (!matchId) continue;
       try {
         const root = (await apiGet('series/match/' + matchId + '/scorecard')).data || {};
+
+        // Build playerID -> name map for this match
+        const idToName = {};
+        for (const key of ['innings1','innings2','innings3','innings4']) {
+          for (const p of [...(root[key]?.batting||[]), ...(root[key]?.bowling||[])]) {
+            if (p.playerID && !idToName[p.playerID]) {
+              idToName[p.playerID] = (p.playerName || ((p.firstName||'') + ' ' + (p.lastName||''))).trim();
+            }
+          }
+        }
+
         for (const key of ['innings1','innings2','innings3','innings4']) {
           const inn = root[key];
           if (!inn) continue;
@@ -736,6 +753,24 @@ function parseFielder(raw, howOut) {
             const name = (b.playerName || ((b.firstName||'') + ' ' + (b.lastName||''))).trim();
             if (!name) continue;
             cumPts[name] = (cumPts[name] || 0) + calcBattingPts(b.runsScored||0, b.ballsFaced||0, b.fours||0, b.sixers||0, b.isOut==='1'||b.isOut===1);
+
+            // Fielding points from dismissal type
+            const how = b.howOut;
+            if (how === 'ct') {
+              const fielder = idToName[b.wicketTaker1];
+              if (fielder) cumPts[fielder] = (cumPts[fielder] || 0) + 8;
+            } else if (how === 'ctw') {
+              const keeper = idToName[b.wicketTaker1];
+              if (keeper) cumPts[keeper] = (cumPts[keeper] || 0) + 8;
+            } else if (how === 'st') {
+              const keeper = idToName[b.wicketTaker1];
+              if (keeper) cumPts[keeper] = (cumPts[keeper] || 0) + 12;
+            } else if (how === 'ro') {
+              const direct = idToName[b.wicketTaker1];
+              const indirect = idToName[b.wicketTaker2];
+              if (direct) cumPts[direct] = (cumPts[direct] || 0) + 12;
+              if (indirect && indirect !== direct) cumPts[indirect] = (cumPts[indirect] || 0) + 6;
+            }
           }
           for (const b of (inn.bowling || [])) {
             const name = (b.playerName || ((b.firstName||'') + ' ' + (b.lastName||''))).trim();
@@ -743,18 +778,23 @@ function parseFielder(raw, howOut) {
             cumPts[name] = (cumPts[name] || 0) + calcBowlingPts(b.runs||0, b.balls||0, b.wickets||0, b.maidens||0);
           }
         }
+
+        // MOM: 25pts
         const mom = (root.playerOfTheMatch || '').trim();
-        if (mom) cumPts[mom] = (cumPts[mom] || 0) + 50;
-        // Fielding: catches=10, keeper catches=10, stumpings=20, run-outs=20
+        if (mom) cumPts[mom] = (cumPts[mom] || 0) + 25;
+
+        // 3-catch bonus: 4pts if a fielder took 3+ catches in this match
+        const catchCount = {};
         for (const key of ['innings1','innings2','innings3','innings4']) {
-          const inn = root[key];
-          if (!inn) continue;
-          for (const b of (inn.batting || [])) {
-            if (b.howOut === 'ct' && b.wicketTaker2) {
-              const fielder = Object.values(root[key]?.batting||[]).find(x => x.playerID === b.wicketTaker2);
-              // Skip keeper (handled separately) — approximate: just add 10 to fielder name via outStringNoLink
+          for (const b of (root[key]?.batting || [])) {
+            if ((b.howOut === 'ct' || b.howOut === 'ctw') && b.wicketTaker1) {
+              const fielder = idToName[b.wicketTaker1];
+              if (fielder) catchCount[fielder] = (catchCount[fielder] || 0) + 1;
             }
           }
+        }
+        for (const [fielder, cnt] of Object.entries(catchCount)) {
+          if (cnt >= 3) cumPts[fielder] = (cumPts[fielder] || 0) + 4;
         }
       } catch (_) {}
 

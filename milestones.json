@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T06:40:15.295Z",
+  "updatedAt": "2026-09-12T06:46:06.252Z",
   "batting": {
     "big": [
       {
@@ -7154,57 +7154,77 @@
   ],
   "rankingHistory": [
     {
-      "name": "Anjan Kumar",
-      "matchCount": 61
-    },
-    {
-      "name": "Abhishek Kumar Singh",
-      "matchCount": 22
-    },
-    {
       "name": "Yash Mehta",
-      "matchCount": 19
+      "matchCount": 41
+    },
+    {
+      "name": "Anjan Kumar",
+      "matchCount": 29
     },
     {
       "name": "Hari Vangipuram",
-      "matchCount": 6
+      "matchCount": 20
+    },
+    {
+      "name": "Vinay Bharbhari",
+      "matchCount": 11
+    },
+    {
+      "name": "Abhishek Lingwal",
+      "matchCount": 4
+    },
+    {
+      "name": "Arjun Shukla",
+      "matchCount": 3
     }
   ],
   "rankingTimeline": [
     {
       "date": "2025-06-22",
+      "name": "Arjun Shukla"
+    },
+    {
+      "date": "2025-06-22",
       "name": "Hari Vangipuram"
     },
     {
-      "date": "2025-07-12",
-      "name": "Abhishek Kumar Singh"
+      "date": "2025-07-19",
+      "name": "Arjun Shukla"
+    },
+    {
+      "date": "2025-07-26",
+      "name": "Abhishek Lingwal"
+    },
+    {
+      "date": "2025-08-02",
+      "name": "Hari Vangipuram"
+    },
+    {
+      "date": "2025-08-09",
+      "name": "Abhishek Lingwal"
+    },
+    {
+      "date": "2025-08-09",
+      "name": "Hari Vangipuram"
+    },
+    {
+      "date": "2025-08-09",
+      "name": "Abhishek Lingwal"
+    },
+    {
+      "date": "2025-08-16",
+      "name": "Hari Vangipuram"
     },
     {
       "date": "2025-09-21",
-      "name": "Anjan Kumar"
+      "name": "Vinay Bharbhari"
     },
     {
-      "date": "2025-11-22",
+      "date": "2025-10-25",
       "name": "Yash Mehta"
     },
     {
-      "date": "2026-02-07",
-      "name": "Anjan Kumar"
-    },
-    {
-      "date": "2026-02-14",
-      "name": "Yash Mehta"
-    },
-    {
-      "date": "2026-02-22",
-      "name": "Anjan Kumar"
-    },
-    {
-      "date": "2026-03-21",
-      "name": "Yash Mehta"
-    },
-    {
-      "date": "2026-03-28",
+      "date": "2026-05-25",
       "name": "Anjan Kumar"
     }
   ]
