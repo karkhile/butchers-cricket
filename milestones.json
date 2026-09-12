@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T07:14:57.610Z",
+  "updatedAt": "2026-09-12T07:21:05.115Z",
   "batting": {
     "big": [
       {
@@ -7155,26 +7155,26 @@
   "rankingHistory": [
     {
       "name": "Yash Mehta",
-      "matchCount": 68
+      "matchCount": 65
     },
     {
       "name": "Anjan Kumar",
-      "matchCount": 23
+      "matchCount": 24
     },
     {
       "name": "Soumya Smruti Mishra",
       "matchCount": 3
     },
     {
-      "name": "Praveen Karkhile",
-      "matchCount": 2
-    },
-    {
-      "name": "Abhishek Kumar Singh",
-      "matchCount": 2
+      "name": "Gaurav Mehta",
+      "matchCount": 3
     },
     {
       "name": "Vinay Bharbhari",
+      "matchCount": 3
+    },
+    {
+      "name": "Praveen Karkhile",
       "matchCount": 2
     },
     {
@@ -7186,7 +7186,7 @@
       "matchCount": 1
     },
     {
-      "name": "Gaurav Mehta",
+      "name": "Abhishek Kumar Singh",
       "matchCount": 1
     }
   ],
@@ -7224,30 +7224,22 @@
       "name": "Vinay Bharbhari"
     },
     {
-      "date": "2025-08-24",
-      "name": "Abhishek Kumar Singh"
-    },
-    {
-      "date": "2025-08-24",
-      "name": "Vinay Bharbhari"
-    },
-    {
       "date": "2025-08-30",
       "name": "Yash Mehta"
     },
     {
-      "date": "2026-06-14",
+      "date": "2026-06-06",
       "name": "Anjan Kumar"
     }
   ],
   "battingRankHistory": [
     {
       "name": "Abhishek Kumar Singh",
-      "matchCount": 83
+      "matchCount": 75
     },
     {
       "name": "Anjan Kumar",
-      "matchCount": 16
+      "matchCount": 24
     },
     {
       "name": "Gaurav Kumar",
@@ -7264,7 +7256,7 @@
       "name": "Abhishek Kumar Singh"
     },
     {
-      "date": "2026-07-11",
+      "date": "2026-06-06",
       "name": "Anjan Kumar"
     }
   ],

@@ -747,13 +747,13 @@ function parseFielder(raw, howOut) {
           for (const b of (inn.batting || [])) {
             const name = (b.playerName || ((b.firstName||'') + ' ' + (b.lastName||''))).trim();
             if (!name) continue;
-            const bp = calcBattingPts(b.runsScored||0, b.ballsFaced||0, b.fours||0, b.sixers||0, b.isOut==='1'||b.isOut===1);
-            cumPts[name] = (cumPts[name] || 0) + bp;
-            cumBat[name] = (cumBat[name] || 0) + bp;
-
-            // Fielding points from dismissal type
-            // wt1=bowler, wt2=fielder for ct/ctw/st; wt1=fielder for ro
             const how = b.howOut;
+            // Skip Retired Hurt — CricClubs excludes these from batting points
+            if (how !== 'rt') {
+              const bp = calcBattingPts(b.runsScored||0, b.ballsFaced||0, b.fours||0, b.sixers||0, b.isOut==='1'||b.isOut===1);
+              cumPts[name] = (cumPts[name] || 0) + bp;
+              cumBat[name] = (cumBat[name] || 0) + bp;
+            }
             if (how === 'ct') {
               const fielder = idToName[b.wicketTaker2] || (b.howOut === 'ct' && /^c&b/i.test(b.outStringNoLink||'') ? idToName[b.wicketTaker1] : '');
               if (fielder) { cumPts[fielder] = (cumPts[fielder]||0) + 8; cumField[fielder] = (cumField[fielder]||0) + 8; }
