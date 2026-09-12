@@ -669,7 +669,7 @@
         const rankHtml = i < 3
           ? '<span class="fastest-rank ' + rankClasses[i] + '" style="font-size:14px;">' + rankLabels[i] + '</span>'
           : '<span class="fastest-rank">' + (i+1) + '</span>';
-        const totalLabel = r.total && r.total !== r.matchCount ? '<span style="font-size:10px;color:#999;margin-left:4px;">(' + r.total + ' total)</span>' : '';
+        const totalLabel = r.total ? '<span style="font-size:10px;color:#999;margin-left:4px;">(' + r.total + ' total)</span>' : '';
         row.innerHTML =
           '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">' +
             rankHtml +
