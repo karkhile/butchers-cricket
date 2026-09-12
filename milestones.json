@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T07:02:52.701Z",
+  "updatedAt": "2026-09-12T07:08:00.573Z",
   "batting": {
     "big": [
       {
@@ -7155,31 +7155,27 @@
   "rankingHistory": [
     {
       "name": "Yash Mehta",
-      "matchCount": 52
+      "matchCount": 59
     },
     {
       "name": "Anjan Kumar",
-      "matchCount": 25
+      "matchCount": 27
     },
     {
-      "name": "Vinay Bharbhari",
-      "matchCount": 10
+      "name": "Abhishek Kumar Singh",
+      "matchCount": 12
     },
     {
       "name": "Hari Vangipuram",
       "matchCount": 7
     },
     {
-      "name": "Abhishek Kumar Singh",
-      "matchCount": 7
+      "name": "Arjun Shukla",
+      "matchCount": 2
     },
     {
       "name": "Abhishek Lingwal",
-      "matchCount": 5
-    },
-    {
-      "name": "Arjun Shukla",
-      "matchCount": 2
+      "matchCount": 1
     }
   ],
   "rankingTimeline": [
@@ -7192,18 +7188,6 @@
       "name": "Hari Vangipuram"
     },
     {
-      "date": "2025-07-12",
-      "name": "Abhishek Lingwal"
-    },
-    {
-      "date": "2025-07-12",
-      "name": "Hari Vangipuram"
-    },
-    {
-      "date": "2025-07-19",
-      "name": "Abhishek Lingwal"
-    },
-    {
       "date": "2025-07-19",
       "name": "Arjun Shukla"
     },
@@ -7212,27 +7196,7 @@
       "name": "Abhishek Lingwal"
     },
     {
-      "date": "2025-08-02",
-      "name": "Abhishek Kumar Singh"
-    },
-    {
-      "date": "2025-08-16",
-      "name": "Vinay Bharbhari"
-    },
-    {
-      "date": "2025-08-24",
-      "name": "Abhishek Kumar Singh"
-    },
-    {
-      "date": "2025-08-24",
-      "name": "Vinay Bharbhari"
-    },
-    {
-      "date": "2025-08-30",
-      "name": "Hari Vangipuram"
-    },
-    {
-      "date": "2025-09-06",
+      "date": "2025-07-26",
       "name": "Abhishek Kumar Singh"
     },
     {
@@ -7240,15 +7204,15 @@
       "name": "Yash Mehta"
     },
     {
-      "date": "2025-09-13",
-      "name": "Vinay Bharbhari"
+      "date": "2025-09-27",
+      "name": "Anjan Kumar"
     },
     {
-      "date": "2025-10-11",
+      "date": "2025-09-27",
       "name": "Yash Mehta"
     },
     {
-      "date": "2026-06-06",
+      "date": "2026-05-31",
       "name": "Anjan Kumar"
     }
   ],
@@ -7367,11 +7331,11 @@
   "fieldingRankHistory": [
     {
       "name": "Abhishek Kumar Singh",
-      "matchCount": 81
+      "matchCount": 75
     },
     {
       "name": "Yash Mehta",
-      "matchCount": 17
+      "matchCount": 23
     },
     {
       "name": "Sylvestor George",
@@ -7408,11 +7372,19 @@
       "name": "Abhishek Kumar Singh"
     },
     {
-      "date": "2025-11-22",
+      "date": "2025-10-25",
       "name": "Yash Mehta"
     },
     {
-      "date": "2025-11-22",
+      "date": "2025-11-08",
+      "name": "Abhishek Kumar Singh"
+    },
+    {
+      "date": "2025-11-15",
+      "name": "Yash Mehta"
+    },
+    {
+      "date": "2025-12-06",
       "name": "Abhishek Kumar Singh"
     },
     {
@@ -7420,15 +7392,7 @@
       "name": "Yash Mehta"
     },
     {
-      "date": "2026-01-16",
-      "name": "Abhishek Kumar Singh"
-    },
-    {
-      "date": "2026-01-17",
-      "name": "Yash Mehta"
-    },
-    {
-      "date": "2026-01-24",
+      "date": "2026-01-31",
       "name": "Abhishek Kumar Singh"
     },
     {

@@ -788,16 +788,23 @@ function parseFielder(raw, howOut) {
         }
 
         // MOM: 25pts — goes into overall only, not fielding
-        const mom = (root.playerOfTheMatch || '').trim();
+        // playerOfTheMatch may be a player ID or a name depending on API response
+        const momRaw = (root.playerOfTheMatch || '').trim();
+        const mom = idToName[momRaw] || momRaw;
         if (mom) cumPts[mom] = (cumPts[mom]||0) + 25;
 
-        // 3-catch bonus: 4pts
+        // 3-catch bonus: 4pts per 3 catches in a single match
+        // wt1=bowler, wt2=fielder for ct/ctw — use wt2
         const catchCount = {};
         for (const key of ['innings1','innings2','innings3','innings4']) {
           for (const b of (root[key]?.batting || [])) {
-            if ((b.howOut === 'ct' || b.howOut === 'ctw') && b.wicketTaker1) {
-              const fielder = idToName[b.wicketTaker1];
+            const isCAB = /^c&b/i.test(b.outStringNoLink||'');
+            if (b.howOut === 'ct') {
+              const fielder = isCAB ? idToName[b.wicketTaker1] : idToName[b.wicketTaker2];
               if (fielder) catchCount[fielder] = (catchCount[fielder] || 0) + 1;
+            } else if (b.howOut === 'ctw') {
+              const keeper = idToName[b.wicketTaker2];
+              if (keeper) catchCount[keeper] = (catchCount[keeper] || 0) + 1;
             }
           }
         }
