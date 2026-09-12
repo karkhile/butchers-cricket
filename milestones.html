@@ -634,10 +634,10 @@
     }
 
     function renderAnalysis(el) {
-      el.appendChild(buildRankingHistoryCard(_data.rankingHistory || [], _data.rankingTimeline || [], '👑 Overall Rank #1 History', 'Matches each player held the overall #1 ranking spot.'));
-      el.appendChild(buildRankingHistoryCard(_data.battingRankHistory || [], _data.battingRankTimeline || [], '🏏 Batting Rank #1 History', 'Matches each player held the #1 spot in batting points.'));
-      el.appendChild(buildRankingHistoryCard(_data.bowlingRankHistory || [], _data.bowlingRankTimeline || [], '🎳 Bowling Rank #1 History', 'Matches each player held the #1 spot in bowling points.'));
-      el.appendChild(buildRankingHistoryCard(_data.fieldingRankHistory || [], _data.fieldingRankTimeline || [], '🧤 Fielding Rank #1 History', 'Matches each player held the #1 spot in fielding points (catches, stumpings, run-outs).'));
+      el.appendChild(buildRankingHistoryCard(_data.rankingHistory || [], _data.rankingTimeline || [], '👑 Overall Rank #1 History', 'Longest consecutive streak at #1 (total in brackets).'));
+      el.appendChild(buildRankingHistoryCard(_data.battingRankHistory || [], _data.battingRankTimeline || [], '🏏 Batting Rank #1 History', 'Longest consecutive streak at #1 in batting points (total in brackets).'));
+      el.appendChild(buildRankingHistoryCard(_data.bowlingRankHistory || [], _data.bowlingRankTimeline || [], '🎳 Bowling Rank #1 History', 'Longest consecutive streak at #1 in bowling points (total in brackets).'));
+      el.appendChild(buildRankingHistoryCard(_data.fieldingRankHistory || [], _data.fieldingRankTimeline || [], '🧤 Fielding Rank #1 History', 'Longest consecutive streak at #1 in fielding points — catches, stumpings, run-outs (total in brackets).'));
       el.appendChild(buildWinPctCard(_data.captainStats || []));
       el.appendChild(buildMatchRescuersCard(_data.matchRescuers || []));
       el.appendChild(buildDisciplinedCard(_data.disciplined || []));
@@ -669,11 +669,12 @@
         const rankHtml = i < 3
           ? '<span class="fastest-rank ' + rankClasses[i] + '" style="font-size:14px;">' + rankLabels[i] + '</span>'
           : '<span class="fastest-rank">' + (i+1) + '</span>';
+        const totalLabel = r.total && r.total !== r.matchCount ? '<span style="font-size:10px;color:#999;margin-left:4px;">(' + r.total + ' total)</span>' : '';
         row.innerHTML =
           '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">' +
             rankHtml +
             '<span style="font-size:13px;font-weight:600;color:#222;flex:1;">' + sn(r.name) + '</span>' +
-            '<span style="font-size:11px;font-weight:700;color:' + color + ';">' + r.matchCount + ' matches · ' + pct + '%</span>' +
+            '<span style="font-size:11px;font-weight:700;color:' + color + ';">' + r.matchCount + ' matches · ' + pct + '%' + totalLabel + '</span>' +
           '</div>' +
           '<div style="height:6px;background:#e5e7eb;border-radius:4px;overflow:hidden;margin-left:28px;">' +
             '<div style="height:100%;width:' + pct + '%;background:' + color + ';border-radius:4px;transition:width 0.6s ease;"></div>' +

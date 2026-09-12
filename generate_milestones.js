@@ -714,11 +714,22 @@ function parseFielder(raw, howOut) {
     return pts;
   }
 
-  const rankingMatchesAt1 = {}; // name -> match count at #1
+  const rankingMatchesAt1 = {}; // name -> total match count at #1
+  const rankingLongest = {};    // name -> longest consecutive streak
   const rankingTimeline = [];   // { date, name } — only on transitions
-  const batMatchesAt1 = {}, batTimeline = [];
-  const bowlMatchesAt1 = {}, bowlTimeline = [];
-  const fieldMatchesAt1 = {}, fieldTimeline = [];
+  const batMatchesAt1 = {}, batLongest = {}, batTimeline = [];
+  const bowlMatchesAt1 = {}, bowlLongest = {}, bowlTimeline = [];
+  const fieldMatchesAt1 = {}, fieldLongest = {}, fieldTimeline = [];
+  // streak state
+  let curRank = null, curRankLen = 0;
+  let curBat = null, curBatLen = 0;
+  let curBowl = null, curBowlLen = 0;
+  let curField = null, curFieldLen = 0;
+  function trackStreak(name, cur, curLen, longestMap) {
+    if (name === cur) { curLen++; }
+    else { if (cur) longestMap[cur] = Math.max(longestMap[cur]||0, curLen); cur = name; curLen = 1; }
+    return [cur, curLen];
+  }
   {
     const cumPts = {}, cumBat = {}, cumBowl = {}, cumField = {};
     const chronological = [...matchesRaw]
@@ -807,23 +818,34 @@ function parseFielder(raw, howOut) {
       const top = Object.entries(cumPts).sort((a, b) => b[1] - a[1])[0];
       if (!top) continue;
       rankingMatchesAt1[top[0]] = (rankingMatchesAt1[top[0]] || 0) + 1;
+      [curRank, curRankLen] = trackStreak(top[0], curRank, curRankLen, rankingLongest);
       const prev = rankingTimeline[rankingTimeline.length - 1];
       if (!prev || prev.name !== top[0]) rankingTimeline.push({ date, name: top[0] });
 
       const topBat = Object.entries(cumBat).sort((a, b) => b[1] - a[1])[0];
-      if (topBat) { batMatchesAt1[topBat[0]] = (batMatchesAt1[topBat[0]]||0) + 1; const pb = batTimeline[batTimeline.length-1]; if (!pb || pb.name !== topBat[0]) batTimeline.push({ date, name: topBat[0] }); }
+      if (topBat) { batMatchesAt1[topBat[0]] = (batMatchesAt1[topBat[0]]||0) + 1; [curBat, curBatLen] = trackStreak(topBat[0], curBat, curBatLen, batLongest); const pb = batTimeline[batTimeline.length-1]; if (!pb || pb.name !== topBat[0]) batTimeline.push({ date, name: topBat[0] }); }
 
       const topBowl = Object.entries(cumBowl).sort((a, b) => b[1] - a[1])[0];
-      if (topBowl) { bowlMatchesAt1[topBowl[0]] = (bowlMatchesAt1[topBowl[0]]||0) + 1; const pb = bowlTimeline[bowlTimeline.length-1]; if (!pb || pb.name !== topBowl[0]) bowlTimeline.push({ date, name: topBowl[0] }); }
+      if (topBowl) { bowlMatchesAt1[topBowl[0]] = (bowlMatchesAt1[topBowl[0]]||0) + 1; [curBowl, curBowlLen] = trackStreak(topBowl[0], curBowl, curBowlLen, bowlLongest); const pb = bowlTimeline[bowlTimeline.length-1]; if (!pb || pb.name !== topBowl[0]) bowlTimeline.push({ date, name: topBowl[0] }); }
 
       const topField = Object.entries(cumField).sort((a, b) => b[1] - a[1])[0];
-      if (topField) { fieldMatchesAt1[topField[0]] = (fieldMatchesAt1[topField[0]]||0) + 1; const pb = fieldTimeline[fieldTimeline.length-1]; if (!pb || pb.name !== topField[0]) fieldTimeline.push({ date, name: topField[0] }); }
+      if (topField) { fieldMatchesAt1[topField[0]] = (fieldMatchesAt1[topField[0]]||0) + 1; [curField, curFieldLen] = trackStreak(topField[0], curField, curFieldLen, fieldLongest); const pb = fieldTimeline[fieldTimeline.length-1]; if (!pb || pb.name !== topField[0]) fieldTimeline.push({ date, name: topField[0] }); }
     }
+    // Flush final streaks
+    if (curRank)  rankingLongest[curRank]  = Math.max(rankingLongest[curRank]  || 0, curRankLen);
+    if (curBat)   batLongest[curBat]       = Math.max(batLongest[curBat]       || 0, curBatLen);
+    if (curBowl)  bowlLongest[curBowl]     = Math.max(bowlLongest[curBowl]     || 0, curBowlLen);
+    if (curField) fieldLongest[curField]   = Math.max(fieldLongest[curField]   || 0, curFieldLen);
   }
 
-  const rankingHistory = Object.entries(rankingMatchesAt1)
-    .map(([name, matchCount]) => ({ name, matchCount }))
-    .sort((a, b) => b.matchCount - a.matchCount);
+  function toRankHistory(longestMap, totalMap) {
+    const names = new Set([...Object.keys(longestMap), ...Object.keys(totalMap)]);
+    return [...names]
+      .map(name => ({ name, matchCount: longestMap[name] || 1, total: totalMap[name] || 1 }))
+      .sort((a, b) => b.matchCount - a.matchCount);
+  }
+
+  const rankingHistory = toRankHistory(rankingLongest, rankingMatchesAt1);
 
   const output = {
     updatedAt: new Date().toISOString(),
@@ -899,11 +921,11 @@ function parseFielder(raw, howOut) {
       .sort((a, b) => b.total - a.total),
     rankingHistory,
     rankingTimeline,
-    battingRankHistory:  Object.entries(batMatchesAt1).map(([name,matchCount])=>({name,matchCount})).sort((a,b)=>b.matchCount-a.matchCount),
+    battingRankHistory:  toRankHistory(batLongest, batMatchesAt1),
     battingRankTimeline:  batTimeline,
-    bowlingRankHistory:  Object.entries(bowlMatchesAt1).map(([name,matchCount])=>({name,matchCount})).sort((a,b)=>b.matchCount-a.matchCount),
+    bowlingRankHistory:  toRankHistory(bowlLongest, bowlMatchesAt1),
     bowlingRankTimeline:  bowlTimeline,
-    fieldingRankHistory: Object.entries(fieldMatchesAt1).filter(([n]) => !/^[A-Za-z0-9_-]{20,}$/.test(n)).map(([name,matchCount])=>({name,matchCount})).sort((a,b)=>b.matchCount-a.matchCount),
+    fieldingRankHistory: toRankHistory(fieldLongest, fieldMatchesAt1),
     fieldingRankTimeline: fieldTimeline,
   };
 

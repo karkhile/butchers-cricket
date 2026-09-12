@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T07:37:10.722Z",
+  "updatedAt": "2026-09-12T08:24:03.624Z",
   "batting": {
     "big": [
       {
@@ -7155,31 +7155,38 @@
   "rankingHistory": [
     {
       "name": "Yash Mehta",
-      "matchCount": 54
+      "matchCount": 48,
+      "total": 54
     },
     {
       "name": "Anjan Kumar",
-      "matchCount": 26
-    },
-    {
-      "name": "Hari Vangipuram",
-      "matchCount": 8
+      "matchCount": 26,
+      "total": 26
     },
     {
       "name": "Abhishek Kumar Singh",
-      "matchCount": 8
+      "matchCount": 8,
+      "total": 8
     },
     {
       "name": "Vinay Bharbhari",
-      "matchCount": 7
+      "matchCount": 4,
+      "total": 7
+    },
+    {
+      "name": "Hari Vangipuram",
+      "matchCount": 3,
+      "total": 8
     },
     {
       "name": "Arjun Shukla",
-      "matchCount": 4
+      "matchCount": 2,
+      "total": 4
     },
     {
       "name": "Abhishek Lingwal",
-      "matchCount": 1
+      "matchCount": 1,
+      "total": 1
     }
   ],
   "rankingTimeline": [
@@ -7247,11 +7254,13 @@
   "battingRankHistory": [
     {
       "name": "Abhishek Kumar Singh",
-      "matchCount": 80
+      "matchCount": 80,
+      "total": 80
     },
     {
       "name": "Anjan Kumar",
-      "matchCount": 28
+      "matchCount": 24,
+      "total": 28
     }
   ],
   "battingRankTimeline": [
@@ -7271,27 +7280,33 @@
   "bowlingRankHistory": [
     {
       "name": "Arpan Dey",
-      "matchCount": 57
-    },
-    {
-      "name": "Hari Vangipuram",
-      "matchCount": 20
+      "matchCount": 57,
+      "total": 57
     },
     {
       "name": "Vinay Bharbhari",
-      "matchCount": 15
+      "matchCount": 15,
+      "total": 15
+    },
+    {
+      "name": "Hari Vangipuram",
+      "matchCount": 14,
+      "total": 20
     },
     {
       "name": "Yash Mehta",
-      "matchCount": 8
+      "matchCount": 8,
+      "total": 8
     },
     {
       "name": "Abhishek Lingwal",
-      "matchCount": 5
+      "matchCount": 2,
+      "total": 5
     },
     {
       "name": "Arjun Shukla",
-      "matchCount": 3
+      "matchCount": 2,
+      "total": 3
     }
   ],
   "bowlingRankTimeline": [
@@ -7351,19 +7366,23 @@
   "fieldingRankHistory": [
     {
       "name": "Abhishek Kumar Singh",
-      "matchCount": 75
+      "matchCount": 26,
+      "total": 75
     },
     {
       "name": "Yash Mehta",
-      "matchCount": 23
+      "matchCount": 10,
+      "total": 23
     },
     {
       "name": "Sylvestor George",
-      "matchCount": 8
+      "matchCount": 5,
+      "total": 8
     },
     {
       "name": "Anjan Kumar",
-      "matchCount": 2
+      "matchCount": 2,
+      "total": 2
     }
   ],
   "fieldingRankTimeline": [
