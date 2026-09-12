@@ -634,6 +634,7 @@
     }
 
     function renderAnalysis(el) {
+      el.appendChild(buildRankingHistoryCard(_data.rankingHistory || [], _data.rankingTimeline || []));
       el.appendChild(buildWinPctCard(_data.captainStats || []));
       el.appendChild(buildMatchRescuersCard(_data.matchRescuers || []));
       el.appendChild(buildDisciplinedCard(_data.disciplined || []));
@@ -643,6 +644,54 @@
       const gc = _data.gameChangers || {};
       el.appendChild(buildGameChangerCard('🦸 Chase Rescuers', gc.rescuers || [], 'batter'));
       el.appendChild(buildGameChangerCard('🛡️ Low-Score Defenders', gc.defenders || [], 'bowler'));
+    }
+
+    function buildRankingHistoryCard(history, timeline) {
+      const card = document.createElement('div');
+      card.className = 'fastest-card';
+      card.innerHTML = '<div class="card-title">👑 Rank #1 History</div>' +
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Matches each player held the #1 ranking spot (by cumulative points).</div>';
+      if (!history.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
+
+      const total = history.reduce((s, r) => s + r.matchCount, 0);
+      const rankLabels = ['🥇','🥈','🥉'];
+      const rankClasses = ['gold','silver','bronze'];
+      const colors = ['#f59e0b','#6b7280','#92400e','#3b82f6','#10b981'];
+
+      history.forEach((r, i) => {
+        const pct = Math.round(r.matchCount / total * 100);
+        const color = colors[i] || '#94a3b8';
+        const row = document.createElement('div');
+        row.style.cssText = 'padding:7px 0;border-bottom:1px solid #f0f0f0;';
+        const rankHtml = i < 3
+          ? '<span class="fastest-rank ' + rankClasses[i] + '" style="font-size:14px;">' + rankLabels[i] + '</span>'
+          : '<span class="fastest-rank">' + (i+1) + '</span>';
+        row.innerHTML =
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">' +
+            rankHtml +
+            '<span style="font-size:13px;font-weight:600;color:#222;flex:1;">' + sn(r.name) + '</span>' +
+            '<span style="font-size:11px;font-weight:700;color:' + color + ';">' + r.matchCount + ' matches · ' + pct + '%</span>' +
+          '</div>' +
+          '<div style="height:6px;background:#e5e7eb;border-radius:4px;overflow:hidden;margin-left:28px;">' +
+            '<div style="height:100%;width:' + pct + '%;background:' + color + ';border-radius:4px;transition:width 0.6s ease;"></div>' +
+          '</div>';
+        card.appendChild(row);
+      });
+
+      // Timeline section
+      if (timeline.length) {
+        const tl = document.createElement('div');
+        tl.style.cssText = 'margin-top:12px;padding-top:10px;border-top:1px solid #f0f0f0;';
+        tl.innerHTML = '<div style="font-size:11px;font-weight:700;color:#555;margin-bottom:6px;">📅 Rank changes</div>';
+        timeline.forEach(t => {
+          const d = document.createElement('div');
+          d.style.cssText = 'font-size:11px;color:#555;padding:2px 0;display:flex;gap:8px;';
+          d.innerHTML = '<span style="color:#aaa;flex-shrink:0;">' + t.date + '</span><span>👑 <strong>' + sn(t.name) + '</strong> takes #1</span>';
+          tl.appendChild(d);
+        });
+        card.appendChild(tl);
+      }
+      return card;
     }
 
     function buildWinPctCard(items) {

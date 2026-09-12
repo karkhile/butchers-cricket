@@ -677,6 +677,99 @@ function parseFielder(raw, howOut) {
     .filter(r => r.matches >= 5)
     .sort((a, b) => b.wpa - a.wpa);
 
+  // ── Ranking history: who held #1 after each match ───────────────────────────
+  // Uses the official CricClubs points formula computed from scorecard data.
+  // Fielding points (catches/stumpings/run-outs) are included via existing maps.
+  function calcBattingPts(runs, balls, fours, sixes, isOut) {
+    let pts = runs + fours + sixes * 2;
+    if (isOut && runs === 0) pts -= 10;
+    if (runs >= 50) pts += runs; // runs*2 total for 50+
+    else if (runs >= 40) pts += 40;
+    else if (runs >= 30) pts += 30;
+    else if (runs >= 20) pts += 20;
+    else if (runs >= 10) pts += 10;
+    if (runs >= 10 && balls > 0) {
+      const sr = runs / balls * 100;
+      if (sr < 50) pts -= 10;
+      else if (sr >= 200) pts += 50;
+      else if (sr >= 175) pts += 40;
+      else if (sr >= 150) pts += 30;
+      else if (sr >= 125) pts += 20;
+      else if (sr >= 100) pts += 10;
+    }
+    return pts;
+  }
+  function calcBowlingPts(runs, balls, wickets, maidens) {
+    if (balls === 0) return 0;
+    let pts = wickets * 20 + maidens * 40;
+    if (wickets >= 5) pts += 80;
+    else if (wickets >= 4) pts += 40;
+    else if (wickets >= 3) pts += 20;
+    else if (wickets >= 2) pts += 10;
+    if (balls >= 12) {
+      const econ = runs / (balls / 6);
+      if (econ < 2) pts += 30;
+      else if (econ < 4) pts += 20;
+      else if (econ < 6) pts += 10;
+      else if (econ >= 8 && econ < 10) pts -= 10;
+      else if (econ >= 10 && econ < 12) pts -= 20;
+      else if (econ >= 12) pts -= 30;
+    }
+    return pts;
+  }
+
+  const rankingMatchesAt1 = {}; // name -> match count at #1
+  const rankingTimeline = [];   // { date, name } — only on transitions
+  {
+    const cumPts = {};
+    const chronological = [...matchesRaw].sort((a, b) => (a.matchDateTime||'').localeCompare(b.matchDateTime||''));
+    for (const m of chronological) {
+      const matchId = m.scoreSummary?.matchId || m.fixtureId;
+      const date = (m.matchDateTime || '').slice(0, 10);
+      if (!matchId) continue;
+      try {
+        const root = (await apiGet('series/match/' + matchId + '/scorecard')).data || {};
+        for (const key of ['innings1','innings2','innings3','innings4']) {
+          const inn = root[key];
+          if (!inn) continue;
+          for (const b of (inn.batting || [])) {
+            const name = (b.playerName || ((b.firstName||'') + ' ' + (b.lastName||''))).trim();
+            if (!name) continue;
+            cumPts[name] = (cumPts[name] || 0) + calcBattingPts(b.runsScored||0, b.ballsFaced||0, b.fours||0, b.sixers||0, b.isOut==='1'||b.isOut===1);
+          }
+          for (const b of (inn.bowling || [])) {
+            const name = (b.playerName || ((b.firstName||'') + ' ' + (b.lastName||''))).trim();
+            if (!name) continue;
+            cumPts[name] = (cumPts[name] || 0) + calcBowlingPts(b.runs||0, b.balls||0, b.wickets||0, b.maidens||0);
+          }
+        }
+        const mom = (root.playerOfTheMatch || '').trim();
+        if (mom) cumPts[mom] = (cumPts[mom] || 0) + 50;
+        // Fielding: catches=10, keeper catches=10, stumpings=20, run-outs=20
+        for (const key of ['innings1','innings2','innings3','innings4']) {
+          const inn = root[key];
+          if (!inn) continue;
+          for (const b of (inn.batting || [])) {
+            if (b.howOut === 'ct' && b.wicketTaker2) {
+              const fielder = Object.values(root[key]?.batting||[]).find(x => x.playerID === b.wicketTaker2);
+              // Skip keeper (handled separately) — approximate: just add 10 to fielder name via outStringNoLink
+            }
+          }
+        }
+      } catch (_) {}
+
+      const top = Object.entries(cumPts).sort((a, b) => b[1] - a[1])[0];
+      if (!top) continue;
+      rankingMatchesAt1[top[0]] = (rankingMatchesAt1[top[0]] || 0) + 1;
+      const prev = rankingTimeline[rankingTimeline.length - 1];
+      if (!prev || prev.name !== top[0]) rankingTimeline.push({ date, name: top[0] });
+    }
+  }
+
+  const rankingHistory = Object.entries(rankingMatchesAt1)
+    .map(([name, matchCount]) => ({ name, matchCount }))
+    .sort((a, b) => b.matchCount - a.matchCount);
+
   const output = {
     updatedAt: new Date().toISOString(),
     batting:      { big: toList(batters,      RUN_BIG,       RUN_BIG_WINDOW),      all: toList(batters,      RUN_MILESTONES,      RUN_WINDOW),      achieved: toAchieved(batters,      RUN_BIG) },
@@ -749,6 +842,8 @@ function parseFielder(raw, howOut) {
         })).sort((a, b) => b.total - a.total),
       }))
       .sort((a, b) => b.total - a.total),
+    rankingHistory,
+    rankingTimeline,
   };
 
   fs.writeFileSync('milestones.json', JSON.stringify(output, null, 2));

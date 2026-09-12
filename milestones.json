@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-11T22:35:47.813Z",
+  "updatedAt": "2026-09-12T06:40:15.295Z",
   "batting": {
     "big": [
       {
@@ -7150,6 +7150,62 @@
           "winPct": 0
         }
       ]
+    }
+  ],
+  "rankingHistory": [
+    {
+      "name": "Anjan Kumar",
+      "matchCount": 61
+    },
+    {
+      "name": "Abhishek Kumar Singh",
+      "matchCount": 22
+    },
+    {
+      "name": "Yash Mehta",
+      "matchCount": 19
+    },
+    {
+      "name": "Hari Vangipuram",
+      "matchCount": 6
+    }
+  ],
+  "rankingTimeline": [
+    {
+      "date": "2025-06-22",
+      "name": "Hari Vangipuram"
+    },
+    {
+      "date": "2025-07-12",
+      "name": "Abhishek Kumar Singh"
+    },
+    {
+      "date": "2025-09-21",
+      "name": "Anjan Kumar"
+    },
+    {
+      "date": "2025-11-22",
+      "name": "Yash Mehta"
+    },
+    {
+      "date": "2026-02-07",
+      "name": "Anjan Kumar"
+    },
+    {
+      "date": "2026-02-14",
+      "name": "Yash Mehta"
+    },
+    {
+      "date": "2026-02-22",
+      "name": "Anjan Kumar"
+    },
+    {
+      "date": "2026-03-21",
+      "name": "Yash Mehta"
+    },
+    {
+      "date": "2026-03-28",
+      "name": "Anjan Kumar"
     }
   ]
 }
