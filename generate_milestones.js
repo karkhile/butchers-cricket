@@ -683,24 +683,24 @@ function parseFielder(raw, howOut) {
   function calcBattingPts(runs, balls, fours, sixes, isOut) {
     let pts = runs + fours + sixes * 2;
     if (isOut && runs === 0) pts -= 2;
-    // milestone bonuses (cumulative — reaching 50 also means you passed 40, 30 etc.)
-    if (runs >= 100) pts += 20; // century bonus
-    if (runs >= 50) pts += 8;   // half-century bonus + on reaching 50
-    if (runs >= 50) pts += 8;   // on reaching 50 (separate from bonus)
-    else if (runs >= 40) pts += 6;
-    else if (runs >= 30) pts += 4;
-    else if (runs >= 20) pts += 2;
-    else if (runs >= 10) pts += 1;
+    // Each milestone is independent — a 60-run innings passes ALL lower thresholds
+    if (runs >= 10)  pts += 1;
+    if (runs >= 20)  pts += 2;
+    if (runs >= 30)  pts += 4;
+    if (runs >= 40)  pts += 6;
+    if (runs >= 50)  pts += 8;       // on reaching 50
+    if (runs >= 50)  pts += 8;       // half-century bonus (separate)
+    if (runs >= 100) pts += 20;      // century bonus
     if (runs >= 10 && balls > 0) {
       const sr = runs / balls * 100;
-      if (sr < 50)        pts -= 6;
-      else if (sr < 75)   pts -= 4;
-      else if (sr < 100)  pts -= 2;
-      else if (sr < 125)  pts += 1;
-      else if (sr < 150)  pts += 3;
-      else if (sr < 175)  pts += 5;
-      else if (sr < 200)  pts += 7;
-      else                pts += 9;
+      if      (sr < 50)  pts -= 6;
+      else if (sr < 75)  pts -= 4;
+      else if (sr < 100) pts -= 2;
+      else if (sr < 125) pts += 1;
+      else if (sr < 150) pts += 3;
+      else if (sr < 175) pts += 5;
+      else if (sr < 200) pts += 7;
+      else               pts += 9;
     }
     return pts;
   }
@@ -786,9 +786,9 @@ function parseFielder(raw, howOut) {
           }
         }
 
-        // MOM: 25pts (counts as fielding/other)
+        // MOM: 25pts — goes into overall only, not fielding
         const mom = (root.playerOfTheMatch || '').trim();
-        if (mom) { cumPts[mom] = (cumPts[mom]||0) + 25; cumField[mom] = (cumField[mom]||0) + 25; }
+        if (mom) cumPts[mom] = (cumPts[mom]||0) + 25;
 
         // 3-catch bonus: 4pts
         const catchCount = {};
@@ -904,7 +904,7 @@ function parseFielder(raw, howOut) {
     battingRankTimeline:  batTimeline,
     bowlingRankHistory:  Object.entries(bowlMatchesAt1).map(([name,matchCount])=>({name,matchCount})).sort((a,b)=>b.matchCount-a.matchCount),
     bowlingRankTimeline:  bowlTimeline,
-    fieldingRankHistory: Object.entries(fieldMatchesAt1).map(([name,matchCount])=>({name,matchCount})).sort((a,b)=>b.matchCount-a.matchCount),
+    fieldingRankHistory: Object.entries(fieldMatchesAt1).filter(([n]) => !/^[A-Za-z0-9_-]{20,}$/.test(n)).map(([name,matchCount])=>({name,matchCount})).sort((a,b)=>b.matchCount-a.matchCount),
     fieldingRankTimeline: fieldTimeline,
   };
 
