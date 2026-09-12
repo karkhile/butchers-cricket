@@ -726,8 +726,11 @@ function parseFielder(raw, howOut) {
 
   const rankingMatchesAt1 = {}; // name -> match count at #1
   const rankingTimeline = [];   // { date, name } — only on transitions
+  const batMatchesAt1 = {}, batTimeline = [];
+  const bowlMatchesAt1 = {}, bowlTimeline = [];
+  const fieldMatchesAt1 = {}, fieldTimeline = [];
   {
-    const cumPts = {};
+    const cumPts = {}, cumBat = {}, cumBowl = {}, cumField = {};
     const chronological = [...matchesRaw].sort((a, b) => (a.matchDateTime||'').localeCompare(b.matchDateTime||''));
     for (const m of chronological) {
       const matchId = m.scoreSummary?.matchId || m.fixtureId;
@@ -752,38 +755,42 @@ function parseFielder(raw, howOut) {
           for (const b of (inn.batting || [])) {
             const name = (b.playerName || ((b.firstName||'') + ' ' + (b.lastName||''))).trim();
             if (!name) continue;
-            cumPts[name] = (cumPts[name] || 0) + calcBattingPts(b.runsScored||0, b.ballsFaced||0, b.fours||0, b.sixers||0, b.isOut==='1'||b.isOut===1);
+            const bp = calcBattingPts(b.runsScored||0, b.ballsFaced||0, b.fours||0, b.sixers||0, b.isOut==='1'||b.isOut===1);
+            cumPts[name] = (cumPts[name] || 0) + bp;
+            cumBat[name] = (cumBat[name] || 0) + bp;
 
             // Fielding points from dismissal type
             const how = b.howOut;
             if (how === 'ct') {
               const fielder = idToName[b.wicketTaker1];
-              if (fielder) cumPts[fielder] = (cumPts[fielder] || 0) + 8;
+              if (fielder) { cumPts[fielder] = (cumPts[fielder]||0) + 8; cumField[fielder] = (cumField[fielder]||0) + 8; }
             } else if (how === 'ctw') {
               const keeper = idToName[b.wicketTaker1];
-              if (keeper) cumPts[keeper] = (cumPts[keeper] || 0) + 8;
+              if (keeper) { cumPts[keeper] = (cumPts[keeper]||0) + 8; cumField[keeper] = (cumField[keeper]||0) + 8; }
             } else if (how === 'st') {
               const keeper = idToName[b.wicketTaker1];
-              if (keeper) cumPts[keeper] = (cumPts[keeper] || 0) + 12;
+              if (keeper) { cumPts[keeper] = (cumPts[keeper]||0) + 12; cumField[keeper] = (cumField[keeper]||0) + 12; }
             } else if (how === 'ro') {
               const direct = idToName[b.wicketTaker1];
               const indirect = idToName[b.wicketTaker2];
-              if (direct) cumPts[direct] = (cumPts[direct] || 0) + 12;
-              if (indirect && indirect !== direct) cumPts[indirect] = (cumPts[indirect] || 0) + 6;
+              if (direct)   { cumPts[direct]   = (cumPts[direct]  ||0) + 12; cumField[direct]   = (cumField[direct]  ||0) + 12; }
+              if (indirect && indirect !== direct) { cumPts[indirect] = (cumPts[indirect]||0) + 6; cumField[indirect] = (cumField[indirect]||0) + 6; }
             }
           }
           for (const b of (inn.bowling || [])) {
             const name = (b.playerName || ((b.firstName||'') + ' ' + (b.lastName||''))).trim();
             if (!name) continue;
-            cumPts[name] = (cumPts[name] || 0) + calcBowlingPts(b.runs||0, b.balls||0, b.wickets||0, b.maidens||0);
+            const bp = calcBowlingPts(b.runs||0, b.balls||0, b.wickets||0, b.maidens||0);
+            cumPts[name] = (cumPts[name] || 0) + bp;
+            cumBowl[name] = (cumBowl[name] || 0) + bp;
           }
         }
 
-        // MOM: 25pts
+        // MOM: 25pts (counts as fielding/other)
         const mom = (root.playerOfTheMatch || '').trim();
-        if (mom) cumPts[mom] = (cumPts[mom] || 0) + 25;
+        if (mom) { cumPts[mom] = (cumPts[mom]||0) + 25; cumField[mom] = (cumField[mom]||0) + 25; }
 
-        // 3-catch bonus: 4pts if a fielder took 3+ catches in this match
+        // 3-catch bonus: 4pts
         const catchCount = {};
         for (const key of ['innings1','innings2','innings3','innings4']) {
           for (const b of (root[key]?.batting || [])) {
@@ -794,7 +801,7 @@ function parseFielder(raw, howOut) {
           }
         }
         for (const [fielder, cnt] of Object.entries(catchCount)) {
-          if (cnt >= 3) cumPts[fielder] = (cumPts[fielder] || 0) + 4;
+          if (cnt >= 3) { cumPts[fielder] = (cumPts[fielder]||0) + 4; cumField[fielder] = (cumField[fielder]||0) + 4; }
         }
       } catch (_) {}
 
@@ -803,6 +810,15 @@ function parseFielder(raw, howOut) {
       rankingMatchesAt1[top[0]] = (rankingMatchesAt1[top[0]] || 0) + 1;
       const prev = rankingTimeline[rankingTimeline.length - 1];
       if (!prev || prev.name !== top[0]) rankingTimeline.push({ date, name: top[0] });
+
+      const topBat = Object.entries(cumBat).sort((a, b) => b[1] - a[1])[0];
+      if (topBat) { batMatchesAt1[topBat[0]] = (batMatchesAt1[topBat[0]]||0) + 1; const pb = batTimeline[batTimeline.length-1]; if (!pb || pb.name !== topBat[0]) batTimeline.push({ date, name: topBat[0] }); }
+
+      const topBowl = Object.entries(cumBowl).sort((a, b) => b[1] - a[1])[0];
+      if (topBowl) { bowlMatchesAt1[topBowl[0]] = (bowlMatchesAt1[topBowl[0]]||0) + 1; const pb = bowlTimeline[bowlTimeline.length-1]; if (!pb || pb.name !== topBowl[0]) bowlTimeline.push({ date, name: topBowl[0] }); }
+
+      const topField = Object.entries(cumField).sort((a, b) => b[1] - a[1])[0];
+      if (topField) { fieldMatchesAt1[topField[0]] = (fieldMatchesAt1[topField[0]]||0) + 1; const pb = fieldTimeline[fieldTimeline.length-1]; if (!pb || pb.name !== topField[0]) fieldTimeline.push({ date, name: topField[0] }); }
     }
   }
 
@@ -884,6 +900,12 @@ function parseFielder(raw, howOut) {
       .sort((a, b) => b.total - a.total),
     rankingHistory,
     rankingTimeline,
+    battingRankHistory:  Object.entries(batMatchesAt1).map(([name,matchCount])=>({name,matchCount})).sort((a,b)=>b.matchCount-a.matchCount),
+    battingRankTimeline:  batTimeline,
+    bowlingRankHistory:  Object.entries(bowlMatchesAt1).map(([name,matchCount])=>({name,matchCount})).sort((a,b)=>b.matchCount-a.matchCount),
+    bowlingRankTimeline:  bowlTimeline,
+    fieldingRankHistory: Object.entries(fieldMatchesAt1).map(([name,matchCount])=>({name,matchCount})).sort((a,b)=>b.matchCount-a.matchCount),
+    fieldingRankTimeline: fieldTimeline,
   };
 
   fs.writeFileSync('milestones.json', JSON.stringify(output, null, 2));

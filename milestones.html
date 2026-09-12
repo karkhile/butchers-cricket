@@ -634,7 +634,10 @@
     }
 
     function renderAnalysis(el) {
-      el.appendChild(buildRankingHistoryCard(_data.rankingHistory || [], _data.rankingTimeline || []));
+      el.appendChild(buildRankingHistoryCard(_data.rankingHistory || [], _data.rankingTimeline || [], '👑 Overall Rank #1 History', 'Matches each player held the overall #1 ranking spot.'));
+      el.appendChild(buildRankingHistoryCard(_data.battingRankHistory || [], _data.battingRankTimeline || [], '🏏 Batting Rank #1 History', 'Matches each player held the #1 spot in batting points.'));
+      el.appendChild(buildRankingHistoryCard(_data.bowlingRankHistory || [], _data.bowlingRankTimeline || [], '🎳 Bowling Rank #1 History', 'Matches each player held the #1 spot in bowling points.'));
+      el.appendChild(buildRankingHistoryCard(_data.fieldingRankHistory || [], _data.fieldingRankTimeline || [], '🧤 Fielding Rank #1 History', 'Matches each player held the #1 spot in fielding points (catches, stumpings, run-outs, MOM).'));
       el.appendChild(buildWinPctCard(_data.captainStats || []));
       el.appendChild(buildMatchRescuersCard(_data.matchRescuers || []));
       el.appendChild(buildDisciplinedCard(_data.disciplined || []));
@@ -646,11 +649,11 @@
       el.appendChild(buildGameChangerCard('🛡️ Low-Score Defenders', gc.defenders || [], 'bowler'));
     }
 
-    function buildRankingHistoryCard(history, timeline) {
+    function buildRankingHistoryCard(history, timeline, title, subtitle) {
       const card = document.createElement('div');
       card.className = 'fastest-card';
-      card.innerHTML = '<div class="card-title">👑 Rank #1 History</div>' +
-        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Matches each player held the #1 ranking spot (by cumulative points).</div>';
+      card.innerHTML = '<div class="card-title">' + (title || '👑 Rank #1 History') + '</div>' +
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">' + (subtitle || 'Matches each player held the #1 ranking spot.') + '</div>';
       if (!history.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
 
       const total = history.reduce((s, r) => s + r.matchCount, 0);
