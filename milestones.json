@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T07:21:05.115Z",
+  "updatedAt": "2026-09-12T07:37:10.722Z",
   "batting": {
     "big": [
       {
@@ -7155,45 +7155,49 @@
   "rankingHistory": [
     {
       "name": "Yash Mehta",
-      "matchCount": 65
+      "matchCount": 54
     },
     {
       "name": "Anjan Kumar",
-      "matchCount": 24
+      "matchCount": 26
     },
     {
-      "name": "Soumya Smruti Mishra",
-      "matchCount": 3
-    },
-    {
-      "name": "Gaurav Mehta",
-      "matchCount": 3
-    },
-    {
-      "name": "Vinay Bharbhari",
-      "matchCount": 3
-    },
-    {
-      "name": "Praveen Karkhile",
-      "matchCount": 2
-    },
-    {
-      "name": "Arjun Shukla",
-      "matchCount": 1
-    },
-    {
-      "name": "Abhishek Lingwal",
-      "matchCount": 1
+      "name": "Hari Vangipuram",
+      "matchCount": 8
     },
     {
       "name": "Abhishek Kumar Singh",
+      "matchCount": 8
+    },
+    {
+      "name": "Vinay Bharbhari",
+      "matchCount": 7
+    },
+    {
+      "name": "Arjun Shukla",
+      "matchCount": 4
+    },
+    {
+      "name": "Abhishek Lingwal",
       "matchCount": 1
     }
   ],
   "rankingTimeline": [
     {
+      "date": "2025-06-22",
+      "name": "Arjun Shukla"
+    },
+    {
+      "date": "2025-06-22",
+      "name": "Hari Vangipuram"
+    },
+    {
+      "date": "2025-06-28",
+      "name": "Arjun Shukla"
+    },
+    {
       "date": "2025-07-12",
-      "name": "Soumya Smruti Mishra"
+      "name": "Hari Vangipuram"
     },
     {
       "date": "2025-07-19",
@@ -7204,55 +7208,59 @@
       "name": "Abhishek Lingwal"
     },
     {
-      "date": "2025-07-26",
-      "name": "Praveen Karkhile"
-    },
-    {
       "date": "2025-08-02",
-      "name": "Gaurav Mehta"
-    },
-    {
-      "date": "2025-08-09",
-      "name": "Yash Mehta"
-    },
-    {
-      "date": "2025-08-16",
       "name": "Abhishek Kumar Singh"
     },
     {
-      "date": "2025-08-16",
+      "date": "2025-08-24",
       "name": "Vinay Bharbhari"
     },
     {
       "date": "2025-08-30",
+      "name": "Hari Vangipuram"
+    },
+    {
+      "date": "2025-09-06",
       "name": "Yash Mehta"
     },
     {
-      "date": "2026-06-06",
+      "date": "2025-09-21",
+      "name": "Vinay Bharbhari"
+    },
+    {
+      "date": "2025-10-04",
+      "name": "Yash Mehta"
+    },
+    {
+      "date": "2025-10-04",
+      "name": "Vinay Bharbhari"
+    },
+    {
+      "date": "2025-10-11",
+      "name": "Yash Mehta"
+    },
+    {
+      "date": "2026-05-31",
       "name": "Anjan Kumar"
     }
   ],
   "battingRankHistory": [
     {
       "name": "Abhishek Kumar Singh",
-      "matchCount": 75
+      "matchCount": 80
     },
     {
       "name": "Anjan Kumar",
-      "matchCount": 24
-    },
-    {
-      "name": "Gaurav Kumar",
-      "matchCount": 4
+      "matchCount": 28
     }
   ],
   "battingRankTimeline": [
     {
-      "date": "2025-07-12",
-      "name": "Gaurav Kumar"
+      "date": "2025-06-22",
+      "name": "Anjan Kumar"
     },
     {
-      "date": "2025-07-26",
+      "date": "2025-06-28",
       "name": "Abhishek Kumar Singh"
     },
     {
@@ -7267,41 +7275,49 @@
     },
     {
       "name": "Hari Vangipuram",
-      "matchCount": 13
+      "matchCount": 20
     },
     {
       "name": "Vinay Bharbhari",
-      "matchCount": 13
+      "matchCount": 15
     },
     {
       "name": "Yash Mehta",
-      "matchCount": 11
-    },
-    {
-      "name": "Soumya Smruti Mishra",
-      "matchCount": 3
+      "matchCount": 8
     },
     {
       "name": "Abhishek Lingwal",
+      "matchCount": 5
+    },
+    {
+      "name": "Arjun Shukla",
       "matchCount": 3
-    },
-    {
-      "name": "Gaurav Mehta",
-      "matchCount": 2
-    },
-    {
-      "name": "Praveen Karkhile",
-      "matchCount": 1
     }
   ],
   "bowlingRankTimeline": [
     {
+      "date": "2025-06-22",
+      "name": "Abhishek Lingwal"
+    },
+    {
+      "date": "2025-06-22",
+      "name": "Hari Vangipuram"
+    },
+    {
+      "date": "2025-06-28",
+      "name": "Arjun Shukla"
+    },
+    {
       "date": "2025-07-12",
-      "name": "Soumya Smruti Mishra"
+      "name": "Abhishek Lingwal"
+    },
+    {
+      "date": "2025-07-12",
+      "name": "Hari Vangipuram"
     },
     {
       "date": "2025-07-19",
-      "name": "Gaurav Mehta"
+      "name": "Arjun Shukla"
     },
     {
       "date": "2025-07-26",
@@ -7309,11 +7325,11 @@
     },
     {
       "date": "2025-08-02",
-      "name": "Praveen Karkhile"
+      "name": "Hari Vangipuram"
     },
     {
       "date": "2025-08-09",
-      "name": "Gaurav Mehta"
+      "name": "Abhishek Lingwal"
     },
     {
       "date": "2025-08-09",
@@ -7324,7 +7340,7 @@
       "name": "Vinay Bharbhari"
     },
     {
-      "date": "2025-11-08",
+      "date": "2025-11-22",
       "name": "Yash Mehta"
     },
     {
@@ -7335,37 +7351,33 @@
   "fieldingRankHistory": [
     {
       "name": "Abhishek Kumar Singh",
-      "matchCount": 76
+      "matchCount": 75
     },
     {
       "name": "Yash Mehta",
-      "matchCount": 21
-    },
-    {
-      "name": "Anjan Kumar",
-      "matchCount": 3
+      "matchCount": 23
     },
     {
       "name": "Sylvestor George",
-      "matchCount": 2
+      "matchCount": 8
     },
     {
-      "name": "Vinay Bharbhari",
-      "matchCount": 1
+      "name": "Anjan Kumar",
+      "matchCount": 2
     }
   ],
   "fieldingRankTimeline": [
     {
-      "date": "2025-07-12",
-      "name": "Anjan Kumar"
+      "date": "2025-06-22",
+      "name": "Sylvestor George"
     },
     {
-      "date": "2025-07-12",
-      "name": "Vinay Bharbhari"
+      "date": "2025-06-22",
+      "name": "Yash Mehta"
     },
     {
-      "date": "2025-07-19",
-      "name": "Abhishek Kumar Singh"
+      "date": "2025-06-28",
+      "name": "Sylvestor George"
     },
     {
       "date": "2025-07-19",

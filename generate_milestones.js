@@ -680,7 +680,7 @@ function parseFielder(raw, howOut) {
   // ── Ranking history: who held #1 after each match ───────────────────────────
   // Uses the official CricClubs points formula computed from scorecard data.
   // Fielding points (catches/stumpings/run-outs) are included via existing maps.
-  const BPL_SERIES_ID = 'wynmKh98CCp9qybL-NjEyQ';
+  // All non-practice matches included (BPL + W3-June + W4-June).
 
   function calcBattingPts(runs, balls, fours, sixes, isOut) {
     let pts = runs + fours + sixes * 2;
@@ -722,7 +722,6 @@ function parseFielder(raw, howOut) {
   {
     const cumPts = {}, cumBat = {}, cumBowl = {}, cumField = {};
     const chronological = [...matchesRaw]
-      .filter(m => m.seriesId === BPL_SERIES_ID)
       .sort((a, b) => (a.matchDateTime||'').localeCompare(b.matchDateTime||''));
     for (const m of chronological) {
       const matchId = m.scoreSummary?.matchId || m.fixtureId;
