@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T21:14:46.229Z",
+  "updatedAt": "2026-09-13T18:51:47.215Z",
   "batting": {
     "big": [
       {
@@ -5641,7 +5641,7 @@
     },
     {
       "name": "Srinath Shah",
-      "count": 35,
+      "count": 37,
       "matches": 12
     },
     {
@@ -5671,7 +5671,7 @@
     },
     {
       "name": "Soumya Smruti Mishra",
-      "count": 65,
+      "count": 63,
       "matches": 46
     },
     {
@@ -5782,14 +5782,14 @@
       "matches": 9
     },
     {
-      "name": "Srinath Shah",
-      "count": 5,
-      "matches": 12
-    },
-    {
       "name": "Eshwar Chaitanya Sarampati",
       "count": 5,
       "matches": 6
+    },
+    {
+      "name": "Soumya Smruti Mishra",
+      "count": 6,
+      "matches": 46
     },
     {
       "name": "Mithal Kothari",
@@ -5802,9 +5802,9 @@
       "matches": 18
     },
     {
-      "name": "Soumya Smruti Mishra",
-      "count": 7,
-      "matches": 46
+      "name": "Srinath Shah",
+      "count": 6,
+      "matches": 12
     },
     {
       "name": "Piyush Jha",
@@ -5967,11 +5967,11 @@
     },
     {
       "name": "Soumya Smruti Mishra",
-      "extras": 72,
-      "balls": 525,
-      "pct": 13.7,
-      "wides": 65,
-      "noBalls": 7
+      "extras": 69,
+      "balls": 519,
+      "pct": 13.3,
+      "wides": 63,
+      "noBalls": 6
     },
     {
       "name": "Prashant Kumar",
@@ -6135,11 +6135,11 @@
     },
     {
       "name": "Srinath Shah",
-      "extras": 40,
-      "balls": 101,
-      "pct": 39.6,
-      "wides": 35,
-      "noBalls": 5
+      "extras": 43,
+      "balls": 107,
+      "pct": 40.2,
+      "wides": 37,
+      "noBalls": 6
     },
     {
       "name": "Venkata Krishna  Ravi",
@@ -6183,9 +6183,9 @@
     },
     {
       "name": "Soumya Smruti Mishra",
-      "dots": 235,
-      "balls": 525,
-      "pct": 44.8
+      "dots": 233,
+      "balls": 519,
+      "pct": 44.9
     },
     {
       "name": "Anjan Kumar",
@@ -6279,9 +6279,9 @@
     },
     {
       "name": "Srinath Shah",
-      "dots": 38,
-      "balls": 101,
-      "pct": 37.6
+      "dots": 40,
+      "balls": 107,
+      "pct": 37.4
     },
     {
       "name": "Piyush Jha",
@@ -6312,7 +6312,7 @@
     {
       "name": "Srinath S",
       "sixes": 1,
-      "balls": 141,
+      "balls": 150,
       "pct": 0.7
     },
     {
@@ -6468,7 +6468,7 @@
     {
       "name": "Soumya Smruti M",
       "sixes": 20,
-      "balls": 597,
+      "balls": 588,
       "pct": 3.4
     },
     {
@@ -6596,8 +6596,8 @@
     {
       "name": "Soumya Smruti M",
       "fours": 21,
-      "balls": 597,
-      "pct": 3.5
+      "balls": 588,
+      "pct": 3.6
     },
     {
       "name": "Lokesh B",
@@ -6656,8 +6656,8 @@
     {
       "name": "Srinath S",
       "fours": 7,
-      "balls": 141,
-      "pct": 5
+      "balls": 150,
+      "pct": 4.7
     },
     {
       "name": "Rajeev T",
