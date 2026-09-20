@@ -117,6 +117,19 @@ function getExtraDays(sat) {
   if (currentWeek) {
     const votesSnap = await db.collection('votes').get();
     const stale = votesSnap.docs.filter(d => d.data().week === currentWeek);
+
+    // Back up votes before deleting
+    if (stale.length > 0) {
+      const backup = {};
+      stale.forEach(d => { backup[d.id] = d.data(); });
+      await db.collection('votes_backup').doc(currentWeek).set({
+        week: currentWeek,
+        backedUpAt: new Date().toISOString(),
+        votes: backup,
+      });
+      console.log(`Backed up ${stale.length} votes for week ${currentWeek} to votes_backup/${currentWeek}`);
+    }
+
     await Promise.all(stale.map(d => d.ref.set({ _deleted: true, week: '' })));
     console.log(`Soft-deleted ${stale.length} votes for week ${currentWeek}`);
   }
