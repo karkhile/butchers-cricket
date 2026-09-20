@@ -1,0 +1,27 @@
+name: Reset Poll
+
+on:
+  schedule:
+    # Sunday 6 PM PT (UTC-7) = 01:00 UTC Monday — after regular weekend matches done
+    - cron: '0 1 * * 1'
+    # Monday 6 PM PT (UTC-7) = 01:00 UTC Tuesday — for long weekends (script skips if not long weekend)
+    - cron: '0 1 * * 2'
+  workflow_dispatch:
+
+jobs:
+  reset-poll:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install firebase-admin
+
+      - name: Reset and open poll for next week
+        run: node reset_poll.js
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}

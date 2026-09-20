@@ -2,8 +2,8 @@ name: Update Player Points
 
 on:
   schedule:
-    - cron: '30 20 * * 6'  # Saturday 20:30 UTC (12:30pm PST)
-    - cron: '30 20 * * 0'  # Sunday 20:30 UTC (12:30pm PST)
+    - cron: '30 20 * * 6'  # Saturday 20:30 UTC (1:30pm PT) — points only
+    - cron: '30 20 * * 0'  # Sunday 20:30 UTC (1:30pm PT) — points only
   workflow_dispatch:        # allow manual trigger from GitHub Actions tab
 
 jobs:
@@ -51,21 +51,3 @@ jobs:
           git add milestones.json
           git diff --staged --quiet || git commit -m "chore: update milestones [skip ci]"
           git push
-
-  reset-poll:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '30 20 * * 0'
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install dependencies
-        run: npm install firebase-admin
-
-      - name: Reset and open poll for next week
-        run: node reset_poll.js
-        env:
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
