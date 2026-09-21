@@ -493,8 +493,8 @@ function parseFielder(raw, howOut) {
 
       if (reqRate <= 6 && inn1.teamId === root.winner) {
         // Defended: inn1 team set total, inn2 team needed ≤6 RR but lost
-        // Top performer from defending team = best bowler in inn1's bowling (bowled inn2)
-        const bowlers = (inn1.bowling || [])
+        // Top performer from defending team = best bowler in inn2 (defending team bowled in inn2)
+        const bowlers = (inn2.bowling || [])
           .map(b => ({ name: ((b.firstName||'')+' '+(b.lastName||'')).trim(), wkts: b.wickets||0, runs: b.runs||0 }))
           .filter(b => !isJunk(b.name))
           .sort((a, b) => b.wkts - a.wkts || a.runs - b.runs);

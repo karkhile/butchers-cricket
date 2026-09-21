@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T07:00:26.282Z",
+  "updatedAt": "2026-09-21T07:08:14.850Z",
   "batting": {
     "big": [
       {
@@ -4552,7 +4552,7 @@
       "total": 73,
       "overs": 14,
       "reqRate": 5.29,
-      "topPerformer": "Praveen Karkhile (3w/11r)"
+      "topPerformer": "Arjun Shukla (2w/15r)"
     },
     {
       "date": "2026-08-22",
@@ -4561,7 +4561,7 @@
       "total": 71,
       "overs": 14,
       "reqRate": 5.14,
-      "topPerformer": "Kaushal Karkera (2w/18r)"
+      "topPerformer": "Prashant Kumar (3w/9r)"
     },
     {
       "date": "2026-07-05",
@@ -4570,7 +4570,7 @@
       "total": 66,
       "overs": 12,
       "reqRate": 5.58,
-      "topPerformer": "Piyush Jha (1w/13r)"
+      "topPerformer": "Srinath Shah (2w/12r)"
     },
     {
       "date": "2026-06-21",
@@ -4579,7 +4579,7 @@
       "total": 74,
       "overs": 15,
       "reqRate": 5,
-      "topPerformer": "Praveen Karkhile (4w/10r)"
+      "topPerformer": "Soumya Smruti Mishra (3w/7r)"
     },
     {
       "date": "2026-05-23",
@@ -4588,7 +4588,7 @@
       "total": 82,
       "overs": 14,
       "reqRate": 5.93,
-      "topPerformer": "Arpan Dey (3w/7r)"
+      "topPerformer": "Rijwan Rana (4w/10r)"
     },
     {
       "date": "2026-03-28",
@@ -4597,7 +4597,7 @@
       "total": 89,
       "overs": 15,
       "reqRate": 6,
-      "topPerformer": "Prashant Kumar (3w/20r)"
+      "topPerformer": "Anjan Kumar (2w/13r)"
     },
     {
       "date": "2026-02-14",
@@ -4606,7 +4606,7 @@
       "total": 54,
       "overs": 15,
       "reqRate": 3.67,
-      "topPerformer": "Anil Mallapur (3w/13r)"
+      "topPerformer": "Yash Mehta (2w/10r)"
     },
     {
       "date": "2026-01-31",
@@ -4615,7 +4615,7 @@
       "total": 71,
       "overs": 15,
       "reqRate": 4.8,
-      "topPerformer": "Yash Mehta (3w/7r)"
+      "topPerformer": "Gaurav Mehta (3w/10r)"
     },
     {
       "date": "2025-12-13",
@@ -4624,7 +4624,7 @@
       "total": 64,
       "overs": 12,
       "reqRate": 5.42,
-      "topPerformer": "Anjan Kumar (1w/16r)"
+      "topPerformer": "Arpan Dey (3w/10r)"
     },
     {
       "date": "2025-10-25",
@@ -4633,7 +4633,7 @@
       "total": 56,
       "overs": 10,
       "reqRate": 5.7,
-      "topPerformer": "Arjun Deb (3w/13r)"
+      "topPerformer": "Yash Mehta (2w/14r)"
     },
     {
       "date": "2025-10-04",
@@ -4642,7 +4642,7 @@
       "total": 71,
       "overs": 12,
       "reqRate": 6,
-      "topPerformer": "Anjan Kumar (2w/19r)"
+      "topPerformer": "Vinay Bharbhari (3w/6r)"
     },
     {
       "date": "2025-09-27",
@@ -4651,7 +4651,7 @@
       "total": 50,
       "overs": 10,
       "reqRate": 5.1,
-      "topPerformer": "Prashant Kumar (1w/12r)"
+      "topPerformer": "Arpan Dey (1w/8r)"
     }
   ],
   "chasedHighRR": [
