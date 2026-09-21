@@ -467,7 +467,58 @@ function parseFielder(raw, howOut) {
       .map(([name, v]) => ({ name, ...v }))
       .sort((a, b) => b.count - a.count);
 
-  // ── Win Probability Added (WPA) ───────────────────────────────────────────────
+  // ── Defended low RR / Chased high RR ─────────────────────────────────────────
+  // defendedLowRR: batting team set a total, required rate for chaser was ≤6, batting team won
+  // chasedHighRR:  chasing team won against a required rate of ≥6
+  const defendedLowRR = [];  // { date, time, team, total, overs, reqRate, topPerformer }
+  const chasedHighRR  = [];  // { date, time, team, target, overs, reqRate, topPerformer }
+
+  for (let i = 0; i < matches.length; i++) {
+    const m = matches[i];
+    const matchId = m.scoreSummary?.matchId || m.fixtureId;
+    if (!matchId) continue;
+    try {
+      const root = (await apiGet('series/match/' + matchId + '/scorecard')).data || {};
+      if (!root.winner || root.isAbandoned) continue;
+      const totalOvers = root.matchInfo?.overs || 14;
+      const dateTime = m.matchDateTime || '';
+      const date = dateTime.slice(0, 10);
+      const time = dateTime.slice(11, 16);
+
+      const inn1 = root.innings1, inn2 = root.innings2;
+      if (!inn1 || !inn2) continue;
+
+      const target = (inn1.total || 0) + 1;
+      const reqRate = target / totalOvers;
+
+      if (reqRate <= 6 && inn1.teamId === root.winner) {
+        // Defended: inn1 team set total, inn2 team needed ≤6 RR but lost
+        // Top performer from defending team = best bowler in inn1's bowling (bowled inn2)
+        const bowlers = (inn1.bowling || [])
+          .map(b => ({ name: ((b.firstName||'')+' '+(b.lastName||'')).trim(), wkts: b.wickets||0, runs: b.runs||0 }))
+          .filter(b => !isJunk(b.name))
+          .sort((a, b) => b.wkts - a.wkts || a.runs - b.runs);
+        const topPerformer = bowlers[0] ? `${bowlers[0].name} (${bowlers[0].wkts}w/${bowlers[0].runs}r)` : '';
+        defendedLowRR.push({ date, time, team: inn1.teamName, total: inn1.total, overs: totalOvers, reqRate: Math.round(reqRate * 100) / 100, topPerformer });
+      }
+
+      if (reqRate >= 6 && inn2.teamId === root.winner) {
+        // Chased: inn2 team won chasing a target that needed ≥6 RR
+        // Top performer from chasing team = top scorer in inn2
+        const batters = (inn2.batting || [])
+          .map(b => ({ name: (b.playerName||'').trim(), runs: parseInt(b.runsScored)||0, balls: parseInt(b.ballsFaced)||0 }))
+          .filter(b => !isJunk(b.name))
+          .sort((a, b) => b.runs - a.runs);
+        const top = batters[0];
+        const topPerformer = top ? `${top.name} (${top.runs}r${top.balls ? '/'+top.balls+'b' : ''})` : '';
+        chasedHighRR.push({ date, time, team: inn2.teamName, target, overs: totalOvers, reqRate: Math.round(reqRate * 100) / 100, topPerformer });
+      }
+    } catch (e) {}
+  }
+
+  // Sort by date descending (most recent first)
+  defendedLowRR.sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time));
+  chasedHighRR.sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time));
   function winProb(runsScored, target, oversPlayed, totalOvers, wickets) {
     const oversLeft = totalOvers - oversPlayed;
     if (oversLeft <= 0) return runsScored >= target ? 1 : 0;
@@ -876,6 +927,8 @@ function parseFielder(raw, howOut) {
       rescuers:  toGameChangers(rescuers),
       defenders: toGameChangers(defenders),
     },
+    defendedLowRR,
+    chasedHighRR,
     matchRescuers,
     rivalries: {      dismissals: toTopPairs(dismissalsByPair),
       sixes:      toTopPairs(sixesByPair),

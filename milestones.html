@@ -647,6 +647,41 @@
       const gc = _data.gameChangers || {};
       el.appendChild(buildGameChangerCard('🦸 Chase Rescuers', gc.rescuers || [], 'batter'));
       el.appendChild(buildGameChangerCard('🛡️ Low-Score Defenders', gc.defenders || [], 'bowler'));
+      el.appendChild(buildRRCard('🔒 Defended Despite Low RR', _data.defendedLowRR || [], 'defend'));
+      el.appendChild(buildRRCard('🚀 Chased High Required Rate', _data.chasedHighRR || [], 'chase'));
+    }
+
+    function buildRRCard(title, items, mode) {
+      const card = document.createElement('div');
+      card.className = 'fastest-card';
+      const subtitle = mode === 'defend'
+        ? 'Matches where the team successfully defended a total with a required rate of 6 or below.'
+        : 'Matches where the team successfully chased a target requiring a run rate of 6 or above.';
+      card.innerHTML = '<div class="card-title">' + title + '</div>' +
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">' + subtitle + '</div>';
+      if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
+
+      items.forEach((r, i) => {
+        const row = document.createElement('div');
+        row.style.cssText = 'padding:7px 0;border-bottom:1px solid #f0f0f0;';
+        const rrColor = mode === 'defend' ? '#10b981' : '#f59e0b';
+        const label   = mode === 'defend'
+          ? r.team + ' set ' + r.total + ' (' + r.overs + ' ov)'
+          : r.team + ' chased ' + r.target + ' (' + r.overs + ' ov)';
+        row.innerHTML =
+          '<div style="display:flex;align-items:center;gap:8px;justify-content:space-between;">' +
+            '<div>' +
+              '<div style="font-size:12px;font-weight:600;color:#222;">' + label + '</div>' +
+              '<div style="font-size:11px;color:#555;margin-top:2px;">⭐ ' + r.topPerformer + '</div>' +
+            '</div>' +
+            '<div style="text-align:right;flex-shrink:0;">' +
+              '<div style="font-size:12px;font-weight:700;color:' + rrColor + ';">RR ' + r.reqRate + '</div>' +
+              '<div style="font-size:10px;color:#999;">' + r.date + (r.time ? ' ' + r.time : '') + '</div>' +
+            '</div>' +
+          '</div>';
+        card.appendChild(row);
+      });
+      return card;
     }
 
     function buildRankingHistoryCard(history, timeline, title, subtitle) {

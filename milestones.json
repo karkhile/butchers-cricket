@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T06:49:57.034Z",
+  "updatedAt": "2026-09-21T07:00:26.282Z",
   "batting": {
     "big": [
       {
@@ -4544,6 +4544,379 @@
       }
     ]
   },
+  "defendedLowRR": [
+    {
+      "date": "2026-09-20",
+      "time": "07:30",
+      "team": "Butchers-A",
+      "total": 73,
+      "overs": 14,
+      "reqRate": 5.29,
+      "topPerformer": "Praveen Karkhile (3w/11r)"
+    },
+    {
+      "date": "2026-08-22",
+      "time": "07:30",
+      "team": "Butchers-B",
+      "total": 71,
+      "overs": 14,
+      "reqRate": 5.14,
+      "topPerformer": "Kaushal Karkera (2w/18r)"
+    },
+    {
+      "date": "2026-07-05",
+      "time": "09:45",
+      "team": "Butchers-A",
+      "total": 66,
+      "overs": 12,
+      "reqRate": 5.58,
+      "topPerformer": "Piyush Jha (1w/13r)"
+    },
+    {
+      "date": "2026-06-21",
+      "time": "07:15",
+      "team": "Butchers-B",
+      "total": 74,
+      "overs": 15,
+      "reqRate": 5,
+      "topPerformer": "Praveen Karkhile (4w/10r)"
+    },
+    {
+      "date": "2026-05-23",
+      "time": "07:00",
+      "team": "Butchers-B",
+      "total": 82,
+      "overs": 14,
+      "reqRate": 5.93,
+      "topPerformer": "Arpan Dey (3w/7r)"
+    },
+    {
+      "date": "2026-03-28",
+      "time": "07:30",
+      "team": "Butchers-B",
+      "total": 89,
+      "overs": 15,
+      "reqRate": 6,
+      "topPerformer": "Prashant Kumar (3w/20r)"
+    },
+    {
+      "date": "2026-02-14",
+      "time": "09:30",
+      "team": "Butchers-A",
+      "total": 54,
+      "overs": 15,
+      "reqRate": 3.67,
+      "topPerformer": "Anil Mallapur (3w/13r)"
+    },
+    {
+      "date": "2026-01-31",
+      "time": "07:30",
+      "team": "Butchers-B",
+      "total": 71,
+      "overs": 15,
+      "reqRate": 4.8,
+      "topPerformer": "Yash Mehta (3w/7r)"
+    },
+    {
+      "date": "2025-12-13",
+      "time": "08:30",
+      "team": "Butchers-B",
+      "total": 64,
+      "overs": 12,
+      "reqRate": 5.42,
+      "topPerformer": "Anjan Kumar (1w/16r)"
+    },
+    {
+      "date": "2025-10-25",
+      "time": "07:30",
+      "team": "Butchers-B",
+      "total": 56,
+      "overs": 10,
+      "reqRate": 5.7,
+      "topPerformer": "Arjun Deb (3w/13r)"
+    },
+    {
+      "date": "2025-10-04",
+      "time": "08:31",
+      "team": "Butchers-B",
+      "total": 71,
+      "overs": 12,
+      "reqRate": 6,
+      "topPerformer": "Anjan Kumar (2w/19r)"
+    },
+    {
+      "date": "2025-09-27",
+      "time": "09:15",
+      "team": "Butchers-A",
+      "total": 50,
+      "overs": 10,
+      "reqRate": 5.1,
+      "topPerformer": "Prashant Kumar (1w/12r)"
+    }
+  ],
+  "chasedHighRR": [
+    {
+      "date": "2026-09-12",
+      "time": "09:30",
+      "team": "Butchers-B",
+      "target": 87,
+      "overs": 14,
+      "reqRate": 6.21,
+      "topPerformer": "Venkata Krishna Ravi (29r/18b)"
+    },
+    {
+      "date": "2026-08-29",
+      "time": "07:30",
+      "team": "Butchers-A",
+      "target": 84,
+      "overs": 14,
+      "reqRate": 6,
+      "topPerformer": "Anjan Kumar (27r/25b)"
+    },
+    {
+      "date": "2026-08-22",
+      "time": "09:30",
+      "team": "Butchers-A",
+      "target": 92,
+      "overs": 14,
+      "reqRate": 6.57,
+      "topPerformer": "Abhishek Kumar Singh (42r/42b)"
+    },
+    {
+      "date": "2026-08-07",
+      "time": "08:00",
+      "team": "Butchers-A",
+      "target": 98,
+      "overs": 14,
+      "reqRate": 7,
+      "topPerformer": "Rijwan Rana (30r/18b)"
+    },
+    {
+      "date": "2026-08-01",
+      "time": "10:00",
+      "team": "Butchers-B",
+      "target": 109,
+      "overs": 14,
+      "reqRate": 7.79,
+      "topPerformer": "Abhishek Kumar Singh (25r/15b)"
+    },
+    {
+      "date": "2026-08-01",
+      "time": "07:30",
+      "team": "Butchers-B",
+      "target": 107,
+      "overs": 15,
+      "reqRate": 7.13,
+      "topPerformer": "Lokesh Bala (30r/28b)"
+    },
+    {
+      "date": "2026-07-18",
+      "time": "09:30",
+      "team": "Butchers-B",
+      "target": 77,
+      "overs": 12,
+      "reqRate": 6.42,
+      "topPerformer": "Gaurav Mehta (27r/17b)"
+    },
+    {
+      "date": "2026-07-11",
+      "time": "07:30",
+      "team": "Butchers-A",
+      "target": 120,
+      "overs": 15,
+      "reqRate": 8,
+      "topPerformer": "Anjan Kumar (49r/37b)"
+    },
+    {
+      "date": "2026-07-05",
+      "time": "08:30",
+      "team": "Butchers-B",
+      "target": 65,
+      "overs": 10,
+      "reqRate": 6.5,
+      "topPerformer": "Rijwan Rana (34r/17b)"
+    },
+    {
+      "date": "2026-06-21",
+      "time": "10:45",
+      "team": "Butchers-A",
+      "target": 101,
+      "overs": 15,
+      "reqRate": 6.73,
+      "topPerformer": "Praveen Karkhile (15r/15b)"
+    },
+    {
+      "date": "2026-06-14",
+      "time": "07:00",
+      "team": "Butchers-A",
+      "target": 128,
+      "overs": 20,
+      "reqRate": 6.4,
+      "topPerformer": "Lokesh Bala (31r/24b)"
+    },
+    {
+      "date": "2026-06-06",
+      "time": "09:45",
+      "team": "Butchers-A",
+      "target": 111,
+      "overs": 12,
+      "reqRate": 9.25,
+      "topPerformer": "Anjan Kumar (63r/29b)"
+    },
+    {
+      "date": "2026-05-25",
+      "time": "07:30",
+      "team": "Butchers-A",
+      "target": 107,
+      "overs": 14,
+      "reqRate": 7.64,
+      "topPerformer": "Lokesh Bala (34r/29b)"
+    },
+    {
+      "date": "2026-05-23",
+      "time": "09:30",
+      "team": "Butchers-A",
+      "target": 95,
+      "overs": 14,
+      "reqRate": 6.79,
+      "topPerformer": "Kunal Kokate (37r/21b)"
+    },
+    {
+      "date": "2026-03-21",
+      "time": "22:30",
+      "team": "Butchers-B",
+      "target": 83,
+      "overs": 10,
+      "reqRate": 8.3,
+      "topPerformer": "Jay Shah (32r/16b)"
+    },
+    {
+      "date": "2025-12-31",
+      "time": "09:30",
+      "team": "Butchers-B",
+      "target": 67,
+      "overs": 10,
+      "reqRate": 6.7,
+      "topPerformer": "Gaurav Kumar (26r/27b)"
+    },
+    {
+      "date": "2025-12-31",
+      "time": "07:45",
+      "team": "Butchers-A",
+      "target": 86,
+      "overs": 12,
+      "reqRate": 7.17,
+      "topPerformer": "Jay Shah (32r/23b)"
+    },
+    {
+      "date": "2025-11-08",
+      "time": "07:30",
+      "team": "Butchers-A",
+      "target": 68,
+      "overs": 10,
+      "reqRate": 6.8,
+      "topPerformer": "Abhishek Kumar Singh (40r/24b)"
+    },
+    {
+      "date": "2025-10-11",
+      "time": "07:40",
+      "team": "Butchers-B",
+      "target": 60,
+      "overs": 10,
+      "reqRate": 6,
+      "topPerformer": "Sylvestor George (26r/27b)"
+    },
+    {
+      "date": "2025-10-04",
+      "time": "07:30",
+      "team": "Butchers-A",
+      "target": 87,
+      "overs": 12,
+      "reqRate": 7.25,
+      "topPerformer": "Gaurav Mehta (24r/20b)"
+    },
+    {
+      "date": "2025-09-21",
+      "time": "09:30",
+      "team": "Butchers-A",
+      "target": 88,
+      "overs": 12,
+      "reqRate": 7.33,
+      "topPerformer": "Anjan Kumar (49r/27b)"
+    },
+    {
+      "date": "2025-09-13",
+      "time": "10:30",
+      "team": "Butchers-A",
+      "target": 60,
+      "overs": 10,
+      "reqRate": 6,
+      "topPerformer": "Gaurav Kumar (25r/24b)"
+    },
+    {
+      "date": "2025-08-16",
+      "time": "07:30",
+      "team": "Butchers-A",
+      "target": 91,
+      "overs": 14,
+      "reqRate": 6.5,
+      "topPerformer": "Abhishek Kumar Singh (50r/38b)"
+    },
+    {
+      "date": "2025-08-02",
+      "time": "09:15",
+      "team": "Butchers-B",
+      "target": 85,
+      "overs": 12,
+      "reqRate": 7.08,
+      "topPerformer": "Sylvestor George (28r/22b)"
+    },
+    {
+      "date": "2025-07-26",
+      "time": "09:15",
+      "team": "Butchers-A",
+      "target": 101,
+      "overs": 12,
+      "reqRate": 8.42,
+      "topPerformer": "Praveen Karkhile (42r/26b)"
+    },
+    {
+      "date": "2025-07-26",
+      "time": "07:30",
+      "team": "Butchers-B",
+      "target": 87,
+      "overs": 12,
+      "reqRate": 7.25,
+      "topPerformer": "Santosh Ghosh (29r/21b)"
+    },
+    {
+      "date": "2025-07-12",
+      "time": "09:45",
+      "team": "Butchers-B",
+      "target": 104,
+      "overs": 12,
+      "reqRate": 8.67,
+      "topPerformer": "Abhishek Kumar Singh (28r/24b)"
+    },
+    {
+      "date": "2025-07-12",
+      "time": "07:30",
+      "team": "Butchers-A",
+      "target": 79,
+      "overs": 12,
+      "reqRate": 6.58,
+      "topPerformer": "Gaurav Kumar (34r/25b)"
+    },
+    {
+      "date": "2025-06-22",
+      "time": "07:30",
+      "team": "Butcher's-A",
+      "target": 65,
+      "overs": 10,
+      "reqRate": 6.5,
+      "topPerformer": "Piyush Jha (17r/9b)"
+    }
+  ],
   "matchRescuers": [
     {
       "name": "Anjan K",
