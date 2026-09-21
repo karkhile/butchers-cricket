@@ -173,6 +173,7 @@
     <button id="btn-fastest"   onclick="setView('fastest')"   class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">⚡ Fastest</button>
     <button id="btn-rivalries" onclick="setView('rivalries')" class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">⚔️ Rivalries</button>
     <button id="btn-analysis"  onclick="setView('analysis')"  class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">📊 Analysis</button>
+    <button id="btn-topmatch"  onclick="setView('topmatch')"  class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">🌟 Top Match</button>
   </div>
 
   <div id="content" class="text-emerald-300 text-center py-10 text-sm">Fetching milestones…</div>
@@ -217,7 +218,7 @@
 
     function setView(v) {
       _view = v;
-      ['big','all','achieved','fastest','rivalries','analysis'].forEach(k => {
+      ['big','all','achieved','fastest','rivalries','analysis','topmatch'].forEach(k => {
         const btn = document.getElementById('btn-' + k);
         if (v === k) {
           btn.style.background = 'white'; btn.style.color = '#064e3b';
@@ -241,6 +242,8 @@
         renderRivalries(el);
       } else if (_view === 'analysis') {
         renderAnalysis(el);
+      } else if (_view === 'topmatch') {
+        renderTopMatch(el);
       } else if (_view === 'fastest') {
         renderFastest(el);
       } else {
@@ -631,6 +634,47 @@
         card.appendChild(btnWrap);
       }
       return card;
+    }
+
+    function renderTopMatch(el) {
+      const items = _data.topMatchPerformances || [];
+      const card = document.createElement('div');
+      card.className = 'fastest-card';
+      card.innerHTML = '<div class="card-title">🌟 Highest Points in a Single Match</div>' +
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Best individual point-scoring performances across all matches, using the official CricClubs formula (bat + bowl + field + MOM).</div>';
+
+      const rankLabels = ['🥇','🥈','🥉'];
+      const rankClasses = ['gold','silver','bronze'];
+
+      items.slice(0, 20).forEach((r, i) => {
+        const row = document.createElement('div');
+        row.style.cssText = 'padding:8px 0;border-bottom:1px solid #f0f0f0;';
+        const rankHtml = i < 3
+          ? '<span class="fastest-rank ' + rankClasses[i] + '" style="font-size:14px;">' + rankLabels[i] + '</span>'
+          : '<span class="fastest-rank">' + (i+1) + '</span>';
+        const breakdown = [];
+        if (r.bat)   breakdown.push('🏏 ' + r.bat);
+        if (r.bowl)  breakdown.push('🎳 ' + r.bowl);
+        if (r.field) breakdown.push('🧤 ' + r.field);
+        if (r.mom)   breakdown.push('⭐ MOM');
+        row.innerHTML =
+          '<div style="display:flex;align-items:center;gap:8px;">' +
+            rankHtml +
+            '<div style="flex:1;">' +
+              '<div style="display:flex;align-items:center;justify-content:space-between;">' +
+                '<span style="font-size:13px;font-weight:700;color:#222;">' + sn(r.name) + '</span>' +
+                '<span style="font-size:14px;font-weight:800;color:#059669;">' + r.pts + ' pts</span>' +
+              '</div>' +
+              '<div style="display:flex;justify-content:space-between;margin-top:2px;">' +
+                '<span style="font-size:11px;color:#666;">' + breakdown.join('  ') + '</span>' +
+                '<span style="font-size:10px;color:#999;">' + r.date + (r.time ? ' ' + r.time : '') + '</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+        card.appendChild(row);
+      });
+
+      el.appendChild(card);
     }
 
     function renderAnalysis(el) {

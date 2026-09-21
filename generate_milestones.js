@@ -771,6 +771,7 @@ function parseFielder(raw, howOut) {
   const batMatchesAt1 = {}, batLongest = {}, batTimeline = [];
   const bowlMatchesAt1 = {}, bowlLongest = {}, bowlTimeline = [];
   const fieldMatchesAt1 = {}, fieldLongest = {}, fieldTimeline = [];
+  const topMatchPerformances = []; // { date, time, name, pts, breakdown }
   // streak state
   let curRank = null, curRankLen = 0;
   let curBat = null, curBatLen = 0;
@@ -788,9 +789,14 @@ function parseFielder(raw, howOut) {
     for (const m of chronological) {
       const matchId = m.scoreSummary?.matchId || m.fixtureId;
       const date = (m.matchDateTime || '').slice(0, 10);
+      const time = (m.matchDateTime || '').slice(11, 16);
       if (!matchId) continue;
       try {
         const root = (await apiGet('series/match/' + matchId + '/scorecard')).data || {};
+
+        // Per-match points tracker
+        const matchPts = {}, matchBat = {}, matchBowl = {}, matchField = {};
+        const addM = (obj, name, v) => { if (!isJunk(name)) obj[name] = (obj[name]||0) + v; };
 
         // Build playerID -> name map for this match
         const idToName = {};
@@ -814,21 +820,22 @@ function parseFielder(raw, howOut) {
               const bp = calcBattingPts(b.runsScored||0, b.ballsFaced||0, b.fours||0, b.sixers||0, b.isOut==='1'||b.isOut===1);
               cumPts[name] = (cumPts[name] || 0) + bp;
               cumBat[name] = (cumBat[name] || 0) + bp;
+              addM(matchPts, name, bp); addM(matchBat, name, bp);
             }
             if (how === 'ct') {
               const fielder = idToName[b.wicketTaker2] || (b.howOut === 'ct' && /^c&b/i.test(b.outStringNoLink||'') ? idToName[b.wicketTaker1] : '');
-              if (fielder) { cumPts[fielder] = (cumPts[fielder]||0) + 8; cumField[fielder] = (cumField[fielder]||0) + 8; }
+              if (fielder) { cumPts[fielder] = (cumPts[fielder]||0) + 8; cumField[fielder] = (cumField[fielder]||0) + 8; addM(matchPts, fielder, 8); addM(matchField, fielder, 8); }
             } else if (how === 'ctw') {
               const keeper = idToName[b.wicketTaker2];
-              if (keeper) { cumPts[keeper] = (cumPts[keeper]||0) + 8; cumField[keeper] = (cumField[keeper]||0) + 8; }
+              if (keeper) { cumPts[keeper] = (cumPts[keeper]||0) + 8; cumField[keeper] = (cumField[keeper]||0) + 8; addM(matchPts, keeper, 8); addM(matchField, keeper, 8); }
             } else if (how === 'st') {
               const keeper = idToName[b.wicketTaker2];
-              if (keeper) { cumPts[keeper] = (cumPts[keeper]||0) + 12; cumField[keeper] = (cumField[keeper]||0) + 12; }
+              if (keeper) { cumPts[keeper] = (cumPts[keeper]||0) + 12; cumField[keeper] = (cumField[keeper]||0) + 12; addM(matchPts, keeper, 12); addM(matchField, keeper, 12); }
             } else if (how === 'ro') {
               const direct = idToName[b.wicketTaker1];
               const indirect = idToName[b.wicketTaker2];
-              if (direct)   { cumPts[direct]   = (cumPts[direct]  ||0) + 12; cumField[direct]   = (cumField[direct]  ||0) + 12; }
-              if (indirect && indirect !== direct) { cumPts[indirect] = (cumPts[indirect]||0) + 6; cumField[indirect] = (cumField[indirect]||0) + 6; }
+              if (direct)   { cumPts[direct]   = (cumPts[direct]  ||0) + 12; cumField[direct]   = (cumField[direct]  ||0) + 12; addM(matchPts, direct, 12); addM(matchField, direct, 12); }
+              if (indirect && indirect !== direct) { cumPts[indirect] = (cumPts[indirect]||0) + 6; cumField[indirect] = (cumField[indirect]||0) + 6; addM(matchPts, indirect, 6); addM(matchField, indirect, 6); }
             }
           }
           for (const b of (inn.bowling || [])) {
@@ -837,6 +844,7 @@ function parseFielder(raw, howOut) {
             const bp = calcBowlingPts(b.runs||0, b.balls||0, b.wickets||0, b.maidens||0);
             cumPts[name] = (cumPts[name] || 0) + bp;
             cumBowl[name] = (cumBowl[name] || 0) + bp;
+            addM(matchPts, name, bp); addM(matchBowl, name, bp);
           }
         }
 
@@ -844,7 +852,7 @@ function parseFielder(raw, howOut) {
         // playerOfTheMatch may be a player ID or a name depending on API response
         const momRaw = (root.playerOfTheMatch || '').trim();
         const mom = idToName[momRaw] || momRaw;
-        if (mom) cumPts[mom] = (cumPts[mom]||0) + 25;
+        if (mom) { cumPts[mom] = (cumPts[mom]||0) + 25; addM(matchPts, mom, 25); }
 
         // 3-catch bonus: 4pts per 3 catches in a single match
         // wt1=bowler, wt2=fielder for ct/ctw — use wt2
@@ -862,7 +870,20 @@ function parseFielder(raw, howOut) {
           }
         }
         for (const [fielder, cnt] of Object.entries(catchCount)) {
-          if (cnt >= 3) { cumPts[fielder] = (cumPts[fielder]||0) + 4; cumField[fielder] = (cumField[fielder]||0) + 4; }
+          if (cnt >= 3) { cumPts[fielder] = (cumPts[fielder]||0) + 4; cumField[fielder] = (cumField[fielder]||0) + 4; addM(matchPts, fielder, 4); addM(matchField, fielder, 4); }
+        }
+
+        // Record top performer for this match
+        const topMatch = Object.entries(matchPts).filter(([n]) => !isJunk(n)).sort((a, b) => b[1] - a[1])[0];
+        if (topMatch) {
+          const [topName, topPts] = topMatch;
+          topMatchPerformances.push({
+            date, time, name: topName, pts: topPts,
+            bat: matchBat[topName] || 0,
+            bowl: matchBowl[topName] || 0,
+            field: matchField[topName] || 0,
+            mom: (mom === topName) ? 25 : 0,
+          });
         }
       } catch (_) {}
 
@@ -974,6 +995,7 @@ function parseFielder(raw, howOut) {
       .sort((a, b) => b.total - a.total),
     rankingHistory,
     rankingTimeline,
+    topMatchPerformances: [...topMatchPerformances].sort((a, b) => b.pts - a.pts),
     battingRankHistory:  toRankHistory(batLongest, batMatchesAt1),
     battingRankTimeline:  batTimeline,
     bowlingRankHistory:  toRankHistory(bowlLongest, bowlMatchesAt1),
