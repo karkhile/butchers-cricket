@@ -508,7 +508,7 @@ function parseFielder(raw, howOut) {
         const batters = (inn2.batting || [])
           .map(b => ({ name: (b.playerName||'').trim(), runs: parseInt(b.runsScored)||0, balls: parseInt(b.ballsFaced)||0 }))
           .filter(b => !isJunk(b.name))
-          .sort((a, b) => b.runs - a.runs);
+          .sort((a, b) => b.runs - a.runs || a.balls - b.balls); // tie-break: fewer balls = better SR
         const top = batters[0];
         const topPerformer = top ? `${top.name} (${top.runs}r${top.balls ? '/'+top.balls+'b' : ''})` : '';
         chasedHighRR.push({ date, time, team: inn2.teamName, target, overs: totalOvers, reqRate: Math.round(reqRate * 100) / 100, topPerformer });
