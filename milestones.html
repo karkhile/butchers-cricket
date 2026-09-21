@@ -173,7 +173,6 @@
     <button id="btn-fastest"   onclick="setView('fastest')"   class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">⚡ Fastest</button>
     <button id="btn-rivalries" onclick="setView('rivalries')" class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">⚔️ Rivalries</button>
     <button id="btn-analysis"  onclick="setView('analysis')"  class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">📊 Analysis</button>
-    <button id="btn-topmatch"  onclick="setView('topmatch')"  class="toggle-btn px-4 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer transition inactive">🌟 Top Match</button>
   </div>
 
   <div id="content" class="text-emerald-300 text-center py-10 text-sm">Fetching milestones…</div>
@@ -218,7 +217,7 @@
 
     function setView(v) {
       _view = v;
-      ['big','all','achieved','fastest','rivalries','analysis','topmatch'].forEach(k => {
+      ['big','all','achieved','fastest','rivalries','analysis'].forEach(k => {
         const btn = document.getElementById('btn-' + k);
         if (v === k) {
           btn.style.background = 'white'; btn.style.color = '#064e3b';
@@ -242,8 +241,6 @@
         renderRivalries(el);
       } else if (_view === 'analysis') {
         renderAnalysis(el);
-      } else if (_view === 'topmatch') {
-        renderTopMatch(el);
       } else if (_view === 'fastest') {
         renderFastest(el);
       } else {
@@ -381,7 +378,7 @@
             '<span class="fastest-name">' + entry.runs + ' runs — ' + entry.over + '</span>' +
             '<span class="fastest-badge">' + entry.date + '</span>' +
           '</div>' +
-          '<div style="font-size:11px;color:#555;padding:2px 0 2px 28px;">🎳 ' + sn(entry.bowler) + '</div>' +
+          '<div style="font-size:11px;color:#555;padding:2px 0 2px 28px;">🔴 ' + sn(entry.bowler) + '</div>' +
           '<div style="font-size:11px;color:#555;padding:2px 0 6px 28px;">🏏 ' + batterLines + '</div>';
         card.appendChild(sec);
       });
@@ -636,17 +633,18 @@
       return card;
     }
 
-    function renderTopMatch(el) {
-      const items = _data.topMatchPerformances || [];
+    function buildTopMatchCard(items) {
       const card = document.createElement('div');
       card.className = 'fastest-card';
       card.innerHTML = '<div class="card-title">🌟 Highest Points in a Single Match</div>' +
-        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Best individual point-scoring performances across all matches, using the official CricClubs formula (bat + bowl + field + MOM).</div>';
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Best individual point-scoring performances across all matches (bat + bowl + field + MOM).</div>';
+      if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
 
       const rankLabels = ['🥇','🥈','🥉'];
       const rankClasses = ['gold','silver','bronze'];
+      const SHOW = 5;
 
-      items.slice(0, 20).forEach((r, i) => {
+      function makeRow(r, i) {
         const row = document.createElement('div');
         row.style.cssText = 'padding:8px 0;border-bottom:1px solid #f0f0f0;';
         const rankHtml = i < 3
@@ -654,7 +652,7 @@
           : '<span class="fastest-rank">' + (i+1) + '</span>';
         const breakdown = [];
         if (r.bat)   breakdown.push('🏏 ' + r.bat);
-        if (r.bowl)  breakdown.push('🎳 ' + r.bowl);
+        if (r.bowl)  breakdown.push('🔴 ' + r.bowl);
         if (r.field) breakdown.push('🧤 ' + r.field);
         if (r.mom)   breakdown.push('⭐ MOM');
         row.innerHTML =
@@ -671,16 +669,33 @@
               '</div>' +
             '</div>' +
           '</div>';
-        card.appendChild(row);
-      });
+        return row;
+      }
 
-      el.appendChild(card);
+      items.slice(0, SHOW).forEach((r, i) => card.appendChild(makeRow(r, i)));
+
+      const extra = items.slice(SHOW);
+      if (extra.length) {
+        const extraWrap = document.createElement('div');
+        extraWrap.className = 'extra-rows';
+        extra.forEach((r, i) => extraWrap.appendChild(makeRow(r, SHOW + i)));
+        card.appendChild(extraWrap);
+        const btnWrap = document.createElement('div');
+        btnWrap.className = 'view-more-wrap';
+        const btn = document.createElement('button');
+        btn.className = 'view-more-btn';
+        btn.textContent = '+ ' + extra.length + ' more';
+        btn.onclick = () => { const open = extraWrap.classList.toggle('open'); btn.textContent = open ? '− Show less' : '+ ' + extra.length + ' more'; };
+        btnWrap.appendChild(btn);
+        card.appendChild(btnWrap);
+      }
+      return card;
     }
 
     function renderAnalysis(el) {
       el.appendChild(buildRankingHistoryCard(_data.rankingHistory || [], _data.rankingTimeline || [], '👑 Overall Rank #1 History', 'Longest consecutive streak at #1 (total in brackets).'));
       el.appendChild(buildRankingHistoryCard(_data.battingRankHistory || [], _data.battingRankTimeline || [], '🏏 Batting Rank #1 History', 'Longest consecutive streak at #1 in batting points (total in brackets).'));
-      el.appendChild(buildRankingHistoryCard(_data.bowlingRankHistory || [], _data.bowlingRankTimeline || [], '🎳 Bowling Rank #1 History', 'Longest consecutive streak at #1 in bowling points (total in brackets).'));
+      el.appendChild(buildRankingHistoryCard(_data.bowlingRankHistory || [], _data.bowlingRankTimeline || [], '🔴 Bowling Rank #1 History', 'Longest consecutive streak at #1 in bowling points (total in brackets).'));
       el.appendChild(buildRankingHistoryCard(_data.fieldingRankHistory || [], _data.fieldingRankTimeline || [], '🧤 Fielding Rank #1 History', 'Longest consecutive streak at #1 in fielding points — catches, stumpings, run-outs (total in brackets).'));
       el.appendChild(buildWinPctCard(_data.captainStats || []));
       el.appendChild(buildMatchRescuersCard(_data.matchRescuers || []));
@@ -693,6 +708,7 @@
       el.appendChild(buildGameChangerCard('🛡️ Low-Score Defenders', gc.defenders || [], 'bowler'));
       el.appendChild(buildRRCard('🔒 Defended Despite Low RR', _data.defendedLowRR || [], 'defend'));
       el.appendChild(buildRRCard('🚀 Chased High Required Rate', _data.chasedHighRR || [], 'chase'));
+      el.appendChild(buildTopMatchCard(_data.topMatchPerformances || []));
     }
 
     function buildRRCard(title, items, mode) {
@@ -858,7 +874,7 @@
       const card = document.createElement('div');
       card.className = 'fastest-card';
       card.innerHTML = '<div class="card-title">🚨 Match Rescuers</div>' +
-        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Players who turned near-certain defeats into wins. 🏏 Chasing: team win% dropped below 40% but won — top WPA contributor credited. 🎳 Defending: opposition win% rose above 60% but defending team won — top WPA bowler credited.</div>';
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Players who turned near-certain defeats into wins. 🏏 Chasing: team win% dropped below 40% but won — top WPA contributor credited. 🔴 Defending: opposition win% rose above 60% but defending team won — top WPA bowler credited.</div>';
       if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
       const rankLabels = ['🥇','🥈','🥉'];
       const rankClasses = ['gold','silver','bronze'];
@@ -893,7 +909,7 @@
               : 'Opposition needed <strong>' + inst.needed + '</strong> off <strong>' + inst.oversLeft + '</strong> overs, <strong>' + inst.wickets + '</strong> wickets down';
             d.innerHTML =
               '<div style="display:flex;justify-content:space-between;align-items:center;">' +
-                '<span>' + (inst.date || '') + ' · ' + (inst.type === 'bowl' ? '🎳 defending' : '🏏 chasing') + ' · win% was <strong style="color:#c0392b;">' + inst.lowestWp + '%</strong> → won</span>' +
+                '<span>' + (inst.date || '') + ' · ' + (inst.type === 'bowl' ? '🔴 defending' : '🏏 chasing') + ' · win% was <strong style="color:#c0392b;">' + inst.lowestWp + '%</strong> → won</span>' +
                 '<span style="color:#1b5e20;font-weight:600;white-space:nowrap;margin-left:8px;">+' + inst.rescueWpa.toFixed(2) + ' WPA</span>' +
               '</div>' +
               (inst.needed !== undefined ? '<div style="color:#888;margin-top:2px;">' + situation + '</div>' : '') +
