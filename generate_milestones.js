@@ -94,6 +94,7 @@ function parseFielder(raw, howOut) {
   const dismissalsByPair = {}, sixesByPair = {}, foursByPair = {};
   const sixesOff = {}, foursOff = {}, commBalls = {};
   const captainStats = {}; // name -> { wins, losses, against: { opponentName -> {wins,losses} } }
+  const biggestDefeats = []; // { date, winnerTeam, loserTeam, winnerCap, loserCap, margin, type }
   const fastest50s = []; // { name, runs, balls, fours, sixes, date }
 
   // Fastest milestone tracking: { playerName: { hits: { threshold: playerMatchCount } } }
@@ -155,6 +156,27 @@ function parseFielder(raw, howOut) {
             captainStats[cap1Name].against[cap2Name].losses++;
             captainStats[cap2Name].wins++;
             captainStats[cap2Name].against[cap1Name].wins++;
+          }
+
+          // Biggest defeat margin
+          const inn1 = root.innings1, inn2 = root.innings2;
+          if (inn1 && inn2) {
+            const date = (m.matchDateTime || '').slice(0, 10);
+            const winnerTeam = cap1Won ? inn1.teamName : inn2.teamName;
+            const loserTeam  = cap1Won ? inn2.teamName : inn1.teamName;
+            const winnerCap  = cap1Won ? cap1Name : cap2Name;
+            const loserCap   = cap1Won ? cap2Name : cap1Name;
+            let margin, type;
+            if (winnerId === inn1.teamId) {
+              // defended — won by runs
+              margin = (inn1.total || 0) - (inn2.total || 0);
+              type = 'runs';
+            } else {
+              // chased — won by wickets
+              margin = 10 - (inn2.wickets || 0);
+              type = 'wickets';
+            }
+            if (margin > 0) biggestDefeats.push({ date, winnerTeam, loserTeam, winnerCap, loserCap, margin, type });
           }
         }
       }
@@ -1058,6 +1080,10 @@ function parseFielder(raw, howOut) {
         })).sort((a, b) => b.total - a.total),
       }))
       .sort((a, b) => b.total - a.total),
+    biggestDefeats: {
+      byRuns:    biggestDefeats.filter(d => d.type === 'runs').sort((a, b) => b.margin - a.margin).slice(0, 10),
+      byWickets: biggestDefeats.filter(d => d.type === 'wickets').sort((a, b) => b.margin - a.margin || a.date.localeCompare(b.date)).slice(0, 10),
+    },
     rankingHistory,
     rankingTimeline,
     topMatchPerformances: [...topMatchPerformances].sort((a, b) => b.pts - a.pts),

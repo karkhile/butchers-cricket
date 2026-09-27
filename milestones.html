@@ -984,10 +984,51 @@
 
     function renderRivalries(el) {
       el.appendChild(buildCaptainCard(_data.captainStats || []));
+      el.appendChild(buildBiggestDefeatsCard(_data.biggestDefeats || {}));
       const r = _data.rivalries || {};
       el.appendChild(buildRivalryCard('⚔️ Most Sixes off a Bowler', r.sixes || [], '6️⃣', 'sixes'));
       el.appendChild(buildRivalryCard('⚔️ Most Fours off a Bowler', r.fours || [], '4️⃣', 'fours'));
       el.appendChild(buildRivalryCard('⚔️ Most Times Dismissed by a Bowler', r.dismissals || [], '🎯', 'dismissals'));
+    }
+
+    function buildBiggestDefeatsCard(data) {
+      const card = document.createElement('div');
+      card.className = 'fastest-card';
+      card.innerHTML = '<div class="card-title">💥 Biggest Defeats</div>';
+      const byRuns    = data.byRuns    || [];
+      const byWickets = data.byWickets || [];
+      if (!byRuns.length && !byWickets.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
+
+      const makeSection = (title, items, fmt) => {
+        const sec = document.createElement('div');
+        sec.style.cssText = 'margin-bottom:14px;';
+        sec.innerHTML = '<div class="fastest-threshold">' + title + '</div>';
+        const rankLabels = ['🥇','🥈','🥉'];
+        const rankClasses = ['gold','silver','bronze'];
+        items.forEach((d, i) => {
+          const row = document.createElement('div');
+          row.className = 'fastest-entry';
+          const rankHtml = i < 3
+            ? '<span class="fastest-rank ' + rankClasses[i] + '">' + rankLabels[i] + '</span>'
+            : '<span class="fastest-rank">' + (i + 1) + '</span>';
+          row.innerHTML = rankHtml +
+            '<span class="fastest-name" style="flex:1">' +
+              '<span style="font-weight:600">' + sn(d.winnerTeam) + '</span>' +
+              ' <span style="color:#888;font-size:10px">(' + sn(d.winnerCap) + ')</span>' +
+              ' <span style="color:#c0392b;margin:0 4px">def.</span>' +
+              '<span style="font-weight:600">' + sn(d.loserTeam) + '</span>' +
+              ' <span style="color:#888;font-size:10px">(' + sn(d.loserCap) + ')</span>' +
+            '</span>' +
+            '<span style="color:#888;font-size:10px;margin-right:6px;">' + d.date + '</span>' +
+            '<span class="fastest-badge">' + fmt(d) + '</span>';
+          sec.appendChild(row);
+        });
+        return sec;
+      };
+
+      if (byRuns.length)    card.appendChild(makeSection('🏏 By Runs',    byRuns,    d => d.margin + ' runs'));
+      if (byWickets.length) card.appendChild(makeSection('🎯 By Wickets', byWickets, d => d.margin + ' wkts'));
+      return card;
     }
 
     function buildRivalryCard(title, items, icon, type) {

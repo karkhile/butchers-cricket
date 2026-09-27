@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-27T19:00:55.961Z",
+  "updatedAt": "2026-09-27T19:21:32.671Z",
   "batting": {
     "big": [
       {
@@ -553,6 +553,12 @@
         "gap": 4
       },
       {
+        "name": "Kunal Kokate",
+        "current": 11,
+        "next": 15,
+        "gap": 4
+      },
+      {
         "name": "Yash Mehta",
         "current": 65,
         "next": 70,
@@ -562,12 +568,6 @@
         "name": "Vinay Bharbhari",
         "current": 45,
         "next": 50,
-        "gap": 5
-      },
-      {
-        "name": "Kunal Kokate",
-        "current": 10,
-        "next": 15,
         "gap": 5
       }
     ],
@@ -1455,15 +1455,15 @@
     ],
     "achieved": [
       {
-        "name": "Arpan D",
-        "current": 30,
-        "achieved": 30,
-        "surplus": 0
-      },
-      {
         "name": "Soumya Smruti M",
         "current": 21,
         "achieved": 20,
+        "surplus": 1
+      },
+      {
+        "name": "Arpan D",
+        "current": 31,
+        "achieved": 30,
         "surplus": 1
       },
       {
@@ -1591,6 +1591,12 @@
         "gap": 2
       },
       {
+        "name": "Arpan D",
+        "current": 28,
+        "next": 30,
+        "gap": 2
+      },
+      {
         "name": "Akashdeep",
         "current": 8,
         "next": 10,
@@ -1606,12 +1612,6 @@
         "name": "Prashant K",
         "current": 17,
         "next": 20,
-        "gap": 3
-      },
-      {
-        "name": "Arpan D",
-        "current": 27,
-        "next": 30,
         "gap": 3
       },
       {
@@ -1708,6 +1708,12 @@
       },
       {
         "name": "Gaurav K",
+        "current": 28,
+        "next": 30,
+        "gap": 2
+      },
+      {
+        "name": "Arpan D",
         "current": 28,
         "next": 30,
         "gap": 2
@@ -1811,12 +1817,6 @@
         "surplus": 7
       },
       {
-        "name": "Arpan D",
-        "current": 27,
-        "achieved": 20,
-        "surplus": 7
-      },
-      {
         "name": "Arjun S",
         "current": 18,
         "achieved": 10,
@@ -1824,6 +1824,12 @@
       },
       {
         "name": "Gaurav K",
+        "current": 28,
+        "achieved": 20,
+        "surplus": 8
+      },
+      {
+        "name": "Arpan D",
         "current": 28,
         "achieved": 20,
         "surplus": 8
@@ -2107,6 +2113,12 @@
   "runOuts": {
     "big": [
       {
+        "name": "Arpan D",
+        "current": 4,
+        "next": 5,
+        "gap": 1
+      },
+      {
         "name": "Gaurav M",
         "current": 4,
         "next": 5,
@@ -2214,6 +2226,12 @@
         "name": "Anjan K",
         "current": 14,
         "next": 15,
+        "gap": 1
+      },
+      {
+        "name": "Arpan D",
+        "current": 4,
+        "next": 5,
         "gap": 1
       },
       {
@@ -2626,12 +2644,6 @@
       }
     ],
     "achieved": [
-      {
-        "name": "Arpan D",
-        "current": 5,
-        "achieved": 5,
-        "surplus": 0
-      },
       {
         "name": "Arjun S",
         "current": 6,
@@ -4179,10 +4191,6 @@
           {
             "name": "Anil M",
             "matches": 22
-          },
-          {
-            "name": "Arpan D",
-            "matches": 27
           },
           {
             "name": "Yash M",
@@ -8197,6 +8205,192 @@
       ]
     }
   ],
+  "biggestDefeats": {
+    "byRuns": [
+      {
+        "date": "2026-03-28",
+        "winnerTeam": "Butchers-B",
+        "loserTeam": "Butchers-A",
+        "winnerCap": "Sylvestor George",
+        "loserCap": "Prashant Kumar",
+        "margin": 58,
+        "type": "runs"
+      },
+      {
+        "date": "2026-04-04",
+        "winnerTeam": "Butchers-A",
+        "loserTeam": "Butchers-B",
+        "winnerCap": "Praveen Karkhile",
+        "loserCap": "Abhishek Kumar Singh",
+        "margin": 51,
+        "type": "runs"
+      },
+      {
+        "date": "2025-07-19",
+        "winnerTeam": "Butchers-A",
+        "loserTeam": "Butchers-B",
+        "winnerCap": "Soumya Smruti Mishra",
+        "loserCap": "Arjun Shukla",
+        "margin": 50,
+        "type": "runs"
+      },
+      {
+        "date": "2026-09-27",
+        "winnerTeam": "Butchers-A",
+        "loserTeam": "Butchers-B",
+        "winnerCap": "Praveen Karkhile",
+        "loserCap": "Sylvestor George",
+        "margin": 50,
+        "type": "runs"
+      },
+      {
+        "date": "2026-08-16",
+        "winnerTeam": "Butchers-B",
+        "loserTeam": "Butchers-A",
+        "winnerCap": "Soumya Smruti Mishra",
+        "loserCap": "Praveen Karkhile",
+        "margin": 49,
+        "type": "runs"
+      },
+      {
+        "date": "2026-09-12",
+        "winnerTeam": "Butchers-A",
+        "loserTeam": "Butchers-B",
+        "winnerCap": "Soumya Smruti Mishra",
+        "loserCap": "Sylvestor George",
+        "margin": 49,
+        "type": "runs"
+      },
+      {
+        "date": "2026-02-07",
+        "winnerTeam": "Butchers-A",
+        "loserTeam": "Butchers-B",
+        "winnerCap": "Praveen Karkhile",
+        "loserCap": "Abhishek Kumar Singh",
+        "margin": 48,
+        "type": "runs"
+      },
+      {
+        "date": "2026-01-17",
+        "winnerTeam": "Butchers-B",
+        "loserTeam": "Butchers-A",
+        "winnerCap": "Abhishek Kumar Singh",
+        "loserCap": "Praveen Karkhile",
+        "margin": 45,
+        "type": "runs"
+      },
+      {
+        "date": "2025-12-06",
+        "winnerTeam": "Butchers-A",
+        "loserTeam": "Butchers-B",
+        "winnerCap": "Sylvestor George",
+        "loserCap": "Yash Mehta",
+        "margin": 43,
+        "type": "runs"
+      },
+      {
+        "date": "2026-04-18",
+        "winnerTeam": "Butchers-B",
+        "loserTeam": "Butchers-A",
+        "winnerCap": "Yash Mehta",
+        "loserCap": "Sylvestor George",
+        "margin": 42,
+        "type": "runs"
+      }
+    ],
+    "byWickets": [
+      {
+        "date": "2026-01-10",
+        "winnerTeam": "Butchers-A",
+        "loserTeam": "Butchers-B",
+        "winnerCap": "Anil Mallapur",
+        "loserCap": "Kaushal Karkera",
+        "margin": 10,
+        "type": "wickets"
+      },
+      {
+        "date": "2026-04-18",
+        "winnerTeam": "Butchers-A",
+        "loserTeam": "Butchers-B",
+        "winnerCap": "Sylvestor George",
+        "loserCap": "Praveen Karkhile",
+        "margin": 10,
+        "type": "wickets"
+      },
+      {
+        "date": "2025-08-09",
+        "winnerTeam": "Butchers-A",
+        "loserTeam": "Butchers-B",
+        "winnerCap": "Soumya Smruti Mishra",
+        "loserCap": "Arjun Shukla",
+        "margin": 9,
+        "type": "wickets"
+      },
+      {
+        "date": "2025-09-13",
+        "winnerTeam": "Butchers-A",
+        "loserTeam": "Butchers-B",
+        "winnerCap": "Gaurav Mehta",
+        "loserCap": "Vinay Bharbhari",
+        "margin": 9,
+        "type": "wickets"
+      },
+      {
+        "date": "2025-10-18",
+        "winnerTeam": "Butchers-B",
+        "loserTeam": "Butchers-A",
+        "winnerCap": "Yash Mehta",
+        "loserCap": "Arpan Dey",
+        "margin": 9,
+        "type": "wickets"
+      },
+      {
+        "date": "2026-07-18",
+        "winnerTeam": "Butchers-B",
+        "loserTeam": "Butchers-A",
+        "winnerCap": "Arpan Dey",
+        "loserCap": "Arjun Shukla",
+        "margin": 9,
+        "type": "wickets"
+      },
+      {
+        "date": "2025-10-11",
+        "winnerTeam": "Butchers-B",
+        "loserTeam": "Butchers-A",
+        "winnerCap": "Yash Mehta",
+        "loserCap": "Arpan Dey",
+        "margin": 8,
+        "type": "wickets"
+      },
+      {
+        "date": "2026-02-28",
+        "winnerTeam": "Butchers-B",
+        "loserTeam": "Butchers-A",
+        "winnerCap": "Prashant Kumar",
+        "loserCap": "Sylvestor George",
+        "margin": 8,
+        "type": "wickets"
+      },
+      {
+        "date": "2026-07-05",
+        "winnerTeam": "Butchers-B",
+        "loserTeam": "Butchers-A",
+        "winnerCap": "Piyush Jha",
+        "loserCap": "Arjun Shukla",
+        "margin": 8,
+        "type": "wickets"
+      },
+      {
+        "date": "2025-07-26",
+        "winnerTeam": "Butchers-A",
+        "loserTeam": "Butchers-B",
+        "winnerCap": "Soumya Smruti Mishra",
+        "loserCap": "Arjun Shukla",
+        "margin": 7,
+        "type": "wickets"
+      }
+    ]
+  },
   "rankingHistory": [
     {
       "name": "Yash Mehta",
