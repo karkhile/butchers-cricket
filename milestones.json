@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-27T18:51:18.907Z",
+  "updatedAt": "2026-09-27T19:00:55.961Z",
   "batting": {
     "big": [
       {
@@ -4273,6 +4273,110 @@
           "runs": 1
         }
       ]
+    }
+  ],
+  "fastest50s": [
+    {
+      "name": "Venkata Krishna R",
+      "balls": 16,
+      "runs": 53,
+      "date": "2026-07-11"
+    },
+    {
+      "name": "Anjan K",
+      "balls": 20,
+      "runs": 50,
+      "date": "2026-03-28"
+    },
+    {
+      "name": "Anjan K",
+      "balls": 24,
+      "runs": 50,
+      "date": "2026-06-06"
+    },
+    {
+      "name": "Anjan K",
+      "balls": 26,
+      "runs": 51,
+      "date": "2025-09-21"
+    },
+    {
+      "name": "Anil M",
+      "balls": 27,
+      "runs": 51,
+      "date": "2026-03-07"
+    },
+    {
+      "name": "Kaushal K",
+      "balls": 28,
+      "runs": 55,
+      "date": "2026-05-31"
+    },
+    {
+      "name": "Abhishek Kumar S",
+      "balls": 28,
+      "runs": 51,
+      "date": "2025-07-26"
+    },
+    {
+      "name": "Prashant K",
+      "balls": 28,
+      "runs": 50,
+      "date": "2026-05-31"
+    },
+    {
+      "name": "Anjan K",
+      "balls": 29,
+      "runs": 51,
+      "date": "2026-07-11"
+    },
+    {
+      "name": "Yash M",
+      "balls": 29,
+      "runs": 50,
+      "date": "2026-03-21"
+    },
+    {
+      "name": "Praveen K",
+      "balls": 30,
+      "runs": 50,
+      "date": "2026-09-27"
+    },
+    {
+      "name": "Yash M",
+      "balls": 32,
+      "runs": 51,
+      "date": "2025-09-06"
+    },
+    {
+      "name": "Abhishek Kumar S",
+      "balls": 33,
+      "runs": 51,
+      "date": "2026-05-23"
+    },
+    {
+      "name": "Gaurav M",
+      "balls": 33,
+      "runs": 50,
+      "date": "2025-12-06"
+    },
+    {
+      "name": "Sylvestor G",
+      "balls": 34,
+      "runs": 50,
+      "date": "2026-08-22"
+    },
+    {
+      "name": "Abhishek Kumar S",
+      "balls": 35,
+      "runs": 50,
+      "date": "2025-09-06"
+    },
+    {
+      "name": "Abhishek Kumar S",
+      "balls": 37,
+      "runs": 52,
+      "date": "2025-08-16"
     }
   ],
   "gameChangers": {

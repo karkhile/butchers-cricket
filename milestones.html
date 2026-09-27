@@ -393,6 +393,44 @@
         el.appendChild(buildFastestCard(c.title, thresholds, c.suffix));
       }
       el.appendChild(buildTopOversCard(_data.topOvers || []));
+      el.appendChild(buildFastest50Card(_data.fastest50s || []));
+    }
+
+    function buildFastest50Card(items) {
+      const card = document.createElement('div');
+      card.className = 'fastest-card';
+      card.innerHTML = '<div class="card-title">⚡ Fastest 50s</div>' +
+        '<div style="font-size:11px;color:#888;margin-bottom:10px;">Fewest balls faced to score 50 in a single innings (ball-by-ball verified).</div>';
+      if (!items.length) { card.innerHTML += '<div class="empty">No data yet</div>'; return card; }
+      const rankLabels = ['🥇','🥈','🥉'];
+      const rankClasses = ['gold','silver','bronze'];
+      const SHOW = 10;
+      const makeRow = (item, i) => {
+        const row = document.createElement('div');
+        row.className = 'fastest-entry';
+        const rankHtml = i < 3
+          ? '<span class="fastest-rank ' + rankClasses[i] + '">' + rankLabels[i] + '</span>'
+          : '<span class="fastest-rank">' + (i + 1) + '</span>';
+        row.innerHTML = rankHtml +
+          '<span class="fastest-name">' + sn(item.name) + '</span>' +
+          '<span style="font-size:11px;color:#888;margin-left:4px;">' + item.date + '</span>' +
+          '<span class="fastest-badge">' + item.balls + 'b · ' + item.runs + 'r</span>';
+        return row;
+      };
+      items.slice(0, SHOW).forEach((r, i) => card.appendChild(makeRow(r, i)));
+      const extra = items.slice(SHOW);
+      if (extra.length) {
+        const extraWrap = document.createElement('div');
+        extraWrap.className = 'extra-rows';
+        extra.forEach((r, i) => extraWrap.appendChild(makeRow(r, SHOW + i)));
+        card.appendChild(extraWrap);
+        const btn = document.createElement('button');
+        btn.className = 'view-more-btn';
+        btn.textContent = 'View ' + extra.length + ' more';
+        btn.onclick = () => { extraWrap.classList.toggle('open'); btn.textContent = extraWrap.classList.contains('open') ? 'Show less' : 'View ' + extra.length + ' more'; };
+        card.appendChild(btn);
+      }
+      return card;
     }
 
     function buildFastestCard(title, thresholds, suffix) {

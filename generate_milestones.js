@@ -94,6 +94,7 @@ function parseFielder(raw, howOut) {
   const dismissalsByPair = {}, sixesByPair = {}, foursByPair = {};
   const sixesOff = {}, foursOff = {}, commBalls = {};
   const captainStats = {}; // name -> { wins, losses, against: { opponentName -> {wins,losses} } }
+  const fastest50s = []; // { name, runs, balls, fours, sixes, date }
 
   // Fastest milestone tracking: { playerName: { hits: { threshold: playerMatchCount } } }
   // playerMatchCount = number of matches the player personally appeared in (not global match number)
@@ -484,6 +485,36 @@ function parseFielder(raw, howOut) {
     Object.entries(map)
       .map(([name, v]) => ({ name, ...v }))
       .sort((a, b) => b.count - a.count);
+
+  // ── Fastest 50s (ball-by-ball) ────────────────────────────────────────────────
+  for (const m of matches) {
+    const matchId = m.scoreSummary?.matchId || m.fixtureId;
+    const date = (m.matchDateTime || '').slice(0, 10);
+    if (!matchId) continue;
+    try {
+      const commentary = await getCommentary(matchId);
+      for (const innKey of ['innings1Balls', 'innings2Balls', 'innings3Balls', 'innings4Balls']) {
+        const innBalls = commentary[innKey];
+        if (!innBalls?.oversMap) continue;
+        const batterRuns = {}, batterBalls = {};
+        for (const [, over] of Object.entries(innBalls.oversMap)) {
+          const validBalls = (over.balls || []).filter(b => b.ballType !== 'Auto Comment Ball').sort((a, b) => (a.ball||0) - (b.ball||0));
+          for (const ball of validBalls) {
+            const batter = ball.strikerName;
+            if (!batter || isJunk(batter)) continue;
+            const runs = parseInt(ball.runs) || 0;
+            const isExtra = ball.ballType === 'Wide' || ball.ballType === 'No Ball';
+            batterRuns[batter] = (batterRuns[batter] || 0) + runs;
+            if (!isExtra) batterBalls[batter] = (batterBalls[batter] || 0) + 1;
+            // Record the ball count at which batter crossed 50
+            if (batterRuns[batter] >= 50 && (batterRuns[batter] - runs) < 50) {
+              fastest50s.push({ name: batter, balls: batterBalls[batter], runs: batterRuns[batter], date });
+            }
+          }
+        }
+      }
+    } catch (_) {}
+  }
 
   // ── Defended low RR / Chased high RR ─────────────────────────────────────────
   // defendedLowRR: batting team set a total, required rate for chaser was ≤6, batting team won
@@ -977,6 +1008,7 @@ function parseFielder(raw, howOut) {
       runOuts:     toFastest(fastRunOut,     FAST_RUNOUT),
     },
     topOvers,
+    fastest50s: fastest50s.sort((a, b) => a.balls - b.balls || b.runs - a.runs).slice(0, 20),
     gameChangers: {
       rescuers:  toGameChangers(rescuers),
       defenders: toGameChangers(defenders),
