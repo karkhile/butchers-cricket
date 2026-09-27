@@ -319,6 +319,13 @@
       const daysArr = unavailable ? [] : [...selected];
       try {
         await setDoc(voteRef, { player: name, days: daysArr, week: weekKey, timestamp: Date.now() });
+        // Snapshot all this week's votes to backup so they're always recoverable
+        try {
+          const allVotes = await getDocs(collection(db, 'votes'));
+          const snapshot = {};
+          allVotes.forEach(d => { if (d.data().week === weekKey) snapshot[d.id] = d.data(); });
+          await setDoc(doc(db, 'votes_backup', weekKey), { week: weekKey, backedUpAt: new Date().toISOString(), votes: snapshot });
+        } catch(_) {}
         await showSuccess(name, daysArr, voteRef, weekKey);
       } catch(e) {
         document.getElementById('errorMsg').classList.remove('hidden');
