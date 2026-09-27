@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-27T04:47:15.753Z",
+  "updatedAt": "2026-09-27T05:00:56.847Z",
   "batting": {
     "big": [
       {
@@ -3242,32 +3242,32 @@
             "matches": 12
           },
           {
+            "name": "Hari Vangipuram",
+            "matches": 13
+          },
+          {
+            "name": "Vinay Bharbhari",
+            "matches": 13
+          },
+          {
+            "name": "Yash Mehta",
+            "matches": 13
+          },
+          {
             "name": "Gaurav Mehta",
             "matches": 13
           },
           {
-            "name": "Rijwan Rana",
+            "name": "Anjan Kumar",
             "matches": 14
           },
           {
-            "name": "Hari Vangipuram",
-            "matches": 15
+            "name": "Praveen Karkhile",
+            "matches": 14
           },
           {
-            "name": "Vinay Bharbhari",
-            "matches": 15
-          },
-          {
-            "name": "Akashdeep Balu",
-            "matches": 15
-          },
-          {
-            "name": "Yash Mehta",
-            "matches": 16
-          },
-          {
-            "name": "Anjan Kumar",
-            "matches": 17
+            "name": "Rijwan Rana",
+            "matches": 14
           }
         ]
       },
@@ -3276,23 +3276,35 @@
         "entries": [
           {
             "name": "Yash Mehta",
-            "matches": 24
+            "matches": 21
+          },
+          {
+            "name": "Anjan Kumar",
+            "matches": 23
           },
           {
             "name": "Vinay Bharbhari",
-            "matches": 27
+            "matches": 23
+          },
+          {
+            "name": "Hari Vangipuram",
+            "matches": 26
+          },
+          {
+            "name": "Praveen Karkhile",
+            "matches": 26
+          },
+          {
+            "name": "Jay Shah",
+            "matches": 26
           },
           {
             "name": "Abhishek Kumar Singh",
             "matches": 27
           },
           {
-            "name": "Anjan Kumar",
-            "matches": 28
-          },
-          {
-            "name": "Hari Vangipuram",
-            "matches": 28
+            "name": "Abhishek Lingwal",
+            "matches": 27
           },
           {
             "name": "Rijwan Rana",
@@ -3301,18 +3313,6 @@
           {
             "name": "Akashdeep Balu",
             "matches": 29
-          },
-          {
-            "name": "Gaurav Mehta",
-            "matches": 34
-          },
-          {
-            "name": "Arpan Dey",
-            "matches": 36
-          },
-          {
-            "name": "Praveen Karkhile",
-            "matches": 39
           }
         ]
       },
@@ -3321,43 +3321,43 @@
         "entries": [
           {
             "name": "Yash Mehta",
-            "matches": 35
-          },
-          {
-            "name": "Anjan Kumar",
-            "matches": 39
-          },
-          {
-            "name": "Abhishek Kumar Singh",
-            "matches": 44
+            "matches": 29
           },
           {
             "name": "Vinay Bharbhari",
-            "matches": 48
+            "matches": 30
+          },
+          {
+            "name": "Anjan Kumar",
+            "matches": 32
+          },
+          {
+            "name": "Praveen Karkhile",
+            "matches": 40
+          },
+          {
+            "name": "Abhishek Kumar Singh",
+            "matches": 41
+          },
+          {
+            "name": "Kaushal Karkera",
+            "matches": 41
+          },
+          {
+            "name": "Hari Vangipuram",
+            "matches": 43
+          },
+          {
+            "name": "Gaurav Mehta",
+            "matches": 44
+          },
+          {
+            "name": "Anil Mallapur",
+            "matches": 47
           },
           {
             "name": "Arpan Dey",
             "matches": 48
-          },
-          {
-            "name": "Gaurav Mehta",
-            "matches": 49
-          },
-          {
-            "name": "Hari Vangipuram",
-            "matches": 58
-          },
-          {
-            "name": "Praveen Karkhile",
-            "matches": 59
-          },
-          {
-            "name": "Kaushal Karkera",
-            "matches": 62
-          },
-          {
-            "name": "Anil Mallapur",
-            "matches": 68
           }
         ]
       },
@@ -3366,43 +3366,43 @@
         "entries": [
           {
             "name": "Yash Mehta",
-            "matches": 43
+            "matches": 37
           },
           {
             "name": "Anjan Kumar",
-            "matches": 52
+            "matches": 41
           },
           {
             "name": "Gaurav Mehta",
-            "matches": 57
-          },
-          {
-            "name": "Abhishek Kumar Singh",
-            "matches": 65
-          },
-          {
-            "name": "Arpan Dey",
-            "matches": 67
+            "matches": 52
           },
           {
             "name": "Praveen Karkhile",
-            "matches": 82
-          },
-          {
-            "name": "Prashant Kumar",
-            "matches": 82
+            "matches": 53
           },
           {
             "name": "Hari Vangipuram",
-            "matches": 85
+            "matches": 58
+          },
+          {
+            "name": "Abhishek Kumar Singh",
+            "matches": 59
+          },
+          {
+            "name": "Arpan Dey",
+            "matches": 65
+          },
+          {
+            "name": "Prashant Kumar",
+            "matches": 69
+          },
+          {
+            "name": "Anil Mallapur",
+            "matches": 71
           },
           {
             "name": "Arjun Shukla",
-            "matches": 94
-          },
-          {
-            "name": "Gaurav Kumar",
-            "matches": 97
+            "matches": 74
           }
         ]
       },
@@ -3411,39 +3411,91 @@
         "entries": [
           {
             "name": "Yash Mehta",
-            "matches": 55
+            "matches": 47
           },
           {
             "name": "Anjan Kumar",
-            "matches": 66
-          },
-          {
-            "name": "Arpan Dey",
-            "matches": 82
-          },
-          {
-            "name": "Gaurav Mehta",
-            "matches": 90
-          },
-          {
-            "name": "Prashant Kumar",
-            "matches": 95
-          },
-          {
-            "name": "Abhishek Kumar Singh",
-            "matches": 97
-          },
-          {
-            "name": "Hari Vangipuram",
-            "matches": 103
+            "matches": 49
           },
           {
             "name": "Praveen Karkhile",
-            "matches": 108
+            "matches": 65
+          },
+          {
+            "name": "Hari Vangipuram",
+            "matches": 68
+          },
+          {
+            "name": "Gaurav Mehta",
+            "matches": 71
+          },
+          {
+            "name": "Arpan Dey",
+            "matches": 76
+          },
+          {
+            "name": "Abhishek Kumar Singh",
+            "matches": 77
+          },
+          {
+            "name": "Prashant Kumar",
+            "matches": 82
           },
           {
             "name": "Arjun Shukla",
-            "matches": 109
+            "matches": 85
+          }
+        ]
+      },
+      {
+        "threshold": 3000,
+        "entries": [
+          {
+            "name": "Yash Mehta",
+            "matches": 57
+          },
+          {
+            "name": "Anjan Kumar",
+            "matches": 59
+          },
+          {
+            "name": "Gaurav Mehta",
+            "matches": 81
+          },
+          {
+            "name": "Prashant Kumar",
+            "matches": 92
+          }
+        ]
+      },
+      {
+        "threshold": 3500,
+        "entries": [
+          {
+            "name": "Anjan Kumar",
+            "matches": 67
+          },
+          {
+            "name": "Yash Mehta",
+            "matches": 68
+          }
+        ]
+      },
+      {
+        "threshold": 4000,
+        "entries": [
+          {
+            "name": "Anjan Kumar",
+            "matches": 77
+          }
+        ]
+      },
+      {
+        "threshold": 4500,
+        "entries": [
+          {
+            "name": "Anjan Kumar",
+            "matches": 85
           }
         ]
       }

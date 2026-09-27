@@ -17,7 +17,7 @@ const SIXES_MILESTONES    = [10,20,30,40,50,75,100];
 // Fastest milestone thresholds
 const FAST_RUN      = [100,500,1000,1500,2000];
 const FAST_WKTS     = [25,50,75,100,150,200,250];
-const FAST_PTS      = [250,500,1000,1500,2000,2500];
+const FAST_PTS      = [250,500,1000,1500,2000,2500,3000,3500,4000,4500];
 const FAST_CATCH    = [10,20,30,50];
 const FAST_STUMPING = [1,5,10,15,20];
 const FAST_RUNOUT   = [5,10,15,20];
@@ -179,6 +179,7 @@ function parseFielder(raw, howOut) {
           if (!fastMom[momName]) fastMom[momName] = { hits: {} };
           for (const t of FAST_MOM)
             if (!fastMom[momName].hits[t] && momMap[momName] >= t) fastMom[momName].hits[t] = momMatchNum;
+          fastMom[momName].total = momMap[momName];
         }
       }
 
@@ -205,14 +206,17 @@ function parseFielder(raw, howOut) {
           for (const t of FAST_RUN) {
             if (!fastBat[name].hits[t] && batters[name] >= t) fastBat[name].hits[t] = batMatchNum;
           }
+          fastBat[name].total = batters[name];
           if (!fastFours[name]) fastFours[name] = { hits: {} };
           for (const t of FAST_FOURS) {
             if (!fastFours[name].hits[t] && foursMap[name] >= t) fastFours[name].hits[t] = batMatchNum;
           }
+          fastFours[name].total = foursMap[name];
           if (!fastSixes[name]) fastSixes[name] = { hits: {} };
           for (const t of FAST_SIXES) {
             if (!fastSixes[name].hits[t] && sixesMap[name] >= t) fastSixes[name].hits[t] = batMatchNum;
           }
+          fastSixes[name].total = sixesMap[name];
 
           // Dismissals rivalry: extract bowler from outStringNoLink for all bowler-credited dismissals
           if (['b', 'ct', 'ctw', 'st', 'lbw', 'ht'].includes(howOut)) {
@@ -248,27 +252,32 @@ function parseFielder(raw, howOut) {
                 if (!fastFieldCt[fielder]) fastFieldCt[fielder] = { hits: {} };
                 for (const t of FAST_CATCH)
                   if (!fastFieldCt[fielder].hits[t] && catches[fielder] >= t) fastFieldCt[fielder].hits[t] = fMatchNum;
+                fastFieldCt[fielder].total = catches[fielder];
               }
               if (howOut === 'ctw') {
                 if (!fastKeeperCt[fielder]) fastKeeperCt[fielder] = { hits: {} };
                 for (const t of FAST_CATCH)
                   if (!fastKeeperCt[fielder].hits[t] && keeperCt[fielder] >= t) fastKeeperCt[fielder].hits[t] = fMatchNum;
+                fastKeeperCt[fielder].total = keeperCt[fielder];
               }
               if (howOut === 'ct' || howOut === 'ctw') {
                 if (!fastTotalCatch[fielder]) fastTotalCatch[fielder] = { hits: {} };
                 const total = (catches[fielder] || 0) + (keeperCt[fielder] || 0);
                 for (const t of FAST_CATCH)
                   if (!fastTotalCatch[fielder].hits[t] && total >= t) fastTotalCatch[fielder].hits[t] = fMatchNum;
+                fastTotalCatch[fielder].total = total;
               }
               if (howOut === 'st') {
                 if (!fastStumping[fielder]) fastStumping[fielder] = { hits: {} };
                 for (const t of FAST_STUMPING)
                   if (!fastStumping[fielder].hits[t] && stumpings[fielder] >= t) fastStumping[fielder].hits[t] = fMatchNum;
+                fastStumping[fielder].total = stumpings[fielder];
               }
               if (howOut === 'ro') {
                 if (!fastRunOut[fielder]) fastRunOut[fielder] = { hits: {} };
                 for (const t of FAST_RUNOUT)
                   if (!fastRunOut[fielder].hits[t] && runouts[fielder] >= t) fastRunOut[fielder].hits[t] = fMatchNum;
+                fastRunOut[fielder].total = runouts[fielder];
               }
             }
           }
@@ -291,6 +300,7 @@ function parseFielder(raw, howOut) {
           for (const t of FAST_WKTS) {
             if (!fastBowl[name].hits[t] && bowlers[name] >= t) fastBowl[name].hits[t] = bowlMatchNum;
           }
+          fastBowl[name].total = bowlers[name];
         }
       }
       // After processing all innings, increment match count for every player who appeared
@@ -320,7 +330,14 @@ function parseFielder(raw, howOut) {
 
   // Fastest: for each threshold, rank players by fewest matches to reach it
   const toFastest = (fastMap, thresholds) => {
-    return thresholds.map(t => {
+    // Auto-extend: if any player has reached the last threshold, keep adding the next step
+    const step = thresholds.length >= 2 ? thresholds[thresholds.length - 1] - thresholds[thresholds.length - 2] : thresholds[thresholds.length - 1];
+    const maxTotal = Math.max(0, ...Object.values(fastMap).map(v => v.total || 0));
+    const extended = [...thresholds];
+    while (extended[extended.length - 1] <= maxTotal) {
+      extended.push(extended[extended.length - 1] + step);
+    }
+    return extended.map(t => {
       const entries = Object.entries(fastMap)
         .filter(([, v]) => v.hits[t])
         .map(([name, v]) => ({ name, matches: v.hits[t] }))
@@ -792,12 +809,13 @@ function parseFielder(raw, howOut) {
       const date = (m.matchDateTime || '').slice(0, 10);
       const time = (m.matchDateTime || '').slice(11, 16);
       if (!matchId) continue;
+      const seenInMatch2 = new Set();
       try {
         const root = (await apiGet('series/match/' + matchId + '/scorecard')).data || {};
 
         // Per-match points tracker
         const matchPts = {}, matchBat = {}, matchBowl = {}, matchField = {};
-        const addM = (obj, name, v) => { if (!isJunk(name)) obj[name] = (obj[name]||0) + v; };
+        const addM = (obj, name, v) => { if (!isJunk(name)) { obj[name] = (obj[name]||0) + v; seenInMatch2.add(name); } };
 
         // Build playerID -> name map for this match
         const idToName = {};
@@ -888,14 +906,17 @@ function parseFielder(raw, howOut) {
         }
       } catch (_) {}
 
-      // Track fastest points milestones — increment match count for every player with pts, check thresholds
+      // Increment per-player match count for pts tracking, then check thresholds
+      for (const name of seenInMatch2) ptsMatchCount[name] = (ptsMatchCount[name] || 0) + 1;
+      // Track fastest points milestones using per-player match count from first loop
       for (const [name, p] of Object.entries(cumPts)) {
         if (isJunk(name)) continue;
-        ptsMatchCount[name] = (ptsMatchCount[name] || 0) + 1;
+        const mCount = ptsMatchCount[name] || 0;
         if (!fastPts[name]) fastPts[name] = { hits: {} };
         for (const t of FAST_PTS) {
-          if (!fastPts[name].hits[t] && p >= t) fastPts[name].hits[t] = ptsMatchCount[name];
+          if (!fastPts[name].hits[t] && p >= t) fastPts[name].hits[t] = mCount;
         }
+        fastPts[name].total = p;
       }
 
       const top = Object.entries(cumPts).sort((a, b) => b[1] - a[1])[0];
