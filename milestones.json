@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-27T21:53:00.824Z",
+  "updatedAt": "2026-09-27T22:51:55.525Z",
   "batting": {
     "big": [
       {
@@ -39,16 +39,16 @@
         "gap": 55
       },
       {
+        "name": "Arpan Dey",
+        "current": 420,
+        "next": 500,
+        "gap": 80
+      },
+      {
         "name": "Srinath Shah",
         "current": 170,
         "next": 250,
         "gap": 80
-      },
-      {
-        "name": "Arpan Dey",
-        "current": 418,
-        "next": 500,
-        "gap": 82
       },
       {
         "name": "Venkata Krishna Ravi",
@@ -131,21 +131,27 @@
         "gap": 27
       },
       {
-        "name": "Sylvestor George",
-        "current": 1122,
-        "next": 1150,
-        "gap": 28
-      },
-      {
         "name": "Praveen Karkhile",
         "current": 722,
         "next": 750,
         "gap": 28
       },
       {
+        "name": "Sylvestor George",
+        "current": 1121,
+        "next": 1150,
+        "gap": 29
+      },
+      {
         "name": "Anil Mallapur",
         "current": 520,
         "next": 550,
+        "gap": 30
+      },
+      {
+        "name": "Arpan Dey",
+        "current": 420,
+        "next": 450,
         "gap": 30
       },
       {
@@ -159,12 +165,6 @@
         "current": 170,
         "next": 200,
         "gap": 30
-      },
-      {
-        "name": "Arpan Dey",
-        "current": 418,
-        "next": 450,
-        "gap": 32
       },
       {
         "name": "Venkata Krishna Ravi",
@@ -326,9 +326,9 @@
       },
       {
         "name": "Sylvestor George",
-        "current": 1122,
+        "current": 1121,
         "achieved": 1000,
-        "surplus": 122
+        "surplus": 121
       },
       {
         "name": "Gaurav Kumar",
@@ -343,16 +343,16 @@
         "surplus": 139
       },
       {
-        "name": "Arpan Dey",
+        "name": "Venkata Krishna Ravi",
         "current": 418,
         "achieved": 250,
         "surplus": 168
       },
       {
-        "name": "Venkata Krishna Ravi",
-        "current": 418,
+        "name": "Arpan Dey",
+        "current": 420,
         "achieved": 250,
-        "surplus": 168
+        "surplus": 170
       },
       {
         "name": "Hari Vangipuram",
@@ -5829,11 +5829,6 @@
         "count": 9
       },
       {
-        "batter": "Sylvestor George",
-        "bowler": "Prashant K",
-        "count": 8
-      },
-      {
         "batter": "Praveen Karkhile",
         "bowler": "Soumya Smruti M",
         "count": 7
@@ -5851,6 +5846,11 @@
       {
         "batter": "Gaurav Mehta",
         "bowler": "Anjan K",
+        "count": 7
+      },
+      {
+        "batter": "Sylvestor George",
+        "bowler": "Prashant K",
         "count": 7
       },
       {
@@ -5896,6 +5896,11 @@
       {
         "batter": "Prashant Kumar",
         "bowler": "Kaushal K",
+        "count": 6
+      },
+      {
+        "batter": "Arpan Dey",
+        "bowler": "Prashant K",
         "count": 6
       },
       {
@@ -5975,6 +5980,11 @@
       },
       {
         "batter": "Sylvestor George",
+        "bowler": "Praveen K",
+        "count": 5
+      },
+      {
+        "batter": "Sylvestor George",
         "bowler": "Kaushal K",
         "count": 5
       },
@@ -5986,11 +5996,6 @@
       {
         "batter": "Kaushal Karkera",
         "bowler": "Arpan D",
-        "count": 5
-      },
-      {
-        "batter": "Arpan Dey",
-        "bowler": "Prashant K",
         "count": 5
       },
       {
@@ -6040,11 +6045,6 @@
       },
       {
         "batter": "Sylvestor George",
-        "bowler": "Soumya Smruti M",
-        "count": 4
-      },
-      {
-        "batter": "Gaurav Kumar",
         "bowler": "Soumya Smruti M",
         "count": 4
       }
@@ -7662,9 +7662,9 @@
     {
       "name": "Sylvestor George",
       "wins": 17,
-      "losses": 15,
-      "total": 32,
-      "winPct": 53,
+      "losses": 16,
+      "total": 33,
+      "winPct": 52,
       "against": [
         {
           "opponent": "Anjan Kumar",
@@ -7688,14 +7688,14 @@
           "winPct": 33
         },
         {
-          "opponent": "Vinay Bharbhari",
+          "opponent": "Praveen Karkhile",
           "wins": 1,
-          "losses": 1,
-          "total": 2,
-          "winPct": 50
+          "losses": 2,
+          "total": 3,
+          "winPct": 33
         },
         {
-          "opponent": "Praveen Karkhile",
+          "opponent": "Vinay Bharbhari",
           "wins": 1,
           "losses": 1,
           "total": 2,
@@ -7753,18 +7753,18 @@
           "winPct": 45
         },
         {
+          "opponent": "Sylvestor George",
+          "wins": 2,
+          "losses": 1,
+          "total": 3,
+          "winPct": 67
+        },
+        {
           "opponent": "Gaurav Mehta",
           "wins": 2,
           "losses": 0,
           "total": 2,
           "winPct": 100
-        },
-        {
-          "opponent": "Sylvestor George",
-          "wins": 1,
-          "losses": 1,
-          "total": 2,
-          "winPct": 50
         },
         {
           "opponent": "Soumya Smruti Mishra",
@@ -7775,13 +7775,6 @@
         },
         {
           "opponent": "Yash Mehta",
-          "wins": 1,
-          "losses": 0,
-          "total": 1,
-          "winPct": 100
-        },
-        {
-          "opponent": "Arpan Dey",
           "wins": 1,
           "losses": 0,
           "total": 1,
@@ -7908,43 +7901,6 @@
       ]
     },
     {
-      "name": "Arpan Dey",
-      "wins": 6,
-      "losses": 8,
-      "total": 14,
-      "winPct": 43,
-      "against": [
-        {
-          "opponent": "Yash Mehta",
-          "wins": 1,
-          "losses": 6,
-          "total": 7,
-          "winPct": 14
-        },
-        {
-          "opponent": "Arjun Shukla",
-          "wins": 4,
-          "losses": 0,
-          "total": 4,
-          "winPct": 100
-        },
-        {
-          "opponent": "Sylvestor George",
-          "wins": 1,
-          "losses": 1,
-          "total": 2,
-          "winPct": 50
-        },
-        {
-          "opponent": "Praveen Karkhile",
-          "wins": 0,
-          "losses": 1,
-          "total": 1,
-          "winPct": 0
-        }
-      ]
-    },
-    {
       "name": "Soumya Smruti Mishra",
       "wins": 8,
       "losses": 5,
@@ -8008,6 +7964,36 @@
           "losses": 1,
           "total": 1,
           "winPct": 0
+        }
+      ]
+    },
+    {
+      "name": "Arpan Dey",
+      "wins": 6,
+      "losses": 7,
+      "total": 13,
+      "winPct": 46,
+      "against": [
+        {
+          "opponent": "Yash Mehta",
+          "wins": 1,
+          "losses": 6,
+          "total": 7,
+          "winPct": 14
+        },
+        {
+          "opponent": "Arjun Shukla",
+          "wins": 4,
+          "losses": 0,
+          "total": 4,
+          "winPct": 100
+        },
+        {
+          "opponent": "Sylvestor George",
+          "wins": 1,
+          "losses": 1,
+          "total": 2,
+          "winPct": 50
         }
       ]
     },
