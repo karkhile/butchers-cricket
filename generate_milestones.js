@@ -17,6 +17,7 @@ const SIXES_MILESTONES    = [10,20,30,40,50,75,100];
 // Fastest milestone thresholds
 const FAST_RUN      = [100,500,1000,1500,2000];
 const FAST_WKTS     = [25,50,75,100,150,200,250];
+const FAST_PTS      = [250,500,1000,1500,2000,2500];
 const FAST_CATCH    = [10,20,30,50];
 const FAST_STUMPING = [1,5,10,15,20];
 const FAST_RUNOUT   = [5,10,15,20];
@@ -96,9 +97,9 @@ function parseFielder(raw, howOut) {
 
   // Fastest milestone tracking: { playerName: { hits: { threshold: playerMatchCount } } }
   // playerMatchCount = number of matches the player personally appeared in (not global match number)
-  const fastBat = {}, fastBowl = {}, fastFieldCt = {}, fastKeeperCt = {}, fastTotalCatch = {}, fastStumping = {}, fastRunOut = {}, fastFours = {}, fastSixes = {}, fastMom = {};
+  const fastBat = {}, fastBowl = {}, fastFieldCt = {}, fastKeeperCt = {}, fastTotalCatch = {}, fastStumping = {}, fastRunOut = {}, fastFours = {}, fastSixes = {}, fastMom = {}, fastPts = {};
   // Per-player match appearance counters
-  const playerMatchCount = {};
+  const playerMatchCount = {}, ptsMatchCount = {};
 
   for (let i = 0; i < matches.length; i++) {
     const m = matches[i];
@@ -887,6 +888,16 @@ function parseFielder(raw, howOut) {
         }
       } catch (_) {}
 
+      // Track fastest points milestones — increment match count for every player with pts, check thresholds
+      for (const [name, p] of Object.entries(cumPts)) {
+        if (isJunk(name)) continue;
+        ptsMatchCount[name] = (ptsMatchCount[name] || 0) + 1;
+        if (!fastPts[name]) fastPts[name] = { hits: {} };
+        for (const t of FAST_PTS) {
+          if (!fastPts[name].hits[t] && p >= t) fastPts[name].hits[t] = ptsMatchCount[name];
+        }
+      }
+
       const top = Object.entries(cumPts).sort((a, b) => b[1] - a[1])[0];
       if (!top) continue;
       rankingMatchesAt1[top[0]] = (rankingMatchesAt1[top[0]] || 0) + 1;
@@ -934,6 +945,7 @@ function parseFielder(raw, howOut) {
     fastest: {
       batting:     toFastest(fastBat,        FAST_RUN),
       bowling:     toFastest(fastBowl,       FAST_WKTS),
+      points:      toFastest(fastPts,        FAST_PTS),
       fours:       toFastest(fastFours,      FAST_FOURS),
       sixes:       toFastest(fastSixes,      FAST_SIXES),
       mom:         toFastest(fastMom,        FAST_MOM),
