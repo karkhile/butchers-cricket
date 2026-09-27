@@ -487,7 +487,7 @@ function parseFielder(raw, howOut) {
             if (!rescuers[name]) rescuers[name] = { count: 0, wins: 0, instances: [] };
             rescuers[name].count++;
             if (isWinnerInn) rescuers[name].wins++;
-            rescuers[name].instances.push({ runs, runsWhen3rdFell, won: isWinnerInn, date });
+            rescuers[name].instances.push({ runs, runsWhen3rdFell, won: isWinnerInn, date, url: matchUrl(m) });
           }
         }
 
@@ -504,7 +504,7 @@ function parseFielder(raw, howOut) {
           if (wkts < 3) continue;
           if (!defenders[name]) defenders[name] = { count: 0, instances: [] };
           defenders[name].count++;
-          defenders[name].instances.push({ wkts, teamTotal, date });
+          defenders[name].instances.push({ wkts, teamTotal, date, url: matchUrl(m) });
         }
       }
     } catch (e) {}

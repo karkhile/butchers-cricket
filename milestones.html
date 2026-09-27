@@ -483,8 +483,8 @@
           ? '<span class="rivalry-rank ' + rankClasses[i] + '">' + rankLabels[i] + '</span>'
           : '<span class="rivalry-rank">' + (i + 1) + '</span>';
         const detail = role === 'batter'
-          ? (item.instances||[]).map(x => x.runs + (x.won ? '✓' : '✗')).join(', ')
-          : (item.instances||[]).map(x => x.wkts + 'wkt vs ' + x.teamTotal + '✓').join(', ');
+          ? (item.instances||[]).map(x => x.runs + (x.won ? '✓' : '✗') + (x.url ? ' <a href="' + x.url + '" target="_blank" rel="noopener" style="color:#059669;font-size:10px;text-decoration:none;" title="View scorecard">🔗</a>' : '')).join(', ')
+          : (item.instances||[]).map(x => x.wkts + 'wkt vs ' + x.teamTotal + '✓' + (x.url ? ' <a href="' + x.url + '" target="_blank" rel="noopener" style="color:#059669;font-size:10px;text-decoration:none;" title="View scorecard">🔗</a>' : '')).join(', ');
         const badge = role === 'batter'
           ? item.wins + '/' + item.count + ' wins'
           : item.count + 'x';
