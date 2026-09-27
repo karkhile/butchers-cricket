@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-26T21:52:49.322Z",
+  "updatedAt": "2026-09-27T04:33:18.866Z",
   "batting": {
     "big": [
       {
@@ -3159,6 +3159,23 @@
           {
             "name": "Gaurav Mehta",
             "matches": 77
+          }
+        ]
+      },
+      {
+        "threshold": 75,
+        "entries": [
+          {
+            "name": "Arpan Dey",
+            "matches": 79
+          },
+          {
+            "name": "Arjun Shukla",
+            "matches": 89
+          },
+          {
+            "name": "Prashant Kumar",
+            "matches": 90
           }
         ]
       }
