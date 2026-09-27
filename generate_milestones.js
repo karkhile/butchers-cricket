@@ -463,48 +463,55 @@ function parseFielder(raw, howOut) {
         const inn = root[innKey];
         if (!inn || !inn.batting?.length) continue;
         const isWinnerInn = inn.teamId === root.winner;
+        const isSecondInn = innKey === 'innings2' || innKey === 'innings4';
 
         // Rescuer: batter who scored 25+ at position 4+ when 3 wkts fell for < 40
-        let wickets = 0, runsWhen3rdFell = null;
-        for (const b of inn.batting) {
-          const ho = (b.howOut || '').toLowerCase();
-          const os = (b.outStringNoLink || '').toLowerCase();
-          if (ho && !['ab','rtno','rt','rto',''].includes(ho) && os !== 'dnb' && os !== 'not out' && os !== 'did not bat') {
-            wickets++;
-            if (wickets === 3) {
-              runsWhen3rdFell = inn.batting.slice(0, inn.batting.indexOf(b) + 1).reduce((s, x) => s + (parseInt(x.runsScored) || 0), 0);
+        // Only applies to the chasing team (batting second)
+        if (isSecondInn) {
+          let wickets = 0, runsWhen3rdFell = null;
+          for (const b of inn.batting) {
+            const ho = (b.howOut || '').toLowerCase();
+            const os = (b.outStringNoLink || '').toLowerCase();
+            if (ho && !['ab','rtno','rt','rto',''].includes(ho) && os !== 'dnb' && os !== 'not out' && os !== 'did not bat') {
+              wickets++;
+              if (wickets === 3) {
+                runsWhen3rdFell = inn.batting.slice(0, inn.batting.indexOf(b) + 1).reduce((s, x) => s + (parseInt(x.runsScored) || 0), 0);
+              }
             }
           }
-        }
-        if (runsWhen3rdFell !== null && runsWhen3rdFell <= 40) {
-          let pos = 0;
-          for (const b of inn.batting) {
-            pos++;
-            if (pos < 4) continue;
-            const runs = parseInt(b.runsScored) || 0;
-            const name = (b.playerName || '').trim();
-            if (runs < 25 || isJunk(name)) continue;
-            if (!rescuers[name]) rescuers[name] = { count: 0, wins: 0, instances: [] };
-            rescuers[name].count++;
-            if (isWinnerInn) rescuers[name].wins++;
-            rescuers[name].instances.push({ runs, runsWhen3rdFell, won: isWinnerInn, date, url: matchUrl(m) });
+          if (runsWhen3rdFell !== null && runsWhen3rdFell <= 40) {
+            let pos = 0;
+            for (const b of inn.batting) {
+              pos++;
+              if (pos < 4) continue;
+              const runs = parseInt(b.runsScored) || 0;
+              const name = (b.playerName || '').trim();
+              if (runs < 25 || isJunk(name)) continue;
+              if (!rescuers[name]) rescuers[name] = { count: 0, wins: 0, instances: [] };
+              rescuers[name].count++;
+              if (isWinnerInn) rescuers[name].wins++;
+              rescuers[name].instances.push({ runs, runsWhen3rdFell, won: isWinnerInn, date, url: matchUrl(m) });
+            }
           }
         }
 
         // Defender: bowler who took 3+ wkts when winning team scored under 90
-        const bowlingInnKey = { innings1:'innings2', innings2:'innings1', innings3:'innings4', innings4:'innings3' }[innKey];
-        const bowlInn = root[bowlingInnKey];
-        if (!bowlInn || bowlInn.teamId !== root.winner) continue;
-        const teamTotal = inn.total || 0;
-        if (teamTotal > 90) continue;
-        for (const b of (bowlInn.bowling || [])) {
-          const name = ((b.firstName || '') + ' ' + (b.lastName || '')).trim();
-          if (isJunk(name)) continue;
-          const wkts = parseInt(b.wickets) || 0;
-          if (wkts < 3) continue;
-          if (!defenders[name]) defenders[name] = { count: 0, instances: [] };
-          defenders[name].count++;
-          defenders[name].instances.push({ wkts, teamTotal, date, url: matchUrl(m) });
+        // Only applies when the bowling side is bowling second (defending their total)
+        if (!isSecondInn) {
+          const bowlingInnKey = { innings1:'innings2', innings3:'innings4' }[innKey];
+          const bowlInn = root[bowlingInnKey];
+          if (!bowlInn || bowlInn.teamId !== root.winner) continue;
+          const teamTotal = inn.total || 0;
+          if (teamTotal > 90) continue;
+          for (const b of (bowlInn.bowling || [])) {
+            const name = ((b.firstName || '') + ' ' + (b.lastName || '')).trim();
+            if (isJunk(name)) continue;
+            const wkts = parseInt(b.wickets) || 0;
+            if (wkts < 3) continue;
+            if (!defenders[name]) defenders[name] = { count: 0, instances: [] };
+            defenders[name].count++;
+            defenders[name].instances.push({ wkts, teamTotal, date, url: matchUrl(m) });
+          }
         }
       }
     } catch (e) {}

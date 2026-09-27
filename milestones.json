@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-27T23:19:57.866Z",
+  "updatedAt": "2026-09-27T23:29:30.433Z",
   "batting": {
     "big": [
       {
@@ -4408,43 +4408,15 @@
     "rescuers": [
       {
         "name": "Anjan Kumar",
-        "count": 13,
-        "wins": 9,
+        "count": 8,
+        "wins": 4,
         "instances": [
-          {
-            "runs": 35,
-            "runsWhen3rdFell": 9,
-            "won": true,
-            "date": "2025-06-22",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=909&clubId=1109751"
-          },
           {
             "runs": 33,
             "runsWhen3rdFell": 13,
             "won": false,
             "date": "2025-08-02",
             "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=921&clubId=1109751"
-          },
-          {
-            "runs": 40,
-            "runsWhen3rdFell": 13,
-            "won": true,
-            "date": "2025-08-24",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=928&clubId=1109751"
-          },
-          {
-            "runs": 29,
-            "runsWhen3rdFell": 16,
-            "won": true,
-            "date": "2025-08-24",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=929&clubId=1109751"
-          },
-          {
-            "runs": 30,
-            "runsWhen3rdFell": 18,
-            "won": true,
-            "date": "2025-11-15",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=952&clubId=1109751"
           },
           {
             "runs": 33,
@@ -4459,13 +4431,6 @@
             "won": false,
             "date": "2026-02-22",
             "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=975&clubId=1109751"
-          },
-          {
-            "runs": 55,
-            "runsWhen3rdFell": 22,
-            "won": true,
-            "date": "2026-03-28",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=985&clubId=1109751"
           },
           {
             "runs": 49,
@@ -4505,104 +4470,6 @@
         ]
       },
       {
-        "name": "Abhishek Kumar Singh",
-        "count": 7,
-        "wins": 4,
-        "instances": [
-          {
-            "runs": 37,
-            "runsWhen3rdFell": 19,
-            "won": true,
-            "date": "2025-06-28",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=914&clubId=1109751"
-          },
-          {
-            "runs": 28,
-            "runsWhen3rdFell": 13,
-            "won": true,
-            "date": "2025-07-12",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=916&clubId=1109751"
-          },
-          {
-            "runs": 58,
-            "runsWhen3rdFell": 9,
-            "won": false,
-            "date": "2025-07-26",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=920&clubId=1109751"
-          },
-          {
-            "runs": 29,
-            "runsWhen3rdFell": 27,
-            "won": false,
-            "date": "2025-08-09",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=924&clubId=1109751"
-          },
-          {
-            "runs": 30,
-            "runsWhen3rdFell": 10,
-            "won": true,
-            "date": "2025-08-09",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=925&clubId=1109751"
-          },
-          {
-            "runs": 50,
-            "runsWhen3rdFell": 6,
-            "won": true,
-            "date": "2025-08-16",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=926&clubId=1109751"
-          },
-          {
-            "runs": 31,
-            "runsWhen3rdFell": 17,
-            "won": false,
-            "date": "2026-02-14",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=973&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Venkata Krishna Ravi",
-        "count": 5,
-        "wins": 3,
-        "instances": [
-          {
-            "runs": 35,
-            "runsWhen3rdFell": 15,
-            "won": true,
-            "date": "2026-05-25",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=992&clubId=1109751"
-          },
-          {
-            "runs": 33,
-            "runsWhen3rdFell": 25,
-            "won": false,
-            "date": "2026-06-06",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=995&clubId=1109751"
-          },
-          {
-            "runs": 51,
-            "runsWhen3rdFell": 27,
-            "won": false,
-            "date": "2026-07-11",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1004&clubId=1109751"
-          },
-          {
-            "runs": 32,
-            "runsWhen3rdFell": 17,
-            "won": true,
-            "date": "2026-08-08",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1014&clubId=1109751"
-          },
-          {
-            "runs": 29,
-            "runsWhen3rdFell": 36,
-            "won": true,
-            "date": "2026-09-12",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1022&clubId=1109751"
-          }
-        ]
-      },
-      {
         "name": "Praveen Karkhile",
         "count": 4,
         "wins": 3,
@@ -4638,142 +4505,30 @@
         ]
       },
       {
-        "name": "Prashant Kumar",
+        "name": "Abhishek Kumar Singh",
         "count": 3,
         "wins": 2,
         "instances": [
           {
-            "runs": 26,
-            "runsWhen3rdFell": 16,
-            "won": false,
+            "runs": 28,
+            "runsWhen3rdFell": 13,
+            "won": true,
             "date": "2025-07-12",
             "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=916&clubId=1109751"
           },
           {
-            "runs": 27,
-            "runsWhen3rdFell": 29,
-            "won": true,
-            "date": "2026-08-16",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1015&clubId=1109751"
-          },
-          {
-            "runs": 40,
-            "runsWhen3rdFell": 36,
-            "won": true,
-            "date": "2026-09-27",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1025&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Yash Mehta",
-        "count": 3,
-        "wins": 0,
-        "instances": [
-          {
-            "runs": 25,
-            "runsWhen3rdFell": 26,
-            "won": false,
-            "date": "2025-08-30",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=931&clubId=1109751"
-          },
-          {
             "runs": 29,
-            "runsWhen3rdFell": 34,
+            "runsWhen3rdFell": 27,
             "won": false,
-            "date": "2026-08-29",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1019&clubId=1109751"
+            "date": "2025-08-09",
+            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=924&clubId=1109751"
           },
           {
-            "runs": 35,
-            "runsWhen3rdFell": 15,
-            "won": false,
-            "date": "2026-09-12",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1022&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Sylvestor George",
-        "count": 3,
-        "wins": 1,
-        "instances": [
-          {
-            "runs": 26,
-            "runsWhen3rdFell": 10,
+            "runs": 50,
+            "runsWhen3rdFell": 6,
             "won": true,
-            "date": "2026-02-14",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=974&clubId=1109751"
-          },
-          {
-            "runs": 38,
-            "runsWhen3rdFell": 21,
-            "won": false,
-            "date": "2026-06-14",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=997&clubId=1109751"
-          },
-          {
-            "runs": 42,
-            "runsWhen3rdFell": 9,
-            "won": false,
-            "date": "2026-08-22",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1018&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Gaurav Mehta",
-        "count": 1,
-        "wins": 0,
-        "instances": [
-          {
-            "runs": 26,
-            "runsWhen3rdFell": 26,
-            "won": false,
             "date": "2025-08-16",
             "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=926&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Vinay Bharbhari",
-        "count": 1,
-        "wins": 1,
-        "instances": [
-          {
-            "runs": 34,
-            "runsWhen3rdFell": 24,
-            "won": true,
-            "date": "2025-10-04",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=943&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Hari Vangipuram",
-        "count": 1,
-        "wins": 1,
-        "instances": [
-          {
-            "runs": 32,
-            "runsWhen3rdFell": 18,
-            "won": true,
-            "date": "2026-03-07",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=979&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Anil Mallapur",
-        "count": 1,
-        "wins": 1,
-        "instances": [
-          {
-            "runs": 63,
-            "runsWhen3rdFell": 18,
-            "won": true,
-            "date": "2026-03-07",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=979&clubId=1109751"
           }
         ]
       },
@@ -4820,34 +4575,6 @@
         ]
       },
       {
-        "name": "Srinath Shah",
-        "count": 1,
-        "wins": 0,
-        "instances": [
-          {
-            "runs": 36,
-            "runsWhen3rdFell": 12,
-            "won": false,
-            "date": "2026-07-05",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1002&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Rohit Sharma",
-        "count": 1,
-        "wins": 1,
-        "instances": [
-          {
-            "runs": 36,
-            "runsWhen3rdFell": 21,
-            "won": true,
-            "date": "2026-07-05",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1003&clubId=1109751"
-          }
-        ]
-      },
-      {
         "name": "Rijwan Rana",
         "count": 1,
         "wins": 1,
@@ -4874,49 +4601,27 @@
             "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1014&clubId=1109751"
           }
         ]
+      },
+      {
+        "name": "Venkata Krishna Ravi",
+        "count": 1,
+        "wins": 1,
+        "instances": [
+          {
+            "runs": 29,
+            "runsWhen3rdFell": 36,
+            "won": true,
+            "date": "2026-09-12",
+            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1022&clubId=1109751"
+          }
+        ]
       }
     ],
     "defenders": [
       {
-        "name": "Praveen Karkhile",
-        "count": 4,
-        "instances": [
-          {
-            "wkts": 3,
-            "teamTotal": 73,
-            "date": "2025-08-30",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=930&clubId=1109751"
-          },
-          {
-            "wkts": 3,
-            "teamTotal": 70,
-            "date": "2026-01-24",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=968&clubId=1109751"
-          },
-          {
-            "wkts": 4,
-            "teamTotal": 48,
-            "date": "2026-06-21",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=998&clubId=1109751"
-          },
-          {
-            "wkts": 3,
-            "teamTotal": 66,
-            "date": "2026-09-20",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1023&clubId=1109751"
-          }
-        ]
-      },
-      {
         "name": "Anjan Kumar",
-        "count": 3,
+        "count": 2,
         "instances": [
-          {
-            "wkts": 3,
-            "teamTotal": 42,
-            "date": "2025-11-08",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=951&clubId=1109751"
-          },
           {
             "wkts": 3,
             "teamTotal": 66,
@@ -4933,49 +4638,13 @@
       },
       {
         "name": "Arjun Shukla",
-        "count": 2,
+        "count": 1,
         "instances": [
           {
             "wkts": 3,
             "teamTotal": 64,
             "date": "2025-06-22",
             "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=908&clubId=1109751"
-          },
-          {
-            "wkts": 5,
-            "teamTotal": 80,
-            "date": "2026-03-14",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=981&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Yash Mehta",
-        "count": 2,
-        "instances": [
-          {
-            "wkts": 3,
-            "teamTotal": 86,
-            "date": "2025-10-04",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=941&clubId=1109751"
-          },
-          {
-            "wkts": 3,
-            "teamTotal": 69,
-            "date": "2026-01-31",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=969&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Hari Vangipuram",
-        "count": 1,
-        "instances": [
-          {
-            "wkts": 3,
-            "teamTotal": 52,
-            "date": "2025-06-22",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=909&clubId=1109751"
           }
         ]
       },
@@ -5004,26 +4673,14 @@
         ]
       },
       {
-        "name": "Kaushal Karkera",
+        "name": "Yash Mehta",
         "count": 1,
         "instances": [
           {
             "wkts": 3,
-            "teamTotal": 34,
-            "date": "2025-10-11",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=945&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Arjun Deb",
-        "count": 1,
-        "instances": [
-          {
-            "wkts": 3,
-            "teamTotal": 52,
-            "date": "2025-10-25",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=948&clubId=1109751"
+            "teamTotal": 86,
+            "date": "2025-10-04",
+            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=941&clubId=1109751"
           }
         ]
       },
@@ -5036,66 +4693,6 @@
             "teamTotal": 62,
             "date": "2026-02-14",
             "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=973&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Anil Mallapur",
-        "count": 1,
-        "instances": [
-          {
-            "wkts": 3,
-            "teamTotal": 39,
-            "date": "2026-02-14",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=974&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Prashant Kumar",
-        "count": 1,
-        "instances": [
-          {
-            "wkts": 3,
-            "teamTotal": 74,
-            "date": "2026-03-28",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=984&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Gaurav Kumar",
-        "count": 1,
-        "instances": [
-          {
-            "wkts": 4,
-            "teamTotal": 45,
-            "date": "2026-04-18",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=988&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Arpan Dey",
-        "count": 1,
-        "instances": [
-          {
-            "wkts": 3,
-            "teamTotal": 65,
-            "date": "2026-05-23",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=989&clubId=1109751"
-          }
-        ]
-      },
-      {
-        "name": "Srinath Shah",
-        "count": 1,
-        "instances": [
-          {
-            "wkts": 3,
-            "teamTotal": 74,
-            "date": "2026-07-11",
-            "url": "https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=1005&clubId=1109751"
           }
         ]
       }
