@@ -87,6 +87,13 @@ function parseFielder(raw, howOut) {
   // Reverse to chronological order (oldest first) for fastest-milestone tracking
   const matches = [...matchesRaw].reverse();
   console.log('Total matches:', matches.length);
+
+  // Extract public scorecard URL from match object
+  function matchUrl(m) {
+    const paper = m.links?.paperScoreCard || '';
+    const id = paper.match(/matchId=(\d+)/)?.[1];
+    return id ? 'https://cricclubs.com/Butcherscricketclub1/viewScorecard.do?matchId=' + id + '&clubId=1109751' : '';
+  }
   const batters = {}, bowlers = {}, catches = {}, keeperCt = {}, stumpings = {}, runouts = {};
   const foursMap = {}, sixesMap = {}, momMap = {};
   const widesMap = {}, noBallsMap = {}, bowlerBalls = {}, dotBallsMap = {}, bowlerMatchCount = {};
@@ -176,7 +183,7 @@ function parseFielder(raw, howOut) {
               margin = 10 - (inn2.wickets || 0);
               type = 'wickets';
             }
-            if (margin > 0) biggestDefeats.push({ date, winnerTeam, loserTeam, winnerCap, loserCap, margin, type });
+            if (margin > 0) biggestDefeats.push({ date, winnerTeam, loserTeam, winnerCap, loserCap, margin, type, url: matchUrl(m) });
           }
         }
       }
@@ -530,7 +537,7 @@ function parseFielder(raw, howOut) {
             if (!isExtra) batterBalls[batter] = (batterBalls[batter] || 0) + 1;
             // Record the ball count at which batter crossed 50
             if (batterRuns[batter] >= 50 && (batterRuns[batter] - runs) < 50) {
-              fastest50s.push({ name: batter, balls: batterBalls[batter], runs: batterRuns[batter], date });
+              fastest50s.push({ name: batter, balls: batterBalls[batter], runs: batterRuns[batter], date, url: matchUrl(m) });
             }
           }
         }
@@ -570,7 +577,7 @@ function parseFielder(raw, howOut) {
           .filter(b => !isJunk(b.name))
           .sort((a, b) => b.wkts - a.wkts || a.runs - b.runs);
         const topPerformer = bowlers[0] ? `${bowlers[0].name} (${bowlers[0].wkts}w/${bowlers[0].runs}r)` : '';
-        defendedLowRR.push({ date, time, team: inn1.teamName, total: inn1.total, overs: totalOvers, reqRate: Math.round(reqRate * 100) / 100, topPerformer });
+        defendedLowRR.push({ date, time, team: inn1.teamName, total: inn1.total, overs: totalOvers, reqRate: Math.round(reqRate * 100) / 100, topPerformer, url: matchUrl(m) });
       }
 
       if (reqRate >= 6 && inn2.teamId === root.winner) {
@@ -582,7 +589,7 @@ function parseFielder(raw, howOut) {
           .sort((a, b) => b.runs - a.runs || a.balls - b.balls); // tie-break: fewer balls = better SR
         const top = batters[0];
         const topPerformer = top ? `${top.name} (${top.runs}r${top.balls ? '/'+top.balls+'b' : ''})` : '';
-        chasedHighRR.push({ date, time, team: inn2.teamName, target, overs: totalOvers, reqRate: Math.round(reqRate * 100) / 100, topPerformer });
+        chasedHighRR.push({ date, time, team: inn2.teamName, target, overs: totalOvers, reqRate: Math.round(reqRate * 100) / 100, topPerformer, url: matchUrl(m) });
       }
     } catch (e) {}
   }
@@ -726,7 +733,7 @@ function parseFielder(raw, howOut) {
                 type: 'bat',
                 lowestWp: Math.round(lowestWp * 1000) / 10,
                 rescueWpa: Math.round(rescueWpa * 100) / 100,
-                date, matchId,
+                date, matchId, url: matchUrl(m),
                 needed: neededAtLow,
                 oversLeft: Math.round(oversLeftAtLow * 10) / 10,
                 wickets: wktsAtLow,
@@ -770,7 +777,7 @@ function parseFielder(raw, howOut) {
                 type: 'bowl',
                 lowestWp: Math.round((1 - highestBattingWp) * 1000) / 10,
                 rescueWpa: Math.round(rescueWpa * 100) / 100,
-                date, matchId,
+                date, matchId, url: matchUrl(m),
                 needed: neededAtPeak,
                 oversLeft: Math.round(oversLeftAtPeak * 10) / 10,
                 wickets: wktsAtPeak,
@@ -955,6 +962,7 @@ function parseFielder(raw, howOut) {
             bowl: matchBowl[topName] || 0,
             field: matchField[topName] || 0,
             mom: (mom === topName) ? 25 : 0,
+            url: matchUrl(m),
           });
         }
       } catch (_) {}

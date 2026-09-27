@@ -214,6 +214,10 @@
       const p = (name || '').trim().split(/\s+/);
       return p[0] + (p.length > 1 ? ' ' + p[p.length - 1][0] : '');
     }
+    function matchLink(url) {
+      if (!url) return '';
+      return ' <a href="' + url + '" target="_blank" rel="noopener" style="color:#059669;font-size:11px;text-decoration:none;" title="View scorecard">🔗</a>';
+    }
 
     function setView(v) {
       _view = v;
@@ -414,6 +418,7 @@
         row.innerHTML = rankHtml +
           '<span class="fastest-name">' + sn(item.name) + '</span>' +
           '<span style="font-size:11px;color:#888;margin-left:4px;">' + item.date + '</span>' +
+          matchLink(item.url) +
           '<span class="fastest-badge">' + item.balls + 'b · ' + item.runs + 'r</span>';
         return row;
       };
@@ -704,7 +709,7 @@
               '</div>' +
               '<div style="display:flex;justify-content:space-between;margin-top:2px;">' +
                 '<span style="font-size:11px;color:#666;">' + breakdown.join('  ') + '</span>' +
-                '<span style="font-size:10px;color:#999;">' + r.date + (r.time ? ' ' + r.time : '') + '</span>' +
+                '<span style="font-size:10px;color:#999;">' + r.date + (r.time ? ' ' + r.time : '') + matchLink(r.url) + '</span>' +
               '</div>' +
             '</div>' +
           '</div>';
@@ -775,7 +780,7 @@
             '</div>' +
             '<div style="text-align:right;flex-shrink:0;">' +
               '<div style="font-size:12px;font-weight:700;color:' + rrColor + ';">RR ' + r.reqRate + '</div>' +
-              '<div style="font-size:10px;color:#999;">' + r.date + (r.time ? ' ' + r.time : '') + '</div>' +
+              '<div style="font-size:10px;color:#999;">' + r.date + (r.time ? ' ' + r.time : '') + matchLink(r.url) + '</div>' +
             '</div>' +
           '</div>';
         card.appendChild(row);
@@ -948,7 +953,7 @@
               : 'Opposition needed <strong>' + inst.needed + '</strong> off <strong>' + inst.oversLeft + '</strong> overs, <strong>' + inst.wickets + '</strong> wickets down';
             d.innerHTML =
               '<div style="display:flex;justify-content:space-between;align-items:center;">' +
-                '<span>' + (inst.date || '') + ' · ' + (inst.type === 'bowl' ? '🔴 defending' : '🏏 chasing') + ' · win% was <strong style="color:#c0392b;">' + inst.lowestWp + '%</strong> → won</span>' +
+                '<span>' + (inst.date || '') + matchLink(inst.url) + ' · ' + (inst.type === 'bowl' ? '🔴 defending' : '🏏 chasing') + ' · win% was <strong style="color:#c0392b;">' + inst.lowestWp + '%</strong> → won</span>' +
                 '<span style="color:#1b5e20;font-weight:600;white-space:nowrap;margin-left:8px;">+' + inst.rescueWpa.toFixed(2) + ' WPA</span>' +
               '</div>' +
               (inst.needed !== undefined ? '<div style="color:#888;margin-top:2px;">' + situation + '</div>' : '') +
@@ -1019,7 +1024,7 @@
               '<span style="font-weight:600">' + sn(d.loserTeam) + '</span>' +
               ' <span style="color:#888;font-size:10px">(' + sn(d.loserCap) + ')</span>' +
             '</span>' +
-            '<span style="color:#888;font-size:10px;margin-right:6px;">' + d.date + '</span>' +
+            '<span style="color:#888;font-size:10px;margin-right:6px;">' + d.date + matchLink(d.url) + '</span>' +
             '<span class="fastest-badge">' + fmt(d) + '</span>';
           sec.appendChild(row);
         });
