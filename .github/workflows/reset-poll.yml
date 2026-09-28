@@ -2,10 +2,10 @@ name: Reset Poll
 
 on:
   schedule:
-    # Sunday 6 PM PT (UTC-7) = 01:00 UTC Monday — after regular weekend matches done
-    - cron: '0 1 * * 1'
-    # Monday 6 PM PT (UTC-7) = 01:00 UTC Tuesday — for long weekends (script skips if not long weekend)
-    - cron: '0 1 * * 2'
+    # Sunday 3 PM PT (UTC-7) = 22:00 UTC Sunday — after regular weekend matches done
+    - cron: '0 22 * * 0'
+    # Monday 3 PM PT (UTC-7) = 22:00 UTC Monday — for long weekends (script skips if not long weekend)
+    - cron: '0 22 * * 1'
   workflow_dispatch:
 
 jobs:
