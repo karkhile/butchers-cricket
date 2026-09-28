@@ -94,18 +94,19 @@ function getExtraDays(sat) {
   console.log('='.repeat(50));
 
   const todayUTCDay = new Date().getUTCDay();
-  // Run on Sunday (0) always, or Monday (1) only if it's a long weekend holiday
-  if (todayUTCDay === 1) {
-    // Monday — only proceed if today is a US federal holiday (long weekend)
+  // Cron fires at 03:00 UTC Mon (regular) and 03:00 UTC Tue (long weekend)
+  // Monday (1) = always run; Tuesday (2) = only run if it's a US federal holiday
+  if (todayUTCDay === 2) {
+    // Tuesday — only proceed if today is a US federal holiday (long weekend Monday observed)
     const todayStr = ymd(new Date());
     const holidays = usFederalHolidays(new Date().getUTCFullYear());
     if (!holidays.has(todayStr)) {
-      console.log('Monday but not a holiday — skipping poll reset.');
+      console.log('Tuesday but not a holiday — skipping poll reset.');
       console.log('='.repeat(50));
       process.exit(0);
     }
-  } else if (todayUTCDay !== 0) {
-    console.log('Not a match day end (Sunday/Monday holiday) — skipping poll reset.');
+  } else if (todayUTCDay !== 1) {
+    console.log('Not a post-match day (Mon/Tue holiday) — skipping poll reset.');
     console.log('='.repeat(50));
     process.exit(0);
   }
