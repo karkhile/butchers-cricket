@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-04T23:32:43.859Z",
+  "updatedAt": "2026-10-10T20:13:53.671Z",
   "batting": {
     "big": [
       {
@@ -1423,6 +1423,12 @@
         "gap": 1
       },
       {
+        "name": "Praveen K",
+        "current": 39,
+        "next": 40,
+        "gap": 1
+      },
+      {
         "name": "Gaurav K",
         "current": 29,
         "next": 30,
@@ -1551,16 +1557,16 @@
         "surplus": 9
       },
       {
+        "name": "Praveen K",
+        "current": 39,
+        "achieved": 30,
+        "surplus": 9
+      },
+      {
         "name": "Gaurav K",
         "current": 29,
         "achieved": 20,
         "surplus": 9
-      },
-      {
-        "name": "Praveen K",
-        "current": 40,
-        "achieved": 30,
-        "surplus": 10
       },
       {
         "name": "Anjan K",
@@ -1701,6 +1707,12 @@
     ],
     "all": [
       {
+        "name": "Praveen K",
+        "current": 39,
+        "next": 40,
+        "gap": 1
+      },
+      {
         "name": "Abhishek L",
         "current": 14,
         "next": 15,
@@ -1835,6 +1847,12 @@
         "surplus": 8
       },
       {
+        "name": "Praveen K",
+        "current": 39,
+        "achieved": 30,
+        "surplus": 9
+      },
+      {
         "name": "Arjun S",
         "current": 19,
         "achieved": 10,
@@ -1851,12 +1869,6 @@
         "current": 19,
         "achieved": 10,
         "surplus": 9
-      },
-      {
-        "name": "Praveen K",
-        "current": 40,
-        "achieved": 30,
-        "surplus": 10
       },
       {
         "name": "Abhishek Kumar S",
