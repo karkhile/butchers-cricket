@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T23:51:07.901Z",
+  "updatedAt": "2026-11-03T17:52:49.624Z",
   "batting": {
     "big": [
       {
@@ -1582,9 +1582,9 @@
       },
       {
         "name": "Yash M",
-        "current": 75,
+        "current": 76,
         "achieved": 50,
-        "surplus": 25
+        "surplus": 26
       }
     ]
   },
@@ -1946,9 +1946,9 @@
       },
       {
         "name": "Yash M",
-        "current": 68,
+        "current": 69,
         "achieved": 50,
-        "surplus": 18
+        "surplus": 19
       }
     ]
   },
