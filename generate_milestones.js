@@ -75,10 +75,17 @@ function parseFielder(raw, howOut) {
     return mx ? mx[1].trim() : '';
   }
   if (howOut === 'ro') {
-    // "run out (Yash M)" or "run out (A/B)"
+    // "run out (Yash M)" or "run out (A/B)" — return first fielder only; use parseRunOutFielders for all
     const mx = raw.match(/run\s+out\s*\((.+?)\)/i);
-    return mx ? mx[1].trim() : '';
+    return mx ? mx[1].split('/')[0].trim() : '';
   }
+}
+
+function parseRunOutFielders(raw) {
+  // Returns array of all credited fielders, e.g. ["Arpan D", "Hari V"] or ["Yash M"]
+  const mx = raw.match(/run\s+out\s*\((.+?)\)/i);
+  if (!mx) return [];
+  return mx[1].split('/').map(s => s.trim()).filter(Boolean);
   return '';
 }
 
@@ -268,13 +275,12 @@ function parseFielder(raw, howOut) {
             }
           }
 
-          if (['ct', 'ctw', 'st', 'ro'].includes(howOut)) {
+          if (['ct', 'ctw', 'st'].includes(howOut)) {
             const fielder = parseFielder(b.outStringNoLink || '', howOut);
             if (!isJunk(fielder)) {
               if (howOut === 'ct')  catches[fielder]   = (catches[fielder]   || 0) + 1;
               if (howOut === 'ctw') keeperCt[fielder]  = (keeperCt[fielder]  || 0) + 1;
               if (howOut === 'st')  stumpings[fielder] = (stumpings[fielder] || 0) + 1;
-              if (howOut === 'ro')  runouts[fielder]   = (runouts[fielder]   || 0) + 1;
               seenInMatch.add(fielder);
 
               const fMatchNum = (playerMatchCount[fielder] || 0) + 1;
@@ -303,12 +309,20 @@ function parseFielder(raw, howOut) {
                   if (!fastStumping[fielder].hits[t] && stumpings[fielder] >= t) fastStumping[fielder].hits[t] = fMatchNum;
                 fastStumping[fielder].total = stumpings[fielder];
               }
-              if (howOut === 'ro') {
-                if (!fastRunOut[fielder]) fastRunOut[fielder] = { hits: {} };
-                for (const t of FAST_RUNOUT)
-                  if (!fastRunOut[fielder].hits[t] && runouts[fielder] >= t) fastRunOut[fielder].hits[t] = fMatchNum;
-                fastRunOut[fielder].total = runouts[fielder];
-              }
+            }
+          }
+          if (howOut === 'ro') {
+            // Credit every fielder listed, e.g. "run out (Arpan D/Hari V)" credits both
+            const roFielders = parseRunOutFielders(b.outStringNoLink || '');
+            for (const fielder of roFielders) {
+              if (isJunk(fielder)) continue;
+              runouts[fielder] = (runouts[fielder] || 0) + 1;
+              seenInMatch.add(fielder);
+              const fMatchNum = (playerMatchCount[fielder] || 0) + 1;
+              if (!fastRunOut[fielder]) fastRunOut[fielder] = { hits: {} };
+              for (const t of FAST_RUNOUT)
+                if (!fastRunOut[fielder].hits[t] && runouts[fielder] >= t) fastRunOut[fielder].hits[t] = fMatchNum;
+              fastRunOut[fielder].total = runouts[fielder];
             }
           }
         }
