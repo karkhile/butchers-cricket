@@ -136,19 +136,35 @@
 
     <!-- Poll + Teams content (no tabs) -->
     <div id="tab-poll">
-      <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-4 mb-4 shadow-xl ring-1 ring-white/20 flex items-center gap-3 flex-wrap">
-        <span class="text-sm font-semibold text-gray-600">Poll status:</span>
-        <span id="pollStatusBadge" class="text-sm font-bold">...</span>
-        <input type="date" id="pollSatDate"
-          class="px-3 py-2 border-2 border-gray-200 rounded-xl text-sm outline-none focus:border-emerald-500 transition"
-          title="Select the Saturday for this poll"
-          onchange="document.getElementById('btnOpenPoll').disabled = !this.value;">
-        <button id="btnOpenPoll" onclick="setPollOpen(true)" disabled
-          class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-green-700 text-white text-xs font-bold rounded-xl transition hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed">🔓 Open Poll</button>
-        <button id="btnClosePoll" onclick="setPollOpen(false)"
-          class="px-4 py-2 bg-white border-2 border-emerald-600 text-emerald-700 text-xs font-bold rounded-xl transition hover:bg-emerald-50">🔒 Close Poll</button>
-        <button id="btnResetPoll" onclick="resetPoll()"
-          class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-xs font-bold rounded-xl transition hover:-translate-y-0.5">🗑️ Reset Poll</button>
+      <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-4 mb-4 shadow-xl ring-1 ring-white/20 flex flex-col gap-3">
+        <div class="flex items-center gap-3 flex-wrap">
+          <span class="text-sm font-semibold text-gray-600">Poll status:</span>
+          <span id="pollStatusBadge" class="text-sm font-bold">...</span>
+          <input type="date" id="pollSatDate"
+            class="px-3 py-2 border-2 border-gray-200 rounded-xl text-sm outline-none focus:border-emerald-500 transition"
+            title="Select the Saturday for this poll"
+            onchange="document.getElementById('btnOpenPoll').disabled = !this.value;">
+          <button id="btnOpenPoll" onclick="setPollOpen(true)" disabled
+            class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-green-700 text-white text-xs font-bold rounded-xl transition hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed">🔓 Open Poll</button>
+          <button id="btnClosePoll" onclick="setPollOpen(false)"
+            class="px-4 py-2 bg-white border-2 border-emerald-600 text-emerald-700 text-xs font-bold rounded-xl transition hover:bg-emerald-50">🔒 Close Poll</button>
+          <button id="btnResetPoll" onclick="resetPoll()"
+            class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-xs font-bold rounded-xl transition hover:-translate-y-0.5">🗑️ Reset Poll</button>
+        </div>
+        <div class="flex items-center gap-4 flex-wrap pt-1 border-t border-gray-100">
+          <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Extra game days:</span>
+          <label class="flex items-center gap-1.5 text-sm text-gray-700 cursor-pointer">
+            <input type="checkbox" id="extraThursday" class="accent-emerald-600 w-4 h-4"> Thursday
+          </label>
+          <label class="flex items-center gap-1.5 text-sm text-gray-700 cursor-pointer">
+            <input type="checkbox" id="extraFriday" class="accent-emerald-600 w-4 h-4"> Friday
+          </label>
+          <label class="flex items-center gap-1.5 text-sm text-gray-700 cursor-pointer">
+            <input type="checkbox" id="extraMonday" class="accent-emerald-600 w-4 h-4"> Monday
+          </label>
+          <button onclick="saveExtraDates()"
+            class="px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 text-xs font-bold rounded-xl transition hover:border-emerald-500 hover:text-emerald-700">💾 Save Days</button>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
@@ -893,6 +909,29 @@
     document.getElementById('btnClosePoll').disabled = !isOpen;
   }
 
+  function getExtraDatesFromUI() {
+    const extras = [];
+    if (document.getElementById('extraThursday').checked) extras.push('thursday');
+    if (document.getElementById('extraFriday').checked)   extras.push('friday');
+    if (document.getElementById('extraMonday').checked)   extras.push('monday');
+    return extras;
+  }
+
+  function loadExtraDatesUI(extraDates) {
+    document.getElementById('extraThursday').checked = (extraDates||[]).includes('thursday');
+    document.getElementById('extraFriday').checked   = (extraDates||[]).includes('friday');
+    document.getElementById('extraMonday').checked   = (extraDates||[]).includes('monday');
+  }
+
+  window.saveExtraDates = async function() {
+    try {
+      const cur = (await getDoc(doc(db, 'config', 'poll'))).data() || {};
+      const extraDates = getExtraDatesFromUI();
+      await setDoc(doc(db, 'config', 'poll'), { ...cur, extraDates, updatedAt: new Date().toISOString() });
+      alert('Extra game days saved: ' + (extraDates.length ? extraDates.join(', ') : 'none'));
+    } catch(e) { alert('Failed: ' + e.message); }
+  };
+
   window.setPollOpen = async function(open) {
     if (open) {
       const satDate = document.getElementById('pollSatDate').value;
@@ -901,7 +940,8 @@
       document.getElementById('gameDate').value  = satDate;
       document.getElementById('gameDate2').value = satDate;
       try {
-        await setDoc(doc(db, 'config', 'poll'), { open: true, satDate, updatedAt: new Date().toISOString() });
+        const extraDates = getExtraDatesFromUI();
+        await setDoc(doc(db, 'config', 'poll'), { open: true, satDate, extraDates, updatedAt: new Date().toISOString() });
         window._state.weekKey = satDate;
         updatePollStatusUI(true, satDate);
         // Re-render poll with correct weekKey
@@ -952,6 +992,7 @@
 
     if (pollData.satDate) window._state.weekKey = pollData.satDate;
     updatePollStatusUI(isOpen, pollData.satDate || '');
+    loadExtraDatesUI(pollData.extraDates || []);
     if (pollData.satDate) {
       document.getElementById('gameDate').value  = pollData.satDate;
       document.getElementById('gameDate2').value = pollData.satDate;

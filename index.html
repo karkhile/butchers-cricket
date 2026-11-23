@@ -118,11 +118,12 @@
   function getUpcomingDates() {
     if (window._pollDates) return window._pollDates;
     const sat = nextSaturday();
+    const thu = new Date(sat); thu.setDate(sat.getDate() - 2);
     const fri = new Date(sat); fri.setDate(sat.getDate() - 1);
     const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
     const mon = new Date(sat); mon.setDate(sat.getDate() + 2);
     const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    return { fri: fmt(fri), sat: fmt(sat), sun: fmt(sun), mon: fmt(mon), extraDates: [] };
+    return { thu: fmt(thu), fri: fmt(fri), sat: fmt(sat), sun: fmt(sun), mon: fmt(mon), extraDates: [] };
   }
 
   function getWeekKey() {
@@ -130,9 +131,9 @@
     return nextSaturday().toISOString().slice(0, 10);
   }
 
-  function formatVoteSummary(days, fri, sat, sun, mon) {
+  function formatVoteSummary(days, thu, fri, sat, sun, mon) {
     if (!days || days.length === 0) return '❌ Not Available';
-    const labels = { friday: '📅 Friday, ' + fri, saturday: '📅 Saturday, ' + sat, sunday: '📅 Sunday, ' + sun, monday: '📅 Monday, ' + mon };
+    const labels = { thursday: '📅 Thursday, ' + thu, friday: '📅 Friday, ' + fri, saturday: '📅 Saturday, ' + sat, sunday: '📅 Sunday, ' + sun, monday: '📅 Monday, ' + mon };
     return days.map(d => labels[d] || d).join('<br>');
   }
 
@@ -149,7 +150,7 @@
   }
 
   async function showSuccess(name, days, voteRef, weekKey) {
-    const { fri, sat, sun, mon } = getUpcomingDates();
+    const { thu, fri, sat, sun, mon } = getUpcomingDates();
     const unavailable = !days || days.length === 0;
     document.getElementById('content').innerHTML = `
       <div class="text-center py-4">
@@ -160,7 +161,7 @@
           : 'See you on the field, ' + name.split(' ')[0] + '! 🏏'
         }</p>
         <div class="mt-4 bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-100 rounded-2xl p-4 text-sm text-gray-700 leading-relaxed">
-          Your availability:<br><strong>${formatVoteSummary(days, fri, sat, sun, mon)}</strong>
+          Your availability:<br><strong>${formatVoteSummary(days, thu, fri, sat, sun, mon)}</strong>
         </div>
         <div id="dashboard" class="mt-4 bg-gray-50 rounded-2xl p-4 text-left">
           <p class="text-xs font-bold text-emerald-800 uppercase tracking-wide">📊 Loading poll results...</p>
@@ -178,10 +179,10 @@
   }
 
   async function renderDashboard(containerId, weekKey) {
-    const { fri, sat, sun, mon, extraDates } = getUpcomingDates();
+    const { thu, fri, sat, sun, mon, extraDates } = getUpcomingDates();
     try {
       const snap = await getDocs(collection(db, 'votes'));
-      const groups = { friday: [], saturday: [], sunday: [], monday: [], unavailable: [] };
+      const groups = { thursday: [], friday: [], saturday: [], sunday: [], monday: [], unavailable: [] };
       let total = 0;
       snap.forEach(d => {
         const v = d.data();
@@ -191,6 +192,7 @@
         const parts = (v.player || d.id).trim().split(/\s+/);
         const firstName = parts[0] + (parts.length > 1 ? ' ' + parts[parts.length - 1][0] : '');
         if (vdays.length === 0) groups.unavailable.push(firstName);
+        if (vdays.includes('thursday')) groups.thursday.push(firstName);
         if (vdays.includes('friday'))   groups.friday.push(firstName);
         if (vdays.includes('saturday')) groups.saturday.push(firstName);
         if (vdays.includes('sunday'))   groups.sunday.push(firstName);
@@ -206,10 +208,12 @@
           <div class="flex flex-wrap gap-1.5">${pills || '<span class="text-xs text-gray-400 italic">No responses yet</span>'}</div>
         </div>`;
       };
+      const hasThu = (extraDates||[]).includes('thursday');
       const hasFri = (extraDates||[]).includes('friday');
       const hasMon = (extraDates||[]).includes('monday');
       document.getElementById(containerId).innerHTML = `
         <p class="text-xs font-bold text-emerald-800 uppercase tracking-wide mb-3">📊 Who's playing this week? (${total} responded)</p>
+        ${hasThu ? renderGroup('Thursday, ' + thu, '📅', groups.thursday)  : ''}
         ${hasFri ? renderGroup('Friday, '   + fri, '📅', groups.friday)   : ''}
         ${renderGroup('Saturday, ' + sat, '📅', groups.saturday)}
         ${renderGroup('Sunday, '   + sun, '📅', groups.sunday)}
@@ -221,7 +225,7 @@
   }
 
   function showVoteForm(name, voteRef, weekKey, currentDays) {
-    const { fri, sat, sun, mon, extraDates } = getUpcomingDates();
+    const { thu, fri, sat, sun, mon, extraDates } = getUpcomingDates();
     const selected = new Set(currentDays && currentDays.length ? currentDays : []);
     let unavailable = !currentDays || currentDays.length === 0;
     if (currentDays === null) unavailable = false;
@@ -248,6 +252,7 @@
     });
 
     const days = [];
+    if ((extraDates||[]).includes('thursday')) days.push({ value: 'thursday', label: 'Thursday, ' + thu, icon: '📅' });
     if ((extraDates||[]).includes('friday'))  days.push({ value: 'friday',   label: 'Friday, '   + fri, icon: '📅' });
     days.push({ value: 'saturday', label: 'Saturday, ' + sat, icon: '📅' });
     days.push({ value: 'sunday',   label: 'Sunday, '   + sun, icon: '📅' });
@@ -396,11 +401,12 @@
 
     if (pollSatDate) {
       const sat = new Date(pollSatDate + 'T12:00:00');
+      const thu = new Date(sat); thu.setDate(sat.getDate() - 2);
       const fri = new Date(sat); fri.setDate(sat.getDate() - 1);
       const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
       const mon = new Date(sat); mon.setDate(sat.getDate() + 2);
       const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      window._pollDates = { fri: fmt(fri), sat: fmt(sat), sun: fmt(sun), mon: fmt(mon), extraDates: pollExtraDates };
+      window._pollDates = { thu: fmt(thu), fri: fmt(fri), sat: fmt(sat), sun: fmt(sun), mon: fmt(mon), extraDates: pollExtraDates };
       window._pollWeekKey = pollSatDate;
     }
 
