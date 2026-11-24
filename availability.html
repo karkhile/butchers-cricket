@@ -78,6 +78,7 @@
 
   // pill colour schemes per day
   const SCHEMES = {
+    thursday:    { badge: 'bg-pink-600',    pill: 'bg-pink-50 text-pink-800 border border-pink-200'         },
     friday:      { badge: 'bg-purple-600',  pill: 'bg-purple-50 text-purple-800 border border-purple-200'  },
     saturday:    { badge: 'bg-emerald-600', pill: 'bg-emerald-50 text-emerald-800 border border-emerald-200' },
     sunday:      { badge: 'bg-blue-600',    pill: 'bg-blue-50 text-blue-800 border border-blue-200'         },
@@ -116,7 +117,7 @@
   async function load() {
     let weekKey = nextSaturday().toISOString().slice(0, 10);
     let extraDates = [];
-    let friLabel = 'Friday', satLabel = 'Saturday', sunLabel = 'Sunday', monLabel = 'Monday';
+    let thuLabel = 'Thursday', friLabel = 'Friday', satLabel = 'Saturday', sunLabel = 'Sunday', monLabel = 'Monday';
 
     try {
       const pollSnap = await getDoc(doc(db, 'config', 'poll'));
@@ -125,9 +126,11 @@
         if (pd.satDate) {
           weekKey = pd.satDate;
           const sat = new Date(pd.satDate + 'T12:00:00');
+          const thu = new Date(sat); thu.setDate(sat.getDate() - 2);
           const fri = new Date(sat); fri.setDate(sat.getDate() - 1);
           const sun = new Date(sat); sun.setDate(sat.getDate() + 1);
           const mon = new Date(sat); mon.setDate(sat.getDate() + 2);
+          thuLabel = 'Thursday, ' + fmt(thu.toISOString().slice(0, 10));
           friLabel = 'Friday, '   + fmt(fri.toISOString().slice(0, 10));
           satLabel = 'Saturday, ' + fmt(pd.satDate);
           sunLabel = 'Sunday, '   + fmt(sun.toISOString().slice(0, 10));
@@ -139,7 +142,7 @@
 
     document.getElementById('weekLabel').textContent = 'Week of ' + fmt(weekKey);
 
-    const groups = { friday: [], saturday: [], sunday: [], monday: [], unavailable: [] };
+    const groups = { thursday: [], friday: [], saturday: [], sunday: [], monday: [], unavailable: [] };
 
     const snap = await getDocs(collection(db, 'votes'));
     snap.forEach(d => {
@@ -147,6 +150,7 @@
       if (v.week !== weekKey) return;
       const name = firstName(v.player || d.id);
       const days = getDays(v);
+      if (days.includes('thursday')) groups.thursday.push(name);
       if (days.includes('friday'))   groups.friday.push(name);
       if (days.includes('saturday')) groups.saturday.push(name);
       if (days.includes('sunday'))   groups.sunday.push(name);
@@ -155,10 +159,11 @@
     });
 
     const sections = [
-      ...(extraDates.includes('friday')  ? [{ key: 'friday',      label: friLabel,       icon: '📅' }] : []),
+      ...(extraDates.includes('thursday') ? [{ key: 'thursday',    label: thuLabel,       icon: '📅' }] : []),
+      ...(extraDates.includes('friday')   ? [{ key: 'friday',      label: friLabel,       icon: '📅' }] : []),
       { key: 'saturday',    label: satLabel,        icon: '📅' },
       { key: 'sunday',      label: sunLabel,        icon: '📅' },
-      ...(extraDates.includes('monday')  ? [{ key: 'monday',      label: monLabel,       icon: '📅' }] : []),
+      ...(extraDates.includes('monday')   ? [{ key: 'monday',      label: monLabel,       icon: '📅' }] : []),
       { key: 'unavailable', label: 'Not Available', icon: '❌' },
     ];
 
