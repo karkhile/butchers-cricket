@@ -179,6 +179,7 @@
             <span class="stat-label text-sm text-gray-500 flex items-center gap-2">📅 Sunday</span>
             <span class="stat-value sunday font-bold text-lg" id="countSun">—</span>
           </div>
+          <div id="extraDayCounts"></div>
           <div class="stat-row flex justify-between items-center py-2 border-b border-gray-100">
             <span class="stat-label text-sm text-gray-500 flex items-center gap-2">❌ Not Available</span>
             <span class="stat-value unavailable font-bold text-lg" id="countNA">—</span>
@@ -198,11 +199,15 @@
 
       <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-xl ring-1 ring-white/20 mb-4">
         <h2 class="text-sm font-bold text-emerald-900 mb-4">⚙️ Build Teams</h2>
+        <div class="flex gap-3 items-center flex-wrap mb-3">
+          <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Select game day:</span>
+          <div id="dayPickerBtns" class="flex gap-2 flex-wrap"></div>
+        </div>
         <div class="flex gap-3 items-center flex-wrap mb-4">
-        <input type="date" class="px-3 py-2 border-2 border-gray-200 rounded-xl text-sm outline-none focus:border-emerald-500 transition" id="gameDate">
-        <button onclick="goToTeams()" class="px-4 py-2 bg-white border-2 border-emerald-600 text-emerald-700 text-xs font-bold rounded-xl hover:bg-emerald-50 transition">👥 Build Teams →</button>
+          <input type="date" class="px-3 py-2 border-2 border-gray-200 rounded-xl text-sm outline-none focus:border-emerald-500 transition" id="gameDate">
+        </div>
+        <p class="text-xs text-gray-400">Pick a day to load who voted for it, then set the game date.</p>
       </div>
-      <p class="text-xs text-gray-400">Select a date, then build teams manually or auto-balance.</p>
     </div>
   </div>
 
@@ -641,7 +646,9 @@
     document.getElementById('balanceInfo').textContent =
       teamA.length || teamB.length
         ? `Butchers-A: ${teamA.length} players (${sumA} pts)  •  Butchers-B: ${teamB.length} players (${sumB} pts)  •  diff: ${Math.abs(sumA - sumB)}`
-        : 'Drag players into each team, or use Auto Balance.';
+        : (window._state._selectedDay
+            ? `Showing players available for ${window._state._selectedDay}. Drag into teams or Auto Balance.`
+            : 'Drag players into each team, or use Auto Balance.');
     document.getElementById('createBtn').disabled = (teamA.length === 0 || teamB.length === 0);
   }
 
@@ -649,12 +656,14 @@
   function renderPoll(votes, roster) {
     const weekKey = window._state.weekKey;
     const thisWeek = Object.entries(votes).filter(([, v]) => v.week === weekKey);
+    const extraDates = getExtraDatesFromUI();
+    const allDays = ['saturday', 'sunday', ...extraDates];
     const counts = { saturday: 0, sunday: 0, unavailable: 0 };
+    extraDates.forEach(d => { counts[d] = 0; });
     thisWeek.forEach(([, v]) => {
       const days = getDays(v);
       if (days.length === 0) counts.unavailable++;
-      if (days.includes('saturday')) counts.saturday++;
-      if (days.includes('sunday')) counts.sunday++;
+      allDays.forEach(day => { if (days.includes(day)) counts[day]++; });
     });
 
     const total = Object.keys(roster).length;
@@ -665,6 +674,15 @@
     document.getElementById('countNA').textContent      = counts.unavailable;
     document.getElementById('countPending').textContent = total - voted;
     document.getElementById('responseBar').style.width  = Math.round(voted / total * 100) + '%';
+
+    // Render extra day rows dynamically
+    const extraRowsEl = document.getElementById('extraDayCounts');
+    const DAY_LABEL = { thursday: '📅 Thursday', friday: '📅 Friday', monday: '📅 Monday' };
+    extraRowsEl.innerHTML = extraDates.map(day => `
+      <div class="stat-row flex justify-between items-center py-2 border-b border-gray-100">
+        <span class="stat-label text-sm text-gray-500 flex items-center gap-2">${DAY_LABEL[day] || day}</span>
+        <span class="stat-value saturday font-bold text-lg">${counts[day] || 0}</span>
+      </div>`).join('');
 
     const winner = counts.saturday >= counts.sunday ? 'saturday' : 'sunday';
     const winnerEl = document.getElementById('winnerBadge');
@@ -686,11 +704,14 @@
     listEl.innerHTML = allPlayers.map(name => {
       const days = voteMap[name];
       let chipClass, dotClass, icon;
-      if (!days)                                              { chipClass = 'pending';     dotClass = 'pending';     icon = '⏳'; }
-      else if (days.length === 0)                             { chipClass = 'unavailable'; dotClass = 'unavailable'; icon = '❌'; }
-      else if (days.includes('saturday') && days.includes('sunday')) { chipClass = 'saturday'; dotClass = 'saturday'; icon = '📅📅'; }
-      else if (days.includes('saturday'))                     { chipClass = 'saturday';    dotClass = 'saturday';    icon = '📅'; }
-      else                                                    { chipClass = 'sunday';      dotClass = 'sunday';      icon = '📅'; }
+      if (!days)              { chipClass = 'pending';     dotClass = 'pending';     icon = '⏳'; }
+      else if (days.length === 0) { chipClass = 'unavailable'; dotClass = 'unavailable'; icon = '❌'; }
+      else {
+        chipClass = days.includes('saturday') ? 'saturday' : 'sunday';
+        dotClass = chipClass;
+        const DAY_ICON = { saturday: '📅', sunday: '🌅', thursday: '🗓️', friday: '🗓️', monday: '🗓️' };
+        icon = days.map(d => DAY_ICON[d] || '📅').join('');
+      }
       const str = STRENGTH[name] ? '[' + STRENGTH[name] + ']' : '';
       return `<div class="player-chip ${chipClass}">
         <div class="dot ${dotClass}"></div>
@@ -704,24 +725,49 @@
     window._state._winner = winner;
     window._state._voteMap = voteMap;
 
+    // Render day picker buttons in Build Teams section
+    renderDayPicker(allDays, counts);
+
     return { winner, counts, voteMap };
   }
 
+  function renderDayPicker(allDays, counts) {
+    const el = document.getElementById('dayPickerBtns');
+    if (!el) return;
+    const DAY_LABEL = { saturday: 'Saturday', sunday: 'Sunday', thursday: 'Thursday', friday: 'Friday', monday: 'Monday' };
+    el.innerHTML = allDays.map(day => {
+      const n = counts[day] || 0;
+      const isWinner = day === window._state._winner;
+      const base = 'px-4 py-2 text-xs font-bold rounded-xl border-2 transition cursor-pointer';
+      const style = isWinner
+        ? `${base} bg-emerald-600 border-emerald-600 text-white`
+        : `${base} bg-white border-gray-300 text-gray-700 hover:border-emerald-500 hover:text-emerald-700`;
+      return `<button class="${style}" onclick="goToTeams('${day}')">
+        📅 ${DAY_LABEL[day] || day} <span class="ml-1 opacity-80">(${n})</span>
+      </button>`;
+    }).join('');
+  }
+
   // ── GO TO TEAMS ───────────────────────────────────────────────────────────────
-  window.goToTeams = function() {
+  window.goToTeams = function(day) {
     const date = document.getElementById('gameDate').value;
     if (date) document.getElementById('gameDate2').value = date;
 
-    // If we already have saved teams for this week, just switch tabs
+    const selectedDay = day || window._state._winner || 'saturday';
+    window._state._selectedDay = selectedDay;
+
+    // If we already have saved teams for this week AND same day, just switch tabs
     const saved = loadTeamState();
-    if (!saved) {
-      const { roster, _winner, _voteMap } = window._state;
+    if (!saved || window._state._savedDay !== selectedDay) {
+      const { roster, _voteMap } = window._state;
       const available = Object.keys(roster)
-        .filter(name => _voteMap[name] && _voteMap[name].includes(_winner))
+        .filter(name => _voteMap[name] && _voteMap[name].includes(selectedDay))
         .map(name => ({ name, id: roster[name].id, strength: STRENGTH[name] || 50, days: _voteMap[name] }));
       window._state.pool  = available;
       window._state.teamA = [];
       window._state.teamB = [];
+      window._state._savedDay = selectedDay;
+      saveTeamState();
     }
     renderTeamBuilder();
     showTab('teams');
